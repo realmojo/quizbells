@@ -42,9 +42,7 @@ export default function QuizModalClient({ type }: { type: string }) {
 
       if (json?.contents) {
         const parsed = JSON.parse(json.contents);
-        const filtered = parsed.filter(
-          (item: any) => item.type && item.question && item.answer
-        );
+        const filtered = parsed.filter((item: any) => item.answer);
 
         setQuizzes(filtered);
         setAnswerDate(json.answerDate?.split("T")[0] || null);
@@ -121,7 +119,7 @@ export default function QuizModalClient({ type }: { type: string }) {
 
         {loading && (
           <p className="text-center text-gray-500">
-            퀴즈를 불러오는 중입니다...
+            퀴즈 정답을 불러오는 중입니다...
           </p>
         )}
 
@@ -219,13 +217,19 @@ export default function QuizModalClient({ type }: { type: string }) {
                 {/* 유사 정답 (있을 경우) */}
                 {quiz.otherAnswers?.length > 0 && (
                   <div
-                    className="text-sm text-gray-500 mt-2"
+                    className="my-3 rounded-lg border border-yellow-200 bg-yellow-50 px-4 py-3 text-yellow-800 shadow-sm"
                     itemProp="suggestedAnswer"
+                    itemScope
+                    itemType="https://schema.org/SuggestedAnswer"
                   >
-                    유사 정답:{" "}
-                    <span className="font-medium">
-                      {quiz.otherAnswers.join(", ")}
+                    <span className="block text-sm font-semibold text-yellow-600 mb-1">
+                      💡 다른 정답
                     </span>
+                    <div className="text-xl font-bold">
+                      <span itemProp="text">
+                        {quiz.otherAnswers.join(", ")}
+                      </span>
+                    </div>
                   </div>
                 )}
               </article>

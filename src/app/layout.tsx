@@ -20,7 +20,7 @@ import BottomTabBar from "@/components/BottomTabBar";
 export const metadata: Metadata = {
   title: "퀴즈벨 - 매일 쏟아지는 퀴즈 정답 알림 서비스 | QUIZBELLS",
   description:
-    "퀴즈벨(QUIZBELLS)은 캐시워크, 쏠퀴즈, 토스 등 인기 앱의 퀴즈 정답을 가장 빠르게 알려주는 알림 기반 퀴즈 서비스입니다. 앱테크의 핵심, 퀴즈벨로 포인트 적립하세요!",
+    "퀴즈벨(QUIZBELLS)은 캐시워크, 신한쏠퀴즈, 토스행운퀴즈, 캐시닥, 오케이케시백 등 인기 앱의 퀴즈 정답을 가장 빠르게 알려주는 알림 기반 퀴즈 서비스입니다. 앱테크의 핵심, 퀴즈벨로 포인트 적립하세요!",
   keywords: [
     "퀴즈벨",
     "QUIZBELLS",
@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     "퀴즈 알림",
     "퀴즈 이벤트",
     "출석퀴즈",
+    "캐시닥",
+    "오케이캐시백",
+    "신한쏠퀴즈",
   ],
   authors: [
     {
@@ -51,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "퀴즈벨 - 오늘의 퀴즈 정답 모음 알림 | QUIZBELLS",
     description:
-      "퀴즈벨은 매일 업데이트되는 퀴즈 정답을 가장 빠르게 전달하는 앱테크 퀴즈 알림 서비스입니다. 포인트 적립의 지름길, 지금 바로 퀴즈벨에서 확인하세요!",
+      "퀴즈벨(QUIZBELLS)은 캐시워크, 신한쏠퀴즈, 토스행운퀴즈, 캐시닥, 오케이케시백 등 인기 앱의 퀴즈 정답을 가장 빠르게 알려주는 알림 기반 퀴즈 서비스입니다. 앱테크의 핵심, 퀴즈벨로 포인트 적립하세요!",
     url: "https://quizbells.com",
     siteName: "퀴즈벨",
     locale: "ko_KR",
@@ -75,7 +78,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "퀴즈벨 - 퀴즈 정답 알림 서비스 | 앱테크로 포인트 적립하세요!",
     description:
-      "신한쏠퀴즈, 캐시워크, 토스퀴즈 등 다양한 퀴즈 정답을 매일 푸시 알림으로 알려주는 앱테크 필수 서비스, QUIZBELLS.",
+      "신한쏠퀴즈, 캐시워크, 토스행운퀴즈, 캐시닥, 오케이캐시백퀴즈벨(QUIZBELLS)은 캐시워크, 신한쏠퀴즈, 토스행운퀴즈, 캐시닥, 오케이케시백 등 인기 앱의 퀴즈 정답을 가장 빠르게 알려주는 알림 기반 퀴즈 서비스입니다. 앱테크의 핵심, 퀴즈벨로 포인트 적립하세요!",
     site: "@quizbells_official",
     creator: "@quizbells_official",
     images: ["https://quizbells.com/icons/og-image.png"], // Twitter 카드용 이미지 (1200x630)

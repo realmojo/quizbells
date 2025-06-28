@@ -30,6 +30,12 @@ export const quizItems = [
     title: "오퀴즈",
     image: "/images/okcashbag.png",
   },
+  {
+    type: "cashdoc",
+    typeKr: "캐시닥",
+    title: "용돈퀴즈",
+    image: "/images/cashdoc.png",
+  },
   // {
   //   type: "kakaobank",
   //   typeKr: "카카오뱅크",
