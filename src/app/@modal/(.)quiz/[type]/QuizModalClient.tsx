@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import moment from "moment";
 import ImageComponents from "@/components/ImageComponets";
+import { getQuitItem } from "@/utils/utils";
 // import Adsense from "@/components/Adsense";
 
 interface Quiz {
@@ -102,11 +103,9 @@ export default function QuizModalClient({ type }: { type: string }) {
         moveClose();
       }}
     >
-      <DialogContent className="!m-0 h-screen max-h-none flex flex-col w-screen max-w-none !gap-0 !rounded-none !border-none p-0 overflow-y-auto bg-gray-50">
-        <style>{`.ring-offset-background { display: none !important; }`}</style>
-
+      <DialogContent className="flex flex-col !m-0 p-0 h-screen max-h-none w-screen max-w-none !gap-0 !rounded-none !border-none overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="flex items-center justify-between text-base font-semibold">
+          <DialogTitle className="flex items-center justify-start text-base font-semibold">
             <div className="flex items-center">
               <button
                 onClick={() => router.back()}
@@ -118,6 +117,7 @@ export default function QuizModalClient({ type }: { type: string }) {
             </div>
           </DialogTitle>
         </DialogHeader>
+        <style>{`.ring-offset-background { display: none !important; }`}</style>
 
         {loading && (
           <p className="text-center text-gray-500">
@@ -127,7 +127,7 @@ export default function QuizModalClient({ type }: { type: string }) {
 
         {!loading && (
           <section
-            className="px-4"
+            className="px-4 pb-8"
             itemScope
             itemType="https://schema.org/WebPage"
           >
@@ -136,7 +136,8 @@ export default function QuizModalClient({ type }: { type: string }) {
               className="text-2xl font-bold text-gray-900 mb-4"
               itemProp="headline"
             >
-              {type}퀴즈 {answerDate} 정답 확인하고 앱테크 적립하세요.
+              {getQuitItem(type)?.typeKr} {getQuitItem(type)?.title}
+              {answerDateString} 정답 확인하고 앱테크 적립하세요
             </h1>
 
             {/* 퀴즈 이미지 */}
@@ -146,7 +147,7 @@ export default function QuizModalClient({ type }: { type: string }) {
                 type={type}
               />
               <div className="text-xs text-center mt-2 mb-2 text-gray-500">
-                {`${answerDateString} ${type} 퀴즈 이미지`}
+                {`${answerDateString} ${type} 퀴즈 정답`}
               </div>
             </>
 
@@ -157,15 +158,16 @@ export default function QuizModalClient({ type }: { type: string }) {
             >
               앱테크는 광고 시청이나 퀴즈 참여를 통해 포인트를 적립하는
               방식으로, 많은 사용자들의 관심을 받고 있습니다. {answerDateString}
-              기준, 캐시워크 등 다양한 앱에서 퀴즈 이벤트가 활발히 진행되고
-              있으며, 정답을 맞히면 현금처럼 사용 가능한 리워드를 받을 수 있어
-              앱 사용자들 사이에서 큰 호응을 얻고 있습니다.
+              기준, {getQuitItem(type)?.typeKr} {getQuitItem(type)?.title} 등
+              다양한 앱에서 퀴즈 이벤트가 활발히 진행되고 있으며, 정답을 맞히면
+              현금처럼 사용 가능한 리워드를 받을 수 있어 앱 사용자들 사이에서 큰
+              호응을 얻고 있습니다.
             </p>
 
             {/* <Adsense slotId="1234567890" /> */}
 
             {!loading && quizzes.length === 0 && (
-              <div className="text-center text-gray-700 px-6 py-10">
+              <div className="text-center text-gray-700 px-6 py-10 mb-10">
                 <p className="text-lg font-semibold mb-2">
                   {answerDateString}
                   <br />
@@ -191,7 +193,7 @@ export default function QuizModalClient({ type }: { type: string }) {
               >
                 {/* 퀴즈 유형 */}
                 <div className="text-xs text-gray-500 mb-1" itemProp="about">
-                  📌 카테고리: <span className="ml-1">{quiz.type}</span>
+                  📌 <span className="ml-1">{quiz.type}</span>
                 </div>
 
                 {/* 퀴즈 질문 */}
@@ -201,15 +203,17 @@ export default function QuizModalClient({ type }: { type: string }) {
 
                 {/* 정답 */}
                 <div
-                  className="text-green-700 font-semibold"
+                  className="my-3 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-green-800 shadow-sm"
                   itemProp="acceptedAnswer"
                   itemScope
                   itemType="https://schema.org/Answer"
                 >
-                  <span className="text-sm font-medium text-gray-600">
-                    정답:
-                  </span>{" "}
-                  <span itemProp="text">{quiz.answer}</span>
+                  <span className="block text-sm font-semibold text-green-600 mb-1">
+                    ✅ 정답
+                  </span>
+                  <span itemProp="text" className="text-xl font-bold">
+                    {quiz.answer}
+                  </span>
                 </div>
 
                 {/* 유사 정답 (있을 경우) */}

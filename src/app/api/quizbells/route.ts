@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { queryOne } from "@/lib/db";
+import { queryList, queryOne } from "@/lib/db";
 
 // ✅ 퀴즈벨 정답
 export async function GET(req: NextRequest) {
@@ -8,12 +8,20 @@ export async function GET(req: NextRequest) {
     const type = searchParams.get("type");
     const answerDate = searchParams.get("answerDate");
 
-    const query =
-      "SELECT * FROM quizbells WHERE type = ? AND answerDate = ? ORDER BY id DESC LIMIT 1";
-    const item = await queryOne<any>(query, [type, answerDate]);
+    let query = "";
+    let items = undefined;
+    if (type) {
+      query =
+        "SELECT * FROM quizbells WHERE type = ? AND answerDate = ? ORDER BY id DESC LIMIT 1";
+      items = await queryOne<any>(query, [type, answerDate]);
+    } else if (answerDate) {
+      query =
+        "SELECT type, answerDate FROM quizbells WHERE answerDate = ? GROUP BY type ORDER BY id DESC";
+      items = await queryList<any>(query, [answerDate]);
+    }
 
     // ✅ 결과 반환
-    return NextResponse.json(item);
+    return NextResponse.json(items);
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
 

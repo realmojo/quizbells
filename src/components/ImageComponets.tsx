@@ -27,6 +27,15 @@ export default function ImageComponents({
         height={600}
       />
     );
+  } else if (type === "shinhan") {
+    return (
+      <Image
+        src="/images/shinhan.png"
+        alt={`${answerDate} ${type} 퀴즈 이미지`}
+        width={600}
+        height={600}
+      />
+    );
   } else if (type === "kakaopay") {
     return (
       <Image
