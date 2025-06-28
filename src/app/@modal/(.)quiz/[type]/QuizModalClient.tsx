@@ -136,7 +136,7 @@ export default function QuizModalClient({ type }: { type: string }) {
               className="text-2xl font-bold text-gray-900 mb-4"
               itemProp="headline"
             >
-              {getQuitItem(type)?.typeKr} {getQuitItem(type)?.title}
+              {getQuitItem(type)?.typeKr} {getQuitItem(type)?.title}{" "}
               {answerDateString} 정답 확인하고 앱테크 적립하세요
             </h1>
 

@@ -9,19 +9,19 @@ export default function ImageComponents({
   type: string;
   answerDate: string;
 }) {
-  if (type === "cashwalk") {
+  if (type === "toss") {
     return (
       <Image
-        src="/images/cashwalk.png"
+        src="/images/toss.png"
         alt={`${answerDate} ${type} 퀴즈 이미지`}
         width={600}
         height={600}
       />
     );
-  } else if (type === "kakaobank") {
+  } else if (type === "cashwalk") {
     return (
       <Image
-        src="/images/kakaobank.png"
+        src="/images/cashwalk.png"
         alt={`${answerDate} ${type} 퀴즈 이미지`}
         width={600}
         height={600}
@@ -36,28 +36,10 @@ export default function ImageComponents({
         height={600}
       />
     );
-  } else if (type === "kakaopay") {
+  } else if (type === "okcashbag") {
     return (
       <Image
-        src="/images/kakaopay.png"
-        alt={`${answerDate} ${type} 퀴즈 이미지`}
-        width={600}
-        height={600}
-      />
-    );
-  } else if (type === "kbstar") {
-    return (
-      <Image
-        src="/images/kbstar.png"
-        alt={`${answerDate} ${type} 퀴즈 이미지`}
-        width={600}
-        height={600}
-      />
-    );
-  } else if (type === "toss") {
-    return (
-      <Image
-        src="/images/toss.png"
+        src="/images/okcashbag.png"
         alt={`${answerDate} ${type} 퀴즈 이미지`}
         width={600}
         height={600}

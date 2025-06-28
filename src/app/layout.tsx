@@ -45,8 +45,8 @@ export const metadata: Metadata = {
   applicationName: "QUIZBELLS",
   generator: "Next.js",
   category: "quiz, apptech, reward, entertainment",
-  themeColor: "#1D4ED8",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+  // themeColor: "#1D4ED8",
+  // viewport: "width=device-width, initial-scale=1.0, maximum-scale=5.0",
   robots: "index, follow",
   openGraph: {
     title: "퀴즈벨 - 오늘의 퀴즈 정답 모음 알림 | QUIZBELLS",
@@ -134,6 +134,7 @@ export default async function RootLayout({
             }
             `}</Script>
         <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/icons/android-icon-48x48.png" />
       </head>
       <body className={pretendard.className}>
         {/* <ClientOnly /> */}
