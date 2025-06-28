@@ -65,15 +65,14 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${pretendard.variable}`}>
       <head>
-        {/* <meta
+        <meta
           name="naver-site-verification"
-          content="80d6139455845cdbf1c9f9457d7dceef48681fb3"
+          content="3f64e7db8e8deef8c04f1aaffd716f53498e30ee"
         />
         <meta
           name="google-site-verification"
-          content="FrevTocD5esK1kGfI3LURLhqx1zfKAcM-v_-WvAI9Qw"
-        /> */}
-
+          content="ouZeon6aBrcNKweLJU3eD7w5AjuYyq3MQFlk2jYv7d8"
+        />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
