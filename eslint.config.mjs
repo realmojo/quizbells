@@ -25,7 +25,7 @@ const eslintConfig = [
     rules: {
       // ✅ any 허용: 완전히 끄기
       "@typescript-eslint/no-explicit-any": "off",
-
+      "react/no-unescaped-entities": "off",
       // 또는 다음과 같이 경고만 띄우고 빌드 실패는 막을 수도 있음
       // "@typescript-eslint/no-explicit-any": "warn",
     },

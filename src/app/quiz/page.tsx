@@ -1,28 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import Head from "next/head";
-
-import { format, addDays, subDays } from "date-fns";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import QuizCardComponent from "@/components/QuizCardComponent";
+import { useAppStore } from "@/store/useAppStore";
 import { quizItems } from "@/utils/utils";
 
 export default function QuizPage() {
-  const [date, setDate] = useState(new Date());
+  const date = useAppStore((s) => s.date);
+  const goPrevDate = useAppStore((s) => s.goPrevDate);
+  const goNextDate = useAppStore((s) => s.goNextDate);
 
   const today = new Date();
   const isToday = format(date, "yyyy-MM-dd") === format(today, "yyyy-MM-dd");
-
-  const handlePrev = () => setDate((prev) => subDays(prev, 1));
-  const handleNext = () => {
-    if (!isToday) {
-      setDate((prev) => addDays(prev, 1));
-    }
-  };
 
   return (
     <>
@@ -51,15 +43,14 @@ export default function QuizPage() {
         <h1 className="text-2xl font-bold mb-2 text-gray-900">
           📌 오늘의 앱테크 퀴즈 정답 모음
         </h1>
-        <p className="mb-6 text-gray-700 text-sm md:text-base leading-relaxed">
-          매일매일 쏟아지는 앱테크 퀴즈 정답을 한 곳에 모았습니다. 캐시워크,
-          쏠퀴즈, 토스 행운퀴즈 등 다양한 앱의 퀴즈 이벤트에 참여하고, 정답을
-          통해 포인트를 빠르게 적립해보세요!
+        <p className="mb-6 text-gray-700 text-lg leading-relaxed tracking-tight md:text-base leading-relaxed">
+          매일매일 쏟아지는 앱테크 퀴즈 정답을 한 곳에 모았습니다. 다양한 앱의
+          퀴즈 이벤트에 참여하고, 정답을 통해 포인트를 빠르게 적립해보세요!
         </p>
 
         {/* 날짜 선택기 */}
         <div className="flex items-center justify-between mb-4">
-          <Button variant="outline" onClick={handlePrev}>
+          <Button variant="outline" onClick={goPrevDate}>
             <ChevronLeft className="h-5 w-5" />
           </Button>
           <div className="text-xl font-bold">
@@ -67,7 +58,7 @@ export default function QuizPage() {
           </div>
           <Button
             variant="outline"
-            onClick={handleNext}
+            onClick={goNextDate}
             disabled={isToday}
             className={isToday ? "opacity-50 cursor-not-allowed" : ""}
           >
@@ -76,34 +67,10 @@ export default function QuizPage() {
         </div>
 
         {/* 퀴즈 카드 그리드 */}
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-3">
-          {quizItems.map((quiz) => (
-            <Link href={`/quiz/${quiz.type}`} prefetch key={quiz.type}>
-              <Card className="hover:shadow-lg transition duration-200 py-0 cursor-pointer">
-                <CardContent className="p-0">
-                  <div className="w-full aspect-square relative overflow-hidden">
-                    <Image
-                      src={quiz.image}
-                      alt={`${quiz.typeKr} 퀴즈 썸네일`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 200px"
-                      className="object-cover rounded-t-lg"
-                    />
-                  </div>
-                  <h2 className="text-sm md:text-base lg:text-lg font-semibold p-2 pb-0">
-                    {quiz.typeKr}
-                  </h2>
-                  <div className="text-sm md:text-base lg:text-lg font-semibold px-2 pb-2">
-                    {quiz.title}
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
+        <QuizCardComponent />
 
         {/* 추가 설명 */}
-        <section className="mt-10 text-gray-800 text-lg leading-loose tracking-tight mb-10">
+        <section className="mt-10 text-gray-800 text-lg leading-relaxed tracking-tight mb-10">
           <h2 className="text-xl font-bold mb-4">
             💡 앱테크 퀴즈, 왜 매일 확인해야 할까요?
           </h2>
@@ -114,7 +81,14 @@ export default function QuizPage() {
             쉽게 얻을 수 있어 많은 사용자들이 매일 참여하고 있습니다.
           </p>
           <p className="mb-4">
-            이 페이지에서는 <strong>신한쏠퀴즈, 캐시워크, 토스 행운퀴즈</strong>{" "}
+            이 페이지에서는{" "}
+            <strong>
+              {quizItems
+                .map((item) => {
+                  return `${item.typeKr}(${item.title})`;
+                })
+                .join(", ")}
+            </strong>{" "}
             등 다양한 앱의 정답을 매일 업데이트하고 있습니다.{" "}
             <strong>퀴즈벨</strong>은 바쁜 일상 속에서도 정답만 빠르게 확인하고,
             포인트를 적립할 수 있도록 도와 드립니다.

@@ -11,6 +11,8 @@ import {
 import moment from "moment";
 import ImageComponents from "@/components/ImageComponets";
 import { getQuitItem } from "@/utils/utils";
+import DescriptionComponent from "@/components/DescriptionComponent";
+import QuizCardComponent from "@/components/QuizCardComponent";
 // import Adsense from "@/components/Adsense";
 
 interface Quiz {
@@ -20,17 +22,25 @@ interface Quiz {
   otherAnswers: string[];
 }
 
-export default function QuizModalClient({ type }: { type: string }) {
+export default function QuizModalClient({
+  type,
+  date,
+}: {
+  type: string;
+  date: string;
+}) {
   const hasFetched = useRef(false);
   const router = useRouter();
   const [open, setOpen] = useState(true);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
   const [answerDate, setAnswerDate] = useState<string | null>(
-    moment().format("YYYY-MM-DD")
+    date ? moment(date).format("YYYY-MM-DD") : moment().format("YYYY-MM-DD")
   );
   const [answerDateString, setAnswerDateString] = useState<string | null>(
-    moment().format("YYYY년 MM월 DD일")
+    date
+      ? moment(date).format("YYYY년 MM월 DD일")
+      : moment().format("YYYY년 MM월 DD일")
   );
 
   const fetchQuizData = useCallback(async () => {
@@ -131,7 +141,7 @@ export default function QuizModalClient({ type }: { type: string }) {
           >
             {/* 페이지 대표 제목 */}
             <h1
-              className="text-2xl font-bold text-gray-900 mb-4"
+              className="text-2xl font-semibold text-gray-900 mb-4"
               itemProp="headline"
             >
               {getQuitItem(type)?.typeKr} {getQuitItem(type)?.title}{" "}
@@ -234,6 +244,17 @@ export default function QuizModalClient({ type }: { type: string }) {
                 )}
               </article>
             ))}
+
+            <article className="mb-6 bg-white  tracking-tight ">
+              <DescriptionComponent type={type} />
+            </article>
+
+            <article className="mb-6  bg-white tracking-tight ">
+              <h2 className="text-xl font-bold text-gray-800 mb-2">
+                💡 앱테크 퀴즈 목록
+              </h2>
+              <QuizCardComponent />
+            </article>
           </section>
         )}
       </DialogContent>

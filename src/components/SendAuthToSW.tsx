@@ -23,7 +23,7 @@ function waitForServiceWorkerController(): Promise<ServiceWorker> {
 export default function SendAuthToSW() {
   useEffect(() => {
     if (isWebView()) return;
-    const authStr = localStorage.getItem("quizbell-auth");
+    const authStr = localStorage.getItem("quizbells-auth");
     if (!authStr) return;
 
     const auth = JSON.parse(authStr);
