@@ -1,16 +1,7 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  detectDevice,
-  getUserAuth,
-  isWebView,
-  sendNotificationTest,
-  setUserAuth,
-} from "@/utils/utils";
-import { getToken } from "firebase/messaging";
-import { messaging } from "@/lib/firebase";
-import { nanoid } from "nanoid";
+import { getUserAuth, isWebView, requestAlarmPermission } from "@/utils/utils";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
@@ -19,55 +10,55 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [showPermissionMessage, setShowPermissionMessage] = useState(false);
 
-  const handleRequestPermission = useCallback(async () => {
-    setLoading(true);
-    if ("Notification" in window) {
-      try {
-        const permission = await Notification.requestPermission();
+  // const handleRequestPermission = useCallback(async () => {
+  //   setLoading(true);
+  //   if ("Notification" in window) {
+  //     try {
+  //       const permission = await Notification.requestPermission();
 
-        if (permission === "granted") {
-          // 권한 허용시 /mynow로 이동
+  //       if (permission === "granted") {
+  //         // 권한 허용시 /mynow로 이동
 
-          if (messaging) {
-            // FCM 토큰 받아오기
-            const userId = nanoid(12);
-            const fcmToken = await getToken(messaging, {
-              vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
-            });
+  //         if (messaging) {
+  //           // FCM 토큰 받아오기
+  //           const userId = nanoid(12);
+  //           const fcmToken = await getToken(messaging, {
+  //             vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
+  //           });
 
-            const quizbellInfo = {
-              userId,
-              joinType: "web",
-              fcmToken,
-            };
-            const res = await fetch("/api/token", {
-              method: "POST",
-              body: JSON.stringify(quizbellInfo),
-            });
-            const r = await res.json();
-            if (r.data === "ok") {
-              setUserAuth(quizbellInfo);
-              console.log("🔔 토큰 저장", quizbellInfo);
-            }
+  //           const quizbellInfo = {
+  //             userId,
+  //             joinType: "web",
+  //             fcmToken,
+  //           };
+  //           const res = await fetch("/api/token", {
+  //             method: "POST",
+  //             body: JSON.stringify(quizbellInfo),
+  //           });
+  //           const r = await res.json();
+  //           if (r.data === "ok") {
+  //             setUserAuth(quizbellInfo);
+  //             console.log("🔔 토큰 저장", quizbellInfo);
+  //           }
 
-            if (detectDevice().isDesktop) {
-              sendNotificationTest();
-            }
-            router.push("/quiz");
-          }
-        } else {
-          // 권한 거부시 메시지 유지
-          alert(
-            "알림 권한이 거부되었습니다. 브라우저 설정에서 알림을 허용해주세요."
-          );
-        }
-      } catch (error) {
-        console.error("알림 권한 요청 실패:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-  }, [router]);
+  //           if (detectDevice().isDesktop) {
+  //             sendNotificationTest();
+  //           }
+  //           router.push("/quiz");
+  //         }
+  //       } else {
+  //         // 권한 거부시 메시지 유지
+  //         alert(
+  //           "알림 권한이 거부되었습니다. 브라우저 설정에서 알림을 허용해주세요."
+  //         );
+  //       }
+  //     } catch (error) {
+  //       console.error("알림 권한 요청 실패:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  // }, [router]);
 
   useEffect(() => {
     const checkAuthAndRedirect = async () => {
@@ -90,14 +81,17 @@ export default function Page() {
             }
           }
         } else {
-          await handleRequestPermission();
-          // userId가 없으면 로그인 페이지로 (기존 로직 유지)
+          setLoading(true);
+          const isGranted = await requestAlarmPermission();
+          setLoading(false);
+          if (isGranted) {
+            router.push("/quiz");
+          }
         }
       }
     };
 
     checkAuthAndRedirect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   const handleSkip = () => {
@@ -138,7 +132,7 @@ export default function Page() {
           <div className="space-y-3">
             <Button
               disabled={loading}
-              onClick={() => handleRequestPermission()}
+              onClick={() => requestAlarmPermission()}
               className="text-md text-md w-full rounded-lg bg-blue-600 px-4 py-6 text-white transition-colors hover:bg-blue-700"
             >
               알림 허용하기

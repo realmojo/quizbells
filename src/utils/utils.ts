@@ -1,4 +1,5 @@
 import { messaging, getToken } from "@/lib/firebase";
+import { nanoid } from "nanoid";
 
 export const getQuitItem = (type: string) => {
   const item = quizItems.find((item) => item.type === type);
@@ -140,6 +141,56 @@ export const refreshToken = async (messaging: any, isTest: boolean = false) => {
     localStorage.setItem("quizbells-auth", JSON.stringify(quizbellsInfo));
     if (isTest) {
       await sendNotification();
+    }
+  }
+};
+
+export const requestAlarmPermission = async () => {
+  if ("Notification" in window) {
+    try {
+      const permission = await Notification.requestPermission();
+
+      if (permission === "granted") {
+        // 권한 허용시 /mynow로 이동
+
+        if (messaging) {
+          // FCM 토큰 받아오기
+          const userId = nanoid(12);
+          const fcmToken = await getToken(messaging, {
+            vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
+          });
+
+          const quizbellInfo = {
+            userId,
+            joinType: isApple() ? "ios" : isWebView() ? "android" : "web",
+            fcmToken,
+          };
+          const res = await fetch("/api/token", {
+            method: "POST",
+            body: JSON.stringify(quizbellInfo),
+          });
+          const r = await res.json();
+          if (r.data === "ok") {
+            setUserAuth(quizbellInfo);
+            console.log("🔔 토큰 저장", quizbellInfo);
+          }
+
+          if (detectDevice().isDesktop) {
+            sendNotificationTest();
+          }
+
+          return true;
+        }
+      } else {
+        // 권한 거부시 메시지 유지
+        alert(
+          "알림 권한이 거부되었습니다. 브라우저 설정에서 알림을 허용해주세요."
+        );
+        return false;
+      }
+    } catch (error) {
+      console.error("알림 권한 요청 실패:", error);
+      return false;
     }
   }
 };

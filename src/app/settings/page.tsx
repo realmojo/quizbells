@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { settingsStore } from "@/store/settingsStore";
+import { getUserAuth, requestAlarmPermission } from "@/utils/utils";
 
 export default function RocketPage() {
   // const [isOpen, setIsOpen] = useState(false);
@@ -31,10 +32,15 @@ export default function RocketPage() {
               id="quiz-alert"
               checked={settings?.isQuizAlarm === "Y"}
               onCheckedChange={async () => {
-                await updateSettings(
-                  "isQuizAlarm",
-                  settings?.isQuizAlarm === "Y" ? "N" : "Y"
-                );
+                const auth = getUserAuth();
+                if (auth.userId) {
+                  await updateSettings(
+                    "isQuizAlarm",
+                    settings?.isQuizAlarm === "Y" ? "N" : "Y"
+                  );
+                } else {
+                  await requestAlarmPermission();
+                }
               }}
             />
           </li>
