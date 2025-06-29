@@ -1,6 +1,6 @@
+// /app/@modal/(.)quiz/[type]/QuizModalClient.tsx
 "use client";
 
-import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -22,6 +22,135 @@ interface Quiz {
   answer: string;
   otherAnswers: string[];
 }
+
+const useUpdateMetaTags = ({
+  type,
+  quizzes,
+  answerDate,
+  answerDateString,
+}: {
+  type: string;
+  quizzes: {
+    type: string;
+    question: string;
+    answer: string;
+    otherAnswers: string[];
+  }[];
+  answerDate: string;
+  answerDateString: string;
+}) => {
+  useEffect(() => {
+    const siteName = "퀴즈벨";
+    const typeName = getQuitItem(type)?.typeKr || type;
+    const typeTitle = getQuitItem(type)?.title ?? "";
+    const quizTitle = `${typeName} ${typeTitle} ${answerDateString} 퀴즈 정답 확인하고 앱테크 적립하세요`;
+    const description = `${answerDateString} 기준 ${typeName} 퀴즈 정답을 한눈에 확인하세요. 퀴즈를 풀고 포인트도 적립하세요.`;
+    const ogDescription = `${typeName} ${answerDateString} 퀴즈 정답 확인하고 앱테크 리워드 적립!`;
+    const twitterDescription = `${typeName} 퀴즈 정답 및 리워드 정보`;
+    const canonicalUrl = `https://quizbells.com/quiz/${type}?answerDate=${answerDate}`;
+
+    // 기존 title 저장 및 업데이트
+    const originalTitle = document.title;
+    document.title = `${quizTitle} | ${siteName}`;
+
+    // 메타태그 업데이트/생성 함수
+    const updateOrCreateMeta = (selector: string, content: string) => {
+      let meta = document.querySelector(selector) as HTMLMetaElement;
+      if (meta) {
+        meta.content = content;
+      } else {
+        meta = document.createElement("meta");
+        if (selector.includes("property=")) {
+          const property = selector.match(/property="([^"]+)"/)?.[1];
+          if (property) meta.setAttribute("property", property);
+        } else if (selector.includes("name=")) {
+          const name = selector.match(/name="([^"]+)"/)?.[1];
+          if (name) meta.name = name;
+        }
+        meta.content = content;
+        meta.setAttribute("data-quiz-dynamic", "true");
+        document.head.appendChild(meta);
+      }
+    };
+
+    // 기본 SEO 메타태그
+    updateOrCreateMeta('meta[name="description"]', description);
+
+    // Open Graph 메타태그
+    updateOrCreateMeta('meta[property="og:type"]', "website");
+    updateOrCreateMeta('meta[property="og:title"]', quizTitle);
+    updateOrCreateMeta('meta[property="og:description"]', ogDescription);
+    updateOrCreateMeta('meta[property="og:url"]', canonicalUrl);
+    updateOrCreateMeta('meta[property="og:site_name"]', siteName);
+
+    // Twitter Card 메타태그
+    updateOrCreateMeta('meta[name="twitter:card"]', "summary");
+    updateOrCreateMeta('meta[name="twitter:title"]', quizTitle);
+    updateOrCreateMeta('meta[name="twitter:description"]', twitterDescription);
+
+    // Canonical URL 업데이트/생성
+    let canonicalLink = document.querySelector(
+      'link[rel="canonical"]'
+    ) as HTMLLinkElement;
+    if (canonicalLink) {
+      canonicalLink.href = canonicalUrl;
+    } else {
+      canonicalLink = document.createElement("link");
+      canonicalLink.rel = "canonical";
+      canonicalLink.href = canonicalUrl;
+      canonicalLink.setAttribute("data-quiz-dynamic", "true");
+      document.head.appendChild(canonicalLink);
+    }
+
+    // JSON-LD 생성
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: quizzes.map((quiz) => ({
+        "@type": "Question",
+        name: quiz.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: quiz.answer,
+        },
+        ...(quiz.otherAnswers?.length > 0 && {
+          suggestedAnswer: quiz.otherAnswers.map((alt) => ({
+            "@type": "Answer",
+            text: alt,
+          })),
+        }),
+      })),
+    };
+
+    // 기존 JSON-LD 제거
+    const existingJsonLd = document.querySelector(
+      'script[key="quiz-jsonld"], script[data-quiz-jsonld]'
+    );
+    if (existingJsonLd) existingJsonLd.remove();
+
+    // 새 JSON-LD 추가
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.setAttribute("data-quiz-jsonld", "true");
+    script.textContent = JSON.stringify(jsonLd);
+    document.head.appendChild(script);
+
+    // 클린업 함수
+    return () => {
+      document.title = originalTitle;
+      // 동적으로 추가한 메타태그들 제거
+      document
+        .querySelectorAll("meta[data-quiz-dynamic]")
+        .forEach((meta) => meta.remove());
+      document
+        .querySelectorAll("link[data-quiz-dynamic]")
+        .forEach((link) => link.remove());
+      document
+        .querySelectorAll("script[data-quiz-jsonld]")
+        .forEach((script) => script.remove());
+    };
+  }, [type, quizzes]);
+};
 
 export default function QuizModalClient({
   type,
@@ -104,106 +233,21 @@ export default function QuizModalClient({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [moveClose]);
 
-  const renderJsonLd = ({
+  useUpdateMetaTags({
     type,
     quizzes,
     answerDate,
     answerDateString,
-  }: {
-    type: string;
-    quizzes: {
-      type: string;
-      question: string;
-      answer: string;
-      otherAnswers: string[];
-    }[];
-    answerDate: string;
-    answerDateString: string;
-  }) => {
-    if (!quizzes || quizzes.length === 0) return null;
-
-    const siteName = "퀴즈벨";
-    const typeName = getQuitItem(type)?.typeKr || type;
-    const typeTitle = getQuitItem(type)?.title ?? "";
-    const quizTitle = `${typeName} ${typeTitle} ${answerDateString} 퀴즈 정답 확인하고 앱테크 적립하세요`;
-
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: quizzes.map((quiz) => ({
-        "@type": "Question",
-        name: quiz.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: quiz.answer,
-        },
-        ...(quiz.otherAnswers?.length > 0 && {
-          suggestedAnswer: quiz.otherAnswers.map((alt) => ({
-            "@type": "Answer",
-            text: alt,
-          })),
-        }),
-      })),
-    };
-
-    return (
-      <Head>
-        {/* SEO 기본 메타 */}
-        <title>
-          {quizTitle} | {siteName}
-        </title>
-        <meta
-          name="description"
-          content={`${answerDateString} 기준 ${typeName} 퀴즈 정답을 한눈에 확인하세요. 퀴즈를 풀고 포인트도 적립하세요.`}
-        />
-
-        {/* Open Graph */}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={quizTitle} />
-        <meta
-          property="og:description"
-          content={`${typeName} ${answerDateString} 퀴즈 정답 확인하고 앱테크 리워드 적립!`}
-        />
-        <meta
-          property="og:url"
-          content={`https://quizbells.com/quiz/${type}?answerDate=${answerDate}`}
-        />
-        <meta property="og:site_name" content={siteName} />
-
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={quizTitle} />
-        <meta
-          name="twitter:description"
-          content={`${typeName} 퀴즈 정답 및 리워드 정보`}
-        />
-
-        {/* Canonical URL */}
-        <link
-          rel="canonical"
-          href={`https://quizbells.com/quiz/${type}?answerDate=${answerDate}`}
-        />
-
-        {/* JSON-LD structured data */}
-        <script
-          key="quiz-jsonld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd),
-          }}
-        />
-      </Head>
-    );
-  };
+  });
 
   return (
     <>
-      {renderJsonLd({
+      {/* {renderJsonLd({
         type,
         quizzes,
         answerDate,
         answerDateString,
-      })}
+      })} */}
       <Dialog
         open={open}
         onOpenChange={() => {
