@@ -21,7 +21,7 @@ export const quizItems = [
   {
     type: "shinhan",
     typeKr: "신한쏠페이 신한은행",
-    title: "쏠퀴즈 퀴즈팡팡 출석퀴즈",
+    title: "쏠퀴즈, 퀴즈팡팡, 출석퀴즈",
     image: "/images/shinhan.png",
   },
   {
@@ -38,8 +38,8 @@ export const quizItems = [
   },
   {
     type: "kbstar",
-    typeKr: "KB스타 국민은행",
-    title: "도전미션 스타퀴즈",
+    typeKr: "KB스타 KBPAY",
+    title: "도전미션 스타퀴즈, 오늘의 퀴즈",
     image: "/images/kbstar.png",
   },
   // {

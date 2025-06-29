@@ -14,7 +14,7 @@ export default function QuizCardComponent() {
   const answerDate = format(date, "yyyy-MM-dd");
 
   return (
-    <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
       {quizItems.map((quiz) => {
         const href = isToday
           ? `/quiz/${quiz.type}`
@@ -36,7 +36,7 @@ export default function QuizCardComponent() {
                 <h2 className="text-sm md:text-base lg:text-lg font-semibold p-2 pb-0">
                   {quiz.typeKr}
                 </h2>
-                <div className="text-sm md:text-base lg:text-lg line-clamp-1 font-normal px-2 pb-2">
+                <div className="text-sm md:text-base lg:text-lg font-normal px-2 pb-2">
                   {quiz.title}
                 </div>
               </CardContent>
