@@ -17,7 +17,7 @@ export default function Header() {
     // if (path.includes("/product")) return "상품정보";
     // if (path.includes("/search"))
     //   return `${decodeURIComponent(path.split("/")[2])} 검색`;
-    return "퀴즈벨";
+    return "퀴즈벨 정답";
   };
 
   const title = getTitle(pathname);

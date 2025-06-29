@@ -166,7 +166,7 @@ export default function QuizModalClient({
         />
         <meta
           property="og:url"
-          content={`https://cpnow.kr/quiz/${type}?answerDate=${answerDate}`}
+          content={`https://quizbells.com/quiz/${type}?answerDate=${answerDate}`}
         />
         <meta property="og:site_name" content={siteName} />
 
@@ -181,7 +181,7 @@ export default function QuizModalClient({
         {/* Canonical URL */}
         <link
           rel="canonical"
-          href={`https://cpnow.kr/quiz/${type}?answerDate=${answerDate}`}
+          href={`https://quizbells.com/quiz/${type}?answerDate=${answerDate}`}
         />
 
         {/* JSON-LD structured data */}

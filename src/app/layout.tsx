@@ -10,7 +10,7 @@ import NaverAnalyticsTracker from "@/components/NaverAnalyticsTracker";
 import "./globals.css";
 
 import SendAuthToSW from "@/components/SendAuthToSW";
-// import InstallPromptBanner from "@/src/components/InstallPromptBanner";
+import InstallPromptBanner from "@/components/InstallPromptBanner";
 // import ClientOnly from "@/src/components/ClientOnly";
 import ForegroundNotification from "@/components/ForegroundNotification";
 // import LayoutClientWrapper from "@/src/components/LayoutClientWrapper";
@@ -164,7 +164,7 @@ export default async function RootLayout({
         /> */}
         <RegisterServiceWorker />
         <SendAuthToSW />
-        {/* <InstallPromptBanner /> */}
+        <InstallPromptBanner />
       </body>
     </html>
   );

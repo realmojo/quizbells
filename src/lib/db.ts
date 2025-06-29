@@ -3,10 +3,10 @@ import mysql, { RowDataPacket } from "mysql2/promise";
 import { ResultSetHeader } from "mysql2";
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST, // 예: your-db.xxxxxxx.rds.amazonaws.com
-  user: process.env.DB_USER, // 예: admin
-  password: process.env.DB_PASSWORD, // 예: yourPassword
-  database: process.env.DB_NAME, // 예: cpnow
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   port: Number(process.env.DB_PORT),
   waitForConnections: true,
   connectionLimit: 10,

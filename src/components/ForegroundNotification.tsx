@@ -51,7 +51,7 @@ export default function ForegroundNotification() {
               body: payload.data?.body,
               icon:
                 payload.data?.icon ||
-                "https://cpnow.kr/icons/android-icon-48x48.png",
+                "https://quizbells.com/icons/android-icon-48x48.png",
               requireInteraction: true,
             });
           });
@@ -60,10 +60,10 @@ export default function ForegroundNotification() {
           //     body: payload.data?.body,
           //     icon:
           //       payload.data?.icon ||
-          //       "https://cpnow.kr/icons/android-icon-48x48.png",
+          //       "https://quizbells.com/icons/android-icon-48x48.png",
           //     requireInteraction: true,
           //   }).onclick = () => {
-          //     window.open(payload.data?.link || "https://cpnow.kr", "_blank");
+          //     window.open(payload.data?.link || "https://quizbells.com", "_blank");
           //   };
           // }
         });
