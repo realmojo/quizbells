@@ -13,6 +13,27 @@ import {
   // BowArrow,
 } from "lucide-react";
 // import { useAppStore } from "../store/useAppStore";
+const createRipple = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const button = event.currentTarget;
+  const circle = document.createElement("span");
+
+  const diameter = Math.max(button.clientWidth, button.clientHeight);
+  const radius = diameter / 2;
+
+  circle.style.width = circle.style.height = `${diameter}px`;
+  circle.style.left = `${
+    event.clientX - button.getBoundingClientRect().left - radius
+  }px`;
+  circle.style.top = `${
+    event.clientY - button.getBoundingClientRect().top - radius
+  }px`;
+  circle.classList.add("ripple-effect");
+
+  const ripple = button.getElementsByClassName("ripple-effect")[0];
+  if (ripple) ripple.remove();
+
+  button.appendChild(circle);
+};
 
 export default function BottomTabBar() {
   const pathname = usePathname();
@@ -30,8 +51,11 @@ export default function BottomTabBar() {
     <nav className="fixed right-0 bottom-0 left-0 z-50 flex h-16 border-t bg-white shadow-inner">
       {/* 1. 퀴즈 */}
       <button
-        onClick={() => router.push("/quiz")}
-        className={`flex flex-1 flex-col items-center justify-center ${
+        onClick={(e) => {
+          createRipple(e);
+          router.push("/quiz");
+        }}
+        className={`ripple relative flex flex-1 flex-col items-center justify-center ${
           pathname === "/quiz"
             ? "text-primary"
             : "text-muted-foreground hover:text-primary"
@@ -75,8 +99,11 @@ export default function BottomTabBar() {
 
       {/* 4. 설정 */}
       <button
-        onClick={() => router.push("/settings")}
-        className={`flex flex-1 flex-col items-center justify-center ${
+        onClick={(e) => {
+          createRipple(e);
+          router.push("/settings");
+        }}
+        className={`ripple relative flex flex-1 flex-col items-center justify-center ${
           pathname === "/settings"
             ? "text-primary"
             : "text-muted-foreground hover:text-primary"
