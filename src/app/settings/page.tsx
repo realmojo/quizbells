@@ -4,10 +4,9 @@ import React, { useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { settingsStore } from "@/store/settingsStore";
-import { getUserAuth, requestAlarmPermission } from "@/utils/utils";
+import { getUserAuth, isWebView, requestAlarmPermission } from "@/utils/utils";
 
 export default function RocketPage() {
-  // const [isOpen, setIsOpen] = useState(false);
   const { settings, setSettings, updateSettings } = settingsStore();
 
   /* eslint-disable react-hooks/exhaustive-deps */
@@ -39,7 +38,9 @@ export default function RocketPage() {
                     settings?.isQuizAlarm === "Y" ? "N" : "Y"
                   );
                 } else {
-                  await requestAlarmPermission();
+                  if (!isWebView()) {
+                    await requestAlarmPermission();
+                  }
                 }
               }}
             />
