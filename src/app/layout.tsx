@@ -16,6 +16,7 @@ import ForegroundNotification from "@/components/ForegroundNotification";
 // import LayoutClientWrapper from "@/src/components/LayoutClientWrapper";
 import { ReactNode } from "react";
 import BottomTabBar from "@/components/BottomTabBar";
+import { GoogleAdSense } from "@/components/AdsenseInit";
 
 export const metadata: Metadata = {
   title: "퀴즈벨 - 매일 쏟아지는 퀴즈 정답 알림 서비스 | QUIZBELLS",
@@ -114,6 +115,7 @@ export default async function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
+        <GoogleAdSense />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
           strategy="afterInteractive"

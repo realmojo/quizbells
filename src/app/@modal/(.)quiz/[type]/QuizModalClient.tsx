@@ -484,7 +484,7 @@ export default function QuizModalClient({
                 <h2 className="text-xl font-bold text-gray-800 mb-2">
                   💡 앱테크 퀴즈 목록
                 </h2>
-                <QuizCardComponent />
+                <QuizCardComponent viewType="list" />
               </article>
             </section>
           )}

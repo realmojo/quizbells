@@ -7,13 +7,19 @@ import { quizItems } from "@/utils/utils";
 import { Card, CardContent } from "./ui/card";
 import { useAppStore } from "@/store/useAppStore";
 
-export default function QuizCardComponent() {
+interface QuizCardComponentProps {
+  viewType?: "grid" | "list";
+}
+
+export default function QuizCardComponent({
+  viewType = "grid",
+}: QuizCardComponentProps) {
   const date = useAppStore((s) => s.date);
   const today = new Date();
   const isToday = format(date, "yyyy-MM-dd") === format(today, "yyyy-MM-dd");
   const answerDate = format(date, "yyyy-MM-dd");
 
-  return (
+  return viewType === "grid" ? (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
       {quizItems.map((quiz) => {
         const href = isToday
@@ -38,6 +44,40 @@ export default function QuizCardComponent() {
                 </h2>
                 <div className="text-sm md:text-base lg:text-lg font-normal px-2 pb-2">
                   {quiz.title}
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        );
+      })}
+    </div>
+  ) : (
+    <div className="flex flex-col space-y-4">
+      {quizItems.map((quiz) => {
+        const href = isToday
+          ? `/quiz/${quiz.type}`
+          : `/quiz/${quiz.type}?answerDate=${answerDate}`;
+
+        return (
+          <Link href={href} prefetch key={quiz.type}>
+            <Card className="gap-0 py-0 hover:shadow-lg transition duration-200 cursor-pointer">
+              <CardContent className="flex p-0 space-x-4">
+                <div className="relative w-32 h-32 flex-shrink-0">
+                  <Image
+                    src={quiz.image}
+                    alt={`${quiz.typeKr} 퀴즈 썸네일`}
+                    fill
+                    className="object-cover rounded-md"
+                    sizes="128px"
+                  />
+                </div>
+                <div className="flex flex-col justify-center">
+                  <h2 className="text-base lg:text-lg font-semibold">
+                    {quiz.typeKr}
+                  </h2>
+                  <div className="text-sm lg:text-base text-gray-600">
+                    {quiz.title}
+                  </div>
                 </div>
               </CardContent>
             </Card>

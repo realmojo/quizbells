@@ -67,7 +67,7 @@ export default function QuizPage() {
         </div>
 
         {/* 퀴즈 카드 그리드 */}
-        <QuizCardComponent />
+        <QuizCardComponent viewType="grid" />
 
         {/* 추가 설명 */}
         <section className="mt-10 text-gray-800 text-lg leading-relaxed tracking-tight mb-10">
