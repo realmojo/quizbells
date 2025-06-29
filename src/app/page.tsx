@@ -91,13 +91,12 @@ export default function Page() {
         }
       } else {
         // userId가 없으면 로그인 페이지로 (기존 로직 유지)
-        // router.push("/login");
       }
     };
 
     checkAuthAndRedirect();
-    handleRequestPermission();
-  }, [router, handleRequestPermission]);
+    // handleRequestPermission();
+  }, [router]);
 
   const handleSkip = () => {
     // 알림 없이 진행
