@@ -36,7 +36,7 @@ export default function QuizCardComponent() {
                 <h2 className="text-sm md:text-base lg:text-lg font-semibold p-2 pb-0">
                   {quiz.typeKr}
                 </h2>
-                <div className="text-sm md:text-base lg:text-lg font-normal px-2 pb-2">
+                <div className="text-sm md:text-base lg:text-lg line-clamp-1 font-normal px-2 pb-2">
                   {quiz.title}
                 </div>
               </CardContent>

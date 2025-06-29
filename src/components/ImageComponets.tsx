@@ -54,5 +54,14 @@ export default function ImageComponents({
         height={600}
       />
     );
+  } else if (type === "kbstar") {
+    return (
+      <Image
+        src="/images/kbstar.png"
+        alt={`${answerDate} ${type} 퀴즈 이미지`}
+        width={600}
+        height={600}
+      />
+    );
   }
 }

@@ -306,6 +306,46 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "kbstar") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>KB스타뱅킹 ‘도전미션 스타퀴즈’</strong>는 KB국민은행의 모바일
+          뱅킹 앱<strong>KB스타뱅킹</strong>에서 제공하는 실시간 퀴즈
+          이벤트입니다. 퀴즈는 주로 월~금요일에 출제되며, 사용자들은 퀴즈에
+          참여해 정답을 맞히면 <strong>스타포인트</strong>를 적립할 수 있습니다.
+        </p>
+
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          이 퀴즈는 <strong>도전미션 형식</strong>으로 구성되며, 매일 간단한
+          문제를 풀어 <strong>랜덤 또는 고정 포인트</strong>를 즉시 지급받을 수
+          있습니다.
+        </p>
+
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 사전 공지 없이 무작위로 출제되며, 선착순 응답 또는 시간제한이
+          있을 수 있어 빠르게 참여하는 것이 유리합니다.
+        </p>
+
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          매일 정답을 맞히면 스타포인트가 누적되며, 앱 내 ‘생활/혜택’ 메뉴에서
+          퀴즈를 확인할 수 있습니다. 이렇게 모인 포인트는 다양한{" "}
+          <strong>금융 서비스 또는 제휴 상품 혜택</strong>에 사용할 수 있습니다.
+        </p>
+      </>
+    );
   }
 
   return null;
