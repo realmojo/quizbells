@@ -40,6 +40,10 @@ export default function RocketPage() {
                 } else {
                   if (!isWebView()) {
                     await requestAlarmPermission();
+                    await updateSettings(
+                      "isQuizAlarm",
+                      settings?.isQuizAlarm === "Y" ? "N" : "Y"
+                    );
                   }
                 }
               }}
