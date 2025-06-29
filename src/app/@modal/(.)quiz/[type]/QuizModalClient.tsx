@@ -40,6 +40,50 @@ const useUpdateMetaTags = ({
   answerDateString: string;
 }) => {
   useEffect(() => {
+    if (!quizzes || quizzes.length === 0) return;
+
+    // 원래 값들 저장
+    const originalTitle = document.title;
+    const originalDescription =
+      document
+        .querySelector('meta[name="description"]')
+        ?.getAttribute("content") || null;
+    const originalOgType =
+      document
+        .querySelector('meta[property="og:type"]')
+        ?.getAttribute("content") || null;
+    const originalOgTitle =
+      document
+        .querySelector('meta[property="og:title"]')
+        ?.getAttribute("content") || null;
+    const originalOgDescription =
+      document
+        .querySelector('meta[property="og:description"]')
+        ?.getAttribute("content") || null;
+    const originalOgUrl =
+      document
+        .querySelector('meta[property="og:url"]')
+        ?.getAttribute("content") || null;
+    const originalOgSiteName =
+      document
+        .querySelector('meta[property="og:site_name"]')
+        ?.getAttribute("content") || null;
+    const originalTwitterCard =
+      document
+        .querySelector('meta[name="twitter:card"]')
+        ?.getAttribute("content") || null;
+    const originalTwitterTitle =
+      document
+        .querySelector('meta[name="twitter:title"]')
+        ?.getAttribute("content") || null;
+    const originalTwitterDescription =
+      document
+        .querySelector('meta[name="twitter:description"]')
+        ?.getAttribute("content") || null;
+    const originalCanonical =
+      document.querySelector('link[rel="canonical"]')?.getAttribute("href") ||
+      null;
+
     const siteName = "퀴즈벨";
     const typeName = getQuitItem(type)?.typeKr || type;
     const typeTitle = getQuitItem(type)?.title ?? "";
@@ -49,8 +93,7 @@ const useUpdateMetaTags = ({
     const twitterDescription = `${typeName} 퀴즈 정답 및 리워드 정보`;
     const canonicalUrl = `https://quizbells.com/quiz/${type}?answerDate=${answerDate}`;
 
-    // 기존 title 저장 및 업데이트
-    const originalTitle = document.title;
+    // Title 업데이트
     document.title = `${quizTitle} | ${siteName}`;
 
     // 메타태그 업데이트/생성 함수
@@ -73,17 +116,13 @@ const useUpdateMetaTags = ({
       }
     };
 
-    // 기본 SEO 메타태그
+    // 메타태그들 업데이트
     updateOrCreateMeta('meta[name="description"]', description);
-
-    // Open Graph 메타태그
     updateOrCreateMeta('meta[property="og:type"]', "website");
     updateOrCreateMeta('meta[property="og:title"]', quizTitle);
     updateOrCreateMeta('meta[property="og:description"]', ogDescription);
     updateOrCreateMeta('meta[property="og:url"]', canonicalUrl);
     updateOrCreateMeta('meta[property="og:site_name"]', siteName);
-
-    // Twitter Card 메타태그
     updateOrCreateMeta('meta[name="twitter:card"]', "summary");
     updateOrCreateMeta('meta[name="twitter:title"]', quizTitle);
     updateOrCreateMeta('meta[name="twitter:description"]', twitterDescription);
@@ -137,7 +176,54 @@ const useUpdateMetaTags = ({
 
     // 클린업 함수
     return () => {
+      // Title 복원
       document.title = originalTitle;
+
+      // 기존 메타태그들을 원래 값으로 복원하는 함수
+      const restoreOriginalMeta = (
+        selector: string,
+        originalValue: string | null
+      ) => {
+        const meta = document.querySelector(selector) as HTMLMetaElement;
+        if (meta) {
+          if (originalValue) {
+            meta.content = originalValue;
+          } else if (meta.hasAttribute("data-quiz-dynamic")) {
+            // 동적으로 생성된 것이면 제거
+            meta.remove();
+          }
+        }
+      };
+
+      // 기존 값들 복원
+      restoreOriginalMeta('meta[name="description"]', originalDescription);
+      restoreOriginalMeta('meta[property="og:type"]', originalOgType);
+      restoreOriginalMeta('meta[property="og:title"]', originalOgTitle);
+      restoreOriginalMeta(
+        'meta[property="og:description"]',
+        originalOgDescription
+      );
+      restoreOriginalMeta('meta[property="og:url"]', originalOgUrl);
+      restoreOriginalMeta('meta[property="og:site_name"]', originalOgSiteName);
+      restoreOriginalMeta('meta[name="twitter:card"]', originalTwitterCard);
+      restoreOriginalMeta('meta[name="twitter:title"]', originalTwitterTitle);
+      restoreOriginalMeta(
+        'meta[name="twitter:description"]',
+        originalTwitterDescription
+      );
+
+      // Canonical URL 복원
+      const canonicalLink = document.querySelector(
+        'link[rel="canonical"]'
+      ) as HTMLLinkElement;
+      if (canonicalLink) {
+        if (originalCanonical) {
+          canonicalLink.href = originalCanonical;
+        } else if (canonicalLink.hasAttribute("data-quiz-dynamic")) {
+          canonicalLink.remove();
+        }
+      }
+
       // 동적으로 추가한 메타태그들 제거
       document
         .querySelectorAll("meta[data-quiz-dynamic]")
@@ -149,7 +235,7 @@ const useUpdateMetaTags = ({
         .querySelectorAll("script[data-quiz-jsonld]")
         .forEach((script) => script.remove());
     };
-  }, [type, quizzes]);
+  }, [type, quizzes, answerDate, answerDateString]);
 };
 
 export default function QuizModalClient({
