@@ -4,12 +4,21 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { detectDevice } from "@/utils/utils";
 
+const BANNER_DISMISS_KEY = "quizbells_install_banner_dismissed_at";
+const ONE_HOUR = 60 * 60 * 1000;
+
 export default function InstallPromptBanner() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showBanner, setShowBanner] = useState(false);
-  const dismissedRef = useRef(false); // 새로고침 시 초기화됨
+  const dismissedRef = useRef(false);
 
   useEffect(() => {
+    // 이전에 닫은 시간이 있는지 확인
+    const lastDismissed = localStorage.getItem(BANNER_DISMISS_KEY);
+    if (lastDismissed && Date.now() - Number(lastDismissed) < ONE_HOUR) {
+      dismissedRef.current = true;
+    }
+
     const handler = (e: any) => {
       e.preventDefault(); // 자동 프롬프트 방지
       if (!dismissedRef.current) {
@@ -24,7 +33,9 @@ export default function InstallPromptBanner() {
       alert("설치가 완료되었습니다!");
     });
 
-    return () => window.removeEventListener("beforeinstallprompt", handler);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+    };
   }, []);
 
   const handleInstall = async () => {
@@ -34,19 +45,15 @@ export default function InstallPromptBanner() {
     if (outcome === "accepted") {
       console.log("✅ 설치 완료");
     }
-    // console.log(deferredPrompt);
-    // setShowBanner(false);
-    // location.href =
-    //   "https://play.google.com/store/apps/details?id=com.f5game.quizbells";
   };
 
   const handleClose = () => {
     dismissedRef.current = true;
     setShowBanner(false);
+    localStorage.setItem(BANNER_DISMISS_KEY, Date.now().toString());
   };
 
   if (!showBanner || detectDevice().isDesktop) return null;
-  // if (!showBanner) return null;
 
   return (
     <div className="fixed right-0 left-0 bottom-20 z-50 border-t border-b border-gray-200 bg-white shadow-md rounded-md max-w-screen-md mx-auto">
@@ -64,7 +71,7 @@ export default function InstallPromptBanner() {
               퀴즈벨 앱을 설치해주세요
             </strong>
             <span className="text-gray-500">
-              퀴즈정답을 실시간으로 알려드립니다
+              퀴즈 정답을 실시간으로 알려드립니다
             </span>
           </div>
         </div>
