@@ -9,7 +9,7 @@ export default function RegisterServiceWorker() {
       return;
 
     const currentVersion = localStorage.getItem("quizbell_sw_version");
-    const version = "1.0.0";
+    const version = "1.0.1";
     const SW_URL = `/firebase-messaging-sw.js?v=${version}`;
     localStorage.setItem("quizbell_sw_version", version);
 

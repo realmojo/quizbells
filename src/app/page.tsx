@@ -72,30 +72,32 @@ export default function Page() {
   useEffect(() => {
     const checkAuthAndRedirect = async () => {
       const auth = getUserAuth();
-      if (auth) {
-        // 알림 권한 확인
-        if ("Notification" in window) {
-          const permission = Notification.permission;
-          if (permission === "granted") {
-            // 알림 허용 + userId 있음 → /mynow로 이동
-            router.push("/quiz");
-          } else if (permission === "denied" || permission === "default") {
-            // 알림 거부/기본값 → 권한 요청 메시지 표시
-            setShowPermissionMessage(true);
-          }
-        } else if (isWebView()) {
-          router.push("/quiz");
-          // 브라우저가 알림을 지원하지 않는 경우
-          // console.log("이 브라우저는 알림을 지원하지 않습니다.");
-          // router.push("/mynow");
-        }
+      console.log("🔐 토큰 확인", auth);
+
+      if (isWebView()) {
+        router.push("/quiz");
       } else {
-        // userId가 없으면 로그인 페이지로 (기존 로직 유지)
+        if (auth.userId) {
+          // 알림 권한 확인
+          if ("Notification" in window) {
+            const permission = Notification.permission;
+            if (permission === "granted") {
+              // 알림 허용 + userId 있음 → /mynow로 이동
+              router.push("/quiz");
+            } else if (permission === "denied" || permission === "default") {
+              // 알림 거부/기본값 → 권한 요청 메시지 표시
+              setShowPermissionMessage(true);
+            }
+          }
+        } else {
+          await handleRequestPermission();
+          // userId가 없으면 로그인 페이지로 (기존 로직 유지)
+        }
       }
     };
 
     checkAuthAndRedirect();
-    // handleRequestPermission();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   const handleSkip = () => {

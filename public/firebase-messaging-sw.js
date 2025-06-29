@@ -18,7 +18,7 @@ const messaging = firebase.messaging();
 const isSupported = firebase.messaging.isSupported();
 
 if (messaging && isSupported) {
-  console.log("✅ SW 백그라운드를 수신 합니다.v1.0.0");
+  console.log("✅ SW 백그라운드를 수신 합니다.v1.0.1");
   messaging.onBackgroundMessage(function (payload) {
     console.log("Received background message", payload);
 
@@ -42,10 +42,13 @@ if (messaging && isSupported) {
   });
 
   self.addEventListener("notificationclick", function (event) {
+    console.log("🔐 노티 클릭", event);
     event.notification.close();
     event.waitUntil(
       clients.openWindow(
-        event.notification.data?.click_action || "https://quizbells.com"
+        event.notification.data?.url ||
+          event.notification.data?.click_action ||
+          "https://quizbells.com"
       )
     );
   });

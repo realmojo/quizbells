@@ -47,12 +47,16 @@ export default function ForegroundNotification() {
           }
           // if (detectDevice().isMobile) {
           navigator.serviceWorker.ready.then(function (registration) {
+            console.log("🔐 포그라운드 메시지 수신", payload);
             registration.showNotification(payload.data?.title || "", {
               body: payload.data?.body,
               icon:
                 payload.data?.icon ||
                 "https://quizbells.com/icons/android-icon-48x48.png",
               requireInteraction: true,
+              data: {
+                url: payload.data?.link || "https://quizbells.com", // 👈 이동할 주소
+              },
             });
           });
           // } else {

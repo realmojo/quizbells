@@ -33,6 +33,8 @@ export async function POST(req: NextRequest) {
         },
       },
       data: {
+        title,
+        body,
         link: link || "https://quizbells.com",
         click_action: "FLUTTER_NOTIFICATION_CLICK",
       },
