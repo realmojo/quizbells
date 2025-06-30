@@ -1,4 +1,5 @@
 import { Separator } from "@/components/ui/separator";
+import { quizItems } from "@/utils/utils";
 import { Metadata } from "next";
 import Head from "next/head";
 
@@ -81,35 +82,16 @@ export default function AppTechTipsPage() {
           <p>
             앱테크의 핵심은 '꾸준함'과 '효율성'입니다. 하루 30분만 투자해도 한
             달에 3-5만원의 부수입을 만들 수 있으며, 여러 앱을 동시에 활용하고
-            전략적으로 접근한다면 더 큰 수익도 가능합니다. 대표적인 예로
-            <a
-              href="https://cashwalk.co.kr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-black-600 underline"
-            >
-              캐시워크
-            </a>
-            ,
-            <a
-              href="https://event.ollehmarket.com/oquiz/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-black-600 underline"
-            >
-              오퀴즈
-            </a>
-            ,
-            <a
-              href="https://www.livemate.or.kr/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-black-600 underline"
-            >
-              리브메이트
-            </a>
-            같은 서비스들이 있으며, 퀴즈벨은 이 모든 퀴즈 정답을 실시간으로
-            받아보고 정리할 수 있는 필수 도구입니다.
+            전략적으로 접근한다면 더 큰 수익도 가능합니다.{" "}
+            <strong>
+              {quizItems
+                .map((item) => {
+                  return `${item.typeKr}(${item.title})`;
+                })
+                .join(", ")}
+            </strong>
+            퀴즈벨은 이 모든 퀴즈 정답을 실시간으로 받아보고 정리할 수 있는 필수
+            도구입니다.
           </p>
 
           <h2 className="text-xl font-semibold mt-6">
