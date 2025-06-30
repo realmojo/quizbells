@@ -147,7 +147,7 @@ const useUpdateMetaTags = ({
       "@type": "FAQPage",
       mainEntity: quizzes.map((quiz) => ({
         "@type": "Question",
-        name: quiz.question,
+        name: quiz.question || "질문 없음",
         acceptedAnswer: {
           "@type": "Answer",
           text: quiz.answer,
@@ -328,12 +328,6 @@ export default function QuizModalClient({
 
   return (
     <>
-      {/* {renderJsonLd({
-        type,
-        quizzes,
-        answerDate,
-        answerDateString,
-      })} */}
       <Dialog
         open={open}
         onOpenChange={() => {
