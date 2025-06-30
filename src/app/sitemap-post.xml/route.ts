@@ -13,21 +13,23 @@ const QUIZ_TYPES = [
 ];
 
 // 최근 N일 날짜 리스트
-function generateRecentDates(days: number = 90): string[] {
-  const today = new Date();
+function generateDatesFromTomorrowToPast(days: number = 30): string[] {
   const dates: string[] = [];
 
-  for (let i = 0; i < days; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() - i);
-    dates.push(date.toISOString().split("T")[0]);
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1); // 내일
+
+  for (let i = 0; i <= days; i++) {
+    const date = new Date(tomorrow);
+    date.setDate(tomorrow.getDate() - i);
+    dates.push(date.toISOString().split("T")[0]); // YYYY-MM-DD
   }
 
   return dates;
 }
 
 export async function GET() {
-  const recentDates = generateRecentDates(90); // 최근 3개월
+  const recentDates = generateDatesFromTomorrowToPast(90); // 최근 3개월
   const urls: { loc: string; lastmod: string }[] = [];
 
   // 날짜 기준 정렬 → 하루 날짜당 모든 type 묶어서 넣기
