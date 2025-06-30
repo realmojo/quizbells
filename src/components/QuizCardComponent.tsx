@@ -37,6 +37,7 @@ export default function QuizCardComponent({
                     fill
                     sizes="(max-width: 768px) 100vw, 200px"
                     className="object-cover rounded-t-lg"
+                    priority
                   />
                 </div>
                 <h2 className="text-sm md:text-base lg:text-lg font-semibold p-2 pb-0">
@@ -69,6 +70,7 @@ export default function QuizCardComponent({
                     fill
                     className="object-cover rounded-md"
                     sizes="128px"
+                    priority
                   />
                 </div>
                 <div className="flex flex-col justify-center">

@@ -65,6 +65,7 @@ export default function InstallPromptBanner() {
             width={40}
             height={40}
             className="rounded-sm"
+            priority
           />
           <div className="text-sm text-gray-800">
             <strong className="block text-base">

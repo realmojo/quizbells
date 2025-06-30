@@ -16,6 +16,7 @@ export default function ImageComponents({
         alt={`${answerDate} ${type} 퀴즈 이미지`}
         width={600}
         height={600}
+        priority
       />
     );
   } else if (type === "cashwalk") {
@@ -25,6 +26,7 @@ export default function ImageComponents({
         alt={`${answerDate} ${type} 퀴즈 이미지`}
         width={600}
         height={600}
+        priority
       />
     );
   } else if (type === "shinhan") {
@@ -34,6 +36,7 @@ export default function ImageComponents({
         alt={`${answerDate} ${type} 퀴즈 이미지`}
         width={600}
         height={600}
+        priority
       />
     );
   } else if (type === "okcashbag") {
@@ -43,6 +46,7 @@ export default function ImageComponents({
         alt={`${answerDate} ${type} 퀴즈 이미지`}
         width={600}
         height={600}
+        priority
       />
     );
   } else if (type === "cashdoc") {
@@ -52,6 +56,7 @@ export default function ImageComponents({
         alt={`${answerDate} ${type} 퀴즈 이미지`}
         width={600}
         height={600}
+        priority
       />
     );
   } else if (type === "kbstar") {
@@ -61,6 +66,7 @@ export default function ImageComponents({
         alt={`${answerDate} ${type} 퀴즈 이미지`}
         width={600}
         height={600}
+        priority
       />
     );
   }
