@@ -75,6 +75,12 @@ export default function SettingsPage() {
               <span className="text-black-600 font-medium">→</span>
             </li>
           </Link>
+          <Link href="/terms">
+            <li className="flex items-center justify-between border-b py-3 px-4 hover:bg-gray-50 cursor-pointer">
+              <span>📜 이용약관</span>
+              <span className="text-black-600 font-medium">→</span>
+            </li>
+          </Link>
         </ul>
       </section>
     </article>

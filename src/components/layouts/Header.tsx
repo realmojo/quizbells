@@ -17,6 +17,7 @@ export default function Header() {
     if (path === "/about") return "퀴즈벨 소개";
     if (path === "/faq") return "자주 묻는 질문 (FAQ)";
     if (path === "/privacy") return "개인정보 처리방침";
+    if (path === "/terms") return "이용약관";
     // if (path.includes("/product")) return "상품정보";
     // if (path.includes("/search"))
     //   return `${decodeURIComponent(path.split("/")[2])} 검색`;
