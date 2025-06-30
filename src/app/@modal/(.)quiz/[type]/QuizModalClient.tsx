@@ -364,14 +364,10 @@ export default function QuizModalClient({
           )}
 
           {!loading && (
-            <section
-              className="px-4 pb-8"
-              itemScope
-              itemType="https://schema.org/WebPage"
-            >
+            <section itemScope itemType="https://schema.org/WebPage">
               {/* 페이지 대표 제목 */}
               <h1
-                className="text-2xl font-semibold text-gray-900 mb-4"
+                className="text-2xl font-semibold text-gray-900 mb-4 px-4"
                 itemProp="headline"
               >
                 {getQuitItem(type)?.typeKr} {getQuitItem(type)?.title}{" "}
@@ -391,7 +387,7 @@ export default function QuizModalClient({
 
               {/* SEO-friendly 설명 */}
               <p
-                className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+                className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6 px-4"
                 itemProp="description"
               >
                 앱테크는 광고 시청이나 퀴즈 참여를 통해 포인트를 적립하는
@@ -403,10 +399,12 @@ export default function QuizModalClient({
                 사이에서 큰 호응을 얻고 있습니다.
               </p>
 
+              {/* <div>Adsense</div> */}
+
               {/* <Adsense slotId="1234567890" /> */}
 
               {!loading && quizzes.length === 0 && (
-                <div className="text-center text-gray-700 px-6 py-10 mb-10">
+                <div className="text-center text-gray-700 px-4 py-10 mb-10">
                   <p className="text-lg font-semibold mb-2">
                     {answerDateString}
                     <br />
@@ -426,7 +424,7 @@ export default function QuizModalClient({
               {quizzes.map((quiz, idx) => (
                 <article
                   key={idx}
-                  className="mb-6 rounded-lg border border-gray-200 bg-white p-5 tracking-tight shadow-sm"
+                  className="mb-6 rounded-lg border mx-4 border-gray-200 bg-white p-5 tracking-tight shadow-sm"
                   itemScope
                   itemType="https://schema.org/Question"
                 >
@@ -476,11 +474,11 @@ export default function QuizModalClient({
                 </article>
               ))}
 
-              <article className="mb-6 bg-white  tracking-tight ">
+              <article className="mb-6 bg-white  px-4 tracking-tight">
                 <DescriptionComponent type={type} />
               </article>
 
-              <article className="mb-6  bg-white tracking-tight ">
+              <article className="mb-6 px-4 bg-white tracking-tight">
                 <h2 className="text-xl font-bold text-gray-800 mb-2">
                   💡 앱테크 퀴즈 목록
                 </h2>
