@@ -21,8 +21,8 @@ export default function SettingsPage() {
         <h2 className="mb-6 text-xl px-4 font-bold">알림 설정</h2>
 
         <ul className="space-y-4 ">
-          <li className="flex items-center justify-between border-b py-3">
-            <div className="flex flex-col px-4">
+          <li className="flex items-center justify-between border-b py-3 px-4">
+            <div className="flex flex-col ">
               <Label htmlFor="random-alert">퀴즈 정답 알림 받기</Label>
               <span className="mt-1 text-xs text-gray-500">
                 퀴즈 정답이 나오면 알람을 보내드립니다.
