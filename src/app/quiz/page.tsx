@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { useAppStore } from "@/store/useAppStore";
 import { quizItems } from "@/utils/utils";
+import Link from "next/link";
 
 export default function QuizPage() {
   const date = useAppStore((s) => s.date);
@@ -43,10 +44,19 @@ export default function QuizPage() {
         <h1 className="text-2xl font-bold mb-2 text-gray-900">
           📌 오늘의 앱테크 퀴즈 정답 모음
         </h1>
-        <p className="mb-6 text-gray-700 text-lg leading-relaxed tracking-tight md:text-base leading-relaxed">
+        <p className="mb-6 text-gray-700 text-lg tracking-tight md:text-base leading-relaxed">
           매일매일 쏟아지는 앱테크 퀴즈 정답을 한 곳에 모았습니다. 다양한 앱의
           퀴즈 이벤트에 참여하고, 정답을 통해 포인트를 빠르게 적립해보세요!
         </p>
+
+        {/* 👉 앱테크 팁 알아보기 버튼 */}
+        <div className="flex justify-end mb-4">
+          <Link href="/tips">
+            <Button variant="secondary" className="text-sm">
+              💡 앱테크 팁 알아보기
+            </Button>
+          </Link>
+        </div>
 
         {/* 날짜 선택기 */}
         <div className="flex items-center justify-between mb-4">
