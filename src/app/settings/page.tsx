@@ -5,8 +5,9 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { settingsStore } from "@/store/settingsStore";
 import { getUserAuth, isWebView, requestAlarmPermission } from "@/utils/utils";
+import Link from "next/link";
 
-export default function RocketPage() {
+export default function SettingsPage() {
   const { settings, setSettings, updateSettings } = settingsStore();
 
   /* eslint-disable react-hooks/exhaustive-deps */
@@ -16,12 +17,12 @@ export default function RocketPage() {
 
   return (
     <article className="mt-4 mb-24 flex flex-col items-center justify-center">
-      <section className="w-full max-w-[860px] px-4">
-        <h2 className="mb-6 text-xl font-bold">알림 설정</h2>
+      <section className="w-full max-w-[860px] ">
+        <h2 className="mb-6 text-xl px-4 font-bold">알림 설정</h2>
 
-        <ul className="space-y-4">
+        <ul className="space-y-4 ">
           <li className="flex items-center justify-between border-b py-3">
-            <div className="flex flex-col">
+            <div className="flex flex-col px-4">
               <Label htmlFor="random-alert">퀴즈 정답 알림 받기</Label>
               <span className="mt-1 text-xs text-gray-500">
                 퀴즈 정답이 나오면 알람을 보내드립니다.
@@ -49,85 +50,23 @@ export default function RocketPage() {
               }}
             />
           </li>
+        </ul>
+        {/* 기존 알림 설정 <ul> 아래에 바로 추가 */}
 
-          {/* <li className="flex items-center justify-between border-b py-3">
-            <div className="flex flex-col">
-              <Label htmlFor="random-alert">추천 알림 받기</Label>
-              <span className="mt-1 text-xs text-gray-500">
-                CPNOW에서 추천하는 알람을 보내드립니다.
-              </span>
-            </div>
-            <Switch
-              id="random-alert"
-              checked={settings?.isPriceAlarm === "Y"}
-              onCheckedChange={async () => {
-                await updateSettings(
-                  "isPriceAlarm",
-                  settings?.isPriceAlarm === "Y" ? "N" : "Y"
-                );
-              }}
-            />
-          </li> */}
-
-          {/* <li className="flex items-center justify-between border-b py-3">
-            <div className="flex flex-col">
-              <Label htmlFor="block-alert">알림방해 시간 설정</Label>
-              {settings.isBlockAlarm === "Y" ? (
-                <span className="mt-1 text-xs text-gray-500">
-                  {settings.blockStartTime} ~ {settings.blockEndTime}
-                </span>
-              ) : null}
-            </div>
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="block-alert"
-                checked={settings?.isBlockAlarm === "Y"}
-                onCheckedChange={(checked) => {
-                  if (checked) {
-                    setIsOpen(true);
-                    updateSettings("isBlockAlarm", "Y");
-                  } else {
-                    updateSettings("isBlockAlarm", "N");
-                  }
-                }}
-              />
-            </div>
-
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>알림방해 시간 설정</DialogTitle>
-                  <DialogDescription>
-                    시작 시간과 종료 시간을 설정해 주세요.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="start-time">시작 시간</Label>
-                    <Input
-                      id="start-time"
-                      type="time"
-                      value={settings?.blockStartTime}
-                      onChange={(e) => {
-                        updateSettings("blockStartTime", e.target.value);
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="end-time">종료 시간</Label>
-                    <Input
-                      id="end-time"
-                      type="time"
-                      value={settings?.blockEndTime}
-                      onChange={(e) => {
-                        updateSettings("blockEndTime", e.target.value);
-                      }}
-                    />
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-          </li> */}
+        <h2 className="mb-6 text-xl font-bold mt-10 px-4">퀴즈벨 정보</h2>
+        <ul className="space-y-4 ">
+          <Link href="/about">
+            <li className="flex items-center justify-between border-b py-3 px-4 hover:bg-gray-50 cursor-pointer">
+              <span>📘 퀴즈벨 소개</span>
+              <span className="text-black-600 font-medium">→</span>
+            </li>
+          </Link>
+          <Link href="/faq">
+            <li className="flex items-center justify-between border-b py-3 px-4 hover:bg-gray-50 cursor-pointer">
+              <span>❓ 자주 묻는 질문 (FAQ)</span>
+              <span className="text-black-600 font-medium">→</span>
+            </li>
+          </Link>
         </ul>
       </section>
     </article>

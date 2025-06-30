@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
 import React from "react";
@@ -84,42 +83,35 @@ export default function FAQPage() {
   ];
 
   return (
-    <main className="max-w-[860] mx-auto px-2 py-12 mb-10 ">
-      <Card>
-        <CardContent className="space-y-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            ❓ 자주 묻는 질문 (FAQ)
-          </h1>
-
-          <Separator />
-
-          <div
-            className="space-y-6 text-gray-800"
-            itemScope
-            itemType="https://schema.org/FAQPage"
-          >
-            {faqList.map((faq, index) => (
-              <React.Fragment key={index}>
-                <div
-                  itemProp="mainEntity"
-                  itemScope
-                  itemType="https://schema.org/Question"
-                >
-                  <strong itemProp="name">Q. {faq.question}</strong>
-                  <div
-                    itemProp="acceptedAnswer"
-                    itemScope
-                    itemType="https://schema.org/Answer"
-                  >
-                    <p itemProp="text">A. {faq.answer}</p>
-                  </div>
-                </div>
-                <Separator />
-              </React.Fragment>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+    <main className="max-w-[860] mx-auto py-4 mb-10 ">
+      <div
+        className="space-y-6 text-gray-800"
+        itemScope
+        itemType="https://schema.org/FAQPage"
+      >
+        {faqList.map((faq, index) => (
+          <React.Fragment key={index}>
+            <div
+              itemProp="mainEntity"
+              itemScope
+              itemType="https://schema.org/Question"
+              className="px-4"
+            >
+              <div className="mb-2 flex items-center justify-between">
+                <strong itemProp="name">Q. {faq.question}</strong>
+              </div>
+              <div
+                itemProp="acceptedAnswer"
+                itemScope
+                itemType="https://schema.org/Answer"
+              >
+                <p itemProp="text">A. {faq.answer}</p>
+              </div>
+            </div>
+            <Separator />
+          </React.Fragment>
+        ))}
+      </div>
     </main>
   );
 }
