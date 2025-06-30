@@ -1,5 +1,6 @@
 // app/about/page.tsx
 import { Metadata } from "next";
+import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
   title: "퀴즈벨 소개 - 앱테크 퀴즈 정답 실시간 알림 서비스",
@@ -44,8 +45,8 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="max-w-[860] mx-auto px-4 pt-4">
-      <p className="text-gray-700 leading-relaxed">
+    <main className="max-w-[860] mx-auto pt-4">
+      <p className="text-gray-700 leading-relaxed px-4">
         <strong>퀴즈벨(Quizbells)</strong>은 다양한 앱테크 플랫폼의 퀴즈 정답을
         실시간으로 알려주는 서비스입니다. 매일 아침 빠르게 퀴즈를 확인하고
         싶거나, 퀴즈 적중률을 높이고 싶은 분들에게 최적화된 플랫폼이에요. 실시간
@@ -53,7 +54,7 @@ export default function AboutPage() {
         누구나 쉽게 사용할 수 있는 기능을 제공합니다. 🚀
       </p>
 
-      <div className="mt-4">
+      <div className="px-4 my-4">
         <h2 className="text-2xl font-semibold text-gray-800 mb-3">
           🔧 주요 기능
         </h2>
@@ -67,7 +68,9 @@ export default function AboutPage() {
         </ul>
       </div>
 
-      <div className="mt-4">
+      <Separator />
+
+      <div className="px-4 my-4">
         <h2 className="text-2xl font-semibold text-gray-800 mb-3">
           💎 우리가 추구하는 가치
         </h2>
@@ -78,8 +81,9 @@ export default function AboutPage() {
           질을 높이는 데 기여하고자 합니다. 🧡
         </p>
       </div>
+      <Separator />
 
-      <div className="mt-4">
+      <div className="px-4 my-4">
         <h2 className="text-2xl font-semibold text-gray-800 mb-3">
           📱 이용 방법 안내
         </h2>
@@ -94,8 +98,9 @@ export default function AboutPage() {
           기능을 활용하세요.
         </p>
       </div>
+      <Separator />
 
-      <div className="mt-4">
+      <div className="px-4 my-4">
         <h2 className="text-2xl font-semibold text-gray-800 mb-3">
           🌟 사용자 후기
         </h2>
@@ -110,8 +115,9 @@ export default function AboutPage() {
           </blockquote>
         </div>
       </div>
+      <Separator />
 
-      <div className="mt-4">
+      <div className="px-4 my-4">
         <h2 className="text-2xl font-semibold text-gray-800 mb-3">
           ❓ 자주 묻는 질문 (FAQ)
         </h2>
@@ -133,6 +139,7 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
+      <Separator />
 
       <p className="text-xs text-gray-500 mt-10 mb-20 text-center">
         &copy; {new Date().getFullYear()} 퀴즈벨. All rights reserved.

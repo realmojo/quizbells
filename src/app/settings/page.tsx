@@ -69,6 +69,12 @@ export default function SettingsPage() {
               <span className="text-black-600 font-medium">→</span>
             </li>
           </Link>
+          <Link href="/privacy">
+            <li className="flex items-center justify-between border-b py-3 px-4 hover:bg-gray-50 cursor-pointer">
+              <span>🔒 개인정보 처리방침</span>
+              <span className="text-black-600 font-medium">→</span>
+            </li>
+          </Link>
         </ul>
       </section>
     </article>
