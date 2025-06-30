@@ -112,13 +112,16 @@ export default async function RootLayout({
           content="ouZeon6aBrcNKweLJU3eD7w5AjuYyq3MQFlk2jYv7d8"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <GoogleAdSense />
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
+
+        {process.env.NODE_ENV === "production" && (
+          <>
+            <GoogleAdSense />
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -126,15 +129,17 @@ export default async function RootLayout({
               page_path: window.location.pathname,
             });
           `}
-        </Script>
-        <Script type="text/javascript" src="//wcs.naver.net/wcslog.js" />
-        <Script id="naver-analytics" type="text/javascript">{`
+            </Script>
+            <Script type="text/javascript" src="//wcs.naver.net/wcslog.js" />
+            <Script id="naver-analytics" type="text/javascript">{`
              if(!wcs_add) var wcs_add = {};
               wcs_add["wa"] = "136538e329b3cb0";
               if(window.wcs) {
               wcs_do();
             }
             `}</Script>
+          </>
+        )}
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/icons/android-icon-48x48.png" />
       </head>
