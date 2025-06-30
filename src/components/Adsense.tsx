@@ -27,7 +27,7 @@ export default function Adsense({ slotId }: AdsenseProps) {
 
   if (isDev) {
     return (
-      <div className="adsense-dev text-white bg-gray-800 p-2 rounded">
+      <div className="adsense-dev text-white bg-gray-800 p-2 min-h-[320px] mb-8 rounded">
         애드센스 {slotId}
       </div>
     );

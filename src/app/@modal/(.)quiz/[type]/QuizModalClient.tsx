@@ -15,6 +15,7 @@ import ImageComponents from "@/components/ImageComponets";
 import { getQuitItem } from "@/utils/utils";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
+import Adsense from "@/components/Adsense";
 // import Adsense from "@/components/Adsense";
 
 interface Quiz {
@@ -401,7 +402,7 @@ export default function QuizModalClient({
 
               {/* <div>Adsense</div> */}
 
-              {/* <Adsense slotId="1234567890" /> */}
+              <Adsense slotId={getQuitItem(type)?.slotId || "8409513997"} />
 
               {!loading && quizzes.length === 0 && (
                 <div className="text-center text-gray-700 px-4 py-10 mb-10">
