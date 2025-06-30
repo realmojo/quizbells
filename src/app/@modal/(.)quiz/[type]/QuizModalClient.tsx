@@ -1,11 +1,12 @@
 // /app/@modal/(.)quiz/[type]/QuizModalClient.tsx
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -245,6 +246,7 @@ export default function QuizModalClient({
   type: string;
   date: string;
 }) {
+  const pathname = usePathname();
   const hasFetched = useRef(false);
   const router = useRouter();
   const [open, setOpen] = useState(true);
@@ -291,8 +293,12 @@ export default function QuizModalClient({
   }, []);
 
   useEffect(() => {
-    setOpen(true); // URL(type)이 바뀌었을 때 다시 열기
-  }, [type]);
+    const splitPathname = pathname.split("/");
+    console.log("splitPathname", splitPathname);
+    if (splitPathname.length === 3) {
+      setOpen(true); // URL(type)이 바뀌었을 때 다시 열기
+    }
+  }, [pathname]);
 
   const moveClose = useCallback(() => {
     const hasReferrer =
@@ -348,9 +354,9 @@ export default function QuizModalClient({
                 </button>
               </div>
             </DialogTitle>
+            <DialogDescription className="text-left" />
           </DialogHeader>
           <style>{`.ring-offset-background { display: none !important; }`}</style>
-
           {loading && (
             <p className="text-center text-gray-500">
               퀴즈 정답을 불러오는 중입니다...

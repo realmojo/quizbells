@@ -56,13 +56,15 @@ export default function BottomTabBar() {
           router.push("/quiz");
         }}
         className={`ripple relative flex flex-1 flex-col items-center justify-center ${
-          pathname === "/quiz"
+          pathname.includes("/quiz")
             ? "text-primary"
             : "text-muted-foreground hover:text-primary"
         }`}
       >
         <Bell
-          className={`h-5 w-5 ${pathname === "/quiz" ? "fill-current" : ""}`}
+          className={`h-5 w-5 ${
+            pathname.includes("/quiz") ? "fill-current" : ""
+          }`}
         />
         <span className="mt-1 text-xs">퀴즈</span>
       </button>
