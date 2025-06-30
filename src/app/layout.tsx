@@ -111,10 +111,7 @@ export default async function RootLayout({
           name="google-site-verification"
           content="ouZeon6aBrcNKweLJU3eD7w5AjuYyq3MQFlk2jYv7d8"
         />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <GoogleAdSense />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
