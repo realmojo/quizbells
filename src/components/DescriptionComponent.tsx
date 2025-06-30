@@ -346,6 +346,56 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "bitbunny") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>비트버니(Bitbunny)</strong>는 걷기만 해도 포인트를 적립할 수
+          있는 <strong>만보기 기반 앱테크 리워드 앱</strong>입니다. 사용자는
+          일상에서 걸음 수를 기록하는 것만으로 포인트를 얻을 수 있으며, 이
+          포인트는 현금, 기프티콘, 암호화폐 등으로 전환할 수 있습니다.{" "}
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          앱은 카카오톡, 애플 계정 등으로 쉽게 회원가입할 수 있으며,{" "}
+          <strong>삼성 헬스 등 걸음 수 연동 기능</strong>을 지원하여 별도 설정
+          없이 자동으로 걸음을 기록하고 포인트로 적립합니다.{" "}
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          포인트는 매일 출석 체크, 퀴즈 참여, 광고 시청, 미션 수행 등을 통해
+          추가로 적립할 수 있습니다. 특히{" "}
+          <strong>퀴즈 정답을 맞히면 보너스 포인트</strong>가 지급되며, 이를
+          통해 다양한 적립 기회를 제공합니다.{" "}
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          적립한 포인트는{" "}
+          <strong>
+            네이버페이, 기프티콘, 커피·치킨 등 모바일 쿠폰, 암호화폐, 현금화
+          </strong>{" "}
+          등 다양한 방식으로 환전하거나 사용할 수 있습니다. 암호화폐로 전환해
+          재테크도 할 수 있습니다.{" "}
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          앱은 광고가 비교적 적고, 귀여운 토끼 캐릭터 UI가 특징입니다. 최근 iOS
+          버전 기준 평점 4.4점(1200개 평가 기준)을 기록했으며, 사용자들은 “광고
+          없이 바로 포인트 적립” 등 긍정적인 평가를 남기고 있습니다.{" "}
+        </p>
+      </>
+    );
   }
 
   return null;

@@ -69,5 +69,15 @@ export default function ImageComponents({
         priority
       />
     );
+  } else if (type === "bitbunny") {
+    return (
+      <Image
+        src="/images/bitbunny.png"
+        alt={`${answerDate} ${type} 퀴즈 이미지`}
+        width={600}
+        height={600}
+        priority
+      />
+    );
   }
 }

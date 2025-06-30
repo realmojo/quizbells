@@ -26,6 +26,12 @@ export const quizItems = [
     image: "/images/shinhan.png",
   },
   {
+    type: "bitbunny",
+    typeKr: "비트버니",
+    title: "오늘의 퀴즈",
+    image: "/images/bitbunny.png",
+  },
+  {
     type: "okcashbag",
     typeKr: "오케이캐시백",
     title: "오퀴즈",
