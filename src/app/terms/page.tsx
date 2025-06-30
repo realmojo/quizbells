@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 space-y-8 text-sm text-gray-800">
+    <main className="mx-auto max-w-[860] px-4 space-y-6 py-6 mb-20">
       <section>
         <h2 className="text-xl font-semibold mb-2">1. 목적</h2>
         <p>
@@ -116,6 +116,6 @@ export default function TermsPage() {
       <p className="text-xs text-gray-500 text-right">
         &copy; {new Date().getFullYear()} Quizbells. All rights reserved.
       </p>
-    </div>
+    </main>
   );
 }
