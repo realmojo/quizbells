@@ -113,8 +113,8 @@ export default async function RootLayout({
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        {process.env.NODE_ENV === "production" && (
-          <>
+        {/* {process.env.NODE_ENV === "production" && (
+          <> */}
             <GoogleAdSense />
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
@@ -138,8 +138,8 @@ export default async function RootLayout({
               wcs_do();
             }
             `}</Script>
-          </>
-        )}
+          {/* </>
+        )} */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/icons/android-icon-48x48.png" />
       </head>
