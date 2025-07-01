@@ -1,16 +1,12 @@
-// app/quiz/[type]/page.tsx
-
+// ✅ 타입 생략: Next.js가 알아서 처리
 import { redirect } from "next/navigation";
 
-export default function Page({
-  params,
-  searchParams,
-}: {
+export default function QuizTypePage({ params, searchParams }: {
   params: { type: string };
-  searchParams: { answerDate?: string };
+  searchParams: { answerDate: string };
 }) {
   const { type } = params;
-  const { answerDate } = searchParams;
+  const answerDate = searchParams?.answerDate;
 
   if (!answerDate) {
     redirect(`/quiz/${type}/today`);
