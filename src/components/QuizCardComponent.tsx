@@ -22,9 +22,7 @@ export default function QuizCardComponent({
   return viewType === "grid" ? (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
       {quizItems.map((quiz) => {
-        const href = isToday
-          ? `/quiz/${quiz.type}`
-          : `/quiz/${quiz.type}?answerDate=${answerDate}`;
+        const href = `/quiz/${quiz.type}/${isToday ? "today" : answerDate}`;
 
         return (
           <Link href={href} prefetch key={quiz.type}>
@@ -55,9 +53,7 @@ export default function QuizCardComponent({
   ) : (
     <div className="flex flex-col space-y-4">
       {quizItems.map((quiz) => {
-        const href = isToday
-          ? `/quiz/${quiz.type}`
-          : `/quiz/${quiz.type}?answerDate=${answerDate}`;
+        const href = `/quiz/${quiz.type}/${isToday ? "today" : answerDate}`;
 
         return (
           <Link href={href} prefetch key={quiz.type}>

@@ -36,7 +36,7 @@ export async function GET() {
   for (const date of recentDates) {
     for (const type of QUIZ_TYPES) {
       urls.push({
-        loc: `${BASE_URL}/quiz/${type}?answerDate=${date}`,
+        loc: `${BASE_URL}/quiz/${type}/${date}`,
         lastmod: date,
       });
     }

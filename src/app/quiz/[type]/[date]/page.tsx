@@ -1,25 +1,24 @@
-import QuizModalPage from "@/app/@modal/(.)quiz/[type]/page";
+import QuizModalPage from "@/app/@modal/(.)quiz/[type]/[date]/page";
 import { getQuitItem } from "@/utils/utils";
 import { Metadata } from "next";
 
 type QuizPageParams = {
   params: Promise<{
     type: string;
+    date: string;
   }>;
-  searchParams: Promise<{
-    answerDate?: string;
-  }>;
+  // searchParams: Promise<{
+  //   answerDate?: string;
+  // }>;
 };
 
 export async function generateMetadata({
   params,
-  searchParams,
 }: QuizPageParams): Promise<Metadata> {
   // params와 searchParams를 await로 해결
-  const { type } = await params;
-  const resolvedSearchParams = await searchParams;
-  const answerDate =
-    resolvedSearchParams.answerDate || new Date().toISOString().split("T")[0];
+  const { type, date } = await params;
+  // const resolvedSearchParams = await searchParams;
+  const answerDate = date || new Date().toISOString().split("T")[0];
 
   const item = getQuitItem(type);
   const typeName = item?.typeKr || type;
@@ -45,7 +44,7 @@ export async function generateMetadata({
     openGraph: {
       title: fullTitle,
       description,
-      url: `https://quizbell.com/quiz/${type}?answerDate=${answerDate}`,
+      url: `https://quizbell.com/quiz/${type}/${answerDate}`,
       siteName: "퀴즈벨",
       type: "website",
       locale: "ko_KR",
@@ -56,7 +55,7 @@ export async function generateMetadata({
       description,
     },
     alternates: {
-      canonical: `https://quizbell.com/quiz/${type}?answerDate=${answerDate}`,
+      canonical: `https://quizbell.com/quiz/${type}/${answerDate}`,
     },
     robots: {
       index: true,

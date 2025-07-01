@@ -16,7 +16,6 @@ import { getQuitItem } from "@/utils/utils";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import Adsense from "@/components/Adsense";
-// import Adsense from "@/components/Adsense";
 
 interface Quiz {
   type: string;
@@ -93,7 +92,7 @@ const useUpdateMetaTags = ({
     const description = `${answerDateString} 기준 ${typeName} 퀴즈 정답을 한눈에 확인하세요. 퀴즈를 풀고 포인트도 적립하세요.`;
     const ogDescription = `${typeName} ${answerDateString} 퀴즈 정답 확인하고 앱테크 리워드 적립!`;
     const twitterDescription = `${typeName} 퀴즈 정답 및 리워드 정보`;
-    const canonicalUrl = `https://quizbells.com/quiz/${type}?answerDate=${answerDate}`;
+    const canonicalUrl = `https://quizbells.com/quiz/${type}/${answerDate}`;
 
     // Title 업데이트
     document.title = `${quizTitle} | ${siteName}`;
@@ -247,6 +246,9 @@ export default function QuizModalClient({
   type: string;
   date: string;
 }) {
+  console.log("date1", date);
+  date = date === "today" ? moment().format("YYYY-MM-DD") : date;
+  console.log("date2", date);
   const pathname = usePathname();
   const hasFetched = useRef(false);
   const router = useRouter();
@@ -399,8 +401,6 @@ export default function QuizModalClient({
                 맞히면 현금처럼 사용 가능한 리워드를 받을 수 있어 앱 사용자들
                 사이에서 큰 호응을 얻고 있습니다.
               </p>
-
-              {/* <div>Adsense</div> */}
 
               <Adsense slotId={getQuitItem(type)?.slotId || "8409513997"} />
 
