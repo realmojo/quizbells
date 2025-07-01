@@ -44,7 +44,7 @@ export async function generateMetadata({
     openGraph: {
       title: fullTitle,
       description,
-      url: `https://quizbell.com/quiz/${type}/${answerDate}`,
+      url: `https://quizbell.coms/quiz/${type}/${answerDate}`,
       siteName: "퀴즈벨",
       type: "website",
       locale: "ko_KR",
@@ -55,7 +55,7 @@ export async function generateMetadata({
       description,
     },
     alternates: {
-      canonical: `https://quizbell.com/quiz/${type}/${answerDate}`,
+      canonical: `https://quizbell.coms/quiz/${type}/${answerDate}`,
     },
     robots: {
       index: true,

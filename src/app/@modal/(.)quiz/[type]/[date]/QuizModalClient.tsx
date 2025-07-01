@@ -92,6 +92,7 @@ const useUpdateMetaTags = ({
     const description = `${answerDateString} 기준 ${typeName} 퀴즈 정답을 한눈에 확인하세요. 퀴즈를 풀고 포인트도 적립하세요.`;
     const ogDescription = `${typeName} ${answerDateString} 퀴즈 정답 확인하고 앱테크 리워드 적립!`;
     const twitterDescription = `${typeName} 퀴즈 정답 및 리워드 정보`;
+    console.log("answerDate", answerDate);
     const canonicalUrl = `https://quizbells.com/quiz/${type}/${answerDate}`;
 
     // Title 업데이트
