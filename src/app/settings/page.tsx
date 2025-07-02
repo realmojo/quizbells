@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { settingsStore } from "@/store/settingsStore";
@@ -10,8 +10,6 @@ import Link from "next/link";
 export default function SettingsPage() {
   const { settings, setSettings, updateSettings } = settingsStore();
 
-  const [isClicked, setIsClicked] = useState(false);
-
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setSettings();
@@ -20,20 +18,7 @@ export default function SettingsPage() {
   return (
     <article className="mt-4 mb-24 flex flex-col items-center justify-center">
       <section className="w-full max-w-[860px] ">
-        <h2
-          className="mb-6 text-xl px-4 font-bold"
-          onClick={() => {
-            setIsClicked(!isClicked);
-          }}
-        >
-          알림 설정
-        </h2>
-
-        {isClicked && (
-          <div className="px-4">
-            <p>{settings ? settings.userId : "로그인 후 설정 가능합니다."}</p>
-          </div>
-        )}
+        <h2 className="mb-6 text-xl px-4 font-bold">알림 설정</h2>
 
         <ul className="space-y-4 ">
           <li className="flex items-center justify-between border-b py-3 px-4">
@@ -51,10 +36,24 @@ export default function SettingsPage() {
               onCheckedChange={async () => {
                 const auth = getUserAuth();
                 if (auth.userId) {
-                  await updateSettings(
-                    "isQuizAlarm",
-                    settings?.isQuizAlarm === "Y" ? "N" : "Y"
-                  );
+                  try {
+                    await updateSettings(
+                      "isQuizAlarm",
+                      settings?.isQuizAlarm === "Y" ? "N" : "Y"
+                    );
+                  } catch (e) {
+                    // 아이디는 있지만 서버에 없는 경우 다시 재발급
+                    console.log(e);
+                    const isGranted = await requestAlarmPermission();
+                    if (isGranted) {
+                      await setSettings();
+                      await updateSettings(
+                        "isQuizAlarm",
+                        settings?.isQuizAlarm === "Y" ? "N" : "Y"
+                      );
+                    }
+                    // console.error(error);
+                  }
                 } else {
                   if (!isWebView()) {
                     const isGranted = await requestAlarmPermission();
