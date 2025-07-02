@@ -385,7 +385,7 @@ export default function QuizModalClient({
                   type={type}
                 />
                 <div className="text-xs text-center mt-2 mb-2 text-gray-500">
-                  {`${answerDateString} ${type} 퀴즈 정답`}
+                  {`${answerDateString} ${getQuitItem(type)?.typeKr} ${getQuitItem(type)?.title} 퀴즈 정답`}
                 </div>
               </>
 
