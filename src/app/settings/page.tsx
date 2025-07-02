@@ -43,6 +43,7 @@ export default function SettingsPage() {
                 } else {
                   if (!isWebView()) {
                     await requestAlarmPermission();
+                    await setSettings();
                     await updateSettings(
                       "isQuizAlarm",
                       settings?.isQuizAlarm === "Y" ? "N" : "Y"

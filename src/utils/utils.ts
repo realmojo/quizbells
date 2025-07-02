@@ -175,7 +175,11 @@ export const requestAlarmPermission = async () => {
 
           const quizbellInfo = {
             userId,
-            joinType: isApple() ? "ios" : isWebView() ? "android" : "web",
+            joinType: isDesktopBrowser()
+              ? "web"
+              : isApple()
+                ? "ios"
+                : "android",
             fcmToken,
           };
           const res = await fetch("/api/token", {
