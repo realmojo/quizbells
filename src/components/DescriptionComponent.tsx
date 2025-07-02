@@ -445,6 +445,55 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "drnow") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>닥터나우</strong>는 원격진료, 약 배송 서비스를 제공하는 비대면
+          진료 플랫폼입니다. 의사와 환자가 모바일 앱을 통해 화상 또는 전화로
+          진료를 진행할 수 있으며, 진료 이후 처방전을 기반으로 약 배송까지
+          원스톱으로 연결됩니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          닥터나우 앱에서는 <strong>“오늘의 퀴즈”</strong>라는 이름의 리워드형
+          퀴즈 콘텐츠를 운영하고 있습니다. 사용자는 앱 내 퀴즈에 참여하여 정답을
+          맞히면 포인트를 적립할 수 있습니다. 퀴즈는 건강상식, 의학지식 등과
+          관련된 주제를 포함하고 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>퀴즈 참여 보상으로 적립되는 포인트</strong>는 일정 수준 이상
+          모았을 경우 <strong>기프티콘 교환 등</strong>의 용도로 사용할 수
+          있습니다. 앱 내에서 포인트 사용처 및 적립 내역을 확인할 수 있는 기능이
+          제공됩니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          닥터나우의 퀴즈는 푸시 알림 또는 앱 홈화면 배너 등을 통해 참여를
+          유도하며, 정답 제출 후 즉시 포인트가 적립됩니다. 퀴즈 참여를 위해서는{" "}
+          <strong>닥터나우 회원가입</strong> 및 <strong>앱 로그인</strong>이
+          필요합니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          닥터나우 앱은 <strong>iOS 및 Android</strong>에서 모두 다운로드
+          가능하며, 원격 진료 및 약 배송 서비스를 지원합니다. Google Play 스토어
+          및 App Store를 통해 앱 설치가 가능합니다.
+        </p>
+      </>
+    );
   }
 
   return null;

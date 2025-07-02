@@ -11,6 +11,7 @@ const QUIZ_TYPES = [
   "kbstar",
   "bitbunny",
   "3o3",
+  "doctornow",
 ];
 
 // 2025년 6월 1일부터 내일까지 포함된 날짜 리스트 생성

@@ -63,6 +63,13 @@ export const quizItems = [
     image: "/images/3o3.png",
     slotId: "4750390457",
   },
+  {
+    type: "doctornow",
+    typeKr: "닥터나우",
+    title: "오늘의 퀴즈",
+    image: "/images/doctornow.png",
+    slotId: "3720379811",
+  },
   // {
   //   type: "kakaopay",
   //   typeKr: "카카오페이",
