@@ -23,7 +23,7 @@ export const quizItems = [
   },
   {
     type: "shinhan",
-    typeKr: "신한쏠페이 신한은행",
+    typeKr: "신한쏠페이",
     title: "쏠퀴즈, 퀴즈팡팡, 출석퀴즈",
     image: "/images/shinhan.png",
     slotId: "5044984058",
