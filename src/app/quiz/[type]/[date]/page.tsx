@@ -48,14 +48,7 @@ export async function generateMetadata({
       siteName: "퀴즈벨",
       type: "website",
       locale: "ko_KR",
-      images: [
-        {
-          url: `/images/${type}.png`,
-          width: 800,
-          height: 600,
-          alt: `${typeName} ${typeTitle}퀴즈 정답 확인하고 앱테크 포인트 받으세요`,
-        },
-      ],
+      images: [`/images/${type}.png`],
     },
     twitter: {
       card: "summary_large_image",
