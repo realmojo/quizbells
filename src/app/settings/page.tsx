@@ -43,16 +43,17 @@ export default function SettingsPage() {
                     );
                   } catch (e) {
                     // 아이디는 있지만 서버에 없는 경우 다시 재발급
-                    console.log(e);
-                    const isGranted = await requestAlarmPermission();
-                    if (isGranted) {
-                      await setSettings();
-                      await updateSettings(
-                        "isQuizAlarm",
-                        settings?.isQuizAlarm === "Y" ? "N" : "Y"
-                      );
+                    if (!isWebView()) {
+                      console.log(e);
+                      const isGranted = await requestAlarmPermission();
+                      if (isGranted) {
+                        await setSettings();
+                        await updateSettings(
+                          "isQuizAlarm",
+                          settings?.isQuizAlarm === "Y" ? "N" : "Y"
+                        );
+                      }
                     }
-                    // console.error(error);
                   }
                 } else {
                   if (!isWebView()) {
