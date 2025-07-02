@@ -10,21 +10,20 @@ const QUIZ_TYPES = [
   "cashdoc",
   "kbstar",
   "bitbunny",
+  "3o3",
 ];
 
 // 2025년 6월 1일부터 내일까지 포함된 날짜 리스트 생성
-function generateDatesFromStartToTomorrow(start: string = "2025-06-01"): string[] {
+function generateDatesFromStartToTomorrow(
+  start: string = "2025-06-01"
+): string[] {
   const startDate = new Date(start);
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1); // 내일
 
   const dates: string[] = [];
 
-  for (
-    let d = new Date(startDate);
-    d <= tomorrow;
-    d.setDate(d.getDate() + 1)
-  ) {
+  for (let d = new Date(startDate); d <= tomorrow; d.setDate(d.getDate() + 1)) {
     dates.push(d.toISOString().split("T")[0]); // YYYY-MM-DD
   }
 

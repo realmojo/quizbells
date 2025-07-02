@@ -9,75 +9,13 @@ export default function ImageComponents({
   type: string;
   answerDate: string;
 }) {
-  if (type === "toss") {
-    return (
-      <Image
-        src="/images/toss.png"
-        alt={`${answerDate} ${type} 퀴즈 이미지`}
-        width={600}
-        height={600}
-        priority
-      />
-    );
-  } else if (type === "cashwalk") {
-    return (
-      <Image
-        src="/images/cashwalk.png"
-        alt={`${answerDate} ${type} 퀴즈 이미지`}
-        width={600}
-        height={600}
-        priority
-      />
-    );
-  } else if (type === "shinhan") {
-    return (
-      <Image
-        src="/images/shinhan.png"
-        alt={`${answerDate} ${type} 퀴즈 이미지`}
-        width={600}
-        height={600}
-        priority
-      />
-    );
-  } else if (type === "okcashbag") {
-    return (
-      <Image
-        src="/images/okcashbag.png"
-        alt={`${answerDate} ${type} 퀴즈 이미지`}
-        width={600}
-        height={600}
-        priority
-      />
-    );
-  } else if (type === "cashdoc") {
-    return (
-      <Image
-        src="/images/cashdoc.png"
-        alt={`${answerDate} ${type} 퀴즈 이미지`}
-        width={600}
-        height={600}
-        priority
-      />
-    );
-  } else if (type === "kbstar") {
-    return (
-      <Image
-        src="/images/kbstar.png"
-        alt={`${answerDate} ${type} 퀴즈 이미지`}
-        width={600}
-        height={600}
-        priority
-      />
-    );
-  } else if (type === "bitbunny") {
-    return (
-      <Image
-        src="/images/bitbunny.png"
-        alt={`${answerDate} ${type} 퀴즈 이미지`}
-        width={600}
-        height={600}
-        priority
-      />
-    );
-  }
+  return (
+    <Image
+      src={`/images/${type}.png`}
+      alt={`${answerDate} ${type} 퀴즈 이미지`}
+      width={600}
+      height={600}
+      priority
+    />
+  );
 }

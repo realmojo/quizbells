@@ -396,6 +396,55 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "3o3") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>삼쩜삼(3.3)</strong>은 프리랜서, N잡러, 사업자 등의 종합소득세
+          신고 및 환급을 도와주는 세무 서비스 앱입니다. 자영업자나 프리랜서로
+          활동하며 3.3% 세금을 원천징수 당한 사용자들이 간편하게 세무 신고를
+          진행하고 환급 여부를 확인할 수 있도록 돕습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          삼쩜삼에서는 매일{" "}
+          <strong>“오늘의 경제 퀴즈” 또는 “삼쩜삼 OX 퀴즈”</strong>를 통해
+          퀴즈를 맞히고 포인트를 적립할 수 있습니다. 퀴즈는 대부분 OX 형식이며,
+          세금·경제 상식과 관련된 간단한 내용을 포함합니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>포인트는 최대 1만 포인트까지 적립</strong>이 가능하며, 적립한
+          포인트는 <strong>네이버페이, 편의점, 커피 등</strong> 다양한
+          제휴처에서 사용할 수 있는 기프티콘 또는 간편 결제 수단으로 교환할 수
+          있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 앱 알림 또는 배너를 통해 안내되며, 퀴즈 정답을 맞힌
+          사용자에게는 보상 포인트가 즉시 지급됩니다. 퀴즈에 참여하기 위해서는{" "}
+          <strong>삼쩜삼 회원가입</strong>이 필요합니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          삼쩜삼 앱은 iOS 및 Android 모두 지원하며, 구글 플레이 스토어 기준{" "}
+          <strong>수십만 다운로드</strong>를 기록하고 있습니다. 사용자는 세무
+          관련 신고뿐 아니라 출석 체크, 리워드 퀴즈, 알림 등을 통해 추가 혜택을
+          누릴 수 있습니다.
+        </p>
+      </>
+    );
   }
 
   return null;

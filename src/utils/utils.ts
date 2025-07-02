@@ -56,6 +56,13 @@ export const quizItems = [
     image: "/images/kbstar.png",
     slotId: "6786839937",
   },
+  {
+    type: "3o3",
+    typeKr: "삼쩜삼",
+    title: "오늘의 퀴즈",
+    image: "/images/3o3.png",
+    slotId: "4750390457",
+  },
   // {
   //   type: "kakaopay",
   //   typeKr: "카카오페이",
