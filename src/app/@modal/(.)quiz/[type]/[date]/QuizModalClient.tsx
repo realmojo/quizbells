@@ -16,6 +16,7 @@ import { getQuitItem } from "@/utils/utils";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import Adsense from "@/components/Adsense";
+import SocialShare from "@/components/SocialShare";
 
 interface Quiz {
   type: string;
@@ -479,6 +480,12 @@ export default function QuizModalClient({
               <article className="mb-6 bg-white  px-4 tracking-tight">
                 <DescriptionComponent type={type} />
               </article>
+
+              <SocialShare
+                title={`${getQuitItem(type)?.typeKr} ${getQuitItem(type)?.title} ${answerDateString} 퀴즈 정답 확인하고 앱테크 적립하세요`}
+                url={window.location.href}
+                imageUrl="https://quizbells.com/icons/default-icon.png"
+              />
 
               <article className="mb-6 px-4 bg-white tracking-tight">
                 <h2 className="text-xl font-bold text-gray-800 mb-2">
