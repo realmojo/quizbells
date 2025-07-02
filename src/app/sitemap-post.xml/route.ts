@@ -12,24 +12,27 @@ const QUIZ_TYPES = [
   "bitbunny",
 ];
 
-// 최근 N일 날짜 리스트
-function generateDatesFromTomorrowToPast(days: number = 30): string[] {
-  const dates: string[] = [];
-
+// 2025년 6월 1일부터 내일까지 포함된 날짜 리스트 생성
+function generateDatesFromStartToTomorrow(start: string = "2025-06-01"): string[] {
+  const startDate = new Date(start);
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1); // 내일
 
-  for (let i = 0; i <= days; i++) {
-    const date = new Date(tomorrow);
-    date.setDate(tomorrow.getDate() - i);
-    dates.push(date.toISOString().split("T")[0]); // YYYY-MM-DD
+  const dates: string[] = [];
+
+  for (
+    let d = new Date(startDate);
+    d <= tomorrow;
+    d.setDate(d.getDate() + 1)
+  ) {
+    dates.push(d.toISOString().split("T")[0]); // YYYY-MM-DD
   }
 
   return dates;
 }
 
 export async function GET() {
-  const recentDates = generateDatesFromTomorrowToPast(90); // 최근 3개월
+  const recentDates = generateDatesFromStartToTomorrow(); // 6/1 ~ 내일 포함
   const urls: { loc: string; lastmod: string }[] = [];
 
   // 날짜 기준 정렬 → 하루 날짜당 모든 type 묶어서 넣기
@@ -42,12 +45,12 @@ export async function GET() {
     }
   }
 
-  // 각 타입별 기본 URL은 가장 앞에 한번만 삽입
-  const todayStr = recentDates[0];
+  // 각 타입별 today 경로는 내일 날짜를 기준으로 삽입
+  const tomorrowStr = recentDates[recentDates.length - 1]; // 가장 마지막 날짜가 내일
   for (const type of QUIZ_TYPES) {
     urls.unshift({
       loc: `${BASE_URL}/quiz/${type}/today`,
-      lastmod: todayStr,
+      lastmod: tomorrowStr,
     });
   }
 
