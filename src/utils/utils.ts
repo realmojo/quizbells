@@ -175,11 +175,12 @@ export const requestAlarmPermission = async () => {
 
           const quizbellInfo = {
             userId,
-            joinType: isDesktopBrowser()
-              ? "web"
-              : isApple()
-                ? "ios"
-                : "android",
+            joinType:
+              isBrowser().isDesktopBrowser || isBrowser().isMobileBrowser
+                ? "web"
+                : isApple()
+                  ? "ios"
+                  : "android",
             fcmToken,
           };
           const res = await fetch("/api/token", {
@@ -256,17 +257,41 @@ export const setUserAuth = (quizbellsInfo: any) => {
   localStorage.setItem("quizbells-auth", JSON.stringify(quizbellsInfo));
 };
 
-export const isDesktopBrowser = (): boolean => {
+export const isBrowser = (): {
+  isBrowser: boolean;
+  isMobileBrowser: boolean;
+  isDesktopBrowser: boolean;
+} => {
+  const isBrowser =
+    typeof window !== "undefined" &&
+    typeof window.document !== "undefined" &&
+    typeof navigator !== "undefined";
+
+  if (!isBrowser) {
+    return {
+      isBrowser: false,
+      isMobileBrowser: false,
+      isDesktopBrowser: false,
+    };
+  }
+
   const ua = navigator.userAgent;
   const platform = navigator.platform;
   const maxTouchPoints = navigator.maxTouchPoints || 0;
 
-  const isMobile =
+  const isMobileBrowser =
     /Mobi|Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
-  const isTablet =
-    /iPad|Tablet/i.test(ua) || (platform === "MacIntel" && maxTouchPoints > 1); // iPadOS 대응
 
-  return !isMobile && !isTablet;
+  const isTabletBrowser =
+    /iPad|Tablet/i.test(ua) || (platform === "MacIntel" && maxTouchPoints > 1); // iPadOS Safari 대응
+
+  const isDesktopBrowser = !isMobileBrowser && !isTabletBrowser;
+
+  return {
+    isBrowser: true,
+    isMobileBrowser,
+    isDesktopBrowser,
+  };
 };
 
 export const isApple = () => {
