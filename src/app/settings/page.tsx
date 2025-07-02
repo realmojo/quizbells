@@ -4,7 +4,12 @@ import React, { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { settingsStore } from "@/store/settingsStore";
-import { getUserAuth, isWebView, requestAlarmPermission } from "@/utils/utils";
+import {
+  getUserAuth,
+  isWebView,
+  isApple,
+  requestAlarmPermission,
+} from "@/utils/utils";
 import Link from "next/link";
 
 export default function SettingsPage() {
@@ -84,6 +89,11 @@ export default function SettingsPage() {
                       await updateSettings("isQuizAlarm", newValue);
                     } else {
                       setIsQuizAlarm(!checked);
+                      if (isApple()) {
+                        alert(
+                          "iOS 브라우저 앱 출시 후 알림을 사용할 수 있습니다."
+                        );
+                      }
                     }
                   }
                 }

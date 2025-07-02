@@ -161,10 +161,8 @@ export const refreshToken = async (messaging: any, isTest: boolean = false) => {
 export const requestAlarmPermission = async () => {
   if ("Notification" in window) {
     try {
-      console.log(Notification);
       const permission = await Notification.requestPermission();
 
-      console.log(permission);
       if (permission === "granted") {
         // 권한 허용시 /mynow로 이동
 
@@ -175,8 +173,6 @@ export const requestAlarmPermission = async () => {
             vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
           });
 
-          console.log(userId);
-          console.log(fcmToken);
           const quizbellInfo = {
             userId,
             joinType:
@@ -187,7 +183,6 @@ export const requestAlarmPermission = async () => {
                   : "android",
             fcmToken,
           };
-          console.log(quizbellInfo);
           const res = await fetch("/api/token", {
             method: "POST",
             body: JSON.stringify(quizbellInfo),
