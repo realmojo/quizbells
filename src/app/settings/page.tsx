@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { settingsStore } from "@/store/settingsStore";
@@ -10,6 +10,8 @@ import Link from "next/link";
 export default function SettingsPage() {
   const { settings, setSettings, updateSettings } = settingsStore();
 
+  const [isClicked, setIsClicked] = useState(false);
+
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setSettings();
@@ -18,7 +20,20 @@ export default function SettingsPage() {
   return (
     <article className="mt-4 mb-24 flex flex-col items-center justify-center">
       <section className="w-full max-w-[860px] ">
-        <h2 className="mb-6 text-xl px-4 font-bold">알림 설정</h2>
+        <h2
+          className="mb-6 text-xl px-4 font-bold"
+          onClick={() => {
+            setIsClicked(!isClicked);
+          }}
+        >
+          알림 설정
+        </h2>
+
+        {isClicked && (
+          <div className="px-4">
+            <p>{settings ? settings.userId : "로그인 후 설정 가능합니다."}</p>
+          </div>
+        )}
 
         <ul className="space-y-4 ">
           <li className="flex items-center justify-between border-b py-3 px-4">
@@ -42,12 +57,14 @@ export default function SettingsPage() {
                   );
                 } else {
                   if (!isWebView()) {
-                    await requestAlarmPermission();
-                    await setSettings();
-                    await updateSettings(
-                      "isQuizAlarm",
-                      settings?.isQuizAlarm === "Y" ? "N" : "Y"
-                    );
+                    const isGranted = await requestAlarmPermission();
+                    if (isGranted) {
+                      await setSettings();
+                      await updateSettings(
+                        "isQuizAlarm",
+                        settings?.isQuizAlarm === "Y" ? "N" : "Y"
+                      );
+                    }
                   }
                 }
               }}
