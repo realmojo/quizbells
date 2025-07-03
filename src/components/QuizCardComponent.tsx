@@ -65,7 +65,6 @@ export default function QuizCardComponent({
                     alt={`${quiz.typeKr} 퀴즈 썸네일`}
                     fill
                     className="object-cover rounded-md"
-                    sizes="128px"
                     priority
                   />
                 </div>
