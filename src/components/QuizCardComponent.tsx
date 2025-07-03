@@ -56,10 +56,10 @@ export default function QuizCardComponent({
         const href = `/quiz/${quiz.type}/${isToday ? "today" : answerDate}`;
 
         return (
-          <Link href={href} prefetch key={quiz.type}>
+          <Link href={href} prefetch key={quiz.type} >
             <Card className="gap-0 py-0 hover:shadow-lg transition duration-200 cursor-pointer">
               <CardContent className="flex p-0 space-x-4">
-                <div className="relative w-32 h-32 flex-shrink-0">
+                <div className="relative w-20 h-20 flex-shrink-0">
                   <Image
                     src={quiz.image}
                     alt={`${quiz.typeKr} 퀴즈 썸네일`}
