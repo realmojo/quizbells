@@ -445,7 +445,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
-  } else if (type === "drnow") {
+  } else if (type === "doctornow") {
     return (
       <>
         <p
@@ -491,6 +491,41 @@ export default function DescriptionComponents({ type }: { type: string }) {
           닥터나우 앱은 <strong>iOS 및 Android</strong>에서 모두 다운로드
           가능하며, 원격 진료 및 약 배송 서비스를 지원합니다. Google Play 스토어
           및 App Store를 통해 앱 설치가 가능합니다.
+        </p>
+      </>
+    );
+  } else if (type === "mydoctor") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>나만의 닥터</strong>는 건강 관련 콘텐츠를 제공하는 플랫폼입니다. 사용자는 앱 또는 웹을 통해 다양한 건강 정보를 확인할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          나만의 닥터에서는 <strong>“건강퀴즈”</strong>라는 이름의 콘텐츠를 운영하고 있습니다. 사용자는 퀴즈에 참여하여 정답을 맞히는 형식으로 건강 관련 상식을 점검할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          건강퀴즈는 <strong>건강정보, 질병예방, 생활습관</strong> 등과 관련된 주제를 포함하고 있으며, 사용자의 자가 건강 인식 향상에 도움을 줍니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈 참여는 <strong>회원가입 없이도 가능</strong>하며, 일부 기능은 로그인 이후에 제공될 수 있습니다. 퀴즈는 정기적으로 업데이트됩니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          나만의 닥터는 <strong>웹 또는 모바일 환경에서</strong> 이용할 수 있으며, 앱 제공 여부는 공식 웹사이트 또는 마켓 페이지를 통해 확인이 필요합니다.
         </p>
       </>
     );

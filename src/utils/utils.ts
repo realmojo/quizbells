@@ -70,6 +70,13 @@ export const quizItems = [
     image: "/images/doctornow.png",
     slotId: "3720379811",
   },
+  {
+    type: "mydoctor",
+    typeKr: "나만의 닥터",
+    title: "건강 퀴즈",
+    image: "/images/mydoctor.png",
+    slotId: "2446810689",
+  },
   // {
   //   type: "kakaopay",
   //   typeKr: "카카오페이",
