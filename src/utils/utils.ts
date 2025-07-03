@@ -91,6 +91,13 @@ export const quizItems = [
     image: "/images/hpoint.png",
     slotId: "3638271729",
   },
+  {
+    type: "climate",
+    typeKr: "기후행동 기회소득",
+    title: "오늘의 퀴즈",
+    image: "/images/climate.png",
+    slotId: "7264340322",
+  },
   // {
   //   type: "kakaopay",
   //   typeKr: "카카오페이",

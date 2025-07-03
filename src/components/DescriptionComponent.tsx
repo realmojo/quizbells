@@ -585,48 +585,49 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
-  } else if (type === "hpoint") {
+  } else if (type === "climate") {
     return (
       <>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>H.Point</strong>는 현대백화점그룹의 통합 멤버십 서비스입니다.
-          사용자는 포인트 적립 및 사용, 이벤트 참여, 제휴 혜택 등의 서비스를
-          받을 수 있습니다.
+          <strong>기후행동 기회소득</strong>은 서울특별시가 운영하는 시민 참여형
+          환경 인센티브 제도입니다. 서울 시민이 친환경 생활 실천을 하면 포인트를
+          적립하고, 다양한 보상을 받을 수 있는 제도입니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          H.Point 앱에서는 <strong>오늘의 퀴즈</strong>라는 이름의 참여형
-          콘텐츠가 제공되고 있습니다. 사용자는 퀴즈에 참여하여 정답을 맞히고
-          H.Point 포인트를 적립할 수 있습니다.
+          참여자는 전용 앱 또는 웹페이지를 통해 <strong>오늘의 퀴즈</strong>에
+          참여할 수 있습니다. 퀴즈는 환경, 탄소중립, 에너지 절약 등의 주제로
+          출제되며, 참여 시 일정 포인트가 제공됩니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          퀴즈는 H.Point 앱 내 배너 또는 이벤트 페이지를 통해 접근 가능하며,{" "}
-          <strong>하루 1회 참여</strong>할 수 있습니다. 퀴즈 참여 시 정답자에게
-          소정의 포인트가 지급됩니다.
+          퀴즈는 주로 OX 형식으로 출제되며, 정답을 제출하면{" "}
+          <strong>기후포인트</strong>가 적립됩니다. 오답을 제출해도 일부
+          포인트가 지급되며, 해당 포인트는 제휴처 혜택이나 서울시 환경 캠페인
+          참여 등에 사용할 수 있습니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          H.Point의 퀴즈는 <strong>시사, 일반상식, 트렌드, 환경, ESG</strong> 등
-          다양한 주제를 포함할 수 있으며, 포인트 적립 외에도 추첨을 통해 경품이
-          제공되는 경우도 있습니다.
+          퀴즈 참여는 <strong>하루 1회 가능</strong>하며, 서울시민 누구나 참여할
+          수 있습니다. 로그인 또는 인증 절차가 필요할 수 있으며, 앱 내 초대 코드
+          기능을 통해 친구 추천도 가능합니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          퀴즈 참여를 위해서는 H.Point 앱 설치 및 <strong>로그인</strong>이
-          필요합니다. 앱은 <strong>iOS와 Android</strong> 모두 지원되며, 포인트
-          적립 내역은 마이페이지에서 확인할 수 있습니다.
+          <strong>기후행동 기회소득</strong>은 서울시 공식 홈페이지, 앱스토어 및
+          구글플레이에서 다운로드 가능한 전용 앱을 통해 참여 가능합니다. 퀴즈와
+          실천 인증 외에도 다양한 환경 캠페인에 참여할 수 있습니다.
         </p>
       </>
     );
