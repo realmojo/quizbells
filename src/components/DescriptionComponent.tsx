@@ -182,7 +182,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
     );
   } else if (type === "kakaobank") {
     return (
-     <>
+      <>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
@@ -196,32 +196,35 @@ export default function DescriptionComponents({ type }: { type: string }) {
           itemProp="description"
         >
           퀴즈는 <strong>OX형 문제</strong>로 구성되어 있으며, 문제에 정답을
-          선택하여 참여할 수 있습니다. 정답자에게는 <strong>이벤트 참여 보상</strong>
+          선택하여 참여할 수 있습니다. 정답자에게는{" "}
+          <strong>이벤트 참여 보상</strong>
           으로 추첨을 통한 경품 또는 리워드가 제공됩니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          퀴즈는 <strong>이벤트 기간 중 1회 참여</strong> 방식이며, 정답을 선택한 후
-          제출하면 참여가 완료됩니다. 퀴즈 정답 및 당첨 여부는 <strong>앱 푸시
-          알림</strong> 또는 <strong>이벤트 페이지 내 결과 발표</strong>를 통해
-          확인할 수 있습니다.
+          퀴즈는 <strong>이벤트 기간 중 1회 참여</strong> 방식이며, 정답을
+          선택한 후 제출하면 참여가 완료됩니다. 퀴즈 정답 및 당첨 여부는{" "}
+          <strong>앱 푸시 알림</strong> 또는{" "}
+          <strong>이벤트 페이지 내 결과 발표</strong>를 통해 확인할 수 있습니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
           카카오뱅크 OX퀴즈는 카카오뱅크가 주관하는 이벤트의 일환으로 진행되며,
-          퀴즈 내용, 정답 기준, 보상 방식은 <strong>카카오뱅크 이벤트 안내사항</strong>
-          에 따릅니다.
+          퀴즈 내용, 정답 기준, 보상 방식은{" "}
+          <strong>카카오뱅크 이벤트 안내사항</strong>에 따릅니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
-          itemProp="description">
-          참여 전 반드시 <strong>카카오뱅크 앱 최신 버전</strong>으로 업데이트되어
-          있어야 하며, 일부 기능은 <strong>알림 설정 및 이벤트 수신 동의</strong>가
-          필요한 경우도 있습니다.
+          itemProp="description"
+        >
+          참여 전 반드시 <strong>카카오뱅크 앱 최신 버전</strong>으로
+          업데이트되어 있어야 하며, 일부 기능은{" "}
+          <strong>알림 설정 및 이벤트 수신 동의</strong>가 필요한 경우도
+          있습니다.
         </p>
       </>
     );
@@ -546,31 +549,84 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>나만의 닥터</strong>는 건강 관련 콘텐츠를 제공하는 플랫폼입니다. 사용자는 앱 또는 웹을 통해 다양한 건강 정보를 확인할 수 있습니다.
+          <strong>나만의 닥터</strong>는 건강 관련 콘텐츠를 제공하는
+          플랫폼입니다. 사용자는 앱 또는 웹을 통해 다양한 건강 정보를 확인할 수
+          있습니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          나만의 닥터에서는 <strong>“건강퀴즈”</strong>라는 이름의 콘텐츠를 운영하고 있습니다. 사용자는 퀴즈에 참여하여 정답을 맞히는 형식으로 건강 관련 상식을 점검할 수 있습니다.
+          나만의 닥터에서는 <strong>“건강퀴즈”</strong>라는 이름의 콘텐츠를
+          운영하고 있습니다. 사용자는 퀴즈에 참여하여 정답을 맞히는 형식으로
+          건강 관련 상식을 점검할 수 있습니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          건강퀴즈는 <strong>건강정보, 질병예방, 생활습관</strong> 등과 관련된 주제를 포함하고 있으며, 사용자의 자가 건강 인식 향상에 도움을 줍니다.
+          건강퀴즈는 <strong>건강정보, 질병예방, 생활습관</strong> 등과 관련된
+          주제를 포함하고 있으며, 사용자의 자가 건강 인식 향상에 도움을 줍니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          퀴즈 참여는 <strong>회원가입 없이도 가능</strong>하며, 일부 기능은 로그인 이후에 제공될 수 있습니다. 퀴즈는 정기적으로 업데이트됩니다.
+          퀴즈 참여는 <strong>회원가입 없이도 가능</strong>하며, 일부 기능은
+          로그인 이후에 제공될 수 있습니다. 퀴즈는 정기적으로 업데이트됩니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          나만의 닥터는 <strong>웹 또는 모바일 환경에서</strong> 이용할 수 있으며, 앱 제공 여부는 공식 웹사이트 또는 마켓 페이지를 통해 확인이 필요합니다.
+          나만의 닥터는 <strong>웹 또는 모바일 환경에서</strong> 이용할 수
+          있으며, 앱 제공 여부는 공식 웹사이트 또는 마켓 페이지를 통해 확인이
+          필요합니다.
+        </p>
+      </>
+    );
+  } else if (type === "hpoint") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>H.Point</strong>는 현대백화점그룹의 통합 멤버십 서비스입니다.
+          사용자는 포인트 적립 및 사용, 이벤트 참여, 제휴 혜택 등의 서비스를
+          받을 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          H.Point 앱에서는 <strong>오늘의 퀴즈</strong>라는 이름의 참여형
+          콘텐츠가 제공되고 있습니다. 사용자는 퀴즈에 참여하여 정답을 맞히고
+          H.Point 포인트를 적립할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 H.Point 앱 내 배너 또는 이벤트 페이지를 통해 접근 가능하며,{" "}
+          <strong>하루 1회 참여</strong>할 수 있습니다. 퀴즈 참여 시 정답자에게
+          소정의 포인트가 지급됩니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          H.Point의 퀴즈는 <strong>시사, 일반상식, 트렌드, 환경, ESG</strong> 등
+          다양한 주제를 포함할 수 있으며, 포인트 적립 외에도 추첨을 통해 경품이
+          제공되는 경우도 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈 참여를 위해서는 H.Point 앱 설치 및 <strong>로그인</strong>이
+          필요합니다. 앱은 <strong>iOS와 Android</strong> 모두 지원되며, 포인트
+          적립 내역은 마이페이지에서 확인할 수 있습니다.
         </p>
       </>
     );

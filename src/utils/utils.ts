@@ -84,6 +84,13 @@ export const quizItems = [
     image: "/images/mydoctor.png",
     slotId: "2446810689",
   },
+  {
+    type: "hpoint",
+    typeKr: "에이치포인트",
+    title: "오늘의 퀴즈",
+    image: "/images/hpoint.png",
+    slotId: "3638271729",
+  },
   // {
   //   type: "kakaopay",
   //   typeKr: "카카오페이",
