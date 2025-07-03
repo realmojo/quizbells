@@ -36,6 +36,13 @@ export const quizItems = [
     slotId: "8304005549",
   },
   {
+    type: "kakaopay",
+    typeKr: "카카오페이",
+    title: "퀴즈타임",
+    image: "/images/kakaopay.png",
+    slotId: "4222958601",
+  },
+  {
     type: "bitbunny",
     typeKr: "비트버니",
     title: "오늘의 퀴즈",

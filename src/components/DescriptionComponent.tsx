@@ -228,6 +228,52 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "kakaopay") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>카카오페이 퀴즈타임</strong>은 카카오페이에서 운영하는 참여형
+          퀴즈 콘텐츠입니다. 사용자는 카카오페이 앱 또는 카카오톡 내 카카오페이
+          서비스 탭을 통해 퀴즈에 참여할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈타임은 일정 기간 또는 특정 이벤트 시점에 제공되며, 사용자는 퀴즈를
+          풀고 정답을 맞히면 <strong>페이포인트</strong> 또는 리워드를 받을 수
+          있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 <strong>일반상식, 금융지식, 이벤트 연계</strong> 등의 다양한
+          주제로 구성되며, 객관식이나 OX형식으로 출제됩니다. 정답자는 정해진
+          포인트 또는 혜택을 받을 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          참여는 <strong>카카오페이 계정 로그인</strong>을 통해 가능하며, 일부
+          퀴즈는 카카오톡 알림 또는 배너 등을 통해 참여를 유도합니다. 참여
+          조건이나 포인트 지급 방식은 퀴즈마다 상이할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>카카오페이 퀴즈타임</strong>은 주로{" "}
+          <strong>카카오페이 앱</strong> 또는{" "}
+          <strong>카카오톡 내 페이 탭</strong>에서 참여할 수 있으며, 참여 기록과
+          리워드는 해당 앱에서 확인 가능합니다.
+        </p>
+      </>
+    );
   } else if (type === "okcashbag") {
     return (
       <>

@@ -14,6 +14,7 @@ const QUIZ_TYPES = [
   "doctornow",
   "mydoctor",
   "kakaobank",
+  "kakaopay",
   "hpoint",
   "climate",
 ];
