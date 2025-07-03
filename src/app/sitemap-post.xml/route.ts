@@ -13,6 +13,7 @@ const QUIZ_TYPES = [
   "3o3",
   "doctornow",
   "mydoctor",
+  "kakaobank",
 ];
 
 // 2025년 6월 1일부터 내일까지 포함된 날짜 리스트 생성

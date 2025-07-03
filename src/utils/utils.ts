@@ -29,6 +29,13 @@ export const quizItems = [
     slotId: "5044984058",
   },
   {
+    type: "kakaobank",
+    typeKr: "카카오뱅크",
+    title: "OX 퀴즈",
+    image: "/images/kakaobank.png",
+    slotId: "8304005549",
+  },
+  {
     type: "bitbunny",
     typeKr: "비트버니",
     title: "오늘의 퀴즈",

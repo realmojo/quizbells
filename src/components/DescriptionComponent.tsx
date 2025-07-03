@@ -180,6 +180,51 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "kakaobank") {
+    return (
+     <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>카카오뱅크 OX퀴즈</strong>는 카카오뱅크 앱에서 진행되는 정답형
+          참여 퀴즈입니다. 앱 내 알림 또는 이벤트 페이지를 통해 퀴즈에 참여할 수
+          있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 <strong>OX형 문제</strong>로 구성되어 있으며, 문제에 정답을
+          선택하여 참여할 수 있습니다. 정답자에게는 <strong>이벤트 참여 보상</strong>
+          으로 추첨을 통한 경품 또는 리워드가 제공됩니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 <strong>이벤트 기간 중 1회 참여</strong> 방식이며, 정답을 선택한 후
+          제출하면 참여가 완료됩니다. 퀴즈 정답 및 당첨 여부는 <strong>앱 푸시
+          알림</strong> 또는 <strong>이벤트 페이지 내 결과 발표</strong>를 통해
+          확인할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          카카오뱅크 OX퀴즈는 카카오뱅크가 주관하는 이벤트의 일환으로 진행되며,
+          퀴즈 내용, 정답 기준, 보상 방식은 <strong>카카오뱅크 이벤트 안내사항</strong>
+          에 따릅니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description">
+          참여 전 반드시 <strong>카카오뱅크 앱 최신 버전</strong>으로 업데이트되어
+          있어야 하며, 일부 기능은 <strong>알림 설정 및 이벤트 수신 동의</strong>가
+          필요한 경우도 있습니다.
+        </p>
+      </>
+    );
   } else if (type === "okcashbag") {
     return (
       <>
