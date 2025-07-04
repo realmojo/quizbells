@@ -17,8 +17,24 @@ const ONE_HOUR = 10 * 60 * 1000;
 
 export default function InstallPromptBanner() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const dismissedRef = useRef(false);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") {
+      console.log("✅ 설치 완료");
+    }
+    setOpen(false);
+  };
+
+  const handleClose = () => {
+    dismissedRef.current = true;
+    setOpen(false);
+    localStorage.setItem(BANNER_DISMISS_KEY, Date.now().toString());
+  };
 
   useEffect(() => {
     const lastDismissed = localStorage.getItem(BANNER_DISMISS_KEY);
@@ -27,6 +43,7 @@ export default function InstallPromptBanner() {
     }
 
     const handler = (e: any) => {
+      console.log("🔔 beforeinstallprompt 감지됨");
       e.preventDefault();
       if (!dismissedRef.current) {
         setDeferredPrompt(e);
@@ -45,22 +62,6 @@ export default function InstallPromptBanner() {
     };
   }, []);
 
-  const handleInstall = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") {
-      console.log("✅ 설치 완료");
-    }
-    setOpen(false);
-  };
-
-  const handleClose = () => {
-    dismissedRef.current = true;
-    setOpen(false);
-    localStorage.setItem(BANNER_DISMISS_KEY, Date.now().toString());
-  };
-
   if (!open || detectDevice().isDesktop) return null;
 
   return (
@@ -76,7 +77,7 @@ export default function InstallPromptBanner() {
             priority
           />
           <div className="text-center">
-            <DrawerTitle className="text-base font-semibold">
+            <DrawerTitle className="text-base text-lg font-semibold">
               퀴즈벨 앱을 설치해주세요
             </DrawerTitle>
             <p className="text-sm text-gray-500">
