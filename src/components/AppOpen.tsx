@@ -48,7 +48,11 @@ export default function AppOpen({ type }: { type: string }) {
     return (
       <div className="w-full flex justify-center my-6">
         <a
-          href="https://spa.shinhan.com/app_link.html?pr_id=ACXCZ10010010"
+          href={
+            isIOS()
+              ? "https://apps.apple.com/kr/app/%EC%8B%A0%ED%95%9C-%EC%8A%88%ED%8D%BCsol-%EC%8B%A0%ED%95%9C-%EC%9C%A0%EB%8B%88%EB%B2%84%EC%84%A4-%EA%B8%88%EC%9C%B5-%EC%95%B1/id486872386"
+              : "https://play.google.com/store/apps/details?id=com.shinhan.smartcaremgr"
+          }
           target="_self"
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
