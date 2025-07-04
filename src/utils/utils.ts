@@ -249,9 +249,9 @@ export const requestAlarmPermission = async () => {
             console.log("🔔 토큰 저장", quizbellInfo);
           }
 
-          if (detectDevice().isDesktop) {
-            sendNotificationTest();
-          }
+          // if (detectDevice().isDesktop) {
+          sendNotificationTest();
+          // }
 
           return true;
         }

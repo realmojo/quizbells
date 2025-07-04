@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { detectDevice } from "@/utils/utils";
+import { Share } from "lucide-react";
+import { detectDevice, isIOS } from "@/utils/utils";
 import {
   Drawer,
   DrawerContent,
@@ -42,24 +43,31 @@ export default function InstallPromptBanner() {
       dismissedRef.current = true;
     }
 
-    const handler = (e: any) => {
-      console.log("🔔 beforeinstallprompt 감지됨");
-      e.preventDefault();
+    if (isIOS()) {
       if (!dismissedRef.current) {
-        setDeferredPrompt(e);
+        console.log("🔔 설치 모달 열림 ios");
         setOpen(true);
       }
-    };
+    } else {
+      const handler = (e: any) => {
+        e.preventDefault();
+        if (!dismissedRef.current) {
+          setDeferredPrompt(e);
+          console.log("🔔 설치 모달 열림 android");
+          setOpen(true);
+        }
+      };
 
-    window.addEventListener("beforeinstallprompt", handler);
-    window.addEventListener("appinstalled", () => {
-      console.log("✅ 앱 설치 완료!");
-      alert("설치가 완료되었습니다!");
-    });
+      window.addEventListener("beforeinstallprompt", handler);
+      window.addEventListener("appinstalled", () => {
+        console.log("✅ 앱 설치 완료!");
+        alert("설치가 완료되었습니다!");
+      });
 
-    return () => {
-      window.removeEventListener("beforeinstallprompt", handler);
-    };
+      return () => {
+        window.removeEventListener("beforeinstallprompt", handler);
+      };
+    }
   }, []);
 
   if (!open || detectDevice().isDesktop) return null;
@@ -85,21 +93,43 @@ export default function InstallPromptBanner() {
             </p>
           </div>
         </DrawerHeader>
-        <DrawerFooter className="flex gap-2 justify-end">
-          <Button
-            onClick={() => handleInstall()}
-            className="w-full min-h-[50px] text-lg font-semibold"
-          >
-            설치
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => handleClose()}
-            className="w-full min-h-[50px] text-lg"
-          >
-            닫기
-          </Button>
-        </DrawerFooter>
+        {isIOS() ? (
+          <DrawerFooter className="flex gap-2 text-center justify-center">
+            <div className="mt-2 flex flex-col justify-center text-md text-gray-600 bg-black text-white rounded-md p-4">
+              <div className="flex justify-center items-center mb-2">
+                공유버튼 <Share className="w-5 h-5 mx-1 font-bold" /> 버튼을
+                눌러
+              </div>
+              <div>
+                <strong className="mx-1">[홈 화면에 추가]</strong>를
+                추가해주세요
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              onClick={() => handleClose()}
+              className="w-full min-h-[50px] text-lg"
+            >
+              닫기
+            </Button>
+          </DrawerFooter>
+        ) : (
+          <DrawerFooter className="flex gap-2 justify-end">
+            <Button
+              onClick={() => handleInstall()}
+              className="w-full min-h-[50px] text-lg font-semibold"
+            >
+              설치
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => handleClose()}
+              className="w-full min-h-[50px] text-lg"
+            >
+              닫기
+            </Button>
+          </DrawerFooter>
+        )}
       </DrawerContent>
     </Drawer>
   );

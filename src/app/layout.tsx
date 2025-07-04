@@ -11,12 +11,11 @@ import "./globals.css";
 
 import SendAuthToSW from "@/components/SendAuthToSW";
 import InstallPromptBanner from "@/components/InstallPromptBanner";
-// import ClientOnly from "@/src/components/ClientOnly";
 import ForegroundNotification from "@/components/ForegroundNotification";
-// import LayoutClientWrapper from "@/src/components/LayoutClientWrapper";
 import { ReactNode } from "react";
 import BottomTabBar from "@/components/BottomTabBar";
 import { GoogleAdSense } from "@/components/AdsenseInit";
+// import ClientOnly from "@/components/ClientOnly";
 
 export const metadata: Metadata = {
   title: "퀴즈벨 - 매일 쏟아지는 퀴즈 정답 알림 서비스 | QUIZBELLS",
@@ -165,6 +164,7 @@ export default async function RootLayout({
         <RegisterServiceWorker />
         <SendAuthToSW />
         <InstallPromptBanner />
+        {/* <ClientOnly /> */}
       </body>
     </html>
   );
