@@ -1,29 +1,37 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { detectDevice } from "@/utils/utils";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
 
 const BANNER_DISMISS_KEY = "quizbells_install_banner_dismissed_at";
-const ONE_HOUR = 60 * 60 * 1000;
+const ONE_HOUR = 10 * 60 * 1000;
 
 export default function InstallPromptBanner() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [showBanner, setShowBanner] = useState(false);
+  const [open, setOpen] = useState(true);
   const dismissedRef = useRef(false);
 
   useEffect(() => {
-    // 이전에 닫은 시간이 있는지 확인
     const lastDismissed = localStorage.getItem(BANNER_DISMISS_KEY);
     if (lastDismissed && Date.now() - Number(lastDismissed) < ONE_HOUR) {
       dismissedRef.current = true;
     }
 
     const handler = (e: any) => {
-      e.preventDefault(); // 자동 프롬프트 방지
+      alert(1);
+      e.preventDefault();
       if (!dismissedRef.current) {
         setDeferredPrompt(e);
-        setShowBanner(true);
+        setOpen(true);
       }
     };
 
@@ -45,20 +53,21 @@ export default function InstallPromptBanner() {
     if (outcome === "accepted") {
       console.log("✅ 설치 완료");
     }
+    setOpen(false);
   };
 
   const handleClose = () => {
     dismissedRef.current = true;
-    setShowBanner(false);
+    setOpen(false);
     localStorage.setItem(BANNER_DISMISS_KEY, Date.now().toString());
   };
 
-  if (!showBanner || detectDevice().isDesktop) return null;
+  if (!open || detectDevice().isDesktop) return null;
 
   return (
-    <div className="fixed right-0 left-0 bottom-20 z-50 border-t border-b border-gray-200 bg-white shadow-md rounded-md max-w-screen-md mx-auto">
-      <div className="flex items-center justify-between gap-4 p-4">
-        <div className="flex items-center gap-3">
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerContent className="max-w-screen-md mx-auto px-4 pb-6">
+        <DrawerHeader className="flex items-center gap-4">
           <Image
             src="/icons/android-icon-48x48.png"
             alt="App Logo"
@@ -67,24 +76,31 @@ export default function InstallPromptBanner() {
             className="rounded-sm"
             priority
           />
-          <div className="text-sm text-gray-800">
-            <strong className="block text-base">
+          <div className="text-center">
+            <DrawerTitle className="text-base font-semibold">
               퀴즈벨 앱을 설치해주세요
-            </strong>
-            <span className="text-gray-500">
+            </DrawerTitle>
+            <p className="text-sm text-gray-500">
               퀴즈 정답을 실시간으로 알려드립니다
-            </span>
+            </p>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="default" onClick={handleInstall} title="설치">
+        </DrawerHeader>
+        <DrawerFooter className="flex gap-2 justify-end">
+          <Button
+            onClick={handleInstall}
+            className="w-full min-h-[50px] text-lg font-semibold"
+          >
             설치
           </Button>
-          <Button variant="ghost" onClick={handleClose} title="닫기">
+          <Button
+            variant="ghost"
+            onClick={handleClose}
+            className="w-full min-h-[50px] text-lg"
+          >
             닫기
           </Button>
-        </div>
-      </div>
-    </div>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 }

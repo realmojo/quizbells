@@ -12,12 +12,16 @@ import {
 } from "@/components/ui/dialog";
 import moment from "moment";
 import ImageComponents from "@/components/ImageComponets";
-import { getQuitItem } from "@/utils/utils";
+import { getQuitItem, isApple, requestAlarmPermission } from "@/utils/utils";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
 import AppOpen from "@/components/AppOpen";
+import { Button } from "@/components/ui/button";
+import { updateSettings } from "@/utils/api";
+import { settingsStore } from "@/store/settingsStore";
+import { toast } from "sonner";
 
 interface Quiz {
   type: string;
@@ -248,9 +252,8 @@ export default function QuizModalClient({
   type: string;
   date: string;
 }) {
-  console.log("date1", date);
+  const { setSettings } = settingsStore();
   date = date === "today" ? moment().format("YYYY-MM-DD") : date;
-  console.log("date2", date);
   const pathname = usePathname();
   const hasFetched = useRef(false);
   const router = useRouter();
@@ -420,10 +423,36 @@ export default function QuizModalClient({
                     새로운 정답이 올라오면 알려드릴게요! 즐겨찾기 해두시면
                     편리해요 😊
                   </p>
+
+                  <Button
+                    className="mt-4 w-full px-4 min-h-[50px] text-lg font-semibold"
+                    onClick={async () => {
+                      const isGranted = await requestAlarmPermission();
+                      if (isGranted) {
+                        await setSettings();
+                        await updateSettings("isQuizAlarm", "Y");
+                        toast.success("알림 설정 완료");
+                      } else {
+                        if (isApple()) {
+                          alert(
+                            "iOS 브라우저 앱 출시 후 알림을 사용할 수 있습니다."
+                          );
+                        }
+                      }
+                    }}
+                  >
+                    🔔 퀴즈 정답 알림받기
+                  </Button>
                 </div>
               )}
 
               {/* 퀴즈 목록 */}
+              {quizzes.length > 0 && (
+                <article className="mb-6 bg-white px-4 tracking-tight">
+                  <AppOpen type={type} />
+                </article>
+              )}
+
               {quizzes.map((quiz, idx) => (
                 <article
                   key={idx}
@@ -477,11 +506,11 @@ export default function QuizModalClient({
                 </article>
               ))}
 
-              <article className="mb-6 bg-white  px-4 tracking-tight">
+              <article className="mb-6 bg-white px-4 tracking-tight">
                 <AppOpen type={type} />
               </article>
 
-              <article className="mb-6 bg-white  px-4 tracking-tight">
+              <article className="mb-6 bg-white px-4 tracking-tight">
                 <DescriptionComponent type={type} />
               </article>
 

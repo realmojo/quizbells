@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-// import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 import Script from "next/script";
 import Header from "@/components/layouts/Header";
@@ -115,13 +115,13 @@ export default async function RootLayout({
 
         {/* {process.env.NODE_ENV === "production" && (
           <> */}
-            <GoogleAdSense />
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
+        <GoogleAdSense />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -129,16 +129,16 @@ export default async function RootLayout({
               page_path: window.location.pathname,
             });
           `}
-            </Script>
-            <Script type="text/javascript" src="//wcs.naver.net/wcslog.js" />
-            <Script id="naver-analytics" type="text/javascript">{`
+        </Script>
+        <Script type="text/javascript" src="//wcs.naver.net/wcslog.js" />
+        <Script id="naver-analytics" type="text/javascript">{`
              if(!wcs_add) var wcs_add = {};
               wcs_add["wa"] = "136538e329b3cb0";
               if(window.wcs) {
               wcs_do();
             }
             `}</Script>
-          {/* </>
+        {/* </>
         )} */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/icons/android-icon-48x48.png" />
@@ -154,7 +154,7 @@ export default async function RootLayout({
           {modal}
         </main>
         <BottomTabBar />
-        {/* <Toaster
+        <Toaster
           position="bottom-center"
           toastOptions={{
             className: "mb-12", // 하단에서 살짝 위
@@ -165,7 +165,7 @@ export default async function RootLayout({
               fontWeight: "600",
             },
           }}
-        /> */}
+        />
         <RegisterServiceWorker />
         <SendAuthToSW />
         <InstallPromptBanner />
