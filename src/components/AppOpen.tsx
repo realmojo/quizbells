@@ -300,6 +300,26 @@ export default function AppOpen({ type }: { type: string }) {
         </a>
       </div>
     );
+  } else if (type === "hanabank") {
+    return (
+      <div className="w-full flex justify-center my-6">
+        <a
+          href={
+            isIOS()
+              ? "https://apps.apple.com/kr/app/%ED%95%98%EB%82%98%EC%9D%80%ED%96%89-%ED%95%98%EB%82%98%EC%9B%90%ED%81%90%EB%8A%94-%EC%A6%90%EA%B1%B0%EC%9A%B4-%ED%98%9C%ED%83%9D%EC%9D%B4-%EA%B0%80%EB%93%9D%ED%95%9C-%EC%9D%80%ED%96%89-%EC%95%B1/id1362508015"
+              : "https://play.google.com/store/apps/details?id=com.kebhana.hanapush"
+          }
+          target="_self"
+          rel="noopener noreferrer"
+          className="group w-full min-h-[50px]"
+        >
+          <Button className="bg-teal-400 w-full min-h-[50px] hover:bg-teal-400 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+            하나원큐 퀴즈 참여하기
+            <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+          </Button>
+        </a>
+      </div>
+    );
   }
 
   return null;

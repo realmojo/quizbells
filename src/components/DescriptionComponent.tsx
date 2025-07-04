@@ -746,6 +746,57 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "hanabank") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>하나원큐 오늘의 퀴즈</strong>는 하나은행의 대표 모바일 앱인{" "}
+          <strong>하나원큐</strong>에서 제공하는 퀴즈 콘텐츠입니다. 해당 퀴즈는
+          하나원큐 앱 내에서 참여할 수 있으며, 주로 앱 실행 시 표시되는 프로모션
+          배너 또는 퀴즈 이벤트 화면을 통해 접근 가능합니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 일반적으로{" "}
+          <strong>하나은행의 금융 상품, 서비스, 이벤트</strong> 등과 관련된
+          내용으로 출제되며, <strong>객관식 또는 단답형</strong> 문제 형식을
+          따릅니다. 참여자는 정답을 제출하면 리워드 혜택을 받을 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>퀴즈 정답을 맞히면 하나머니 포인트 또는 응모권</strong> 등의
+          혜택이 지급되며, 일부 이벤트의 경우 추첨을 통해 경품이 제공되기도
+          합니다. 지급 방식과 시기는 퀴즈별 이벤트 안내에 명시됩니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          하나원큐 오늘의 퀴즈는 <strong>하나은행 고객 또는 앱 사용자</strong>
+          라면 누구나 참여할 수 있으며, 퀴즈는 앱에서 정해진 기간 동안만
+          제공됩니다. 정답은 일반적으로 <strong>제출 즉시 확인</strong>{" "}
+          가능하며, 일부 이벤트는 일정 기간 후 당첨자 발표 형식으로 운영되기도
+          합니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈 내용과 리워드 조건은 수시로 변경될 수 있으며, 하나은행은 해당
+          이벤트를 통해 앱 이용자와의{" "}
+          <strong>상호 소통 및 금융 상품 홍보</strong>를 병행하고 있습니다. 상세
+          내용은 퀴즈 페이지 또는 하나원큐 앱 공지사항 등을 통해 확인할 수
+          있습니다.
+        </p>
+      </>
+    );
   }
 
   return null;

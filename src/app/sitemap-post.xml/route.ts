@@ -15,6 +15,7 @@ const QUIZ_TYPES = [
   "mydoctor",
   "kakaobank",
   "kakaopay",
+  "hanabank",
   "hpoint",
   "climate",
   "skstoa",

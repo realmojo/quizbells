@@ -112,46 +112,13 @@ export const quizItems = [
     image: "/images/skstoa.png",
     slotId: "7264340322",
   },
-  // {
-  //   type: "kakaopay",
-  //   typeKr: "카카오페이",
-  //   title: "퀴즈타임",
-  //   image: "/images/kakaopay.png",
-  // },
-  // {
-  //   type: "kakaobank",
-  //   typeKr: "카카오뱅크",
-  //   title: "OX퀴즈",
-  //   image: "/images/kakaobank.png",
-  // },
-  // {
-  //   type: "kakaopay",
-  //   typeKr: "카카오페이",
-  //   title: "퀴즈타임",
-  //   image: "/images/kakaopay.png",
-  // },
-  // {
-  //   type: "hanabank",
-  //   typeKr: "하나은행",
-  //   title: "퀴즈하나",
-  //   image: "/images/quizhana.png",
-  //   description1:
-  //     "본 이벤트는 하나은행의 사정에 따라 내용이 변경되거나 종료될 수 있습니다.(단 기조건 충족 손님 제외)",
-  //   description2:
-  //     "매일 퀴즈HANA 정답을 맞히시면 5~10,000개의 원큐볼이 랜덤으로 즉시 적립됩니다. (1인/1회 참여가능)",
-  //   description3:
-  //     "원큐볼 지급 개수는 변경될 수 있으며, 적립된 원큐볼은 락커룸 > 원큐볼에서 확인 가능합니다.",
-  //   description4:
-  //     "이벤트 관련 자세한 사항은 하나은행 고객센터(1599-1111)로 문의 바랍니다.",
-  //   description:
-  //     "보유 원큐볼은 2025년 1월 2일부터 하나머니로 전환 후 사용 가능합니다. (1회 전환: 최소 100개 ~ 최대 30,000개 / 1일 최대 500,000개 전환 가능) * 2024년 6월 11일 부터 2024년 12월 10일 18시까지 적립된 원큐볼은 2024년 12월 10일 자정 리셋 되었습니다. * 2024년 12월 11일 이후 확인되는 원큐볼은 2025년 12월 10일까지만 유효합니다. (2024년 12월 10일 18시 이후 적립 분)",
-  // },
-  // {
-  //   type: "kbstar",
-  //   typeKr: "KB스타",
-  //   title: "도전미션 스타퀴즈",
-  //   image: "/images/kbstar.png",
-  // },
+  {
+    type: "hanabank",
+    typeKr: "하나은행",
+    title: "퀴즈하나",
+    image: "/images/hanabank.png",
+    slotId: "1605120854",
+  },
 ];
 
 export const detectDevice = () => {
