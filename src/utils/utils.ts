@@ -105,6 +105,13 @@ export const quizItems = [
     image: "/images/climate.png",
     slotId: "7264340322",
   },
+  {
+    type: "skstoa",
+    typeKr: "SK 스토아",
+    title: "퀴즈타임",
+    image: "/images/skstoa.png",
+    slotId: "7264340322",
+  },
   // {
   //   type: "kakaopay",
   //   typeKr: "카카오페이",

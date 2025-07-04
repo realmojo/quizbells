@@ -17,6 +17,7 @@ const QUIZ_TYPES = [
   "kakaopay",
   "hpoint",
   "climate",
+  "skstoa",
 ];
 
 // 2025년 6월 1일부터 내일까지 포함된 날짜 리스트 생성

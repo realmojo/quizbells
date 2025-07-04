@@ -677,6 +677,47 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "skstoa") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>SK스토아 퀴즈</strong>는 SK스토아에서 운영하는 쇼핑 연계형 이벤트 퀴즈입니다. SK스토아는 TV홈쇼핑과 모바일 커머스를 운영하는 통합 플랫폼으로, 사용자는 앱 또는 웹사이트를 통해 퀴즈에 참여할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 일반적으로 SK스토아의 상품 정보, 방송 콘텐츠, 쇼핑 혜택 등과 관련된 주제로 출제됩니다. SK스토아 퀴즈는 <strong>이벤트성으로 간헐적 제공</strong>되며, 특정 기간 동안 진행되는 프로모션과 함께 열리는 경우가 많습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          참여자는 <strong>SK스토아 모바일 앱</strong>이나 웹사이트 내 이벤트 배너, 알림 등을 통해 퀴즈에 접근할 수 있으며, 정답 제출 시 포인트나 적립금, 할인쿠폰 등의 <strong>리워드</strong>를 받을 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 선택형, 객관식 또는 OX 형식으로 구성되며, 퀴즈 이벤트에 따라 <strong>참여 횟수나 보상 조건</strong>이 달라질 수 있습니다. 이벤트 상세 안내는 SK스토아 공지사항이나 각 퀴즈 페이지에서 확인할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          SK스토아 퀴즈는 <strong>회원 가입자에 한해 참여 가능</strong>하며, 로그인 후 참여가 원칙입니다. 일부 이벤트의 경우 방송 중 실시간 참여를 요구하기도 하며, 방송 중 퀴즈 정답을 공개하는 방식도 존재합니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          SK스토아는 해당 퀴즈를 통해 고객의 쇼핑 몰입도를 높이고, <strong>참여형 마케팅</strong>을 통해 고객과의 소통을 강화하고 있습니다. 적립된 포인트는 추후 구매 시 현금처럼 사용 가능하며, 일부 혜택은 이벤트 종료 후 자동 지급됩니다.
+        </p>
+      </>
+    );
   }
 
   return null;
