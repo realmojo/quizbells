@@ -86,14 +86,14 @@ export default function InstallPromptBanner() {
         </DrawerHeader>
         <DrawerFooter className="flex gap-2 justify-end">
           <Button
-            onClick={handleInstall}
+            onClick={() => handleInstall()}
             className="w-full min-h-[50px] text-lg font-semibold"
           >
             설치
           </Button>
           <Button
             variant="ghost"
-            onClick={handleClose}
+            onClick={() => handleClose()}
             className="w-full min-h-[50px] text-lg"
           >
             닫기
