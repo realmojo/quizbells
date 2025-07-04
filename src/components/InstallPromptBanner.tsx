@@ -45,7 +45,6 @@ export default function InstallPromptBanner() {
 
     if (isIOS()) {
       if (!dismissedRef.current) {
-        console.log("🔔 설치 모달 열림 ios");
         setOpen(true);
       }
     } else {
@@ -53,7 +52,6 @@ export default function InstallPromptBanner() {
         e.preventDefault();
         if (!dismissedRef.current) {
           setDeferredPrompt(e);
-          console.log("🔔 설치 모달 열림 android");
           setOpen(true);
         }
       };
