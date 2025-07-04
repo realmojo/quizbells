@@ -365,6 +365,18 @@ export const isApple = () => {
   return isIOS || isIPad || isMac;
 };
 
+export const isIOS = () => {
+  const ua = navigator.userAgent;
+  const platform = navigator.platform;
+  const maxTouchPoints = navigator.maxTouchPoints || 0;
+
+  const isIOS = /iPhone|iPod/.test(ua);
+  const isIPad =
+    /iPad/.test(ua) || (platform === "MacIntel" && maxTouchPoints > 1);
+
+  return isIOS || isIPad;
+};
+
 export const isWebView = () => {
   if (typeof window === "undefined") return false;
 

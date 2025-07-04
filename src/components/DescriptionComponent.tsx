@@ -360,46 +360,6 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
-  } else if (type === "kakaopay") {
-    return (
-      <>
-        <p
-          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
-          itemProp="description"
-        >
-          <strong>카카오페이 퀴즈타임</strong>은 카카오페이 앱의 ‘혜택’ 또는
-          ‘매일 모으기’ 메뉴에서 참여할 수 있는 실시간 퀴즈 이벤트입니다. 문제가
-          출제되면 정답 입력 시<strong>카카오페이 포인트(페이포인트)</strong>가
-          즉시 적립됩니다.
-        </p>
-
-        <p
-          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
-          itemProp="description"
-        >
-          매번 랜덤한 문제가 출제되며, 최대 <strong>20문제까지 참여</strong>할
-          수 있고, 각 문제를 맞히면 대략 <strong>20P</strong>가 즉시 지급됩니다.
-        </p>
-
-        <p
-          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
-          itemProp="description"
-        >
-          퀴즈타임은 <strong>선착순 응답 방식</strong>으로 운영되며, 문제는 매주
-          3~4일 무작위 시간에 열립니다. 특히 오전 시간대에 자주 오픈한다고
-          알려져 있어, 꾸준한 참여가 중요합니다.
-        </p>
-
-        <p
-          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
-          itemProp="description"
-        >
-          적립된 페이포인트는 카카오페이 결제나 제휴 쿠폰 구매에 사용할 수
-          있으며, 퀴즈타임 외에도 출석체크, 만보기 등 다양한 ‘매일 모으기’
-          이벤트 기능이 함께 제공됩니다.
-        </p>
-      </>
-    );
   } else if (type === "kbstar") {
     return (
       <>
@@ -677,6 +637,58 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "hpoint") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>현대포인트 퀴즈</strong>는 현대백화점그룹의 통합 멤버십
+          서비스인
+          <strong> H.Point</strong>에서 운영하는 퀴즈형 이벤트입니다. 사용자는
+          H.Point 모바일 앱을 통해 퀴즈에 참여할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 일반적으로{" "}
+          <strong>현대백화점, 현대홈쇼핑, 현대그린푸드</strong> 등 그룹 계열사의
+          서비스, 프로모션 또는 쇼핑 정보와 관련된 내용을 바탕으로 출제됩니다.
+          특정 테마나 브랜드 캠페인에 맞춰 퀴즈가 진행되며,
+          <strong>정답 제출 시 H.Point 적립</strong> 혜택이 주어집니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          참여자는 H.Point 앱 내 이벤트 영역에서 퀴즈를 확인할 수 있으며, 정답을
+          맞히면 <strong>즉시 포인트</strong>가 적립됩니다. 일부 퀴즈는 참여
+          횟수나 기간이 제한되어 있으며,
+          <strong>일일 퀴즈 또는 주간 이벤트</strong> 형식으로 제공되기도
+          합니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈 형식은 <strong>객관식 또는 단답형</strong>으로 출제되며, 힌트나
+          관련 정보는 이벤트 설명 또는 H.Point 콘텐츠에서 함께 제공됩니다. 퀴즈
+          참여는 <strong>로그인한 회원에 한해</strong> 가능하며, H.Point
+          회원가입 후 누구나 이용할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          적립된 H.Point는 <strong>현대백화점, 현대홈쇼핑, H몰 등</strong>{" "}
+          제휴처에서 사용할 수 있으며, 일부 퀴즈는 당첨자 추첨을 통해 추가
+          경품이 제공되는 경우도 있습니다. 퀴즈 내용은 H.Point 앱 공지사항이나
+          이벤트 화면에서 확인 가능합니다.
+        </p>
+      </>
+    );
   } else if (type === "skstoa") {
     return (
       <>
@@ -684,37 +696,53 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>SK스토아 퀴즈</strong>는 SK스토아에서 운영하는 쇼핑 연계형 이벤트 퀴즈입니다. SK스토아는 TV홈쇼핑과 모바일 커머스를 운영하는 통합 플랫폼으로, 사용자는 앱 또는 웹사이트를 통해 퀴즈에 참여할 수 있습니다.
+          <strong>SK스토아 퀴즈</strong>는 SK스토아에서 운영하는 쇼핑 연계형
+          이벤트 퀴즈입니다. SK스토아는 TV홈쇼핑과 모바일 커머스를 운영하는 통합
+          플랫폼으로, 사용자는 앱 또는 웹사이트를 통해 퀴즈에 참여할 수
+          있습니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          퀴즈는 일반적으로 SK스토아의 상품 정보, 방송 콘텐츠, 쇼핑 혜택 등과 관련된 주제로 출제됩니다. SK스토아 퀴즈는 <strong>이벤트성으로 간헐적 제공</strong>되며, 특정 기간 동안 진행되는 프로모션과 함께 열리는 경우가 많습니다.
+          퀴즈는 일반적으로 SK스토아의 상품 정보, 방송 콘텐츠, 쇼핑 혜택 등과
+          관련된 주제로 출제됩니다. SK스토아 퀴즈는{" "}
+          <strong>이벤트성으로 간헐적 제공</strong>되며, 특정 기간 동안 진행되는
+          프로모션과 함께 열리는 경우가 많습니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          참여자는 <strong>SK스토아 모바일 앱</strong>이나 웹사이트 내 이벤트 배너, 알림 등을 통해 퀴즈에 접근할 수 있으며, 정답 제출 시 포인트나 적립금, 할인쿠폰 등의 <strong>리워드</strong>를 받을 수 있습니다.
+          참여자는 <strong>SK스토아 모바일 앱</strong>이나 웹사이트 내 이벤트
+          배너, 알림 등을 통해 퀴즈에 접근할 수 있으며, 정답 제출 시 포인트나
+          적립금, 할인쿠폰 등의 <strong>리워드</strong>를 받을 수 있습니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          퀴즈는 선택형, 객관식 또는 OX 형식으로 구성되며, 퀴즈 이벤트에 따라 <strong>참여 횟수나 보상 조건</strong>이 달라질 수 있습니다. 이벤트 상세 안내는 SK스토아 공지사항이나 각 퀴즈 페이지에서 확인할 수 있습니다.
+          퀴즈는 선택형, 객관식 또는 OX 형식으로 구성되며, 퀴즈 이벤트에 따라{" "}
+          <strong>참여 횟수나 보상 조건</strong>이 달라질 수 있습니다. 이벤트
+          상세 안내는 SK스토아 공지사항이나 각 퀴즈 페이지에서 확인할 수
+          있습니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          SK스토아 퀴즈는 <strong>회원 가입자에 한해 참여 가능</strong>하며, 로그인 후 참여가 원칙입니다. 일부 이벤트의 경우 방송 중 실시간 참여를 요구하기도 하며, 방송 중 퀴즈 정답을 공개하는 방식도 존재합니다.
+          SK스토아 퀴즈는 <strong>회원 가입자에 한해 참여 가능</strong>하며,
+          로그인 후 참여가 원칙입니다. 일부 이벤트의 경우 방송 중 실시간 참여를
+          요구하기도 하며, 방송 중 퀴즈 정답을 공개하는 방식도 존재합니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          SK스토아는 해당 퀴즈를 통해 고객의 쇼핑 몰입도를 높이고, <strong>참여형 마케팅</strong>을 통해 고객과의 소통을 강화하고 있습니다. 적립된 포인트는 추후 구매 시 현금처럼 사용 가능하며, 일부 혜택은 이벤트 종료 후 자동 지급됩니다.
+          SK스토아는 해당 퀴즈를 통해 고객의 쇼핑 몰입도를 높이고,{" "}
+          <strong>참여형 마케팅</strong>을 통해 고객과의 소통을 강화하고
+          있습니다. 적립된 포인트는 추후 구매 시 현금처럼 사용 가능하며, 일부
+          혜택은 이벤트 종료 후 자동 지급됩니다.
         </p>
       </>
     );

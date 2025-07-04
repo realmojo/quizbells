@@ -17,6 +17,7 @@ import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
+import AppOpen from "@/components/AppOpen";
 
 interface Quiz {
   type: string;
@@ -475,6 +476,10 @@ export default function QuizModalClient({
                   )}
                 </article>
               ))}
+
+              <article className="mb-6 bg-white  px-4 tracking-tight">
+                <AppOpen type={type} />
+              </article>
 
               <article className="mb-6 bg-white  px-4 tracking-tight">
                 <DescriptionComponent type={type} />
