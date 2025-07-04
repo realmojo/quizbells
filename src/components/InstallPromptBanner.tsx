@@ -27,7 +27,6 @@ export default function InstallPromptBanner() {
     }
 
     const handler = (e: any) => {
-      alert(1);
       e.preventDefault();
       if (!dismissedRef.current) {
         setDeferredPrompt(e);
