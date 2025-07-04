@@ -80,7 +80,11 @@ export default function AppOpen({ type }: { type: string }) {
     return (
       <div className="w-full flex justify-center my-6">
         <a
-          href="https://link.kakaopay.com/_/h-lKhnA"
+          href={
+            isIOS()
+              ? "https://apps.apple.com/kr/app/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%8E%98%EC%9D%B4/id1464496236"
+              : "https://play.google.com/store/apps/details?id=com.kakaopay.app"
+          }
           target="_self"
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
