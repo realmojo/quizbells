@@ -119,6 +119,13 @@ export const quizItems = [
     image: "/images/hanabank.png",
     slotId: "1605120854",
   },
+  {
+    type: "auction",
+    typeKr: "옥션",
+    title: "매일퀴즈",
+    image: "/images/auction.png",
+    slotId: "4232667087",
+  },
 ];
 
 export const detectDevice = () => {

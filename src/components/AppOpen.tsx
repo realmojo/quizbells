@@ -17,7 +17,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-blue-600 w-full min-h-[50px] hover:bg-blue-700 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-blue-600 w-full min-h-[50px] hover:bg-blue-700 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             토스 행운퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -37,7 +37,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-blue-600 w-full min-h-[50px] hover:bg-blue-700 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-blue-600 w-full min-h-[50px] hover:bg-blue-700 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             캐시워크 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -57,7 +57,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-blue-600 w-full min-h-[50px] hover:bg-blue-700 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-blue-600 w-full min-h-[50px] hover:bg-blue-700 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             신한쏠페이 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -73,7 +73,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-black px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-black px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             카카오뱅크 OX 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -93,7 +93,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-black px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-black px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             카카오페이 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -113,7 +113,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-red-400 w-full min-h-[50px] hover:bg-red-400 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-red-400 w-full min-h-[50px] hover:bg-red-400 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             오케이캐시백 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -133,7 +133,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-black px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-black px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             캐시닥 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -153,7 +153,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-black px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-black px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             KB스타뱅킹 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -173,7 +173,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-violet-400 w-full min-h-[50px] hover:bg-violet-400 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-violet-400 w-full min-h-[50px] hover:bg-violet-400 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             비트버니 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -193,7 +193,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-blue-600 w-full min-h-[50px] hover:bg-blue-600 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-blue-600 w-full min-h-[50px] hover:bg-blue-600 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             삼쩜삼 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -213,7 +213,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-orange-400 w-full min-h-[50px] hover:bg-orange-400 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-orange-400 w-full min-h-[50px] hover:bg-orange-400 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             닥터나우 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -233,7 +233,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-blue-400 w-full min-h-[50px] hover:bg-blue-400 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-blue-400 w-full min-h-[50px] hover:bg-blue-400 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             나만의닥터 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -253,7 +253,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-indigo-600 w-full min-h-[50px] hover:bg-indigo-600 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-indigo-600 w-full min-h-[50px] hover:bg-indigo-600 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             기후동행기회소득 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -273,7 +273,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-indigo-600 w-full min-h-[50px] hover:bg-indigo-600 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-indigo-600 w-full min-h-[50px] hover:bg-indigo-600 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             에이치포인트 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -293,7 +293,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-red-400 w-full min-h-[50px] hover:bg-red-400 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-red-400 w-full min-h-[50px] hover:bg-red-400 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             SK스토아 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -313,8 +313,28 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-teal-400 w-full min-h-[50px] hover:bg-teal-400 text-white px-6 py-4 text-lg font-semibold  shadow-md transition-all duration-300 group-hover:scale-105">
+          <Button className="bg-teal-400 w-full min-h-[50px] hover:bg-teal-400 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
             하나원큐 퀴즈 참여하기
+            <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+          </Button>
+        </a>
+      </div>
+    );
+  } else if (type === "auction") {
+    return (
+      <div className="w-full flex justify-center my-6">
+        <a
+          href={
+            isIOS()
+              ? "https://apps.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BC-%EC%87%BC%ED%95%91%EC%9D%80-%EC%98%A5%EC%85%98/id380239756"
+              : "https://play.google.com/store/apps/details?id=com.ebay.kr.auction"
+          }
+          target="_self"
+          rel="noopener noreferrer"
+          className="group w-full min-h-[50px]"
+        >
+          <Button className="bg-red-400 w-full min-h-[50px] hover:bg-red-400 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-105">
+            옥션 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
         </a>

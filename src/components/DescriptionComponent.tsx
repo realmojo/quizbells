@@ -797,6 +797,59 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "auction") {
+    return (
+      <>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>옥션 매일 퀴즈</strong>는 이베이코리아에서 운영하는 온라인
+          쇼핑몰 <strong>옥션(Auction)</strong>에서 제공하는 참여형 퀴즈
+          이벤트입니다. 퀴즈는 주로{" "}
+          <strong>옥션 모바일 앱 또는 웹사이트</strong>를 통해 참여할 수 있으며,
+          메인 화면 배너 또는 이벤트 메뉴에서 퀴즈로 이동 가능합니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈는 일반적으로 <strong>하루 1문제</strong>가 출제되며,{" "}
+          <strong>쇼핑 혜택, 인기 상품, 할인 이벤트</strong>와 관련된 주제를
+          포함합니다. 객관식 또는 빈칸 채우기 형태로 구성되며, 정답을 제출하면
+          포인트 또는 응모권 등의 리워드가 제공됩니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          <strong>
+            정답을 맞히면 스마일캐시 또는 할인쿠폰, 경품 응모 기회
+          </strong>{" "}
+          등의 보상이 주어지며, 일부 이벤트는{" "}
+          <strong>선착순 참여자 또는 추첨 방식</strong>으로 당첨자를 선정합니다.
+          당첨 여부는 이벤트 종료 후 별도 공지되거나, 스마일캐시 적립 내역 등을
+          통해 확인할 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          옥션 매일 퀴즈는 <strong>옥션 회원</strong>이라면 누구나 참여
+          가능하며, 참여를 위해 로그인이 필요합니다. 정답은{" "}
+          <strong>제출 직후 확인</strong>할 수 있으며, 잘못된 정답을
+          제출하더라도 하루 1회 재참여 기회는 제한됩니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          해당 이벤트는 <strong>쇼핑몰 내 사용자 활성화 및 브랜드 홍보</strong>
+          를 목적으로 운영되며, 자세한 이벤트 조건, 정답 공개 시점, 리워드 지급
+          방식 등은 옥션 공식 이벤트 페이지에서 확인할 수 있습니다.
+        </p>
+      </>
+    );
   }
 
   return null;
