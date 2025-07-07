@@ -1,5 +1,6 @@
 const axios = require("axios");
 const moment = require("moment");
+// const fs = require("fs");
 
 const { doInsert } = require("./db");
 
@@ -22,8 +23,6 @@ const getType = (title) => {
     return "kakaopay";
   } else if (title.includes("에이치")) {
     return "hpoint";
-  } else if (title.includes("농협")) {
-    return "nh";
   } else if (title.includes("비트버니")) {
     return "bitbunny";
   } else if (title.includes("농협")) {
@@ -43,7 +42,7 @@ const getType = (title) => {
   }
 };
 
-const extract3o3QuizFromText = async (text, type) => {
+const extract3o3QuizFromText = async (text, type, notifiedTypes) => {
   const regex = /퀴즈\s(.+?)\sO\sX/i; // "퀴즈 소득세는 ~ O X" 형태를 캡처
   const answerRegex = /정답은\s([OX])/i; // "정답은 O" 또는 "정답은 X"
 
@@ -64,10 +63,10 @@ const extract3o3QuizFromText = async (text, type) => {
     },
   ];
 
-  await doInsert(quizzes, type);
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
-const extractDoctornowQuizFromText = async (text, type) => {
+const extractDoctornowQuizFromText = async (text, type, notifiedTypes) => {
   // 질문 추출: "O X"가 붙은 문장 중 하나를 질문으로 가정
   const questionRegex = /([^\n]+?O\s*X)/i;
   const questionMatch = text.match(questionRegex);
@@ -87,10 +86,10 @@ const extractDoctornowQuizFromText = async (text, type) => {
     },
   ];
 
-  await doInsert(quizzes, type);
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
-const extractMydoctorQuizFromText = async (text, type) => {
+const extractMydoctorQuizFromText = async (text, type, notifiedTypes) => {
   const questionMatch = text.match(/([^\n.]+[?\.])\s*O\s+[^\s]+\s+X\s+[^\s]+/);
   const question = questionMatch ? questionMatch[1].trim() : "";
 
@@ -106,10 +105,10 @@ const extractMydoctorQuizFromText = async (text, type) => {
     },
   ];
 
-  await doInsert(quizzes, type);
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
-const extractHpointQuizFromText = async (title, text, type) => {
+const extractHpointQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title.split("!")[1].trim();
 
   const answerRegex = /정답은\s*[:：]?\s*([가-힣a-zA-Z0-9]+)/i;
@@ -127,10 +126,15 @@ const extractHpointQuizFromText = async (title, text, type) => {
     },
   ];
 
-  await doInsert(quizzes, type);
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
-const extractKakaopayQuizFromText = async (title, text, type) => {
+const extractKakaopayQuizFromText = async (
+  title,
+  text,
+  type,
+  notifiedTypes
+) => {
   const question = title.split("!")[1].trim();
 
   const answerRegex = /정답은\s*[:：]?\s*([가-힣a-zA-Z0-9]+)/i;
@@ -148,10 +152,10 @@ const extractKakaopayQuizFromText = async (title, text, type) => {
     },
   ];
 
-  await doInsert(quizzes, type);
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
-const extractShinhanQuizFromText = async (title, text, type) => {
+const extractShinhanQuizFromText = async (title, text, type, notifiedTypes) => {
   let quizType = "";
 
   if (title.includes("출석퀴즈") || text.includes("출석퀴즈")) {
@@ -179,10 +183,10 @@ const extractShinhanQuizFromText = async (title, text, type) => {
     },
   ];
 
-  await doInsert(quizzes, type);
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
-const extractSkstoaQuizFromText = async (title, text, type) => {
+const extractSkstoaQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title.split("!")[1].trim();
 
   // ✅ 2. 정답 추출 개선
@@ -198,10 +202,15 @@ const extractSkstoaQuizFromText = async (title, text, type) => {
     },
   ];
 
-  await doInsert(quizzes, type);
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
-const extractOkcashbagQuizFromText = async (title, text, type) => {
+const extractOkcashbagQuizFromText = async (
+  title,
+  text,
+  type,
+  notifiedTypes
+) => {
   let titles = title.split("정답");
 
   if (titles[1].length < 6) {
@@ -223,10 +232,15 @@ const extractOkcashbagQuizFromText = async (title, text, type) => {
     },
   ];
 
-  await doInsert(quizzes, type);
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
-const extractKakaobankQuizFromText = async (title, text, type) => {
+const extractKakaobankQuizFromText = async (
+  title,
+  text,
+  type,
+  notifiedTypes
+) => {
   const titleSplits = title.split("정답!");
   if (titleSplits.length > 1) {
     const question = titleSplits[1].trim();
@@ -246,12 +260,17 @@ const extractKakaobankQuizFromText = async (title, text, type) => {
         },
       ];
 
-      await doInsert(quizzes, type);
+      await doInsert(quizzes, type, notifiedTypes);
     }
   }
 };
 
-const extractCashwalkQuizFromText = async (title, text, type) => {
+const extractCashwalkQuizFromText = async (
+  title,
+  text,
+  type,
+  notifiedTypes
+) => {
   const titleSplits = title.split("정답 ");
   if (titleSplits.length > 1) {
     const question = titleSplits[1].trim();
@@ -271,12 +290,17 @@ const extractCashwalkQuizFromText = async (title, text, type) => {
         },
       ];
 
-      await doInsert(quizzes, type);
+      await doInsert(quizzes, type, notifiedTypes);
     }
   }
 };
 
-const extractHanabankQuizFromText = async (title, text, type) => {
+const extractHanabankQuizFromText = async (
+  title,
+  text,
+  type,
+  notifiedTypes
+) => {
   const titleSplits = title.split("정답!");
   if (titleSplits.length > 1) {
     const question = titleSplits[1].trim();
@@ -296,12 +320,12 @@ const extractHanabankQuizFromText = async (title, text, type) => {
         },
       ];
 
-      await doInsert(quizzes, type);
+      await doInsert(quizzes, type, notifiedTypes);
     }
   }
 };
 
-const extractKbstQuizFromText = async (title, text, type) => {
+const extractKbstQuizFromText = async (title, text, type, notifiedTypes) => {
   const titleSplits = title.split("정답!");
   if (titleSplits.length > 1) {
     const question = titleSplits[1].trim();
@@ -321,12 +345,12 @@ const extractKbstQuizFromText = async (title, text, type) => {
         },
       ];
 
-      await doInsert(quizzes, type);
+      await doInsert(quizzes, type, notifiedTypes);
     }
   }
 };
 
-const extractAuctionQuizFromText = async (title, text, type) => {
+const extractAuctionQuizFromText = async (title, text, type, notifiedTypes) => {
   const titleSplits = title.split("정답!");
   if (titleSplits.length > 1) {
     const question = titleSplits[1].trim();
@@ -351,12 +375,12 @@ const extractAuctionQuizFromText = async (title, text, type) => {
         },
       ];
 
-      await doInsert(quizzes, type);
+      await doInsert(quizzes, type, notifiedTypes);
     }
   }
 };
 
-const extractCashdocQuizFromText = async (title, text, type) => {
+const extractCashdocQuizFromText = async (title, text, type, notifiedTypes) => {
   let titles = title.split("정답");
 
   if (titles[1].length < 6) {
@@ -385,7 +409,35 @@ const extractCashdocQuizFromText = async (title, text, type) => {
       },
     ];
 
-    await doInsert(quizzes, type);
+    await doInsert(quizzes, type, notifiedTypes);
+  }
+};
+
+const extractNhQuizFromText = async (title, text, type, notifiedTypes) => {
+  let titles = title.split("정답!");
+
+  if (titles[1].length < 6) {
+    question = titles[0].trim(); // 날짜가 뒤로오는 경우
+  } else {
+    question = titles[1].trim(); // 날짜가 앞에 질문이 뒤에 오는 경우
+  }
+
+  // ✅ 2. 정답 추출 개선
+  const answerMatch = text.match(/정답은\s+([^\n#]+)/);
+  let answer = answerMatch ? answerMatch[1].trim() : null;
+
+  if (answer.length < 100) {
+    // 너무 길면 오류임
+    const quizzes = [
+      {
+        type: "디깅퀴즈",
+        question,
+        answer,
+        otherAnswers: [],
+      },
+    ];
+
+    await doInsert(quizzes, type, notifiedTypes);
   }
 };
 
@@ -424,38 +476,41 @@ const getVeil8000Quiz = async () => {
     }
   });
 
+  const notifiedTypes = new Set(); // ← 알림 발송 추적용 Set
+
   for (const post of quizItems) {
     const { title, content, type } = post;
-
     // console.log("type: ", type);
     if (type === "3o3") {
-      await extract3o3QuizFromText(content, type);
+      await extract3o3QuizFromText(content, type, notifiedTypes);
     } else if (type === "doctornow") {
-      await extractDoctornowQuizFromText(content, type);
+      await extractDoctornowQuizFromText(content, type, notifiedTypes);
     } else if (type === "mydoctor") {
-      await extractMydoctorQuizFromText(content, type);
+      await extractMydoctorQuizFromText(content, type, notifiedTypes);
     } else if (type === "kakaobank") {
-      await extractKakaobankQuizFromText(title, content, type);
+      await extractKakaobankQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "hpoint") {
-      await extractHpointQuizFromText(title, content, type);
+      await extractHpointQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "kakaopay") {
-      await extractKakaopayQuizFromText(title, content, type);
+      await extractKakaopayQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "shinhan") {
-      await extractShinhanQuizFromText(title, content, type);
+      await extractShinhanQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "skstoa") {
-      await extractSkstoaQuizFromText(title, content, type);
+      await extractSkstoaQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "okcashbag") {
-      await extractOkcashbagQuizFromText(title, content, type);
+      await extractOkcashbagQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "cashwalk") {
-      await extractCashwalkQuizFromText(title, content, type);
+      await extractCashwalkQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "hanabank") {
-      await extractHanabankQuizFromText(title, content, type);
+      await extractHanabankQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "kbstar") {
-      await extractKbstQuizFromText(title, content, type);
+      await extractKbstQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "auction") {
-      await extractAuctionQuizFromText(title, content, type);
+      await extractAuctionQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "cashdoc") {
-      await extractCashdocQuizFromText(title, content, type);
+      await extractCashdocQuizFromText(title, content, type, notifiedTypes);
+    } else if (type === "nh") {
+      await extractNhQuizFromText(title, content, type, notifiedTypes);
     }
   }
 

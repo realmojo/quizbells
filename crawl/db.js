@@ -105,6 +105,12 @@ const quizItems = [
     title: "매일퀴즈",
     image: "/images/auction.png",
   },
+  {
+    type: "nh",
+    typeKr: "농협",
+    title: "디깅퀴즈",
+    image: "/images/nh.png",
+  },
 ];
 
 const escapeSQLString = (str) => {
