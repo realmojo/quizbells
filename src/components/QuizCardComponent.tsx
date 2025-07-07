@@ -38,10 +38,10 @@ export default function QuizCardComponent({
                     priority
                   />
                 </div>
-                <h2 className="text-sm md:text-base lg:text-lg font-semibold p-2 pb-0">
+                <h2 className="text-sm md:text-base line-clamp-1 lg:text-lg font-semibold p-2 pb-0">
                   {quiz.typeKr}
                 </h2>
-                <div className="text-sm md:text-base lg:text-sm font-normal px-2 pb-2">
+                <div className="text-sm md:text-xs line-clamp-1 lg:text-xs font-normal px-2 pb-2">
                   {quiz.title}
                 </div>
               </CardContent>
@@ -56,7 +56,7 @@ export default function QuizCardComponent({
         const href = `/quiz/${quiz.type}/${isToday ? "today" : answerDate}`;
 
         return (
-          <Link href={href} prefetch key={quiz.type} >
+          <Link href={href} prefetch key={quiz.type}>
             <Card className="gap-0 py-0 hover:shadow-lg transition duration-200 cursor-pointer">
               <CardContent className="flex p-0 space-x-4">
                 <div className="relative w-20 h-20 flex-shrink-0">

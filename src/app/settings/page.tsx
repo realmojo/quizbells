@@ -31,7 +31,7 @@ export default function SettingsPage() {
 
   return (
     <article className="mt-4 mb-24 flex flex-col items-center justify-center">
-      <section className="w-full max-w-[860px] ">
+      <section className="w-full max-w-[720px] ">
         <h2
           className="mb-6 text-xl px-4 font-bold"
           onClick={() => setIsClicked(!isClicked)}

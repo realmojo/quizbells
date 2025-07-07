@@ -39,7 +39,7 @@ export default function QuizPage() {
         />
       </Head>
 
-      <div className="max-w-4xl mx-auto p-4 mb-10">
+      <div className="max-w-[720px] mx-auto p-4 mb-10">
         {/* 타이틀 & 설명 */}
         <h1 className="text-2xl font-bold mb-2 text-gray-900">
           📌 오늘의 앱테크 퀴즈 정답 모음

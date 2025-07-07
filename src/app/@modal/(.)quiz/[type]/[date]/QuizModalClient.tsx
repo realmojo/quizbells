@@ -387,6 +387,8 @@ export default function QuizModalClient({
                 <ImageComponents
                   answerDate={answerDateString?.toString() || ""}
                   type={type}
+                  width={600}
+                  height={600}
                 />
                 <div className="text-xs text-center mt-2 mb-2 text-gray-500">
                   {`${answerDateString} ${getQuitItem(type)?.typeKr} ${getQuitItem(type)?.title} 퀴즈 정답`}

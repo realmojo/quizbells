@@ -28,7 +28,7 @@ export default function Header() {
   const title = getTitle(pathname);
 
   return (
-    <header className="container mx-auto flex h-16 w-full max-w-[860px] items-center justify-between px-4 shadow-[0_2px_6px_-2px_rgba(0,0,0,0.15)]">
+    <header className="container mx-auto flex h-16 w-full max-w-[720px] items-center justify-between px-4 shadow-[0_2px_6px_-2px_rgba(0,0,0,0.15)]">
       {/* 왼쪽: 제목 */}
       <div className="flex items-center gap-3 text-2xl font-semibold">
         {title}
