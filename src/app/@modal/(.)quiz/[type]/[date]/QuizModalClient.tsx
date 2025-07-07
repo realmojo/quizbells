@@ -2,6 +2,7 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Dialog,
@@ -294,7 +295,6 @@ export default function QuizModalClient({
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!hasFetched.current) {
-      console.log("여기?");
       hasFetched.current = true;
       fetchQuizData();
     }
@@ -303,8 +303,8 @@ export default function QuizModalClient({
   useEffect(() => {
     const splitPathname = pathname.split("/");
     console.log("splitPathname", splitPathname);
-    if (splitPathname.length === 3) {
-      setOpen(true); // URL(type)이 바뀌었을 때 다시 열기
+    if (splitPathname.length === 3 && splitPathname[1] === "quiz") {
+      setOpen(true);
     }
   }, [pathname]);
 

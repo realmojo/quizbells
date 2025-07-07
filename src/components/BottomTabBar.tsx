@@ -74,7 +74,7 @@ export default function BottomTabBar() {
       <button
         onClick={() => router.push("/posts")}
         className={`flex flex-1 flex-col items-center justify-center ${
-          pathname === "/posts"
+          pathname.includes("/posts") || pathname.includes("/post")
             ? "text-primary"
             : "text-muted-foreground hover:text-primary"
         }`}
