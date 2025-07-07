@@ -850,6 +850,53 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "nh") {
+    return (
+      <>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          <strong>농협 디깅 퀴즈</strong>는 NH농협은행의 공식 모바일 앱인{" "}
+          <strong>올원뱅크(NH All-One Bank)</strong>에서 제공하는 정기 퀴즈
+          이벤트입니다.
+        </p>
+
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          사용자는 <strong>NH 올원뱅크 앱 접속 후</strong>, 메인 홈 또는 이벤트
+          메뉴에 있는 <strong>‘디깅 퀴즈(Digging Quiz)’</strong> 배너를 클릭하여
+          퀴즈에 참여할 수 있습니다.
+        </p>
+
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          퀴즈는 일반적으로{" "}
+          <strong>
+            농협의 금융상품, 서비스, 공익 캠페인, 디지털 금융 정보
+          </strong>
+          와 관련된 객관식 문제 형식이며, 퀴즈 참여 시{" "}
+          <strong>포인트(예: 올포인트) 또는 경품</strong>을 지급하는 프로모션과
+          함께 진행됩니다.
+        </p>
+
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          디깅퀴즈는 <strong>매주 또는 특정 기간 동안 한정적으로 진행</strong>
+          되며, 퀴즈 정답을 맞힐 경우 즉시 리워드가 지급되거나 추첨 이벤트에
+          자동 응모되는 방식이 사용됩니다.
+        </p>
+
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          일부 퀴즈의 경우{" "}
+          <strong>
+            NH농협 관련 유튜브 콘텐츠를 시청한 뒤 정답을 맞히는 미션형 퀴즈
+          </strong>
+          로 제공되기도 합니다. 퀴즈는 일반적으로 하루 1문제 또는 이벤트 기간 중
+          1회 참여 형식으로 제한됩니다.
+        </p>
+
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          참여 전 반드시 NH 올원뱅크 앱의{" "}
+          <strong>이벤트 상세 페이지의 안내사항 및 유의사항</strong>을 확인하는
+          것이 좋습니다.
+        </p>
+      </>
+    );
   }
 
   return null;

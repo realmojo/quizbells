@@ -340,6 +340,26 @@ export default function AppOpen({ type }: { type: string }) {
         </a>
       </div>
     );
+  } else if (type === "nh") {
+    return (
+      <div className="w-full flex justify-center my-6">
+        <a
+          href={
+            isIOS()
+              ? "https://apps.apple.com/kr/app/nh%EC%98%AC%EC%9B%90%EB%B1%85%ED%81%AC-%EB%86%8D%ED%98%91%EC%9D%80%ED%96%89-%EB%8C%80%ED%91%9C-%ED%94%8C%EB%9E%AB%ED%8F%BC/id1641628055"
+              : "https://play.google.com/store/apps/details?id=com.nonghyup.nhallonebank"
+          }
+          target="_self"
+          rel="noopener noreferrer"
+          className="group w-full min-h-[50px]"
+        >
+          <Button className="bg-green-700 w-full min-h-[50px] hover:bg-green-700 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-102">
+            농협 퀴즈 참여하기
+            <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+          </Button>
+        </a>
+      </div>
+    );
   }
 
   return null;

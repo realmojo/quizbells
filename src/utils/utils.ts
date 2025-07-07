@@ -36,6 +36,13 @@ export const quizItems = [
     slotId: "8304005549",
   },
   {
+    type: "nh",
+    typeKr: "농협",
+    title: "디깅 퀴즈",
+    image: "/images/nh.png",
+    slotId: "4038662754",
+  },
+  {
     type: "kakaopay",
     typeKr: "카카오페이",
     title: "퀴즈타임",
