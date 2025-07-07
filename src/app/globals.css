@@ -221,4 +221,24 @@
     pointer-events: none;
     z-index: 0;
   }
+
+  #post-content p,
+  #post-content ul,
+  #post-content ol,
+  #post-content div,
+  #post-content h6 {
+    margin-bottom: 1rem;
+  }
+  #post-content h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  #post-content li {
+    margin-left: 1rem;
+    list-style-type: disc;
+  }
+  #post-content a {
+    text-decoration: underline;
+  }
 }

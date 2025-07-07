@@ -1,4 +1,5 @@
 // src/app/api/sitemap.xml/route.ts
+import { queryList } from "@/lib/db"; // ← DB 쿼리 함수 import 필요
 
 const BASE_URL = "https://quizbells.com";
 
@@ -35,12 +36,29 @@ function generateDatesFromStartToTomorrow(
     dates.push(d.toISOString().split("T")[0]); // YYYY-MM-DD
   }
 
-  return dates;
+  return dates.reverse();
 }
 
 export async function GET() {
   const recentDates = generateDatesFromStartToTomorrow(); // 6/1 ~ 내일 포함
   const urls: { loc: string; lastmod: string }[] = [];
+  // ✅ DB에서 게시글 목록 추가 (posts/{id})
+  try {
+    const rows = await queryList(
+      `SELECT id, regdated FROM quizbells_posts ORDER BY regdated DESC`
+    );
+    console.log("✅ 게시글 데이터 조회 성공:", rows);
+
+    for (const post of rows) {
+      urls.push({
+        loc: `${BASE_URL}/posts/${post.id}`,
+        lastmod: post.regdated.toISOString().split("T")[0],
+      });
+    }
+    console.log("✅ 게시글 데이터 조회 성공:", rows);
+  } catch (err) {
+    console.error("❌ 게시글 데이터 조회 실패:", err);
+  }
 
   // 날짜 기준 정렬 → 하루 날짜당 모든 type 묶어서 넣기
   for (const date of recentDates) {

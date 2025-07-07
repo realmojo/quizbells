@@ -9,6 +9,7 @@ import {
   // Rocket,
   Settings,
   Bell,
+  Book,
   // Box,
   // BowArrow,
 } from "lucide-react";
@@ -42,7 +43,7 @@ export default function BottomTabBar() {
   useEffect(() => {
     // 사용자에게 많이 노출될 가능성이 높은 페이지들을 prefetch
     router.prefetch("/quiz");
-    router.prefetch("/fortune");
+    router.prefetch("/posts");
     router.prefetch("/sale");
     router.prefetch("/settings");
   }, [router]);
@@ -69,20 +70,20 @@ export default function BottomTabBar() {
         <span className="mt-1 text-xs">퀴즈</span>
       </button>
 
-      {/* 2. 운세 */}
-      {/* <button
-        onClick={() => router.push("/fortune")}
+      {/* 2. 포스트 */}
+      <button
+        onClick={() => router.push("/posts")}
         className={`flex flex-1 flex-col items-center justify-center ${
-          pathname === "/fortune"
+          pathname === "/posts"
             ? "text-primary"
             : "text-muted-foreground hover:text-primary"
         }`}
       >
-        <BowArrow
-          className={`h-5 w-5 ${pathname === "/fortune" ? "fill-current" : ""}`}
+        <Book
+          className={`h-5 w-5 ${pathname === "/posts" ? "fill-current" : ""}`}
         />
-        <span className="mt-1 text-xs">운세</span>
-      </button> */}
+        <span className="mt-1 text-xs">콘텐츠</span>
+      </button>
 
       {/* 3. 특가 */}
       {/* <button

@@ -10,7 +10,7 @@ export default function Header() {
 
   // 경로별 제목 정의
   const getTitle = (path: string) => {
-    if (path === "/quiz") return "퀴즈벨 정답";
+    if (path.includes("/quiz")) return "퀴즈벨 정답";
     if (path === "/fortune") return "운세";
     if (path === "/sale") return "특가";
     if (path === "/settings") return "설정";
@@ -18,6 +18,7 @@ export default function Header() {
     if (path === "/faq") return "자주 묻는 질문 (FAQ)";
     if (path === "/privacy") return "개인정보 처리방침";
     if (path === "/terms") return "이용약관";
+    if (path.includes("/posts")) return "콘텐츠";
     // if (path.includes("/product")) return "상품정보";
     // if (path.includes("/search"))
     //   return `${decodeURIComponent(path.split("/")[2])} 검색`;

@@ -66,3 +66,31 @@ export const getQuizbellsList = async (
   const data = await res.json();
   return data;
 };
+
+// ✅ 게시글 목록 조회
+export const getPostsList = async (type: string = ""): Promise<any | null> => {
+  const res = await fetch(`/api/post/list?type=${type}`, {
+    cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+  });
+
+  if (!res.ok) return null;
+
+  const data = await res.json();
+  return data;
+};
+
+export const getPost = async (id: string): Promise<any | null> => {
+  if (!id) {
+    return null;
+  }
+
+  const res = await fetch(`/api/post?id=${id}`, {
+    cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+  });
+  console.log(res);
+
+  if (!res.ok) return null;
+
+  const data = await res.json();
+  return data;
+};
