@@ -87,7 +87,6 @@ export const getPost = async (id: string): Promise<any | null> => {
   const res = await fetch(`/api/post?id=${id}`, {
     cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
   });
-  console.log(res);
 
   if (!res.ok) return null;
 
