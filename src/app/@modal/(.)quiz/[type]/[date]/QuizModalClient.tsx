@@ -12,7 +12,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { format, parseISO } from "date-fns";
-import { ko } from "date-fns/locale";
 import ImageComponents from "@/components/ImageComponets";
 import { getQuitItem, isApple, requestAlarmPermission } from "@/utils/utils";
 import DescriptionComponent from "@/components/DescriptionComponent";
