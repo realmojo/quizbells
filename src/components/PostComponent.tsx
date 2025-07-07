@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Head from "next/head"; // 또는 next/head는 CSR에서도 사용 가능
 import { getPost, getPostsList } from "@/utils/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -63,48 +64,81 @@ export default function PostComponent({ id }: { id: string }) {
   }
 
   return (
-    <div className="max-w-[720px] mx-auto">
-      <Card className="shadow-xl border-none rounded-none mb-10 gap-4">
-        <CardHeader>
-          <CardTitle className="text-2xl md:text-3xl font-bold leading-tight tracking-tight">
-            {post.title}
-          </CardTitle>
-          <div className="text-sm text-right text-muted-foreground mt-2">
-            {post.author} · 등록일: {post.regdated.split("T")[0]}{" "}
-            {post.regdated.split("T")[1].substring(0, 5)}
+    <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              headline: post.title,
+              datePublished: post.regdated,
+              dateModified: post.regdated,
+              author: {
+                "@type": "Person",
+                name: post.author,
+              },
+              mainEntityOfPage: {
+                "@type": "WebPage",
+                "@id": `https://quizbells.com/posts/${post.id}`,
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "퀴즈벨",
+                logo: {
+                  "@type": "ImageObject",
+                  url: "https://quizbells.com/logo.png", // 실제 로고 주소로 변경
+                },
+              },
+              description: `${post.regdated.split("T")[0]} ${getQuitItem(post.type)?.typeKr} 퀴즈 콘텐츠`,
+            }),
+          }}
+        />
+      </Head>
+      <div className="max-w-[720px] mx-auto">
+        <Card className="shadow-xl border-none rounded-none mb-10 gap-4">
+          <CardHeader>
+            <CardTitle className="text-2xl md:text-3xl font-bold leading-tight tracking-tight">
+              {post.title}
+            </CardTitle>
+            <div className="text-sm text-right text-muted-foreground mt-2">
+              {post.author} · 등록일: {post.regdated.split("T")[0]}{" "}
+              {post.regdated.split("T")[1].substring(0, 5)}
+            </div>
+          </CardHeader>
+
+          <div className="flex justify-center">
+            <ImageComponents
+              width={500}
+              height={500}
+              type={post.type}
+              answerDate={post.regdated}
+            />
           </div>
-        </CardHeader>
+          <div className="text-xs text-center text-gray-500">
+            {`${post.regdated.split("T")[0]} ${getQuitItem(post.type)?.typeKr} ${getQuitItem(post.type)?.title} 퀴즈 콘텐츠`}
+          </div>
 
-        <div className="flex justify-center">
-          <ImageComponents
-            width={500}
-            height={500}
-            type={post.type}
-            answerDate={post.regdated}
-          />
-        </div>
-        <div className="text-xs text-center text-gray-500">
-          {`${post.regdated.split("T")[0]} ${getQuitItem(post.type)?.typeKr} ${getQuitItem(post.type)?.title} 퀴즈 콘텐츠`}
-        </div>
+          <CardContent>
+            <div
+              id="post-content"
+              className="prose prose-lg max-w-none text-gray-900 leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: post.contents }}
+            />
+          </CardContent>
+        </Card>
 
-        <CardContent>
-          <div
-            id="post-content"
-            className="prose prose-lg max-w-none text-gray-900 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: post.contents }}
-          />
-        </CardContent>
-      </Card>
-
-      <div className="mb-20">
-        <div className="flex items-center mb-4">
-          <span className="text-2xl pl-4">👉</span>
-          <h2 className="text-xl font-bold text-gray-900 ml-2">
-            다른 콘텐츠도 확인해보세요
-          </h2>
+        <div className="mb-20">
+          <div className="flex items-center mb-4">
+            <span className="text-2xl pl-4">👉</span>
+            <h2 className="text-xl font-bold text-gray-900 ml-2">
+              다른 콘텐츠도 확인해보세요
+            </h2>
+          </div>
+          <PostTableComponents posts={morePosts} loading={loading} />
         </div>
-        <PostTableComponents posts={morePosts} loading={loading} />
       </div>
-    </div>
+    </>
   );
 }

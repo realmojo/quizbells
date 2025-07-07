@@ -364,3 +364,12 @@ export const isWebView = () => {
 
   return isAndroidWebView || isiOSWebView;
 };
+export const getPlainTextFromFirstParagraph = (html: string): string => {
+  if (!html) return "";
+
+  const match = html.match(/<p[^>]*>(.*?)<\/p>/i);
+  if (match && match[1]) {
+    return match[1].replace(/<[^>]*>/g, "").trim();
+  }
+  return "";
+};

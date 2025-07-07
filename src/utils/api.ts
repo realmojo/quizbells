@@ -84,9 +84,12 @@ export const getPost = async (id: string): Promise<any | null> => {
     return null;
   }
 
-  const res = await fetch(`/api/post?id=${id}`, {
-    cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3001"}/api/post?id=${id}`,
+    {
+      cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+    }
+  );
 
   if (!res.ok) return null;
 
