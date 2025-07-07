@@ -241,4 +241,30 @@
   #post-content a {
     text-decoration: underline;
   }
+
+  #post-content table {
+    @apply w-full border border-gray-200 text-sm text-left text-gray-700 rounded-md overflow-hidden;
+    margin-bottom: 1rem;
+  }
+
+  #post-content table thead {
+    @apply bg-gray-100;
+  }
+
+  #post-content table th,
+  #post-content table td {
+    @apply border px-4 py-3 align-top;
+  }
+
+  #post-content table th {
+    @apply font-semibold text-gray-900 bg-gray-50;
+  }
+
+  #post-content table td {
+    @apply text-gray-700;
+  }
+
+  #post-content table tr:nth-child(even) {
+    @apply bg-gray-50;
+  }
 }
