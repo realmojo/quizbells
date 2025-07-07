@@ -1,6 +1,5 @@
 const axios = require("axios");
 const moment = require("moment");
-// const fs = require("fs");
 
 const { doInsert } = require("./db");
 
@@ -366,7 +365,6 @@ const extractCashdocQuizFromText = async (title, text, type) => {
     question = titles[1].trim(); // 날짜가 앞에 질문이 뒤에 오는 경우
   }
 
-  console.log(question);
   // ✅ 2. 정답 추출 개선
   const answerMatch = text.match(/정답은\s+([^\n#]+)/);
   let answer = answerMatch ? answerMatch[1].trim() : null;
@@ -428,6 +426,7 @@ const getVeil8000Quiz = async () => {
 
   for (const post of quizItems) {
     const { title, content, type } = post;
+
     // console.log("type: ", type);
     if (type === "3o3") {
       await extract3o3QuizFromText(content, type);

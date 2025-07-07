@@ -226,7 +226,9 @@ const replaceAll = (str, search, replacement) => {
   return str.split(search).join(replacement);
 };
 
-const doInsert = async (quizzes, type) => {
+const doInsert = async (quizzes, type, notifiedTypes) => {
+  let shouldNotify = false;
+
   if (quizzes.length > 0) {
     const getItem = await getQuizbells(type, moment().format("YYYY-MM-DD"));
 
@@ -236,7 +238,7 @@ const doInsert = async (quizzes, type) => {
       );
       const quizJson = escapeSQLString(JSON.stringify(quizzes));
       insertQuizbells(type, quizJson, moment().format("YYYY-MM-DD"));
-      alarmNotify(type);
+      shouldNotify = true;
     } else {
       console.log(
         `✅ [${moment().format("YYYY-MM-DD")}] 퀴즈 이미 존재 합니다 - ${type}`
@@ -260,12 +262,17 @@ const doInsert = async (quizzes, type) => {
         if (prevAnswers.length > 0) {
           try {
             await updateQuizbells(getItem.id, JSON.stringify(prevAnswers));
-            alarmNotify(type);
+            shouldNotify = true;
           } catch (e) {
             console.log(e);
           }
         }
       }
+    }
+
+    if (shouldNotify && !notifiedTypes.has(type)) {
+      await alarmNotify(type);
+      notifiedTypes.add(type); // ← 알람 보냈다고 기록
     }
   }
 };

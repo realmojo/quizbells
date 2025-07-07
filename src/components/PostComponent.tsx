@@ -8,6 +8,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ImageComponents from "./ImageComponets";
 import { getQuitItem } from "@/utils/utils";
 import PostTableComponents from "./PostTableComponents";
+import { ArrowRight } from "lucide-react";
+import { Button } from "./ui/button";
 
 interface Post {
   id: number;
@@ -118,6 +120,20 @@ export default function PostComponent({ id }: { id: string }) {
           </div>
           <div className="text-xs text-center text-gray-500">
             {`${post.regdated.split("T")[0]} ${getQuitItem(post.type)?.typeKr} ${getQuitItem(post.type)?.title} 퀴즈 콘텐츠`}
+          </div>
+
+          <div className="w-full flex justify-center my-6 px-4">
+            <a
+              href={`/quiz/${post.type}/today`}
+              target="_self"
+              rel="noopener noreferrer"
+              className="group w-full min-h-[50px]"
+            >
+              <Button className="bg-black w-full min-h-[50px] hover:bg-black-700 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-102">
+                {getQuitItem(post.type)?.typeKr} 정답 보러가기
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+            </a>
           </div>
 
           <CardContent>
