@@ -1,4 +1,3 @@
-const mysql = require("mysql2/promise");
 const axios = require("axios");
 const moment = require("moment");
 
@@ -124,17 +123,6 @@ const escapeSQLString = (str) => {
 const getQuizItems = (type) => {
   return quizItems.find((item) => item.type === type);
 };
-
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  port: process.env.DB_PORT || 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
 
 const getQuizbells = async (type, answerDate) => {
   const query = `SELECT * FROM quizbells WHERE type = '${type}' AND answerDate = '${answerDate}'`;

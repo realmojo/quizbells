@@ -9,8 +9,8 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME,
   port: Number(process.env.DB_PORT),
   waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+  connectionLimit: 50,
+  queueLimit: 100,
 });
 
 const queryOne = async <T extends RowDataPacket = any>(

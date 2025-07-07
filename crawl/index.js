@@ -1,4 +1,5 @@
 const moment = require("moment");
+const mysql = require("mysql2/promise");
 const { getCashworkQuiz } = require("./cashwalk");
 const { getTossQuiz } = require("./toss");
 const { getShinhanQuiz } = require("./shinhan");
@@ -8,6 +9,18 @@ const { getKbstarQuiz } = require("./kbstar");
 const { getBitbunnyQuiz } = require("./bitbunny");
 const { getVeil8000Quiz } = require("./veil8000");
 const { getClimateQuiz } = require("./climate");
+
+global.pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
+
 const run = async () => {
   console.log(
     `🔍 [${moment().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 시작`
