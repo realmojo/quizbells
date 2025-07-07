@@ -1,7 +1,10 @@
 import PostComponent from "@/components/PostComponent";
-import { use } from "react";
 
-export default function Page(props: Promise<{ params: { id: string } }>) {
-  const { params } = use(props);
-  return <PostComponent id={params.id} />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  return <PostComponent id={id} />;
 }
