@@ -28,11 +28,15 @@ export async function POST(req: NextRequest) {
       throw new Error("no parameter");
     }
 
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip =
+      forwarded?.split(",")[0] || req.headers.get("x-real-ip") || "unknown";
+
     const { fcmToken, userId, joinType } = params;
 
     const query =
-      "INSERT INTO quizbells_users (userId, fcmToken, joinType, regdated) VALUES (?, ?, ?, NOW())";
-    await insertOne(query, [userId, fcmToken, joinType]);
+      "INSERT INTO quizbells_users (userId, fcmToken, joinType, regdated, ip) VALUES (?, ?, ?, NOW(), ?)";
+    await insertOne(query, [userId, fcmToken, joinType, ip]);
 
     return NextResponse.json({ success: true, data: "ok" });
   } catch (err) {
