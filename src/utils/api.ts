@@ -47,10 +47,20 @@ export const getQuizbells = async (
   return data;
 };
 
-// ✅ 게시글 목록 조회
-export const getPostsList = async (type: string = ""): Promise<any | null> => {
-  const res = await fetch(`/api/post/list?type=${type}`, {
-    cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+// ✅ 게시글 목록 조회 (offset 기반)
+export const getPostsList = async (
+  offset: number = 0,
+  limit: number = 5,
+  type: string = ""
+): Promise<any | null> => {
+  const query = new URLSearchParams({
+    type,
+    offset: offset.toString(),
+    limit: limit.toString(),
+  });
+
+  const res = await fetch(`/api/post/list?${query.toString()}`, {
+    cache: "no-store",
   });
 
   if (!res.ok) return null;
