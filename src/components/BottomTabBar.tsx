@@ -80,7 +80,11 @@ export default function BottomTabBar() {
         }`}
       >
         <Book
-          className={`h-5 w-5 ${pathname === "/posts" ? "fill-current" : ""}`}
+          className={`h-5 w-5 ${
+            pathname.includes("/posts") || pathname.includes("/post")
+              ? "fill-current"
+              : ""
+          }`}
         />
         <span className="mt-1 text-xs">콘텐츠</span>
       </button>
