@@ -55,10 +55,13 @@ export async function PATCH(req: NextRequest) {
     }
 
     const { fcmToken, userId } = params;
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip =
+      forwarded?.split(",")[0] || req.headers.get("x-real-ip") || "unknown";
 
     const query =
-      "UPDATE quizbells_users SET fcmToken= ?, lastUpdated= NOW() WHERE userId= ?";
-    await updateOne(query, [fcmToken, userId]);
+      "UPDATE quizbells_users SET fcmToken= ?, lastUpdated= NOW(), ip= ? WHERE userId= ?";
+    await updateOne(query, [fcmToken, ip, userId]);
 
     return NextResponse.json({ success: true, data: "ok" });
   } catch (err) {
