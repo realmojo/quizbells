@@ -1,5 +1,3 @@
-import moment from "moment";
-
 // ✅ 설정 조회
 export const getSettings = async (userId: string): Promise<any | null> => {
   const res = await fetch(`/api/users?userId=${userId}`, {
@@ -49,24 +47,6 @@ export const getQuizbells = async (
   return data;
 };
 
-// ✅ 퀴즈벨 정답 조회
-export const getQuizbellsList = async (
-  answerDate: string
-): Promise<any | null> => {
-  if (!answerDate) {
-    answerDate = moment().format("YYYY-MM-DD");
-  }
-
-  const res = await fetch(`/api/quizbells?answerDate=${answerDate}`, {
-    cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
-  });
-
-  if (!res.ok) return null;
-
-  const data = await res.json();
-  return data;
-};
-
 // ✅ 게시글 목록 조회
 export const getPostsList = async (type: string = ""): Promise<any | null> => {
   const res = await fetch(`/api/post/list?type=${type}`, {
@@ -79,17 +59,17 @@ export const getPostsList = async (type: string = ""): Promise<any | null> => {
   return data;
 };
 
+// ✅ 단일 게시글 조회
 export const getPost = async (id: string): Promise<any | null> => {
   if (!id) {
     return null;
   }
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3001"}/api/post?id=${id}`,
-    {
-      cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
-    }
-  );
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3001";
+
+  const res = await fetch(`${baseUrl}/api/post?id=${id}`, {
+    cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+  });
 
   if (!res.ok) return null;
 

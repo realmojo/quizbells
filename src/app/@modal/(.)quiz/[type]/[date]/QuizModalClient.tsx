@@ -11,7 +11,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import moment from "moment";
+import { format, parseISO } from "date-fns";
+import { ko } from "date-fns/locale";
 import ImageComponents from "@/components/ImageComponets";
 import { getQuitItem, isApple, requestAlarmPermission } from "@/utils/utils";
 import DescriptionComponent from "@/components/DescriptionComponent";
@@ -254,7 +255,7 @@ export default function QuizModalClient({
   date: string;
 }) {
   const { setSettings } = settingsStore();
-  date = date === "today" ? moment().format("YYYY-MM-DD") : date;
+  date = date === "today" ? format(new Date(), "yyyy-MM-dd") : date;
   const pathname = usePathname();
   const hasFetched = useRef(false);
   const router = useRouter();
@@ -262,12 +263,14 @@ export default function QuizModalClient({
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
   const [answerDate, setAnswerDate] = useState<string>(
-    date ? moment(date).format("YYYY-MM-DD") : moment().format("YYYY-MM-DD")
+    date
+      ? format(parseISO(date), "yyyy-MM-dd")
+      : format(new Date(), "yyyy-MM-dd")
   );
   const [answerDateString, setAnswerDateString] = useState<string>(
     date
-      ? moment(date).format("YYYY년 MM월 DD일")
-      : moment().format("YYYY년 MM월 DD일")
+      ? format(parseISO(date), "yyyy년 MM월 dd일")
+      : format(new Date(), "yyyy년 MM월 dd일")
   );
 
   const fetchQuizData = useCallback(async () => {
@@ -283,7 +286,9 @@ export default function QuizModalClient({
 
         setQuizzes(filtered);
         setAnswerDate(json.answerDate?.split("T")[0] || null);
-        setAnswerDateString(moment(json.answerDate).format("YYYY년 MM월 DD일"));
+        setAnswerDateString(
+          format(parseISO(json.answerDate), "yyyy년 MM월 dd일")
+        );
       }
     } catch (err) {
       console.error("퀴즈 로딩 실패", err);
