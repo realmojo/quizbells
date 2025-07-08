@@ -37,16 +37,16 @@ export async function PATCH(req: NextRequest) {
         { status: 400 }
       );
     }
-    const { isQuizAlarm } = await req.json();
+    const { isQuizAlarm, alarmSettings } = await req.json();
     // 1. UPDATE
     const updateQuery =
-      "UPDATE quizbells_users SET isQuizAlarm = ? WHERE userId = ?";
+      "UPDATE quizbells_users SET isQuizAlarm = ?, alarmSettings = ? WHERE userId = ?";
 
-    await queryOne(updateQuery, [isQuizAlarm, userId]);
+    await queryOne(updateQuery, [isQuizAlarm, alarmSettings, userId]);
 
     // 2. SELECT로 변경된 값 조회
     const selectQuery =
-      "SELECT isQuizAlarm FROM quizbells_users WHERE userId = ?";
+      "SELECT isQuizAlarm, alarmSettings FROM quizbells_users WHERE userId = ?";
 
     const updatedUser = await queryOne(selectQuery, [userId]);
     return NextResponse.json(updatedUser);

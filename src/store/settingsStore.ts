@@ -18,6 +18,7 @@ export const settingsStore = create<any>((set, get) => ({
 
     const params = {
       isQuizAlarm: settings?.isQuizAlarm,
+      alarmSettings: settings?.alarmSettings,
     };
 
     const { userId } = getUserAuth();

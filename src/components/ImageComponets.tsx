@@ -9,14 +9,14 @@ export default function ImageComponents({
   height = 600,
 }: {
   type: string;
-  answerDate: string;
+  answerDate?: string;
   width: number;
   height: number;
 }) {
   return (
     <Image
       src={`/images/${type}.png`}
-      alt={`${answerDate} ${type} 퀴즈 이미지`}
+      alt={`${answerDate ? answerDate : ""} ${type} 퀴즈 이미지`}
       width={width}
       height={height}
       priority
