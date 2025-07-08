@@ -3,10 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Share } from "lucide-react";
-import { detectDevice, isIOS } from "@/utils/utils";
+import { detectDevice, isIOS, isWebView } from "@/utils/utils";
 import {
   Drawer,
   DrawerContent,
+  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -17,22 +18,16 @@ const BANNER_DISMISS_KEY = "quizbells_install_banner_dismissed_at";
 const ONE_HOUR = 10 * 60 * 1000;
 
 export default function InstallPromptBanner() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [open, setOpen] = useState(false);
   const dismissedRef = useRef(false);
 
   const handleInstall = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") {
-      console.log("✅ 설치 완료");
-    }
+    location.href =
+      "https://play.google.com/store/apps/details?id=com.mojoday.quizbells";
     setOpen(false);
   };
 
   const handleClose = () => {
-    dismissedRef.current = true;
     setOpen(false);
     localStorage.setItem(BANNER_DISMISS_KEY, Date.now().toString());
   };
@@ -48,27 +43,13 @@ export default function InstallPromptBanner() {
         setOpen(true);
       }
     } else {
-      const handler = (e: any) => {
-        e.preventDefault();
-        if (!dismissedRef.current) {
-          setDeferredPrompt(e);
-          setOpen(true);
-        }
-      };
-
-      window.addEventListener("beforeinstallprompt", handler);
-      window.addEventListener("appinstalled", () => {
-        console.log("✅ 앱 설치 완료!");
-        alert("설치가 완료되었습니다!");
-      });
-
-      return () => {
-        window.removeEventListener("beforeinstallprompt", handler);
-      };
+      if (detectDevice().isMobile && !dismissedRef.current) {
+        setOpen(true);
+      }
     }
   }, []);
 
-  if (!open || detectDevice().isDesktop) return null;
+  if (!open || detectDevice().isDesktop || isWebView()) return null;
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
@@ -84,11 +65,12 @@ export default function InstallPromptBanner() {
           />
           <div className="text-center">
             <DrawerTitle className="text-base text-lg font-semibold">
+              원활한 알람을 위해 <br />
               퀴즈벨 앱을 설치해주세요
             </DrawerTitle>
-            <p className="text-sm text-gray-500">
+            <DrawerDescription className="mt-2 text-sm text-gray-500">
               퀴즈 정답을 실시간으로 알려드립니다
-            </p>
+            </DrawerDescription>
           </div>
         </DrawerHeader>
         {isIOS() ? (

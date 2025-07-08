@@ -8,6 +8,7 @@ import QuizCardComponent from "@/components/QuizCardComponent";
 import { useAppStore } from "@/store/useAppStore";
 import { quizItems } from "@/utils/utils";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function QuizPage() {
   const date = useAppStore((s) => s.date);
@@ -16,6 +17,12 @@ export default function QuizPage() {
 
   const today = new Date();
   const isToday = format(date, "yyyy-MM-dd") === format(today, "yyyy-MM-dd");
+
+  const [clientDate, setClientDate] = useState<string>("");
+
+  useEffect(() => {
+    setClientDate(format(date, "yyyy년 M월 d일"));
+  }, [date]);
 
   return (
     <>
@@ -64,7 +71,7 @@ export default function QuizPage() {
             <ChevronLeft className="h-5 w-5" />
           </Button>
           <div className="text-xl font-bold">
-            {format(date, "yyyy년 M월 d일")}
+            {clientDate || "날짜 로딩 중..."}
           </div>
           <Button
             variant="outline"
