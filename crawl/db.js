@@ -264,7 +264,7 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
       }
     }
 
-    if (shouldNotify && !notifiedTypes.has(type)) {
+    if (shouldNotify && notifiedTypes && !notifiedTypes.has(type)) {
       await alarmNotify(type);
       notifiedTypes.add(type); // ← 알람 보냈다고 기록
     }
