@@ -231,8 +231,12 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
         `✅ [${moment().format("YYYY-MM-DD")}] ${type} 퀴즈 크롤링 완료`
       );
       const quizJson = escapeSQLString(JSON.stringify(quizzes));
-      insertQuizbells(type, quizJson, moment().format("YYYY-MM-DD"));
-      shouldNotify = true;
+      try {
+        insertQuizbells(type, quizJson, moment().format("YYYY-MM-DD"));
+        shouldNotify = true;
+      } catch (e) {
+        console.log(e);
+      }
     } else {
       console.log(
         `✅ [${moment().format("YYYY-MM-DD")}] 퀴즈 이미 존재 합니다 - ${type}`
