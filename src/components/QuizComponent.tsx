@@ -70,9 +70,7 @@ export default function QuizPage() {
           <Button variant="outline" onClick={goPrevDate}>
             <ChevronLeft className="h-5 w-5" />
           </Button>
-          <div className="text-xl font-bold">
-            {clientDate || "날짜 로딩 중..."}
-          </div>
+          <div className="text-xl font-bold">{clientDate || ""}</div>
           <Button
             variant="outline"
             onClick={goNextDate}
