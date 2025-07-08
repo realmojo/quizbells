@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,6 @@ import QuizCardComponent from "@/components/QuizCardComponent";
 import { useAppStore } from "@/store/useAppStore";
 import { quizItems } from "@/utils/utils";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export default function QuizPage() {
   const date = useAppStore((s) => s.date);
