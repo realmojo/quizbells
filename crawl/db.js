@@ -164,13 +164,31 @@ const alarmNotify = async (type) => {
         link: `https://quizbells.com/quiz/${type || "toss"}/today`,
       };
 
-      if (item.isQuizAlarm === "Y") {
+      // 1. 알림 자체 비활성화
+      if (item.isQuizAlarm !== "Y") {
+        console.log(`🔕 ${item.fcmToken} 유저에게 발송 안 함 (알림 비활성화)`);
+        continue;
+      }
+
+      // 2. 어떤 퀴즈에 대한 알람인지 명확히 설정
+      const quizType = type; // 예: "toss" / "cashwalk" 등
+
+      // 3. 설정 파싱
+      const allowedTypes =
+        item.alarmSettings === "*"
+          ? "ALL"
+          : item.alarmSettings?.split(",").map((t) => t.trim()) || [];
+
+      // 4. 조건 체크 후 발송
+      if (allowedTypes === "ALL" || allowedTypes.includes(quizType)) {
         console.log(
-          `🔔 [${getQuizItems(type).typeKr}] ${item.fcmToken} 유저에게 발송`
+          `🔔 [${getQuizItems(quizType).typeKr}] ${item.fcmToken} 유저에게 발송`
         );
         await axios.post("https://quizbells.com/api/notify", params);
       } else {
-        console.log(`🔔 ${item.fcmToken} 유저에게 발송 안 함 (알림 비활성화)`);
+        console.log(
+          `⛔️ [${getQuizItems(quizType).typeKr}] ${item.fcmToken} 유저는 해당 퀴즈 알림 비활성화`
+        );
       }
     }
   } catch (e) {
