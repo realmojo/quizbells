@@ -220,7 +220,7 @@ const sanitizeQuotesInJsonArray = (data) => {
       const value = item[key];
 
       if (typeof value === "string") {
-        newItem[key] = value.replace(/'/g, ""); // ' 제거
+        newItem[key] = value.replace(/'/g, "").replace(/"/g, ""); // ' 제거
       } else if (Array.isArray(value)) {
         newItem[key] = value.map((v) =>
           typeof v === "string" ? v.replace(/'/g, "") : v
