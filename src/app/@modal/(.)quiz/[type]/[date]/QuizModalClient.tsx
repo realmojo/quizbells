@@ -371,7 +371,9 @@ export default function QuizModalClient({
             <DialogTitle className="flex items-center justify-start text-base font-semibold">
               <div className="flex items-center">
                 <button
-                  onClick={() => router.back()}
+                  onClick={() => {
+                    location.href = "/quiz";
+                  }}
                   className="rounded-full p-3 text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
                   aria-label="뒤로가기"
                 >
