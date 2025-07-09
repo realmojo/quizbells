@@ -68,11 +68,12 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
           className="hover:scale-102 transition-transform"
         >
           <Image
-            src="/images/twitter.png"
-            alt="twitter-share-icon"
-            width={60}
-            height={60}
+            src="/images/x.png"
+            alt="x-share-icon"
+            width={50}
+            height={50}
             priority
+            className="rounded-md"
           />
         </Link>
 
@@ -99,6 +100,7 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
             width={60}
             height={60}
             priority
+            className="rounded-md"
           />
         </button>
 
