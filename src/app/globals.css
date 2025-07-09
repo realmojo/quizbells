@@ -267,4 +267,16 @@
   #post-content table tr:nth-child(even) {
     @apply bg-gray-50;
   }
+
+  .translate-y-mobile {
+    --tw-translate-y: -46% !important;
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+
+  @media (min-width: 768px) {
+    .md\:translate-y-50p {
+      --tw-translate-y: -50%;
+      translate: var(--tw-translate-x) var(--tw-translate-y);
+    }
+  }
 }

@@ -303,4 +303,5 @@ module.exports = {
   replaceAll,
   sanitizeQuotesInJsonArray,
   doInsert,
+  quizItems,
 };

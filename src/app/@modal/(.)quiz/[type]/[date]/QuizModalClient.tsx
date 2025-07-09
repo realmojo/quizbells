@@ -13,7 +13,13 @@ import {
 } from "@/components/ui/dialog";
 import { format, parseISO } from "date-fns";
 import ImageComponents from "@/components/ImageComponets";
-import { getQuitItem, isApple, requestAlarmPermission } from "@/utils/utils";
+import {
+  getQuitItem,
+  isApple,
+  requestAlarmPermission,
+  detectDevice,
+  isWebView,
+} from "@/utils/utils";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import Adsense from "@/components/Adsense";
@@ -254,6 +260,7 @@ export default function QuizModalClient({
   date: string;
 }) {
   const { setSettings } = settingsStore();
+  const { isMobile } = detectDevice();
   date = date === "today" ? format(new Date(), "yyyy-MM-dd") : date;
   const pathname = usePathname();
   const hasFetched = useRef(false);
@@ -353,7 +360,13 @@ export default function QuizModalClient({
           moveClose();
         }}
       >
-        <DialogContent className="flex flex-col !m-0 p-0 h-screen max-h-none w-screen max-w-none !gap-0 !rounded-none !border-none overflow-y-auto">
+        <DialogContent
+          className={`${
+            isMobile && !isWebView()
+              ? "translate-y-mobile mb-20"
+              : "md:translate-y-50p"
+          } flex flex-col !m-0 p-0 h-screen max-h-none w-screen max-w-none !gap-0 !rounded-none !border-none overflow-y-auto`}
+        >
           <DialogHeader>
             <DialogTitle className="flex items-center justify-start text-base font-semibold">
               <div className="flex items-center">
