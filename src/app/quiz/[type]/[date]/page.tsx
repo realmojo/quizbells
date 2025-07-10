@@ -86,7 +86,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
   const quizItem = await getQuizbells(type, answerDate);
 
   const contents = JSON.parse(quizItem?.contents || "[]") || [];
-  console.log(contents);
 
   const jsonLd = contents.map((quiz: any) => ({
     "@context": "https://schema.org",
@@ -123,7 +122,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
         />
       ))}
-      <div className="max-w-[720px] mx-auto pt-4 mb-20">
+      <div className="max-w-[720px] mx-auto pt-4 mb-40">
         <section
           id="quiz-content"
           itemScope
@@ -183,13 +182,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
             </div>
           )}
 
-          {/* 퀴즈 목록 */}
-          {contents.length > 0 && (
-            <article className="mb-6 bg-white px-4 tracking-tight">
-              <AppOpen type={type} />
-            </article>
-          )}
-
           {contents.map((quiz: any, idx: number) => (
             <article
               key={idx}
@@ -238,12 +230,14 @@ export default async function QuizPage({ params }: QuizPageParams) {
           ))}
 
           <article className="mb-6 bg-white px-4 tracking-tight">
-            <AppOpen type={type} />
-          </article>
-
-          <article className="mb-6 bg-white px-4 tracking-tight">
             <DescriptionComponent type={type} />
           </article>
+
+          <div className="fixed bottom-14 left-0 w-full px-4 z-50">
+            <div className="mx-auto w-full max-w-[720px] md:px-4">
+              <AppOpen type={type} />
+            </div>
+          </div>
 
           <SocialShare
             title={`${item?.typeKr} ${item?.title} ${answerDateString} 퀴즈 정답 확인하고 앱테크 적립하세요`}
