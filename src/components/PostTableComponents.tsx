@@ -65,7 +65,7 @@ export default function PostTableComponents({
         {posts.map((post) => (
           <TableRow key={post.id}>
             <TableCell className="cursor-pointer">
-              <Link href={`/posts/${post.id}`} prefetch>
+              <Link href={`/posts/${post.id}`}>
                 {/* PC 버전 */}
                 <div className="hidden md:block hover:underline text-black-600 truncate max-w-[500px]">
                   <span className="text-sm text-blue-500 mr-1">
