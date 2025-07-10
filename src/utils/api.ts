@@ -34,12 +34,14 @@ export const getQuizbells = async (
   type: string,
   answerDate: string
 ): Promise<any | null> => {
-  const res = await fetch(
-    `/api/quizbells?type=${type}&answerDate=${answerDate}`,
-    {
-      cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
-    }
-  );
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+
+  const url = `${baseUrl}/api/quizbells?type=${type}&answerDate=${answerDate}`;
+  console.log(url);
+
+  const res = await fetch(url, {
+    cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+  });
 
   if (!res.ok) return null;
 
@@ -75,7 +77,7 @@ export const getPost = async (id: string): Promise<any | null> => {
     return null;
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3001";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
   const res = await fetch(`${baseUrl}/api/post?id=${id}`, {
     cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우

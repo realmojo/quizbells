@@ -94,10 +94,10 @@ const pretendard = localFont({
 
 export default async function RootLayout({
   children,
-  modal,
+  // modal,
 }: Readonly<{
   children: ReactNode;
-  modal: ReactNode;
+  // modal: ReactNode;
 }>) {
   return (
     <html lang="en" className={`${pretendard.variable}`}>
@@ -146,7 +146,7 @@ export default async function RootLayout({
         <main className="min-h-[80vh] w-full">
           <Header />
           {children}
-          {modal}
+          {/* {modal} */}
         </main>
         <BottomTabBar />
         <Toaster
