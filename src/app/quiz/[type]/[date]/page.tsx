@@ -85,7 +85,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
   const firstDescription = `앱테크는 광고 시청이나 퀴즈 참여를 통해 포인트를 적립하는 방식으로 많은 사용자들의 관심을 받고 있습니다. ${answerDateString} 기준, ${item?.typeKr} ${item?.title} 등 다양한 앱에서 퀴즈 이벤트가 활발히 진행되고 있으며, 정답을 맞히면 현금처럼 사용 가능한 리워드를 받을 수 있어 앱 사용자들 사이에서 큰 호응을 얻고 있습니다.`;
   const quizItem = await getQuizbells(type, answerDate);
 
-  const contents = JSON.parse(quizItem.contents) || [];
+  const contents = JSON.parse(quizItem?.contents || "[]") || [];
+  console.log(contents);
 
   const jsonLd = contents.map((quiz: any) => ({
     "@context": "https://schema.org",
@@ -169,25 +170,16 @@ export default async function QuizPage({ params }: QuizPageParams) {
                 😊
               </p>
 
-              <Button
-                className="mt-4 w-full px-4 min-h-[50px] text-lg font-semibold"
-                onClick={async () => {
-                  location.href =
-                    "https://play.google.com/store/apps/details?id=com.mojoday.quizbells";
-                  // const isGranted = await requestAlarmPermission();
-                  // if (isGranted) {
-                  //   await setSettings();
-                  //   await updateSettings("isQuizAlarm", "Y");
-                  //   toast.success("알림 설정 완료");
-                  // } else {
-                  //   if (isApple()) {
-                  //     alert("iOS 브라우저 앱 출시 후 알림을 사용할 수 있습니다.");
-                  //   }
-                  // }
-                }}
+              <a
+                href="https://play.google.com/store/apps/details?id=com.mojoday.quizbells"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block mt-4 w-full"
               >
-                🔔 퀴즈 정답 알림받기
-              </Button>
+                <Button className="w-full px-4 min-h-[50px] text-lg font-semibold">
+                  🔔 퀴즈 정답 알림받기
+                </Button>
+              </a>
             </div>
           )}
 
