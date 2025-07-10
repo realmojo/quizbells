@@ -37,7 +37,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-102">
+          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-black px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-102">
             캐시워크 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
