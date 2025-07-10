@@ -44,7 +44,7 @@ export default function BottomTabBar() {
     // 사용자에게 많이 노출될 가능성이 높은 페이지들을 prefetch
     router.prefetch("/quiz");
     router.prefetch("/posts");
-    router.prefetch("/sale");
+    // router.prefetch("/sale");
     router.prefetch("/settings");
   }, [router]);
 
