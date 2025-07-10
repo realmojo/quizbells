@@ -89,6 +89,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
   const firstDescription = `앱테크는 광고 시청이나 퀴즈 참여를 통해 포인트를 적립하는 방식으로 많은 사용자들의 관심을 받고 있습니다. ${answerDateString} 기준, ${getQuitItem(type)?.typeKr} ${getQuitItem(type)?.title} 등 다양한 앱에서 퀴즈 이벤트가 활발히 진행되고 있으며, 정답을 맞히면 현금처럼 사용 가능한 리워드를 받을 수 있어 앱 사용자들 사이에서 큰 호응을 얻고 있습니다.`;
   const quizItem = await getQuizbells(type, answerDate);
 
+  console.log(quizItem.contents);
+
   const contents = JSON.parse(quizItem.contents) || [];
 
   const jsonLd = contents.map((quiz: any) => ({
