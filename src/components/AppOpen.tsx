@@ -37,7 +37,7 @@ export default function AppOpen({ type }: { type: string }) {
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
         >
-          <Button className="bg-blue-600 w-full min-h-[50px] hover:bg-blue-700 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-102">
+          <Button className="bg-yellow-300 w-full min-h-[50px] hover:bg-yellow-300 text-white px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 group-hover:scale-102">
             캐시워크 퀴즈 참여하기
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
@@ -68,7 +68,11 @@ export default function AppOpen({ type }: { type: string }) {
     return (
       <div className="w-full flex justify-center my-6">
         <a
-          href="https://kakaobank.onelink.me/0qMi/ysxkqbud"
+          href={
+            isIOS()
+              ? "https://apps.apple.com/kr/app/%EC%B9%B4%EC%B9%B4%EC%98%A4%EB%B1%85%ED%81%AC/id1258016944"
+              : "https://play.google.com/store/apps/details?id=com.kakaobank.channel"
+          }
           target="_self"
           rel="noopener noreferrer"
           className="group w-full min-h-[50px]"
