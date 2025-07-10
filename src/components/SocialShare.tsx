@@ -49,7 +49,7 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
         },
         buttons: [
           {
-            title: "플레이 하기",
+            title: "정답 확인하기",
             link: { mobileWebUrl: url, webUrl: url },
           },
         ],
