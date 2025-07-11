@@ -59,7 +59,11 @@ export default function QuizPage() {
         {/* 👉 앱테크 팁 알아보기 버튼 */}
         <div className="flex justify-end mb-4">
           <Link href="/tips">
-            <Button variant="secondary" className="text-sm">
+            <Button
+              variant="secondary"
+              className="text-sm"
+              aria-label="앱테크 팁 알아보기"
+            >
               💡 앱테크 팁 알아보기
             </Button>
           </Link>
@@ -67,7 +71,7 @@ export default function QuizPage() {
 
         {/* 날짜 선택기 */}
         <div className="flex items-center justify-between mb-4">
-          <Button variant="outline" onClick={goPrevDate}>
+          <Button variant="outline" onClick={goPrevDate} aria-label="이전 날짜">
             <ChevronLeft className="h-5 w-5" />
           </Button>
           <div className="text-xl font-bold">{clientDate || ""}</div>
@@ -75,6 +79,7 @@ export default function QuizPage() {
             variant="outline"
             onClick={goNextDate}
             disabled={isToday}
+            aria-label="다음 날짜"
             className={isToday ? "opacity-50 cursor-not-allowed" : ""}
           >
             <ChevronRight className="h-5 w-5" />
