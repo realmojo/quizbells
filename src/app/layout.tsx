@@ -4,7 +4,6 @@ import { Toaster } from "@/components/ui/sonner";
 import Script from "next/script";
 import Header from "@/components/layouts/Header";
 import RegisterServiceWorker from "@/app/register-service-worker";
-import localFont from "next/font/local";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import NaverAnalyticsTracker from "@/components/NaverAnalyticsTracker";
 import "./globals.css";
@@ -85,13 +84,6 @@ export const metadata: Metadata = {
   },
 };
 
-const pretendard = localFont({
-  src: "../fonts/pretendard/PretendardVariable.woff2",
-  display: "swap",
-  weight: "100 900",
-  variable: "--font-pretendard",
-});
-
 export default async function RootLayout({
   children,
   // modal,
@@ -100,7 +92,7 @@ export default async function RootLayout({
   // modal: ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${pretendard.variable}`}>
+    <html lang="en">
       <head>
         <meta
           name="naver-site-verification"
@@ -138,7 +130,7 @@ export default async function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/icons/android-icon-48x48.png" />
       </head>
-      <body className={pretendard.className}>
+      <body>
         {/* <ClientOnly /> */}
         <NaverAnalyticsTracker />
         <GoogleAnalytics />
