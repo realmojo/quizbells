@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="max-w-[860] mx-auto pt-4">
+    <main className="max-w-[720px] mx-auto pt-4">
       <p className="text-gray-700 leading-relaxed px-4">
         <strong>퀴즈벨(Quizbells)</strong>은 다양한 앱테크 플랫폼의 퀴즈 정답을
         실시간으로 알려주는 서비스입니다. 매일 아침 빠르게 퀴즈를 확인하고

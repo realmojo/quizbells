@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="mx-auto max-w-[860] space-y-6 py-6 mb-20">
+    <main className="mx-auto max-w-[720px] space-y-6 py-6 mb-20">
       <p className="px-4">
         퀴즈벨(Quizbell)은 다양한 앱테크 퀴즈의 정답 정보를 실시간으로 제공하고,
         사용자에게 퀴즈 알림 및 포인트 적립 정보를 안내하는 서비스입니다. 본

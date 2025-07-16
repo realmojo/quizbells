@@ -83,7 +83,7 @@ export default function FAQPage() {
   ];
 
   return (
-    <main className="max-w-[860] mx-auto py-4 mb-10 ">
+    <main className="max-w-[720px] mx-auto py-4 mb-10 ">
       <div
         className="space-y-6 text-gray-800"
         itemScope
