@@ -241,6 +241,9 @@ const replaceAll = (str, search, replacement) => {
 const doInsert = async (quizzes, type, notifiedTypes) => {
   let shouldNotify = false;
 
+  // 이상한 답은 제외 처리하기
+  quizzes = quizzes.filter((quiz) => !quiz.answer.includes("잠시만"));
+
   if (quizzes.length > 0) {
     const getItem = await getQuizbells(type, moment().format("YYYY-MM-DD"));
 

@@ -69,9 +69,10 @@ export default function AppOpen({ type }: { type: string }) {
       <div className="w-full flex justify-center my-6">
         <a
           href={
-            isIOS()
-              ? "https://apps.apple.com/kr/app/%EC%B9%B4%EC%B9%B4%EC%98%A4%EB%B1%85%ED%81%AC/id1258016944"
-              : "https://play.google.com/store/apps/details?id=com.kakaobank.channel"
+            "https://kakaobank.onelink.me/0qMi/ysxkqbud"
+            // isIOS()
+            //   ? "https://apps.apple.com/kr/app/%EC%B9%B4%EC%B9%B4%EC%98%A4%EB%B1%85%ED%81%AC/id1258016944"
+            //   : "https://play.google.com/store/apps/details?id=com.kakaobank.channel"
           }
           target="_self"
           rel="noopener noreferrer"
