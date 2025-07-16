@@ -111,9 +111,9 @@ const extractMydoctorQuizFromText = async (text, type, notifiedTypes) => {
 const extractHpointQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title.split("!")[1].trim();
 
-  const answerRegex = /정답은\s*[:：]?\s*([가-힣a-zA-Z0-9]+)/i;
+  const answerRegex = /정답은\s+([^\n#]+)/i;
   const answerMatch = text.match(answerRegex);
-  const answer = answerMatch ? answerMatch[1].toUpperCase() : null;
+  const answer = answerMatch ? answerMatch[1].toUpperCase().trim() : null;
 
   if (!question || !answer) return null;
 

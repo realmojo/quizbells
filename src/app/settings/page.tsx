@@ -126,6 +126,11 @@ export default function SettingsPage() {
                 <span className="mt-1 text-xs text-gray-500">
                   퀴즈 정답이 나오면 알람을 보내드립니다.
                 </span>
+                <span className="mt-1 text-xs text-gray-500">
+                  {settings?.alarmSettings === "*"
+                    ? "현재 모든 알림을 받습니다. 원치 않은 퀴즈가 있으시면 개별적으로 해제 가능합니다."
+                    : "현재 선택한 퀴즈만 알림을 받습니다. 원치 않은 퀴즈가 있으시면 개별적으로 해제 가능합니다."}
+                </span>
               </div>
               <Switch
                 id="quiz-alert"
