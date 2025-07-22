@@ -279,7 +279,7 @@ const extractCashwalkQuizFromText = async (
     const answerMatch = text.match(/정답은\s+([^\n#]+)/);
     const answer = answerMatch ? answerMatch[1].trim() : null;
 
-    if (answer.length < 100) {
+    if (answer.length < 100 && question) {
       // 너무 길면 오류임
       const quizzes = [
         {

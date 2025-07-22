@@ -131,16 +131,24 @@ const getQuizbells = async (type, answerDate) => {
 };
 
 const insertQuizbells = async (type, contents, answerDate) => {
-  if (type && contents && answerDate) {
-    const query = `INSERT INTO quizbells (type, contents, answerDate) VALUES ('${type}', '${contents}', '${answerDate}')`;
-    await pool.query(query);
+  try {
+    if (type && contents && answerDate) {
+      const query = `INSERT INTO quizbells (type, contents, answerDate) VALUES ('${type}', '${contents}', '${answerDate}')`;
+      await pool.query(query);
+    }
+  } catch (e) {
+    console.log(e);
   }
 };
 
 const updateQuizbells = async (id, contents) => {
-  if (id && contents) {
-    const query = `UPDATE quizbells SET contents = '${contents}' WHERE id = '${id}'`;
-    await pool.query(query);
+  try {
+    if (id && contents) {
+      const query = `UPDATE quizbells SET contents = '${contents}' WHERE id = '${id}'`;
+      await pool.query(query);
+    }
+  } catch (e) {
+    console.log(e);
   }
 };
 
