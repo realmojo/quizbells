@@ -83,35 +83,45 @@ export default function FAQPage() {
   ];
 
   return (
-    <main className="max-w-[720px] mx-auto py-4 mb-10 ">
-      <div
-        className="space-y-6 text-gray-800"
-        itemScope
-        itemType="https://schema.org/FAQPage"
-      >
-        {faqList.map((faq, index) => (
-          <React.Fragment key={index}>
-            <div
-              itemProp="mainEntity"
-              itemScope
-              itemType="https://schema.org/Question"
-              className="px-4"
-            >
-              <div className="mb-2 flex items-center justify-between">
-                <strong itemProp="name">Q. {faq.question}</strong>
-              </div>
+    <main className="mx-auto max-w-[720px] px-4 py-8 mb-20">
+      <h1 className="text-3xl font-bold text-gray-900 mb-6">
+        자주 묻는 질문 (FAQ)
+      </h1>
+      <Separator />
+      <section className="mt-8 space-y-6">
+        <div
+          className="space-y-6 text-gray-800"
+          itemScope
+          itemType="https://schema.org/FAQPage"
+        >
+          {faqList.map((faq, index) => (
+            <React.Fragment key={index}>
               <div
-                itemProp="acceptedAnswer"
+                itemProp="mainEntity"
                 itemScope
-                itemType="https://schema.org/Answer"
+                itemType="https://schema.org/Question"
+                className="px-2"
               >
-                <p itemProp="text">A. {faq.answer}</p>
+                <div className="mb-2 flex items-center justify-between">
+                  <strong itemProp="name">Q. {faq.question}</strong>
+                </div>
+                <div
+                  itemProp="acceptedAnswer"
+                  itemScope
+                  itemType="https://schema.org/Answer"
+                >
+                  <p itemProp="text">A. {faq.answer}</p>
+                </div>
               </div>
-            </div>
-            <Separator />
-          </React.Fragment>
-        ))}
-      </div>
+              <Separator />
+            </React.Fragment>
+          ))}
+        </div>
+      </section>
+      <Separator className="my-8" />
+      <p className="text-xs text-gray-500 text-center mt-10">
+        &copy; {new Date().getFullYear()} 퀴즈벨. All rights reserved.
+      </p>
     </main>
   );
 }

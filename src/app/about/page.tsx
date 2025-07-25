@@ -45,103 +45,75 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="max-w-[720px] mx-auto pt-4">
-      <p className="text-gray-700 leading-relaxed px-4">
-        <strong>퀴즈벨(Quizbells)</strong>은 다양한 앱테크 플랫폼의 퀴즈 정답을
-        실시간으로 알려주는 서비스입니다. 매일 아침 빠르게 퀴즈를 확인하고
-        싶거나, 퀴즈 적중률을 높이고 싶은 분들에게 최적화된 플랫폼이에요. 실시간
-        푸시 알림, 검색 기능, 사용자 친화적 UI 등 앱테크 초보자부터 고수까지
-        누구나 쉽게 사용할 수 있는 기능을 제공합니다. 🚀
-      </p>
-
-      <div className="px-4 my-4">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-          🔧 주요 기능
-        </h2>
-        <ul className="list-disc list-inside text-gray-700 space-y-1">
-          <li>📅 매일 업데이트되는 퀴즈 정답 제공</li>
-          <li>📲 FCM 푸시 알림으로 정답을 실시간 수신</li>
-          <li>📚 과거 퀴즈 검색 및 아카이브 제공</li>
-          <li>💡 퀴즈 적중률을 높이는 팁과 해설</li>
-          <li>🧭 카테고리별 필터 및 퀴즈 시간대별 정렬 기능</li>
-          <li>🎯 퀴즈 유형별 통계와 참여자 반응 기반 정확도 표시</li>
-        </ul>
-      </div>
-
+    <main className="mx-auto max-w-[720px] px-4 py-8 mb-20">
+      <h1 className="text-3xl font-bold text-gray-900 mb-6">퀴즈벨 소개</h1>
       <Separator />
-
-      <div className="px-4 my-4">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-          💎 우리가 추구하는 가치
-        </h2>
+      <section className="mt-8 space-y-6">
+        {/* 기존 본문 전체 복사 */}
         <p className="text-gray-700 leading-relaxed">
-          퀴즈벨은 단순히 정답을 전달하는 서비스가 아니라, 사용자와 함께
-          성장하는 앱테크 파트너가 되고자 합니다. 정확하고 빠른 정보, 편리한
-          인터페이스, 그리고 알림 기반의 효율적인 시간 관리 도구로서 사용자 삶의
-          질을 높이는 데 기여하고자 합니다. 🧡
+          <strong>퀴즈벨(Quizbells)</strong>은 다양한 앱테크 플랫폼의 퀴즈
+          정답을 실시간으로 알려주는 서비스입니다. 매일 아침 빠르게 퀴즈를
+          확인하고 싶거나, 퀴즈 적중률을 높이고 싶은 분들에게 최적화된
+          플랫폼이에요. 실시간 푸시 알림, 검색 기능, 사용자 친화적 UI 등 앱테크
+          초보자부터 고수까지 누구나 쉽게 사용할 수 있는 기능을 제공합니다. 🚀
         </p>
-      </div>
-      <Separator />
-
-      <div className="px-4 my-4">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-          📱 이용 방법 안내
-        </h2>
-        <ol className="list-decimal list-inside text-gray-700 space-y-1">
-          <li>퀴즈벨 웹사이트에 접속하거나 앱을 설치합니다.</li>
-          <li>카테고리 또는 날짜별로 원하는 퀴즈를 탐색합니다.</li>
-          <li>푸시 알림을 허용하면, 실시간 정답을 받을 수 있습니다.</li>
-          <li>과거 기록을 통해 나만의 퀴즈 노하우를 쌓을 수 있습니다.</li>
-        </ol>
-        <p className="text-sm text-gray-500 mt-2">
-          * Android에서는 설치 시 앱처럼 실행되며, iOS는 Safari 홈화면 추가
-          기능을 활용하세요.
-        </p>
-      </div>
-      <Separator />
-
-      <div className="px-4 my-4">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-          🌟 사용자 후기
-        </h2>
-        <div className="space-y-3 text-gray-700">
-          <blockquote className="border-l-4 pl-4 italic text-sm">
-            "매일 아침 퀴즈벨 덕분에 시간을 절약해요! 포인트 쏠쏠하게 모으는
-            재미도 있어요."
-          </blockquote>
-          <blockquote className="border-l-4 pl-4 italic text-sm">
-            "여러 앱을 왔다갔다 할 필요 없이 한 곳에서 퀴즈를 확인할 수 있어
-            너무 편리해요."
-          </blockquote>
+        <div>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+            🔧 주요 기능
+          </h2>
+          <ul className="list-disc list-inside text-gray-700 space-y-1">
+            <li>📅 매일 업데이트되는 퀴즈 정답 제공</li>
+            <li>📲 FCM 푸시 알림으로 정답을 실시간 수신</li>
+            <li>📚 과거 퀴즈 검색 및 아카이브 제공</li>
+            <li>💡 퀴즈 적중률을 높이는 팁과 해설</li>
+            <li>🧩 카테고리별 필터 및 퀴즈 시간대별 정렬 기능</li>
+            <li>🎯 퀴즈 유형별 통계와 참여자 반응 기반 정확도 표시</li>
+          </ul>
         </div>
-      </div>
-      <Separator />
-
-      <div className="px-4 my-4">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-          ❓ 자주 묻는 질문 (FAQ)
-        </h2>
-        <div className="space-y-3 text-gray-700">
-          <div>
-            <strong>Q. 퀴즈 정답은 언제 업데이트되나요?</strong>
-            <p>A. 대부분의 퀴즈는 오전 9시~10시 사이에 빠르게 반영됩니다.</p>
-          </div>
-          <div>
-            <strong>Q. 알림이 오지 않을 때는 어떻게 하나요?</strong>
-            <p>
-              A. 브라우저 알림 권한을 확인하고, 배터리 최적화에서 앱을
-              제외해주세요.
-            </p>
-          </div>
-          <div>
-            <strong>Q. 무료 서비스인가요?</strong>
-            <p>A. 네, 현재 퀴즈벨은 모든 사용자에게 무료로 제공됩니다.</p>
+        <div>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+            💎 우리가 추구하는 가치
+          </h2>
+          <p className="text-gray-700 leading-relaxed">
+            퀴즈벨은 단순히 정답을 전달하는 서비스가 아니라, 사용자와 함께
+            성장하는 앱테크 파트너가 되고자 합니다. 정확하고 빠른 정보, 편리한
+            인터페이스, 그리고 알림 기반의 효율적인 시간 관리 도구로서 사용자
+            삶의 질을 높이는 데 기여하고자 합니다. 🧡
+          </p>
+        </div>
+        <div>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+            📱 이용 방법 안내
+          </h2>
+          <ol className="list-decimal list-inside text-gray-700 space-y-1">
+            <li>퀴즈벨 웹사이트에 접속하거나 앱을 설치합니다.</li>
+            <li>카테고리 또는 날짜별로 원하는 퀴즈를 탐색합니다.</li>
+            <li>푸시 알림을 허용하면, 실시간 정답을 받을 수 있습니다.</li>
+            <li>과거 기록을 통해 나만의 퀴즈 노하우를 쌓을 수 있습니다.</li>
+          </ol>
+          <p className="text-sm text-gray-500 mt-2">
+            * Android에서는 설치 시 앱처럼 실행되며, iOS는 Safari 홈화면 추가
+            기능을 활용하세요.
+          </p>
+        </div>
+        <div>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+            🌟 사용자 후기
+          </h2>
+          <div className="space-y-3 text-gray-700">
+            <blockquote className="border-l-4 pl-4 italic text-sm">
+              "매일 아침 퀴즈벨 덕분에 시간을 절약해요! 포인트 쏠쏠하게 모으는
+              재미도 있어요."
+            </blockquote>
+            <blockquote className="border-l-4 pl-4 italic text-sm">
+              "여러 앱을 왔다갔다 할 필요 없이 한 곳에서 퀴즈를 확인할 수 있어
+              너무 편리해요."
+            </blockquote>
           </div>
         </div>
-      </div>
-      <Separator />
-
-      <p className="text-xs text-gray-500 mt-10 mb-20 text-center">
+      </section>
+      <Separator className="my-8" />
+      <p className="text-xs text-gray-500 text-center mt-10">
         &copy; {new Date().getFullYear()} 퀴즈벨. All rights reserved.
       </p>
     </main>
