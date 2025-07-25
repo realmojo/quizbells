@@ -28,6 +28,28 @@ export default function Footer() {
           </div>
         )}
 
+        {/* 네비게이션 바 */}
+        <nav className="mt-4 flex justify-center gap-6 text-sm">
+          <Link href="/" className="hover:underline">
+            홈
+          </Link>
+          <Link href="/tips" className="hover:underline">
+            팁
+          </Link>
+          <Link href="/quiz" className="hover:underline">
+            퀴즈
+          </Link>
+          <Link href="/posts" className="hover:underline">
+            포스트
+          </Link>
+          <Link
+            href="/tips"
+            className="hover:underline font-semibold text-blue-700"
+          >
+            앱테크 팁
+          </Link>
+        </nav>
+
         {/* 브랜드 설명 */}
         <p className="leading-relaxed text-sm text-gray-700">
           <strong>퀴즈벨(Quizbell)</strong>은 퀴즈 정답과 앱테크 정보를

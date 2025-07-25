@@ -10,6 +10,7 @@ import {
   Settings,
   Bell,
   Book,
+  Lightbulb,
   // Box,
   // BowArrow,
 } from "lucide-react";
@@ -70,7 +71,24 @@ export default function BottomTabBar() {
         <span className="mt-1 text-xs">퀴즈</span>
       </button>
 
-      {/* 2. 포스트 */}
+      {/* 2. 팁 */}
+      <button
+        onClick={() => router.push("/tips")}
+        className={`flex flex-1 flex-col items-center justify-center ${
+          pathname.includes("/tips")
+            ? "text-primary"
+            : "text-muted-foreground hover:text-primary"
+        }`}
+      >
+        <Lightbulb
+          className={`h-5 w-5 ${
+            pathname.includes("/tips") ? "fill-current" : ""
+          }`}
+        />
+        <span className="mt-1 text-xs">팁</span>
+      </button>
+
+      {/* 3. 콘텐츠 */}
       <button
         onClick={() => router.push("/posts")}
         className={`flex flex-1 flex-col items-center justify-center ${
@@ -88,21 +106,6 @@ export default function BottomTabBar() {
         />
         <span className="mt-1 text-xs">콘텐츠</span>
       </button>
-
-      {/* 3. 특가 */}
-      {/* <button
-        onClick={() => router.push("/sale")}
-        className={`flex flex-1 flex-col items-center justify-center ${
-          pathname === "/sale"
-            ? "text-primary"
-            : "text-muted-foreground hover:text-primary"
-        }`}
-      >
-        <Box
-          className={`h-5 w-5 ${pathname === "/sale" ? "fill-current" : ""}`}
-        />
-        <span className="mt-1 text-xs">특가</span>
-      </button> */}
 
       {/* 4. 설정 */}
       <button
