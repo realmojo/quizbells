@@ -241,7 +241,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
           <SocialShare
             title={`${item?.typeKr} ${item?.title} ${answerDateString} 퀴즈 정답 확인하고 앱테크 적립하세요`}
-            url={`https://quizbells.com/quiz/${type}/${answerDate}`}
+            url={window.location.href}
             imageUrl="https://quizbells.com/icons/default-icon.png"
           />
 
