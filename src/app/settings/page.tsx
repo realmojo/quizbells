@@ -91,15 +91,11 @@ export default function SettingsPage() {
                     setIsSheetOpen(true);
                   } else {
                     setIsSheetOpen(false);
-                  }
-
-                  setTimeout(async () => {
-                    await setSettings();
                     await updateSettings(settings?.userId, {
                       isQuizAlarm: newValue,
                       alarmSettings: settings?.alarmSettings,
                     });
-                  }, 100);
+                  }
                 }}
               />
             </li>
