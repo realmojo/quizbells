@@ -6,7 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { settingsStore } from "@/store/settingsStore";
 import AlarmSetting from "@/components/AlarmSetting";
-import { getUserAuth, requestAlarmPermission } from "@/utils/utils";
+import { getUserAuth } from "@/utils/utils";
 import { updateSettings } from "@/utils/api";
 
 export default function SettingsPage() {
@@ -94,10 +94,7 @@ export default function SettingsPage() {
                   await setSettings();
 
                   if (newValue === "Y" && userId) {
-                    const isGranted = await requestAlarmPermission();
-                    if (isGranted) {
-                      setIsSheetOpen(true);
-                    }
+                    setIsSheetOpen(true);
                   } else {
                     setIsSheetOpen(false);
                   }
