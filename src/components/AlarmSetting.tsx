@@ -62,7 +62,10 @@ export default function InstallPromptBanner({
     const initializeAlarmSetting = async () => {
       const isFirstAlarmSetting = localStorage.getItem("isFirstAlarmSetting");
       if (!isFirstAlarmSetting || isForceOpen) {
-        await requestAlarmPermission();
+        const { userId } = getUserAuth();
+        if (!userId) {
+          await requestAlarmPermission();
+        }
         await setSettings();
         setIsSheetOpen(true);
         setCheckedTypes(settings?.alarmSettings?.split(",") || []);
