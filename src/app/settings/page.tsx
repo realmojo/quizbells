@@ -84,20 +84,19 @@ export default function SettingsPage() {
                 onCheckedChange={async (checked: boolean) => {
                   // 1. 먼저 UI 반영
                   setIsQuizAlarm(checked);
-                  const { userId } = getUserAuth();
 
                   const newValue = checked ? "Y" : "N";
-                  await updateSettings(userId, {
-                    isQuizAlarm: newValue,
-                    alarmSettings: settings?.alarmSettings,
-                  });
                   await setSettings();
 
-                  if (newValue === "Y" && userId) {
+                  if (newValue === "Y" && settings?.userId) {
                     setIsSheetOpen(true);
                   } else {
                     setIsSheetOpen(false);
                   }
+                  await updateSettings(settings?.userId, {
+                    isQuizAlarm: newValue,
+                    alarmSettings: settings?.alarmSettings,
+                  });
                 }}
               />
             </li>
