@@ -73,9 +73,10 @@ export default function InstallPromptBanner() {
             </DrawerDescription>
           </div>
         </DrawerHeader>
+
         {isIOS() ? (
           <DrawerFooter className="flex gap-2 text-center justify-center">
-            <div className="mt-2 flex flex-col justify-center text-md text-gray-600 bg-black rounded-md p-4">
+            <div className="mt-2 flex flex-col justify-center text-md text-white bg-black rounded-md p-4">
               <div className="flex justify-center items-center mb-2">
                 공유버튼 <Share className="w-5 h-5 mx-1 font-bold" /> 버튼을
                 눌러

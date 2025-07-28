@@ -347,15 +347,12 @@ export const isApple = () => {
 };
 
 export const isIOS = () => {
+  if (typeof window === "undefined") return false;
   const ua = navigator.userAgent;
-  const platform = navigator.platform;
-  const maxTouchPoints = navigator.maxTouchPoints || 0;
 
   const isIOS = /iPhone|iPod/.test(ua);
-  const isIPad =
-    /iPad/.test(ua) || (platform === "MacIntel" && maxTouchPoints > 1);
 
-  return isIOS || isIPad;
+  return isIOS;
 };
 
 export const isWebView = () => {
@@ -364,10 +361,9 @@ export const isWebView = () => {
   const ua = navigator.userAgent || navigator.vendor || (window as any).opera;
   const isAndroidWebView = /wv|reactnative|react-native/i.test(ua);
   const isiOS = /iPhone|iPad|iPod/i.test(ua);
-  const isSafari = /Safari/.test(ua);
   const isCriOS = /CriOS/.test(ua); // iOS Chrome
   const isFxiOS = /FxiOS/.test(ua); // iOS Firefox
-  const isiOSWebView = isiOS && !isSafari && !isCriOS && !isFxiOS;
+  const isiOSWebView = isiOS && !isCriOS && !isFxiOS;
 
   return isAndroidWebView || isiOSWebView;
 };
