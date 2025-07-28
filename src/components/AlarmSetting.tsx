@@ -42,7 +42,8 @@ export default function InstallPromptBanner({
 
     // ✅ DB에 업데이트
     const allTypes = quizItems.map((q) => q.type);
-    const isAllSelected = newChecked.length === allTypes.length;
+    const isAllSelected =
+      newChecked.length === 0 || newChecked.length === allTypes.length;
     const newValue = isAllSelected ? "*" : newChecked.join(",");
 
     try {
