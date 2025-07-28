@@ -64,7 +64,7 @@ export default function InstallPromptBanner() {
             priority
           />
           <div className="text-center">
-            <DrawerTitle className="text-base text-lg font-semibold">
+            <DrawerTitle className="text-base font-semibold">
               원활한 알람을 위해 <br />
               퀴즈벨 앱을 설치해주세요
             </DrawerTitle>
@@ -75,7 +75,7 @@ export default function InstallPromptBanner() {
         </DrawerHeader>
         {isIOS() ? (
           <DrawerFooter className="flex gap-2 text-center justify-center">
-            <div className="mt-2 flex flex-col justify-center text-md text-gray-600 bg-black text-white rounded-md p-4">
+            <div className="mt-2 flex flex-col justify-center text-md text-gray-600 bg-black rounded-md p-4">
               <div className="flex justify-center items-center mb-2">
                 공유버튼 <Share className="w-5 h-5 mx-1 font-bold" /> 버튼을
                 눌러

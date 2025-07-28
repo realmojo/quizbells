@@ -11,6 +11,7 @@ import "./globals.css";
 import SendAuthToSW from "@/components/SendAuthToSW";
 import InstallPromptBanner from "@/components/InstallPromptBanner";
 import ForegroundNotification from "@/components/ForegroundNotification";
+import AlarmSetting from "@/components/AlarmSetting";
 import { ReactNode } from "react";
 import BottomTabBar from "@/components/BottomTabBar";
 import { GoogleAdSense } from "@/components/AdsenseInit";
@@ -157,6 +158,7 @@ export default async function RootLayout({
         <RegisterServiceWorker />
         <SendAuthToSW />
         <InstallPromptBanner />
+        <AlarmSetting />
         {/* <ClientOnly /> */}
       </body>
     </html>
