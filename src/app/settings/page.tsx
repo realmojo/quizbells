@@ -86,17 +86,20 @@ export default function SettingsPage() {
                   setIsQuizAlarm(checked);
 
                   const newValue = checked ? "Y" : "N";
-                  await setSettings();
 
                   if (newValue === "Y" && settings?.userId) {
                     setIsSheetOpen(true);
                   } else {
                     setIsSheetOpen(false);
                   }
-                  await updateSettings(settings?.userId, {
-                    isQuizAlarm: newValue,
-                    alarmSettings: settings?.alarmSettings,
-                  });
+
+                  setTimeout(async () => {
+                    await setSettings();
+                    await updateSettings(settings?.userId, {
+                      isQuizAlarm: newValue,
+                      alarmSettings: settings?.alarmSettings,
+                    });
+                  }, 100);
                 }}
               />
             </li>
