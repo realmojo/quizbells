@@ -68,7 +68,11 @@ export default function InstallPromptBanner({
         }
         await setSettings();
         setIsSheetOpen(true);
-        setCheckedTypes(settings?.alarmSettings?.split(",") || []);
+        setCheckedTypes(
+          settings?.alarmSettings !== "*"
+            ? settings?.alarmSettings?.split(",") || []
+            : []
+        );
       }
     };
 
