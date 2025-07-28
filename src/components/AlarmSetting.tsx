@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Sheet } from "@/components/ui/sheet";
-import { getUserAuth, quizItems } from "@/utils/utils";
+import { getUserAuth, quizItems, requestAlarmPermission } from "@/utils/utils";
 import { Button } from "@/components/ui/button";
 import {
   SheetContent,
@@ -59,12 +59,17 @@ export default function InstallPromptBanner({
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    const isFirstAlarmSetting = localStorage.getItem("isFirstAlarmSetting");
-    if (!isFirstAlarmSetting || isForceOpen) {
-      setSettings();
-      setIsSheetOpen(true);
-      setCheckedTypes(settings?.alarmSettings?.split(",") || []);
-    }
+    const initializeAlarmSetting = async () => {
+      const isFirstAlarmSetting = localStorage.getItem("isFirstAlarmSetting");
+      if (!isFirstAlarmSetting || isForceOpen) {
+        await requestAlarmPermission();
+        await setSettings();
+        setIsSheetOpen(true);
+        setCheckedTypes(settings?.alarmSettings?.split(",") || []);
+      }
+    };
+
+    initializeAlarmSetting();
   }, [isForceOpen, setSettings]);
 
   return (
