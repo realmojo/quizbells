@@ -63,7 +63,7 @@ export default function InstallPromptBanner({
     if (!isFirstAlarmSetting || isForceOpen) {
       setSettings();
       setIsSheetOpen(true);
-      setCheckedTypes(settings.alarmSettings.split(","));
+      setCheckedTypes(settings?.alarmSettings?.split(",") || []);
     }
   }, [isForceOpen, setSettings]);
 
