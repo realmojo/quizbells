@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Script from "next/script";
 import ImageComponents from "@/components/ImageComponets";
 import { format, parseISO } from "date-fns";
-import { getQuitItem } from "@/utils/utils";
+import { getQuitItem, isIOS } from "@/utils/utils";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
 import AppOpen from "@/components/AppOpen";
@@ -170,7 +170,11 @@ export default async function QuizPage({ params }: QuizPageParams) {
               </p>
 
               <a
-                href="https://play.google.com/store/apps/details?id=com.mojoday.quizbells"
+                href={
+                  isIOS()
+                    ? "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703"
+                    : "https://play.google.com/store/apps/details?id=com.mojoday.quizbells"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block mt-4 w-full"

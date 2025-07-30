@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Share } from "lucide-react";
 import { detectDevice, isIOS, isWebView } from "@/utils/utils";
 import {
   Drawer,
@@ -22,8 +21,13 @@ export default function InstallPromptBanner() {
   const dismissedRef = useRef(false);
 
   const handleInstall = async () => {
-    location.href =
-      "https://play.google.com/store/apps/details?id=com.mojoday.quizbells";
+    if (isIOS()) {
+      location.href =
+        "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703";
+    } else {
+      location.href =
+        "https://play.google.com/store/apps/details?id=com.mojoday.quizbells";
+    }
     setOpen(false);
   };
 
@@ -73,44 +77,21 @@ export default function InstallPromptBanner() {
             </DrawerDescription>
           </div>
         </DrawerHeader>
-
-        {isIOS() ? (
-          <DrawerFooter className="flex gap-2 text-center justify-center">
-            <div className="mt-2 flex flex-col justify-center text-md text-white bg-black rounded-md p-4">
-              <div className="flex justify-center items-center mb-2">
-                공유버튼 <Share className="w-5 h-5 mx-1 font-bold" /> 버튼을
-                눌러
-              </div>
-              <div>
-                <strong className="mx-1">[홈 화면에 추가]</strong>를
-                추가해주세요
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              onClick={() => handleClose()}
-              className="w-full min-h-[50px] text-lg"
-            >
-              닫기
-            </Button>
-          </DrawerFooter>
-        ) : (
-          <DrawerFooter className="flex gap-2 justify-end">
-            <Button
-              onClick={() => handleInstall()}
-              className="w-full min-h-[50px] text-lg font-semibold"
-            >
-              설치
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => handleClose()}
-              className="w-full min-h-[50px] text-lg"
-            >
-              닫기
-            </Button>
-          </DrawerFooter>
-        )}
+        <DrawerFooter className="flex gap-2 justify-end">
+          <Button
+            onClick={() => handleInstall()}
+            className="w-full min-h-[50px] text-lg font-semibold"
+          >
+            설치
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => handleClose()}
+            className="w-full min-h-[50px] text-lg"
+          >
+            닫기
+          </Button>
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );
