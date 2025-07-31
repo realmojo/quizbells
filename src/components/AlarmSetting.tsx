@@ -92,7 +92,11 @@ export default function InstallPromptBanner({
           }
         }}
       >
-        <SheetContent side="bottom" className="sm:max-w-full gap-0">
+        <SheetContent
+          side="bottom"
+          className="sm:max-w-[720px] gap-0"
+          style={{ margin: "0 auto" }}
+        >
           <SheetHeader>
             <SheetTitle>알림 설정을 해주세요!</SheetTitle>
             <SheetDescription>
