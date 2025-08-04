@@ -188,4 +188,4 @@ run();
 
 // 3분 간격 반복
 // setInterval(run, 1 * 60 * 1000);
-setInterval(run, 5 * 60 * 1000);
+setInterval(run, 1 * 60 * 1000);

@@ -192,7 +192,7 @@ const alarmNotify = async (type) => {
         console.log(
           `🔔 [${getQuizItems(quizType).typeKr}] ${item.fcmToken} 유저에게 발송`
         );
-        await axios.post("https://quizbells.com/api/notify", params);
+        axios.post("https://quizbells.com/api/notify", params);
       } else {
         console.log(
           `⛔️ [${getQuizItems(quizType).typeKr}] ${item.fcmToken} 유저는 해당 퀴즈 알림 비활성화`
@@ -252,6 +252,7 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
   // 이상한 답은 제외 처리하기
   quizzes = quizzes.filter((quiz) => !quiz.answer.includes("잠시만"));
 
+  let isNotify = false;
   if (quizzes.length > 0) {
     const getItem = await getQuizbells(type, moment().format("YYYY-MM-DD"));
 
@@ -262,9 +263,11 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
       const quizJson = escapeSQLString(JSON.stringify(quizzes));
       try {
         insertQuizbells(type, quizJson, moment().format("YYYY-MM-DD"));
+        isNotify = true;
         shouldNotify = true;
       } catch (e) {
         console.log(e);
+        isNotify = false;
       }
     } else {
       console.log(
@@ -290,15 +293,22 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
           try {
             await updateQuizbells(getItem.id, JSON.stringify(prevAnswers));
             shouldNotify = true;
+            isNotify = true;
           } catch (e) {
             console.log(e);
+            isNotify = false;
           }
         }
       }
     }
 
-    if (shouldNotify && notifiedTypes && !notifiedTypes.has(type)) {
+    if (shouldNotify && isNotify && notifiedTypes && !notifiedTypes.has(type)) {
+      console.log(
+        `🔔 [${moment().format("YYYY-MM-DD")}] ${type} 퀴즈 알람 발송`
+      );
+      // if (type !== "cashdoc") {
       await alarmNotify(type);
+      // }0-
       notifiedTypes.add(type); // ← 알람 보냈다고 기록
     }
   }
