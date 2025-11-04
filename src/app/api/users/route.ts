@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { queryOne } from "@/lib/db";
+const API_URL = process.env.API_URL || "http://api.mindpang.com/api/quizbells";
 
 // ✅ user 정보 가져오기
 export async function GET(req: NextRequest) {
   try {
-    // ✅ URL에서 id 파라미터 추출
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
 
@@ -15,11 +14,10 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const query = "SELECT * FROM quizbells_users WHERE userId = ?";
-    const user = await queryOne(query, [userId]);
-
-    // ✅ 결과 반환
-    return NextResponse.json(user);
+    const url = `${API_URL}/user.php?userId=${userId}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return NextResponse.json(data);
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ success: false, error: errorMessage });
@@ -37,19 +35,13 @@ export async function PATCH(req: NextRequest) {
         { status: 400 }
       );
     }
-    const { isQuizAlarm, alarmSettings } = await req.json();
-    // 1. UPDATE
-    const updateQuery =
-      "UPDATE quizbells_users SET isQuizAlarm = ?, alarmSettings = ? WHERE userId = ?";
 
-    await queryOne(updateQuery, [isQuizAlarm, alarmSettings, userId]);
-
-    // 2. SELECT로 변경된 값 조회
-    const selectQuery =
-      "SELECT isQuizAlarm, alarmSettings FROM quizbells_users WHERE userId = ?";
-
-    const updatedUser = await queryOne(selectQuery, [userId]);
-    return NextResponse.json(updatedUser);
+    const params = await req.json();
+    const { isQuizAlarm, alarmSettings } = params;
+    const url = `${API_URL}/user.php?userId=${userId}&isQuizAlarm=${isQuizAlarm}&alarmSettings=${alarmSettings}`;
+    const res = await fetch(url, { method: "PATCH" });
+    const data = await res.json();
+    return NextResponse.json(data);
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ success: false, error: errorMessage });

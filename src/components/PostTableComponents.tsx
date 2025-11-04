@@ -91,7 +91,7 @@ export default function PostTableComponents({
               {post.author}
             </TableCell>
             <TableCell className="text-center hidden md:table-cell">
-              {post.regdated.split("T")[0]}
+              {post.regdated}
             </TableCell>
           </TableRow>
         ))}

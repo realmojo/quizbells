@@ -1,6 +1,4 @@
 // src/app/api/sitemap.xml/route.ts
-import { queryList } from "@/lib/db"; // ← DB 쿼리 함수 import 필요
-
 const BASE_URL = "https://quizbells.com";
 
 const QUIZ_TYPES = [
@@ -46,18 +44,19 @@ export async function GET() {
   const urls: { loc: string; lastmod: string }[] = [];
   // ✅ DB에서 게시글 목록 추가 (posts/{id})
   try {
-    const rows = await queryList(
-      `SELECT id, regdated FROM quizbells_posts ORDER BY regdated DESC`
-    );
-    console.log("✅ 게시글 데이터 조회 성공:", rows);
+    const API_URL =
+      process.env.API_URL || "http://api.mindpang.com/api/quizbells";
+    const url = `${API_URL}/sitemap.php`;
+    const res = await fetch(url);
+    const data = await res.json();
 
-    for (const post of rows) {
+    for (const post of data) {
       urls.push({
         loc: `${BASE_URL}/posts/${post.id}`,
-        lastmod: post.regdated.toISOString().split("T")[0],
+        lastmod: post.regdated,
       });
     }
-    console.log("✅ 게시글 데이터 조회 성공:", rows);
+    console.log("✅ 게시글 데이터 조회 성공:", data);
   } catch (err) {
     console.error("❌ 게시글 데이터 조회 실패:", err);
   }

@@ -1,30 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { queryOne } from "@/lib/db";
 
 // ✅ 게시글 1개 조회 API
 export async function GET(req: NextRequest) {
   try {
-    // ✅ Next.js 전용 searchParams 사용
-    const id = req.nextUrl.searchParams.get("id");
+    const API_URL =
+      process.env.API_URL || "http://api.mindpang.com/api/quizbells";
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
 
-    if (!id) {
-      return NextResponse.json(
-        { error: "Missing id parameter" },
-        { status: 400 }
-      );
-    }
-
-    // ✅ DB에서 게시글 1개 조회
-    const query = "SELECT * FROM quizbells_posts WHERE id = ?";
-    const post = await queryOne(query, [id]);
-
-    // ✅ 게시글이 없을 경우
-    if (!post) {
-      return NextResponse.json({ error: "Post not found" }, { status: 404 });
-    }
-
-    // ✅ 성공 응답
-    return NextResponse.json(post);
+    const url = `${API_URL}/post.php?id=${id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return NextResponse.json(data);
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     console.error("🚨 DB Error:", errorMessage);

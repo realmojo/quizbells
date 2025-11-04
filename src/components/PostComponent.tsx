@@ -93,7 +93,7 @@ export default function PostComponent({ id }: { id: string }) {
                   url: "https://quizbells.com/logo.png", // 실제 로고 주소로 변경
                 },
               },
-              description: `${post.regdated.split("T")[0]} ${getQuitItem(post.type)?.typeKr} 퀴즈 콘텐츠`,
+              description: `${post.regdated} ${getQuitItem(post.type)?.typeKr} 퀴즈 콘텐츠`,
             }),
           }}
         />
@@ -105,8 +105,7 @@ export default function PostComponent({ id }: { id: string }) {
               {post.title}
             </CardTitle>
             <div className="text-sm text-right text-muted-foreground mt-2">
-              {post.author} · 등록일: {post.regdated.split("T")[0]}{" "}
-              {post.regdated.split("T")[1].substring(0, 5)}
+              등록일 {post.regdated}
             </div>
           </CardHeader>
 
@@ -119,7 +118,7 @@ export default function PostComponent({ id }: { id: string }) {
             />
           </div>
           <div className="text-xs text-center text-gray-500">
-            {`${post.regdated.split("T")[0]} ${getQuitItem(post.type)?.typeKr} ${getQuitItem(post.type)?.title} 퀴즈 콘텐츠`}
+            {`${post.regdated} ${getQuitItem(post.type)?.typeKr} ${getQuitItem(post.type)?.title} 퀴즈 콘텐츠`}
           </div>
 
           <div className="w-full flex justify-center my-6 px-4">

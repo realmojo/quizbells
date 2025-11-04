@@ -291,10 +291,8 @@ export default function QuizModalClient({
         const filtered = parsed.filter((item: any) => item.answer);
 
         setQuizzes(filtered);
-        setAnswerDate(json.answerDate?.split("T")[0] || null);
-        setAnswerDateString(
-          format(parseISO(json.answerDate), "yyyy년 MM월 dd일")
-        );
+        setAnswerDate(json.answerDate || "");
+        setAnswerDateString(json.answerDateString || "");
       }
     } catch (err) {
       console.error("퀴즈 로딩 실패", err);

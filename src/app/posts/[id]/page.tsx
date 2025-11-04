@@ -10,7 +10,7 @@ export async function generateMetadata({
   const { id } = await params;
   const post = await getPost(id);
   const firstParagraph = getPlainTextFromFirstParagraph(post.contents);
-  const publishedDate = post.regdated?.split("T")[0] || "";
+  const publishedDate = post.regdated || "";
   const typeKr = getQuitItem(post.type)?.typeKr || post.type;
   const pageTitle = `${post.title} | 퀴즈벨`;
   const pageDescription =

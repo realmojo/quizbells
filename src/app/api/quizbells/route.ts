@@ -1,27 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { queryList, queryOne } from "@/lib/db";
 
 // ✅ 퀴즈벨 정답
 export async function GET(req: NextRequest) {
   try {
+    const API_URL =
+      process.env.API_URL || "http://api.mindpang.com/api/quizbells";
     const { searchParams } = new URL(req.url);
     const type = searchParams.get("type");
     const answerDate = searchParams.get("answerDate");
 
-    let query = "";
-    let items = undefined;
-    if (type) {
-      query =
-        "SELECT * FROM quizbells WHERE type = ? AND answerDate = ? ORDER BY id DESC LIMIT 1";
-      items = await queryOne<any>(query, [type, answerDate]);
-    } else if (answerDate) {
-      query =
-        "SELECT type, answerDate FROM quizbells WHERE answerDate = ? GROUP BY type ORDER BY id DESC";
-      items = await queryList<any>(query, [answerDate]);
-    }
-
-    // ✅ 결과 반환
-    return NextResponse.json(items);
+    const url = `${API_URL}/item.php?type=${type}&answerDate=${answerDate}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return NextResponse.json(data);
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
 
