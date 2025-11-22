@@ -11,6 +11,16 @@ import QuizCardComponent from "@/components/QuizCardComponent";
 import { Button } from "@/components/ui/button";
 import { getQuizbells } from "@/utils/api";
 
+// 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
+const getKoreaDate = (): Date => {
+  const now = new Date();
+  // 한국 시간대(Asia/Seoul)의 현재 시간을 가져옴
+  const koreaTimeString = now.toLocaleString("en-US", {
+    timeZone: "Asia/Seoul",
+  });
+  return new Date(koreaTimeString);
+};
+
 type QuizPageParams = {
   params: Promise<{
     type: string;
@@ -24,7 +34,7 @@ export async function generateMetadata({
   // params와 searchParams를 await로 해결
   const { type, date } = await params;
   // const resolvedSearchParams = await searchParams;
-  const answerDate = date || new Date().toISOString().split("T")[0];
+  const answerDate = date || format(getKoreaDate(), "yyyy-MM-dd");
 
   const item = getQuitItem(type);
   const typeName = item?.typeKr || type;
@@ -73,19 +83,34 @@ export async function generateMetadata({
 
 export default async function QuizPage({ params }: QuizPageParams) {
   const { type, date } = await params;
-  const answerDate = date === "today" ? format(new Date(), "yyyy-MM-dd") : date;
+  const answerDate =
+    date === "today" ? format(getKoreaDate(), "yyyy-MM-dd") : date;
   const item = getQuitItem(type);
   const dateLabel = answerDate.replace(/-/g, "년 ").replace(/-/, "월 ") + "일";
 
   const answerDateString = answerDate
     ? format(parseISO(answerDate), "yyyy년 MM월 dd일")
-    : format(new Date(), "yyyy년 MM월 dd일");
+    : format(getKoreaDate(), "yyyy년 MM월 dd일");
 
   const h1Title = `${item?.typeKr} ${item?.title} ${answerDateString} 정답 확인하고 앱테크 적립하세요`;
   const firstDescription = `앱테크는 광고 시청이나 퀴즈 참여를 통해 포인트를 적립하는 방식으로 많은 사용자들의 관심을 받고 있습니다. ${answerDateString} 기준, ${item?.typeKr} ${item?.title} 등 다양한 앱에서 퀴즈 이벤트가 활발히 진행되고 있으며, 정답을 맞히면 현금처럼 사용 가능한 리워드를 받을 수 있어 앱 사용자들 사이에서 큰 호응을 얻고 있습니다.`;
   const quizItem = await getQuizbells(type, answerDate);
 
-  const contents = JSON.parse(quizItem?.contents || "[]") || [];
+  // 이스케이프된 JSON 문자열 처리
+  let contents = [];
+  if (quizItem?.contents) {
+    try {
+      // 이스케이프된 JSON 문자열을 정상적인 JSON으로 변환
+      const unescaped = quizItem.contents
+        .replace(/\\"/g, '"') // \" → "
+        .replace(/\\\\/g, "\\"); // \\ → \
+      contents = JSON.parse(unescaped);
+    } catch (err) {
+      console.error("JSON 파싱 오류:", err);
+      // 파싱 실패 시 빈 배열 반환
+      contents = [];
+    }
+  }
 
   const jsonLd = contents.map((quiz: any) => ({
     "@context": "https://schema.org",

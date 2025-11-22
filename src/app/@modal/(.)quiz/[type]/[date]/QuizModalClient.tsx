@@ -37,6 +37,16 @@ interface Quiz {
   otherAnswers: string[];
 }
 
+// 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
+const getKoreaDate = (): Date => {
+  const now = new Date();
+  // 한국 시간대(Asia/Seoul)의 현재 시간을 가져옴
+  const koreaTimeString = now.toLocaleString("en-US", {
+    timeZone: "Asia/Seoul",
+  });
+  return new Date(koreaTimeString);
+};
+
 const useUpdateMetaTags = ({
   type,
   quizzes,
@@ -261,7 +271,7 @@ export default function QuizModalClient({
 }) {
   const { setSettings } = settingsStore();
   const { isMobile } = detectDevice();
-  date = date === "today" ? format(new Date(), "yyyy-MM-dd") : date;
+  date = date === "today" ? format(getKoreaDate(), "yyyy-MM-dd") : date;
   const pathname = usePathname();
   const hasFetched = useRef(false);
   const router = useRouter();
@@ -271,12 +281,12 @@ export default function QuizModalClient({
   const [answerDate, setAnswerDate] = useState<string>(
     date
       ? format(parseISO(date), "yyyy-MM-dd")
-      : format(new Date(), "yyyy-MM-dd")
+      : format(getKoreaDate(), "yyyy-MM-dd")
   );
   const [answerDateString, setAnswerDateString] = useState<string>(
     date
       ? format(parseISO(date), "yyyy년 MM월 dd일")
-      : format(new Date(), "yyyy년 MM월 dd일")
+      : format(getKoreaDate(), "yyyy년 MM월 dd일")
   );
 
   const fetchQuizData = useCallback(async () => {
@@ -287,12 +297,21 @@ export default function QuizModalClient({
       const json = await res.json();
 
       if (json?.contents) {
-        const parsed = JSON.parse(json.contents);
-        const filtered = parsed.filter((item: any) => item.answer);
+        try {
+          // 이스케이프된 JSON 문자열을 정상적인 JSON으로 변환
+          const unescaped = json.contents
+            .replace(/\\"/g, '"')  // \" → "
+            .replace(/\\\\/g, '\\'); // \\ → \
+          const parsed = JSON.parse(unescaped);
+          const filtered = parsed.filter((item: any) => item.answer);
 
-        setQuizzes(filtered);
-        setAnswerDate(json.answerDate || "");
-        setAnswerDateString(json.answerDateString || "");
+          setQuizzes(filtered);
+          setAnswerDate(json.answerDate || "");
+          setAnswerDateString(json.answerDateString || "");
+        } catch (err) {
+          console.error("JSON 파싱 오류:", err);
+          setQuizzes([]);
+        }
       }
     } catch (err) {
       console.error("퀴즈 로딩 실패", err);
