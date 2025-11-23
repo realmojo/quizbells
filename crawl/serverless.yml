@@ -1,0 +1,40 @@
+service: quizbells-crawler
+
+# frameworkVersion: "3"  # Serverless Framework 버전에 맞게 주석 처리
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ap-northeast-2 # 서울 리전
+  timeout: 900 # 15분 (최대)
+  memorySize: 512
+  lambdaHashingVersion: 20201221
+  environment:
+    API_URL: ${env:API_URL, 'https://quizbells.com'}
+    GOOGLE_CLIENT_EMAIL: ${env:GOOGLE_CLIENT_EMAIL, 'devupbox-google-api@devupbox.iam.gserviceaccount.com'}
+    GOOGLE_PRIVATE_KEY: ${env:GOOGLE_PRIVATE_KEY}
+    LAST_INDEXED_DATE: ${env:LAST_INDEXED_DATE, ''}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource: "arn:aws:logs:*:*:*"
+
+functions:
+  crawler:
+    handler: lambda.handler
+    events:
+      # EventBridge (CloudWatch Events)로 주기적 실행
+      - schedule:
+          rate: rate(1 minute) # 1분마다 실행
+          enabled: true
+      # 또는 API Gateway로 수동 실행
+      - http:
+          path: /crawl
+          method: get
+          cors: true
+# plugins:
+#   - serverless-offline # 로컬 테스트용 (선택사항, 필요시 설치: npm install -D serverless-offline)
+
