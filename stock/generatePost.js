@@ -5,6 +5,7 @@ const {
   getDayCandle,
 } = require("./api");
 const { wpCreatePost } = require("./wp");
+const moment = require("moment");
 const categories = require("./categories");
 
 // 숫자 포맷팅
@@ -277,17 +278,15 @@ const generateContent = (
     const recentPrices = priceInfos.slice(0, 5);
     priceHistory = recentPrices
       .map((price, idx) => {
-        const date = price.date ? new Date(price.date) : new Date();
+        const date = price.localDate;
         const closePrice = price.closePrice || price.close || price.price || 0;
-        const changeRate = price.changeRate || price.rate || 0;
-        const volume = price.volume || price.vol || 0;
+        const volume = price.accumulatedTradingVolume || 0;
+        const foreignRetentionRate = price.foreignRetentionRate || 0;
 
         return `<tr>
-          <td style="padding: 10px; border: 1px solid #ddd;">${date.getMonth() + 1}/${date.getDate()}</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">${moment(date).format("YYYY-MM-DD")}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(closePrice)}원</td>
-          <td style="padding: 10px; border: 1px solid #ddd; color: ${changeRate >= 0 ? "red" : "blue"}">
-            ${changeRate >= 0 ? "+" : ""}${changeRate.toFixed(2)}%
-          </td>
+          <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(foreignRetentionRate)}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(volume)}</td>
         </tr>`;
       })
@@ -309,7 +308,6 @@ const generateContent = (
   // 관련 링크 버튼 생성
   const opentalkUrl =
     channelInfo && channelInfo.opentalkUrl ? channelInfo.opentalkUrl : null;
-  const financeUrl = `https://finance.naver.com/item/main.naver?code=${code}`;
   const mobileUrl = `https://m.stock.naver.com/item/main.nhn?code=${code}`;
 
   const linkButtons = `
@@ -431,7 +429,7 @@ const generateContent = (
         <tr style="background-color: #f0f0f0;">
           <th style="padding: 10px; border: 1px solid #ddd;">날짜</th>
           <th style="padding: 10px; border: 1px solid #ddd;">종가</th>
-          <th style="padding: 10px; border: 1px solid #ddd;">등락률</th>
+          <th style="padding: 10px; border: 1px solid #ddd;">외국인 비율</th>
           <th style="padding: 10px; border: 1px solid #ddd;">거래량</th>
         </tr>
       </thead>
@@ -710,6 +708,8 @@ const generateStockPost = async (code, stockName, wpCategoryId) => {
       analysis,
       recommendation
     );
+
+    console.log(content);
 
     // 워드프레스에 업로드
     console.log(`\n📝 워드프레스에 글 업로드 중...`);

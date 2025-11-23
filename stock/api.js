@@ -80,7 +80,7 @@ const getDayCandle = async (code, periodType = "dayCandle") => {
       },
     });
 
-    data.priceInfos = data.priceInfos.slice(0, 10);
+    data.priceInfos = data.priceInfos.reverse().slice(0, 10);
 
     return data;
   } catch (error) {
