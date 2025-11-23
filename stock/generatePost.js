@@ -697,7 +697,7 @@ const generateStockPost = async (code, stockName, wpCategoryId) => {
     // 제목 생성
     const today = new Date();
     const dateStr = `${today.getMonth() + 1}월 ${today.getDate()}일`;
-    const title = `${stockName} 주가 분석 (${dateStr}) - ${recommendation.emoji} ${recommendation.grade} 추천`;
+    const title = `${stockName} 주가 분석 (${dateStr})`;
 
     // 콘텐츠 생성
     const content = generateContent(
