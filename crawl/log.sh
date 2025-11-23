@@ -1,0 +1,1 @@
+serverless logs -f crawler --tail
