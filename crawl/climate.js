@@ -1,5 +1,10 @@
 const axios = require("axios");
-const moment = require("moment");
+const moment = require("moment-timezone");
+
+// 한국 시간(KST, UTC+9)으로 현재 시간 가져오기
+const getKoreaTime = () => {
+  return moment().tz("Asia/Seoul");
+};
 
 const {
   insertQuizbells,
@@ -12,44 +17,21 @@ const getType = (title) => {
   if (title.includes("기후행동")) {
     return "climate";
   }
-  // } else if (title.includes("오퀴즈")) {
-  //   return "okcashbag";
-  // } else if (title.includes("삼쩜삼")) {
-  //   return "3o3";
-  // } else if (title.includes("쏠퀴즈")) {
-  //   return "shinhan";
-  // } else if (title.includes("닥터나우")) {
-  //   return "doctornow";
-  // } else if (title.includes("나만의닥터")) {
-  //   return "mydoctor";
-  // } else if (title.includes("카카오뱅크")) {
-  //   return "kakaobank";
-  // } else if (title.includes("에이치")) {
-  //   return "hpoint";
-  // } else if (title.includes("농협")) {
-  //   return "nh";
-  // } else if (title.includes("비트버니")) {
-  //   return "bitbunny";
-  // } else if (title.includes("하나원큐")) {
-  //   return "hana";
-  // } else if (title.includes("농협")) {
-  //   return "nh";
-  // }
 };
 
 const doInsert = async (quizzes, type) => {
   if (quizzes.length > 0) {
-    const getItem = await getQuizbells(type, moment().format("YYYY-MM-DD"));
-    if (getItem === undefined) {
+    const getItem = await getQuizbells(type, getKoreaTime().format("YYYY-MM-DD"));
+    if (getItem === undefined || getItem === null) {
       console.log(
-        `✅ [${moment().format("YYYY-MM-DD")}] ${type} 퀴즈 크롤링 완료`
+        `✅ [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 크롤링 완료`
       );
       const quizJson = escapeSQLString(JSON.stringify(quizzes));
-      insertQuizbells(type, quizJson, moment().format("YYYY-MM-DD"));
-      alarmNotify(type);
+      await insertQuizbells(type, quizJson, getKoreaTime().format("YYYY-MM-DD"));
+      await alarmNotify(type);
     } else {
       console.log(
-        `✅ [${moment().format("YYYY-MM-DD")}] 퀴즈 이미 존재 합니다 - ${type}`
+        `✅ [${getKoreaTime().format("YYYY-MM-DD")}] 퀴즈 이미 존재 합니다 - ${type}`
       );
     }
   }
@@ -73,12 +55,13 @@ const extractClimateQuizFromText = async (title, text, type) => {
     },
   ];
 
+  console.log(quizzes);
   await doInsert(quizzes, type);
 };
 
 const getClimateQuiz = async () => {
   const url =
-    "https://m.blog.naver.com/api/blogs/zetaland/post-list?categoryNo=0&itemCount=24&page=1";
+    "https://m.blog.naver.com/api/blogs/zetaland/post-list?categoryNo=0&itemCount=10&page=1";
   const headers = {
     Referer: "https://m.blog.naver.com/zetaland?tab=1",
   };
@@ -89,8 +72,9 @@ const getClimateQuiz = async () => {
     },
   } = await axios.get(url, { headers });
 
-  const today1 = moment().format("M월 D일");
-  const today2 = moment().format("M월D일");
+  const today1 = getKoreaTime().format("M월 D일");
+  const today2 = getKoreaTime().format("M월D일");
+  // const today2 = "11월 20일";
 
   let quizItems = items.map((post) => {
     return {
@@ -103,7 +87,7 @@ const getClimateQuiz = async () => {
   quizItems = quizItems.filter((post) => {
     if (
       (post.title.includes(today1) || post.title.includes(today2)) &&
-      post.content.includes("정답은")
+      post.content.includes("정답")
     ) {
       return true;
     }
@@ -115,17 +99,6 @@ const getClimateQuiz = async () => {
     if (type === "climate") {
       await extractClimateQuizFromText(title, content, type);
     }
-    // if (type === "3o3") {
-    //   await extract3o3QuizFromText(content, type);
-    // } else if (type === "doctornow") {
-    //   await extractDoctornowQuizFromText(content, type);
-    // } else if (type === "mydoctor") {
-    //   await extractMydoctorQuizFromText(content, type);
-    // } else if (type === "kakaobank") {
-    //   await extractKakaobankQuizFromText(content, type);
-    // } else if (type === "hpoint") {
-    //   await extractHpointQuizFromText(content, type);
-    // }
   }
 
   // fs.writeFileSync("./veil8000.json", JSON.stringify(quizItems, null, 2));

@@ -1,5 +1,13 @@
 const axios = require("axios");
-const moment = require("moment");
+const moment = require("moment-timezone");
+
+// 한국 시간(KST, UTC+9)으로 현재 시간 가져오기
+const getKoreaTime = () => {
+  return moment().tz("Asia/Seoul");
+};
+
+// 환경 변수에서 가져오거나 기본값 사용
+const API_URL = process.env.API_URL || "https://quizbells.com";
 
 const quizItems = [
   {
@@ -110,6 +118,12 @@ const quizItems = [
     title: "디깅퀴즈",
     image: "/images/nh.png",
   },
+  {
+    type: "kbank",
+    typeKr: "케이뱅크",
+    title: "미션 퀴즈",
+    image: "/images/kbank.png",
+  },
 ];
 
 const escapeSQLString = (str) => {
@@ -125,39 +139,53 @@ const getQuizItems = (type) => {
 };
 
 const getQuizbells = async (type, answerDate) => {
-  const query = `SELECT * FROM quizbells WHERE type = '${type}' AND answerDate = '${answerDate}'`;
-  const [rows] = await pool.query(query, [type, answerDate]);
-  return rows[0];
+  try {
+    const url = `${API_URL}/api/quizbells?type=${type}&answerDate=${answerDate}`;
+    const res = await axios.get(url);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
 };
 
 const insertQuizbells = async (type, contents, answerDate) => {
-  try {
-    if (type && contents && answerDate) {
-      const query = `INSERT INTO quizbells (type, contents, answerDate) VALUES ('${type}', '${contents}', '${answerDate}')`;
-      await pool.query(query);
+  if (type && contents && answerDate) {
+    try {
+      const url = `${API_URL}/api/quizbells/add`;
+      const res = await axios.post(url, {
+        type,
+        contents,
+        answerDate,
+      });
+      return res.data;
+    } catch (e) {
+      return null;
     }
-  } catch (e) {
-    console.log(e);
   }
 };
 
 const updateQuizbells = async (id, contents) => {
-  try {
-    if (id && contents) {
-      const query = `UPDATE quizbells SET contents = '${contents}' WHERE id = '${id}'`;
-      await pool.query(query);
+  if (id && contents) {
+    try {
+      const url = `${API_URL}/api/quizbells/update`;
+      const res = await axios.post(url, {
+        id,
+        contents,
+      });
+      return res.data;
+    } catch (e) {
+      return null;
     }
-  } catch (e) {
-    console.log(e);
   }
 };
 
 const alarmNotify = async (type) => {
   try {
     // 가격 알람 등록한 유저 가져오기
-    let query = `SELECT * FROM quizbells_users`;
-    let d = await pool.query(query);
-    const items = d[0];
+    const url = `${API_URL}/api/users/alarm?type=${type}`;
+    const res = await axios.get(url);
+    const items = res.data;
 
     if (items.length === 0) {
       console.log("❎ 아무도 등록을 해놓은 사람이 없습니다.");
@@ -168,8 +196,8 @@ const alarmNotify = async (type) => {
         token: item.fcmToken,
         title: "퀴즈벨",
         body: `${getQuizItems(type).typeKr} 정답 알람이 도착했어요`,
-        icon: `https://quizbells.com/icons/android-icon-192x192.png`,
-        link: `https://quizbells.com/quiz/${type || "toss"}/today`,
+        icon: `${API_URL}/icons/android-icon-192x192.png`,
+        link: `${API_URL}/quiz/${type || "toss"}/today`,
       };
 
       // 1. 알림 자체 비활성화
@@ -192,7 +220,7 @@ const alarmNotify = async (type) => {
         console.log(
           `🔔 [${getQuizItems(quizType).typeKr}] ${item.fcmToken} 유저에게 발송`
         );
-        axios.post("https://quizbells.com/api/notify", params);
+        axios.post(`${API_URL}/api/notify`, params);
       } else {
         console.log(
           `⛔️ [${getQuizItems(quizType).typeKr}] ${item.fcmToken} 유저는 해당 퀴즈 알림 비활성화`
@@ -250,19 +278,28 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
   let shouldNotify = false;
 
   // 이상한 답은 제외 처리하기
-  quizzes = quizzes.filter((quiz) => !quiz.answer.includes("잠시만"));
+  quizzes = quizzes.filter(
+    (quiz) => quiz.answer && !quiz.answer.includes("잠시만")
+  );
 
   let isNotify = false;
   if (quizzes.length > 0) {
-    const getItem = await getQuizbells(type, moment().format("YYYY-MM-DD"));
+    const getItem = await getQuizbells(
+      type,
+      getKoreaTime().format("YYYY-MM-DD")
+    );
 
-    if (getItem === undefined) {
+    if (getItem === undefined || getItem === null) {
       console.log(
-        `✅ [${moment().format("YYYY-MM-DD")}] ${type} 퀴즈 크롤링 완료`
+        `✅ [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 크롤링 완료`
       );
       const quizJson = escapeSQLString(JSON.stringify(quizzes));
       try {
-        insertQuizbells(type, quizJson, moment().format("YYYY-MM-DD"));
+        await insertQuizbells(
+          type,
+          quizJson,
+          getKoreaTime().format("YYYY-MM-DD")
+        );
         isNotify = true;
         shouldNotify = true;
       } catch (e) {
@@ -271,44 +308,44 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
       }
     } else {
       console.log(
-        `✅ [${moment().format("YYYY-MM-DD")}] 퀴즈 이미 존재 합니다 - ${type}`
+        `✅ [${getKoreaTime().format("YYYY-MM-DD")}] 퀴즈 이미 존재 합니다 - ${type}`
       );
     }
 
-    if (getItem !== undefined) {
-      const newQuizzes = findNewQuizzes(JSON.parse(getItem.contents), quizzes);
-      // 두번째 문제
-      if (newQuizzes.length > 0) {
-        console.log("✅ 이미 등록되었지만 문제가 추가되어서 업데이트 합니다.");
-        const prevAnswers = sanitizeQuotesInJsonArray(
-          JSON.parse(getItem.contents)
-        );
-        prevAnswers.push(newQuizzes[0]);
+    // if (getItem !== undefined || getItem !== null) {
+    //   console.log(getItem.contents);
+    //   const newQuizzes = findNewQuizzes(JSON.parse(getItem.contents), quizzes);
+    //   // 두번째 문제
+    //   if (newQuizzes.length > 0) {
+    //     console.log("✅ 이미 등록되었지만 문제가 추가되어서 업데이트 합니다.");
+    //     const prevAnswers = sanitizeQuotesInJsonArray(
+    //       JSON.parse(getItem.contents)
+    //     );
+    //     prevAnswers.push(newQuizzes[0]);
 
-        console.log(
-          `✅ [${moment().format("YYYY-MM-DD")}] ${type} 퀴즈 업데이트 합니다..`
-        );
+    //     console.log(
+    //       `✅ [${moment().format("YYYY-MM-DD")}] ${type} 퀴즈 업데이트 합니다..`
+    //     );
 
-        if (prevAnswers.length > 0) {
-          try {
-            await updateQuizbells(getItem.id, JSON.stringify(prevAnswers));
-            shouldNotify = true;
-            isNotify = true;
-          } catch (e) {
-            console.log(e);
-            isNotify = false;
-          }
-        }
-      }
-    }
+    //     if (prevAnswers.length > 0) {
+    //       try {
+    //         await updateQuizbells(getItem.id, JSON.stringify(prevAnswers));
+    //         shouldNotify = true;
+    //         isNotify = true;
+    //       } catch (e) {
+    //         isNotify = false;
+    //       }
+    //     }
+    //   }
+    // }
 
     if (shouldNotify && isNotify && notifiedTypes && !notifiedTypes.has(type)) {
       console.log(
-        `🔔 [${moment().format("YYYY-MM-DD")}] ${type} 퀴즈 알람 발송`
+        `🔔 [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 알람 발송`
       );
       // if (type !== "cashdoc") {
       await alarmNotify(type);
-      // }0-
+      // }
       notifiedTypes.add(type); // ← 알람 보냈다고 기록
     }
   }

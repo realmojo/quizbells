@@ -1,6 +1,11 @@
 const axios = require("axios");
-const moment = require("moment");
+const moment = require("moment-timezone");
 // const fs = require("fs");
+
+// 한국 시간(KST, UTC+9)으로 현재 시간 가져오기
+const getKoreaTime = () => {
+  return moment().tz("Asia/Seoul");
+};
 
 const { doInsert } = require("./db");
 
@@ -33,24 +38,28 @@ const getType = (title) => {
     return "cashwalk";
   } else if (title.includes("하나은행") || title.includes("하나원큐")) {
     return "hanabank";
-  } else if (title.includes("KB스타") || title.includes("KB페이")) {
+  } else if (
+    title.includes("KB스타") ||
+    title.includes("KB페이") ||
+    title.includes("KB")
+  ) {
     return "kbstar";
   } else if (title.includes("옥션")) {
     return "auction";
   } else if (title.includes("캐시닥")) {
     return "cashdoc";
+  } else if (title.includes("케이뱅크")) {
+    return "kbank";
   }
 };
 
-const extract3o3QuizFromText = async (text, type, notifiedTypes) => {
-  const regex = /퀴즈\s(.+?)\sO\sX/i; // "퀴즈 소득세는 ~ O X" 형태를 캡처
-  const answerRegex = /정답은\s([OX])/i; // "정답은 O" 또는 "정답은 X"
+const extract3o3QuizFromText = async (title, text, type, notifiedTypes) => {
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
 
-  const match = text.match(regex);
   const answerMatch = text.match(answerRegex);
 
-  const question = match ? match[1].trim() : null;
-  const answer = answerMatch ? answerMatch[1] : null;
+  const question = title;
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
   if (!question || !answer) return null;
 
@@ -66,21 +75,22 @@ const extract3o3QuizFromText = async (text, type, notifiedTypes) => {
   await doInsert(quizzes, type, notifiedTypes);
 };
 
-const extractDoctornowQuizFromText = async (text, type, notifiedTypes) => {
+const extractDoctornowQuizFromText = async (
+  title,
+  text,
+  type,
+  notifiedTypes
+) => {
   // 질문 추출: "O X"가 붙은 문장 중 하나를 질문으로 가정
-  const questionRegex = /([^\n]+?O\s*X)/i;
-  const questionMatch = text.match(questionRegex);
-  const question = questionMatch ? questionMatch[1].trim() : null;
-
-  // 정답 추출: "정답은 O" 형식
-  const answerRegex = /정답은\s*([OX])/i;
+  // 정답 추출: "정답은.. O" 형식
+  const answerRegex = /정답은..\s*([OX])/i;
   const answerMatch = text.match(answerRegex);
-  const answer = answerMatch ? answerMatch[1].toUpperCase() : null;
+  const answer = answerMatch ? answerMatch[1].toUpperCase() : "";
 
   const quizzes = [
     {
       type: "닥터나우",
-      question,
+      question: title,
       answer,
       otherAnswers: [],
     },
@@ -89,17 +99,19 @@ const extractDoctornowQuizFromText = async (text, type, notifiedTypes) => {
   await doInsert(quizzes, type, notifiedTypes);
 };
 
-const extractMydoctorQuizFromText = async (text, type, notifiedTypes) => {
-  const questionMatch = text.match(/([^\n.]+[?\.])\s*O\s+[^\s]+\s+X\s+[^\s]+/);
-  const question = questionMatch ? questionMatch[1].trim() : "";
-
-  const answerMatch = text.match(/정답은\s+(O|X)\s*([^\s]+)/);
+const extractMydoctorQuizFromText = async (
+  title,
+  text,
+  type,
+  notifiedTypes
+) => {
+  const answerMatch = text.match(/정답은..\s+(O|X)\s*([^\s]+)/);
   const answer = answerMatch ? `${answerMatch[1]} ${answerMatch[2]}` : "";
 
   const quizzes = [
     {
       type: "건강퀴즈",
-      question,
+      question: title,
       answer,
       otherAnswers: [],
     },
@@ -109,11 +121,10 @@ const extractMydoctorQuizFromText = async (text, type, notifiedTypes) => {
 };
 
 const extractHpointQuizFromText = async (title, text, type, notifiedTypes) => {
-  const question = title.split("!")[1].trim();
-
-  const answerRegex = /정답은\s+([^\n#]+)/i;
+  const question = title.split("!")[1]?.trim() || title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
-  const answer = answerMatch ? answerMatch[1].toUpperCase().trim() : null;
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
   if (!question || !answer) return null;
 
@@ -135,17 +146,16 @@ const extractKakaopayQuizFromText = async (
   type,
   notifiedTypes
 ) => {
-  const question = title.split("!")[1].trim();
-
-  const answerRegex = /정답은\s*[:：]?\s*([가-힣a-zA-Z0-9]+)/i;
+  const question = title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
-  const answer = answerMatch ? answerMatch[1].toUpperCase() : null;
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
   if (!question || !answer) return null;
 
   const quizzes = [
     {
-      type: "퀴즈타임",
+      type: "카카오페이",
       question,
       answer,
       otherAnswers: [],
@@ -157,7 +167,6 @@ const extractKakaopayQuizFromText = async (
 
 const extractShinhanQuizFromText = async (title, text, type, notifiedTypes) => {
   let quizType = "";
-
   if (title.includes("출석퀴즈") || text.includes("출석퀴즈")) {
     quizType = "출석퀴즈";
   } else if (title.includes("퀴즈팡팡") || text.includes("퀴즈팡팡")) {
@@ -171,8 +180,8 @@ const extractShinhanQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = questionMatch ? questionMatch[1].trim() : "";
 
   // ✅ 2. 정답 추출 개선
-  const answerMatch = text.match(/정답은\s+([^\n#]+)/);
-  const answer = answerMatch ? answerMatch[1].trim() : null;
+  const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
+  const answer = answerMatch ? answerMatch[1].trim() : "";
 
   const quizzes = [
     {
@@ -190,8 +199,8 @@ const extractSkstoaQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title.split("!")[1].trim();
 
   // ✅ 2. 정답 추출 개선
-  const answerMatch = text.match(/정답은\s+([^\n#]+)/);
-  const answer = answerMatch ? answerMatch[1].trim() : null;
+  const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
+  const answer = answerMatch ? answerMatch[1].trim() : "";
 
   const quizzes = [
     {
@@ -220,8 +229,8 @@ const extractOkcashbagQuizFromText = async (
   }
 
   // ✅ 2. 정답 추출 개선
-  const answerMatch = text.match(/정답은\s+([^\n#]+)/);
-  const answer = answerMatch ? answerMatch[1].trim() : null;
+  const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
+  const answer = answerMatch ? answerMatch[1].trim() : "";
 
   const quizzes = [
     {
@@ -241,28 +250,46 @@ const extractKakaobankQuizFromText = async (
   type,
   notifiedTypes
 ) => {
-  const titleSplits = title.split("정답!");
-  if (titleSplits.length > 1) {
-    const question = titleSplits[1].trim();
+  const question = title.split("!")[1]?.trim() || title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerMatch = text.match(answerRegex);
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
-    // ✅ 2. 정답 추출 개선
-    const answerMatch = text.match(/정답은\s+([^\n#]+)/);
-    const answer = answerMatch ? answerMatch[1].trim() : null;
+  if (!question || !answer) return null;
 
-    if (answer.length < 100) {
-      // 너무 길면 오류임
-      const quizzes = [
-        {
-          type: "카카오뱅크",
-          question,
-          answer,
-          otherAnswers: [],
-        },
-      ];
+  const quizzes = [
+    {
+      type: "카카오뱅크",
+      question,
+      answer,
+      otherAnswers: [],
+    },
+  ];
 
-      await doInsert(quizzes, type, notifiedTypes);
-    }
-  }
+  await doInsert(quizzes, type, notifiedTypes);
+
+  // const titleSplits = title.split("정답!");
+  // if (titleSplits.length > 1) {
+  //   const question = titleSplits[1].trim();
+
+  //   // ✅ 2. 정답 추출 개선
+  //   const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
+  //   const answer = answerMatch ? answerMatch[1].trim() : "";
+
+  //   if (answer.length < 100) {
+  //     // 너무 길면 오류임
+  //     const quizzes = [
+  //       {
+  //         type: "카카오뱅크",
+  //         question,
+  //         answer,
+  //         otherAnswers: [],
+  //       },
+  //     ];
+
+  //     await doInsert(quizzes, type, notifiedTypes);
+  //   }
+  // }
 };
 
 const extractCashwalkQuizFromText = async (
@@ -271,28 +298,23 @@ const extractCashwalkQuizFromText = async (
   type,
   notifiedTypes
 ) => {
-  const titleSplits = title.split("정답 ");
-  if (titleSplits.length > 1) {
-    const question = titleSplits[1].trim();
+  const question = title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerMatch = text.match(answerRegex);
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
-    // ✅ 2. 정답 추출 개선
-    const answerMatch = text.match(/정답은\s+([^\n#]+)/);
-    const answer = answerMatch ? answerMatch[1].trim() : null;
+  if (!question || !answer) return null;
 
-    if (answer.length < 100 && question) {
-      // 너무 길면 오류임
-      const quizzes = [
-        {
-          type: "캐시워크",
-          question,
-          answer,
-          otherAnswers: [],
-        },
-      ];
+  const quizzes = [
+    {
+      type: "캐시워크",
+      question,
+      answer,
+      otherAnswers: [],
+    },
+  ];
 
-      await doInsert(quizzes, type, notifiedTypes);
-    }
-  }
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
 const extractHanabankQuizFromText = async (
@@ -301,83 +323,63 @@ const extractHanabankQuizFromText = async (
   type,
   notifiedTypes
 ) => {
-  const titleSplits = title.split("정답!");
-  if (titleSplits.length > 1) {
-    const question = titleSplits[1].trim();
+  const question = title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerMatch = text.match(answerRegex);
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
-    // ✅ 2. 정답 추출 개선
-    const answerMatch = text.match(/정답은\s+([^\n#]+)/);
-    const answer = answerMatch ? answerMatch[1].trim() : null;
+  if (!question || !answer) return null;
 
-    if (answer.length < 100) {
-      // 너무 길면 오류임
-      const quizzes = [
-        {
-          type: "하나원큐",
-          question,
-          answer,
-          otherAnswers: [],
-        },
-      ];
+  const quizzes = [
+    {
+      type: "하나은행",
+      question,
+      answer,
+      otherAnswers: [],
+    },
+  ];
 
-      await doInsert(quizzes, type, notifiedTypes);
-    }
-  }
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
 const extractKbstQuizFromText = async (title, text, type, notifiedTypes) => {
-  const titleSplits = title.split("정답!");
-  if (titleSplits.length > 1) {
-    const question = titleSplits[1].trim();
+  const question = title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerMatch = text.match(answerRegex);
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
-    // ✅ 2. 정답 추출 개선
-    const answerMatch = text.match(/정답은\s+([^\n#]+)/);
-    const answer = answerMatch ? answerMatch[1].trim() : null;
+  if (!question || !answer) return null;
 
-    if (answer.length < 100) {
-      // 너무 길면 오류임
-      const quizzes = [
-        {
-          type: title.includes("KB스타") ? "KB스타" : "KB페이",
-          question,
-          answer,
-          otherAnswers: [],
-        },
-      ];
+  const quizzes = [
+    {
+      type: title.includes("KB스타") ? "KB스타" : "KB페이",
+      question,
+      answer,
+      otherAnswers: [],
+    },
+  ];
 
-      await doInsert(quizzes, type, notifiedTypes);
-    }
-  }
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
 const extractAuctionQuizFromText = async (title, text, type, notifiedTypes) => {
-  const titleSplits = title.split("정답!");
-  if (titleSplits.length > 1) {
-    const question = titleSplits[1].trim();
+  const question = title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerMatch = text.match(answerRegex);
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
-    // ✅ 2. 정답 추출 개선
-    const answerMatch = text.match(/정답은\s+([^\n#]+)/);
-    let answer = answerMatch ? answerMatch[1].trim() : null;
+  if (!question || !answer) return null;
 
-    const realAnswerMatch = answer.match(/정답은\s+([^\n#]+)/);
-    let realAnswer = realAnswerMatch ? realAnswerMatch[1].trim() : null;
+  const quizzes = [
+    {
+      type: "옥션",
+      question,
+      answer,
+      otherAnswers: [],
+    },
+  ];
 
-    answer = realAnswer ? realAnswer : answer;
-
-    if (answer.length < 100) {
-      // 너무 길면 오류임
-      const quizzes = [
-        {
-          type: "매일퀴즈",
-          question,
-          answer,
-          otherAnswers: [],
-        },
-      ];
-
-      await doInsert(quizzes, type, notifiedTypes);
-    }
-  }
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
 const extractCashdocQuizFromText = async (title, text, type, notifiedTypes) => {
@@ -390,11 +392,11 @@ const extractCashdocQuizFromText = async (title, text, type, notifiedTypes) => {
   }
 
   // ✅ 2. 정답 추출 개선
-  const answerMatch = text.match(/정답은\s+([^\n#]+)/);
-  let answer = answerMatch ? answerMatch[1].trim() : null;
+  const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
+  let answer = answerMatch ? answerMatch[1].trim() : "";
 
-  const realAnswerMatch = answer.match(/정답은\s+([^\n#]+)/);
-  let realAnswer = realAnswerMatch ? realAnswerMatch[1].trim() : null;
+  const realAnswerMatch = answer.match(/정답은..\s+([^\n#]+)/);
+  let realAnswer = realAnswerMatch ? realAnswerMatch[1].trim() : "";
 
   answer = realAnswer ? realAnswer : answer;
 
@@ -423,8 +425,8 @@ const extractNhQuizFromText = async (title, text, type, notifiedTypes) => {
   }
 
   // ✅ 2. 정답 추출 개선
-  const answerMatch = text.match(/정답은\s+([^\n#]+)/);
-  let answer = answerMatch ? answerMatch[1].trim() : null;
+  const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
+  let answer = answerMatch ? answerMatch[1].trim() : "";
 
   if (answer.length < 100) {
     // 너무 길면 오류임
@@ -441,6 +443,69 @@ const extractNhQuizFromText = async (title, text, type, notifiedTypes) => {
   }
 };
 
+const extractBitbunnyQuizFromText = async (
+  title,
+  text,
+  type,
+  notifiedTypes
+) => {
+  const question = title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerMatch = text.match(answerRegex);
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
+
+  if (!question || !answer) return null;
+
+  const quizzes = [
+    {
+      type: "비트버니",
+      question,
+      answer,
+      otherAnswers: [],
+    },
+  ];
+
+  await doInsert(quizzes, type, notifiedTypes);
+};
+
+const extractTossQuizFromText = async (title, text, type, notifiedTypes) => {
+  const question = title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerMatch = text.match(answerRegex);
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
+
+  if (!question || !answer) return null;
+
+  const quizzes = [
+    {
+      type: "토스",
+      question,
+      answer,
+      otherAnswers: [],
+    },
+  ];
+
+  await doInsert(quizzes, type, notifiedTypes);
+};
+
+const extractKbankQuizFromText = async (title, text, type, notifiedTypes) => {
+  const question = title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerMatch = text.match(answerRegex);
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
+
+  if (!question || !answer) return null;
+  const quizzes = [
+    {
+      type: "케이뱅크",
+      question,
+      answer,
+      otherAnswers: [],
+    },
+  ];
+
+  await doInsert(quizzes, type, notifiedTypes);
+};
 const getVeil8000Quiz = async () => {
   const url =
     "https://m.blog.naver.com/api/blogs/veil8000/post-list?categoryNo=61&itemCount=30&logCode=0&page=1";
@@ -455,8 +520,8 @@ const getVeil8000Quiz = async () => {
     },
   } = await axios.get(url, { headers });
 
-  const today1 = moment().format("M월 D일");
-  const today2 = moment().format("M월D일");
+  const today1 = getKoreaTime().format("M월 D일");
+  const today2 = getKoreaTime().format("M월D일");
 
   let quizItems = items.map((post) => {
     return {
@@ -470,7 +535,7 @@ const getVeil8000Quiz = async () => {
   quizItems = quizItems.filter((post) => {
     if (
       (post.title.includes(today1) || post.title.includes(today2)) &&
-      post.content.includes("정답은")
+      post.content.includes("정답")
     ) {
       return true;
     }
@@ -480,13 +545,17 @@ const getVeil8000Quiz = async () => {
 
   for (const post of quizItems) {
     const { title, content, type } = post;
-    // console.log("type: ", type);
+    console.log("type: ", type);
+    if (title.includes("일정")) {
+      console.log("일정 퀴즈 제외");
+      continue;
+    }
     if (type === "3o3") {
-      await extract3o3QuizFromText(content, type, notifiedTypes);
+      await extract3o3QuizFromText(title, content, type, notifiedTypes);
     } else if (type === "doctornow") {
-      await extractDoctornowQuizFromText(content, type, notifiedTypes);
+      await extractDoctornowQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "mydoctor") {
-      await extractMydoctorQuizFromText(content, type, notifiedTypes);
+      await extractMydoctorQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "kakaobank") {
       await extractKakaobankQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "hpoint") {
@@ -511,6 +580,12 @@ const getVeil8000Quiz = async () => {
       await extractCashdocQuizFromText(title, content, type, notifiedTypes);
     } else if (type === "nh") {
       await extractNhQuizFromText(title, content, type, notifiedTypes);
+    } else if (type === "bitbunny") {
+      await extractBitbunnyQuizFromText(title, content, type, notifiedTypes);
+    } else if (type === "toss") {
+      await extractTossQuizFromText(title, content, type, notifiedTypes);
+    } else if (type === "kbank") {
+      await extractKbankQuizFromText(title, content, type, notifiedTypes);
     }
   }
 
