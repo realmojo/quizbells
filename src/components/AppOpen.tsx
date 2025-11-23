@@ -170,6 +170,15 @@ const APP_DATA: Record<string, AppData> = {
     hoverColor: "hover:bg-green-700",
     textColor: "text-white",
   },
+  kbank: {
+    ios: "https://apps.apple.com/kr/app/%EC%BC%80%EC%9D%B4%EB%B1%85%ED%81%AC/id1178872627",
+    android:
+      "https://play.google.com/store/apps/details?id=com.kbankwith.smartbank",
+    buttonText: "케이뱅크 퀴즈 참여하기",
+    bgColor: "bg-blue-600",
+    hoverColor: "hover:bg-blue-600",
+    textColor: "text-white",
+  },
 };
 
 export default function AppOpen({ type }: { type: string }) {
