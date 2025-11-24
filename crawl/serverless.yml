@@ -28,7 +28,7 @@ functions:
     events:
       # EventBridge (CloudWatch Events)로 주기적 실행
       - schedule:
-          rate: rate(1 minute) # 1분마다 실행
+          rate: rate(5 minutes) # 5분마다 실행
           enabled: true
       # 또는 API Gateway로 수동 실행
       - http:

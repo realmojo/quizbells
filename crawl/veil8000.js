@@ -220,17 +220,12 @@ const extractOkcashbagQuizFromText = async (
   type,
   notifiedTypes
 ) => {
-  let titles = title.split("정답");
+  const question = title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerMatch = text.match(answerRegex);
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
-  if (titles[1].length < 6) {
-    question = titles[1].trim();
-  } else {
-    question = titles[0].trim();
-  }
-
-  // ✅ 2. 정답 추출 개선
-  const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
-  const answer = answerMatch ? answerMatch[1].trim() : "";
+  if (!question || !answer) return null;
 
   const quizzes = [
     {
@@ -250,7 +245,7 @@ const extractKakaobankQuizFromText = async (
   type,
   notifiedTypes
 ) => {
-  const question = title.split("!")[1]?.trim() || title;
+  const question = title;
   const answerRegex = /(정답은..\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
