@@ -1,7 +1,6 @@
-const categories = require("./categories");
 const axios = require("axios");
 
-// 뉴스 데이터 가져오기
+// 뉴스 데이터 가져오기(국내, 해외 공통)
 const getStockNews = async (code, pageSize = 20, page = 1) => {
   try {
     const url = `https://m.stock.naver.com/api/news/stock/${code}?pageSize=${pageSize}&page=${page}`;
@@ -28,10 +27,11 @@ const getStockNews = async (code, pageSize = 20, page = 1) => {
   }
 };
 
-// 실시간 시세 가져오기
+// 실시간 시세 가져오기(국내, 해외 다름)
 const getRealtimePrice = async (code) => {
+  const isKorea = code.length === 6 && Number.isInteger(Number(code));
   try {
-    const url = `https://polling.finance.naver.com/api/realtime/domestic/stock/${code}`;
+    const url = `https://polling.finance.naver.com/api/realtime/${isKorea ? "domestic" : "worldstock"}/stock/${code}`;
     const {
       data: { datas },
     } = await axios.get(url, {
@@ -47,7 +47,7 @@ const getRealtimePrice = async (code) => {
   }
 };
 
-// 종목 정보 가져오기
+// 종목 정보 가져오기(국내, 해외 공통)
 const getStockChannelInfo = async (code) => {
   try {
     const url = `https://m.stock.naver.com/front-api/opentalk/channelInfo?code=${code}`;
@@ -69,10 +69,11 @@ const getStockChannelInfo = async (code) => {
   }
 };
 
-// 일별 시세 가져오기
+// 일별 시세 가져오기(국내, 해외 다름)
 const getDayCandle = async (code, periodType = "dayCandle") => {
+  const isKorea = code.length === 6 && Number.isInteger(Number(code));
   try {
-    const url = `https://api.stock.naver.com/chart/domestic/item/${code}?periodType=${periodType}`;
+    const url = `https://api.stock.naver.com/chart/${isKorea ? "domestic" : "foreign"}/item/${code}?periodType=${periodType}`;
     const { data } = await axios.get(url, {
       headers: {
         "User-Agent":
@@ -96,7 +97,7 @@ const getWiseReport = async (code) => {
 // 테스트 함수
 const run = async () => {
   try {
-    const code = "005930";
+    const code = "TSLA.O";
 
     console.log("=== 뉴스 데이터 ===");
     const news = await getStockNews(code, 5, 1);

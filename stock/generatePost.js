@@ -6,7 +6,6 @@ const {
 } = require("./api");
 const { wpCreatePost } = require("./wp");
 const moment = require("moment");
-const categories = require("./categories");
 
 // 숫자 포맷팅
 const formatNumber = (num) => {
@@ -216,6 +215,19 @@ const generateContent = (
   const today = new Date();
   const dateStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
 
+  const isKorea = code.length === 6 && Number.isInteger(Number(code));
+
+  let chartHtml = "";
+  let unitMoney = "원";
+
+  if (isKorea) {
+    unitMoney = "원";
+    chartHtml = `<img src="https://ssl.pstatic.net/imgfinance/chart/item/area/day/${code}.png" alt="${stockName}-주가-차트-${dateStr}" style="width: 100%; height: auto; margin-bottom: 20px;" />`;
+  } else {
+    unitMoney = "$";
+    chartHtml = "";
+  }
+
   // 현재가 정보 추출
   let currentPrice = 0;
   let prevClose = 0;
@@ -233,13 +245,11 @@ const generateContent = (
     // 숫자에서 콤마 제거하는 헬퍼 함수
     const parseNumber = (str) => {
       if (!str) return 0;
-      return (
-        parseInt(
-          String(str)
-            .replace(/,/g, "")
-            .replace(/[^0-9.-]/g, "")
-        ) || 0
-      );
+      const cleaned = String(str)
+        .replace(/,/g, "")
+        .replace(/[^0-9.-]/g, "");
+      const value = parseFloat(cleaned);
+      return Number.isNaN(value) ? 0 : value;
     };
 
     // 현재가 (closePrice는 "94,800" 형식의 문자열)
@@ -285,7 +295,7 @@ const generateContent = (
 
         return `<tr>
           <td style="padding: 10px; border: 1px solid #ddd;">${moment(date).format("YYYY-MM-DD")}</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(closePrice)}원</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(closePrice)}${unitMoney}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(foreignRetentionRate)}</td>
           <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(volume)}</td>
         </tr>`;
@@ -308,7 +318,9 @@ const generateContent = (
   // 관련 링크 버튼 생성
   const opentalkUrl =
     channelInfo && channelInfo.opentalkUrl ? channelInfo.opentalkUrl : null;
-  const mobileUrl = `https://m.stock.naver.com/item/main.nhn?code=${code}`;
+  const mobileUrl = isKorea
+    ? `https://m.stock.naver.com/item/main.nhn?code=${code}`
+    : `https://m.stock.naver.com/worldstock/stock/${code}/total`;
 
   const linkButtons = `
     <div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 25px 0; justify-content: center;">
@@ -369,37 +381,36 @@ const generateContent = (
   `;
 
   const content = `
-    <h2>📊 ${stockName} 주가 분석 리포트</h2>
-    <img src="https://ssl.pstatic.net/imgfinance/chart/item/area/day/${code}.png" alt="${stockName}-주가-차트-${dateStr}" style="width: 100%; height: auto; margin-bottom: 20px;" />
-    <p><strong>분석 일자:</strong> ${dateStr}</p>
+    <h2>📊 ${stockName} 주가 분석 리포트 (${dateStr})</h2>
+    ${chartHtml}
     
     <h3>💰 현재 시세</h3>
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd;"><strong>현재가</strong></td>
-        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(currentPrice)}원</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(currentPrice)}${unitMoney}</td>
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd;"><strong>전일대비</strong></td>
         <td style="padding: 10px; border: 1px solid #ddd; color: ${changePrice >= 0 ? "red" : "blue"}">
-          ${changePrice >= 0 ? "+" : ""}${formatNumber(changePrice)}원 (${changeRate >= 0 ? "+" : ""}${changeRate.toFixed(2)}%)
+          ${changePrice >= 0 ? "+" : ""}${formatNumber(changePrice)}${unitMoney} (${changeRate >= 0 ? "+" : ""}${changeRate.toFixed(2)}%)
         </td>
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd;"><strong>전일종가</strong></td>
-        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(prevClose)}원</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(prevClose)}${unitMoney}</td>
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd;"><strong>시가</strong></td>
-        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(openPrice)}원</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(openPrice)}${unitMoney}</td>
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd;"><strong>고가</strong></td>
-        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(highPrice)}원</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(highPrice)}${unitMoney}</td>
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd;"><strong>저가</strong></td>
-        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(lowPrice)}원</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(lowPrice)}${unitMoney}</td>
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd;"><strong>거래량</strong></td>
@@ -407,7 +418,7 @@ const generateContent = (
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd;"><strong>거래대금</strong></td>
-        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(tradingValue)}원</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">${formatNumber(tradingValue)}${unitMoney}</td>
       </tr>
     </table>
 
@@ -473,7 +484,7 @@ const generateContent = (
                 } else if (isNearLow) {
                   return `<li><strong>가격 위치:</strong> 현재가가 오늘 저가 근처에 위치하고 있어 추가 하락 가능성보다는 반등 기대감이 있습니다. 저가 지지선을 확인하는 것이 중요합니다.</li>`;
                 } else {
-                  return `<li><strong>가격 위치:</strong> 현재가가 오늘 거래 범위(${formatNumber(lowPrice)}원 ~ ${formatNumber(highPrice)}원)의 중간 지점에 위치하고 있습니다. 변동폭은 ${rangePercent}%로 ${rangePercent > 3 ? "큰 편" : "적정한 수준"}입니다.</li>`;
+                  return `<li><strong>가격 위치:</strong> 현재가가 오늘 거래 범위(${formatNumber(lowPrice)}${unitMoney} ~ ${formatNumber(highPrice)}${unitMoney})의 중간 지점에 위치하고 있습니다. 변동폭은 ${rangePercent}%로 ${rangePercent > 3 ? "큰 편" : "적정한 수준"}입니다.</li>`;
                 }
               })()
             : ""
@@ -486,9 +497,9 @@ const generateContent = (
                   100
                 ).toFixed(2);
                 if (Math.abs(openChange) > 2) {
-                  return `<li><strong>시가 대비:</strong> 시가(${formatNumber(openPrice)}원) 대비 ${openChange >= 0 ? "+" : ""}${openChange}% ${openChange >= 0 ? "상승" : "하락"}했습니다. ${openChange >= 0 ? "강세" : "약세"} 흐름이 지속되고 있습니다.</li>`;
+                  return `<li><strong>시가 대비:</strong> 시가(${formatNumber(openPrice)}${unitMoney}) 대비 ${openChange >= 0 ? "+" : ""}${openChange}% ${openChange >= 0 ? "상승" : "하락"}했습니다. ${openChange >= 0 ? "강세" : "약세"} 흐름이 지속되고 있습니다.</li>`;
                 } else {
-                  return `<li><strong>시가 대비:</strong> 시가(${formatNumber(openPrice)}원) 대비 ${openChange >= 0 ? "+" : ""}${openChange}%로 큰 변화 없이 거래되고 있습니다.</li>`;
+                  return `<li><strong>시가 대비:</strong> 시가(${formatNumber(openPrice)}${unitMoney}) 대비 ${openChange >= 0 ? "+" : ""}${openChange}%로 큰 변화 없이 거래되고 있습니다.</li>`;
                 }
               })()
             : ""
@@ -513,11 +524,11 @@ const generateContent = (
                   2
                 );
                 if (tradingValue > 1000000000000) {
-                  return `<li><strong>거래대금:</strong> 오늘 거래대금이 ${tradingValueBillion}조원으로 매우 높은 수준입니다. 대형 자금의 움직임이 활발한 것으로 보입니다.</li>`;
+                  return `<li><strong>거래대금:</strong> 오늘 거래대금이 ${tradingValueBillion}조${unitMoney}으로 매우 높은 수준입니다. 대형 자금의 움직임이 활발한 것으로 보입니다.</li>`;
                 } else if (tradingValue > 500000000000) {
-                  return `<li><strong>거래대금:</strong> 오늘 거래대금이 ${tradingValueBillion}조원으로 높은 수준입니다. 시장의 관심이 집중되고 있습니다.</li>`;
+                  return `<li><strong>거래대금:</strong> 오늘 거래대금이 ${tradingValueBillion}조${unitMoney}으로 높은 수준입니다. 시장의 관심이 집중되고 있습니다.</li>`;
                 } else {
-                  return `<li><strong>거래대금:</strong> 오늘 거래대금이 ${tradingValueBillion}조원으로 보통 수준입니다.</li>`;
+                  return `<li><strong>거래대금:</strong> 오늘 거래대금이 ${tradingValueBillion}조${unitMoney}으로 보통 수준입니다.</li>`;
                 }
               })()
             : ""
@@ -729,7 +740,7 @@ const generateStockPost = async (code, stockName, wpCategoryId) => {
 };
 
 // 카테고리별로 글 생성
-const generateAllPosts = async () => {
+const generateAllPosts = async (categories) => {
   const results = [];
 
   for (const category of categories) {
