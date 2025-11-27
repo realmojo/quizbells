@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const API_URL =
-      process.env.API_URL || "http://api.mindpang.com/api/quizbells";
+      process.env.API_URL || "https://api.mindpang.com/api/quizbells";
     const { searchParams } = new URL(req.url);
     const type = searchParams.get("type");
     const answerDate = searchParams.get("answerDate");

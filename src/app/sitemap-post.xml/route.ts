@@ -45,7 +45,7 @@ export async function GET() {
   // ✅ DB에서 게시글 목록 추가 (posts/{id})
   try {
     const API_URL =
-      process.env.API_URL || "http://api.mindpang.com/api/quizbells";
+      process.env.API_URL || "https://api.mindpang.com/api/quizbells";
     const url = `${API_URL}/sitemap.php`;
     const res = await fetch(url);
     const data = await res.json();

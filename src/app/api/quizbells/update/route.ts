@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const API_URL =
-      process.env.API_URL || "http://api.mindpang.com/api/quizbells";
+      process.env.API_URL || "https://api.mindpang.com/api/quizbells";
 
     // Request body에서 JSON 데이터 받기
     const body = await req.json();

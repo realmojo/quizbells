@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-const API_URL = process.env.API_URL || "http://api.mindpang.com/api/quizbells";
+const API_URL = process.env.API_URL || "https://api.mindpang.com/api/quizbells";
 
 export async function DELETE(req: NextRequest) {
   try {
