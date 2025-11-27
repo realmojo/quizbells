@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { getQuitItem } from "@/utils/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Calendar, User, ArrowRight } from "lucide-react";
 
 export default function PostTableComponents({
   posts,
@@ -21,81 +22,58 @@ export default function PostTableComponents({
 }) {
   if (loading) {
     return (
-      <Table className="max-w-[720px] mx-auto">
-        <TableHeader>
-          <TableRow>
-            <TableHead>제목</TableHead>
-            <TableHead className="w-[150px] text-center">작성자</TableHead>
-            <TableHead className="w-[150px] text-center">작성일</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {[...Array(5)].map((_, i) => (
-            <TableRow key={i}>
-              <TableCell>
-                <Skeleton className="h-4 w-3/4" />
-              </TableCell>
-              <TableCell className="text-center">
-                <Skeleton className="h-4 w-1/2 mx-auto" />
-              </TableCell>
-              <TableCell className="text-center">
-                <Skeleton className="h-4 w-2/3 mx-auto" />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <div className="p-4 space-y-4">
+        {[...Array(5)].map((_, i) => (
+          <div
+            key={i}
+            className="bg-white/50 dark:bg-slate-800/50 rounded-xl p-4 space-y-3"
+          >
+            <Skeleton className="h-5 w-1/4" />
+            <Skeleton className="h-6 w-3/4" />
+            <div className="flex gap-4">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-4 w-32" />
+            </div>
+          </div>
+        ))}
+      </div>
     );
   }
 
   return (
-    <Table className="max-w-[720px] w-full mx-auto">
-      <TableHeader>
-        <TableRow>
-          <TableHead>제목</TableHead>
-          <TableHead className="w-[150px] text-center hidden md:table-cell">
-            작성자
-          </TableHead>
-          <TableHead className="w-[150px] text-center hidden md:table-cell">
-            작성일
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {posts.map((post) => (
-          <TableRow key={post.id}>
-            <TableCell className="cursor-pointer">
-              <Link href={`/posts/${post.id}`}>
-                {/* PC 버전 */}
-                <div className="hidden md:block hover:underline text-black-600 truncate max-w-[500px]">
-                  <span className="text-sm text-blue-500 mr-1">
-                    [{getQuitItem(post.type)?.typeKr}]
-                  </span>
-                  {post.title}
-                </div>
+    <div className="divide-y divide-slate-200 dark:divide-slate-800">
+      {posts.map((post) => (
+        <Link
+          key={post.id}
+          href={`/posts/${post.id}`}
+          className="block group hover:bg-white/50 dark:hover:bg-slate-800/50 transition-all duration-300"
+        >
+          <article className="p-6">
+            {/* Category Badge */}
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold mb-3">
+              <span>{getQuitItem(post.type)?.typeKr || "일반"}</span>
+            </div>
 
-                {/* 모바일 버전: 타입 + 제목 두 줄 (줄바꿈 허용) */}
-                <div className="block md:hidden">
-                  <div className="text-sm text-blue-500">
-                    [{getQuitItem(post.type)?.typeKr}]
-                  </div>
-                  <div className="text-black-700 text-sm font-medium whitespace-normal break-words leading-snug">
-                    {post.title}
-                  </div>
-                </div>
-              </Link>
-            </TableCell>
+            {/* Title */}
+            <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors flex items-start gap-2">
+              <span className="flex-1 line-clamp-2">{post.title}</span>
+              <ArrowRight className="w-5 h-5 mt-0.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" />
+            </h3>
 
-            {/* PC 전용 작성자/작성일 */}
-            <TableCell className="text-center hidden md:table-cell">
-              {post.author}
-            </TableCell>
-            <TableCell className="text-center hidden md:table-cell">
-              {post.regdated}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+            {/* Meta Information */}
+            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
+              <div className="flex items-center gap-1.5">
+                <User className="w-4 h-4" />
+                <span>{post.author}</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Calendar className="w-4 h-4" />
+                <span>{post.regdated}</span>
+              </div>
+            </div>
+          </article>
+        </Link>
+      ))}
+    </div>
   );
 }

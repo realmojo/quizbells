@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { useAppStore } from "@/store/useAppStore";
 import { quizItems } from "@/utils/utils";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function QuizPage() {
   const date = useAppStore((s) => s.date);
@@ -46,120 +47,147 @@ export default function QuizPage() {
         />
       </Head>
 
-      <div className="max-w-[720px] mx-auto p-4 mb-10">
-        {/* 타이틀 & 설명 */}
-        <h1 className="text-2xl font-bold mb-2 text-gray-900">
-          📌 오늘의 앱테크 퀴즈 정답 모음
-        </h1>
-        <p className="mb-6 text-gray-700 text-lg tracking-tight md:text-base leading-relaxed">
-          매일매일 쏟아지는 앱테크 퀴즈 정답을 한 곳에 모았습니다. 다양한 앱의
-          퀴즈 이벤트에 참여하고, 정답을 통해 포인트를 빠르게 적립해보세요!
-        </p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-purple-950">
+        <div className="max-w-3xl mx-auto px-4 py-12 mb-10">
+          {/* Header Section */}
+          <div className="text-center mb-12 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-sm font-medium mb-2">
+              <Sparkles className="w-4 h-4" />
+              <span>매일 업데이트되는 정답</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">
+              오늘의 앱테크 퀴즈
+            </h1>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              다양한 앱의 퀴즈 정답을 한곳에서 확인하세요.
+              <br className="hidden md:block" /> 정답을 맞추고 포인트를 적립하여
+              스마트한 앱테크를 시작해보세요.
+            </p>
+          </div>
 
-        {/* 👉 앱테크 팁 알아보기 버튼 */}
-        <div className="flex justify-end mb-4">
-          <Link href="/tips">
-            <Button
-              variant="secondary"
-              className="text-sm"
-              aria-label="앱테크 팁 알아보기"
-            >
-              💡 앱테크 팁 알아보기
-            </Button>
-          </Link>
+          {/* Controls Section */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl p-4 rounded-2xl border border-white/20 shadow-sm">
+            {/* Date Navigation */}
+            <div className="flex items-center gap-4 bg-white dark:bg-slate-800 rounded-xl p-1.5 shadow-sm border border-slate-100 dark:border-slate-700">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={goPrevDate}
+                aria-label="이전 날짜"
+                className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg h-9 w-9"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <div className="text-lg font-bold min-w-[140px] text-center text-slate-800 dark:text-slate-100">
+                {clientDate || "로딩중..."}
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={goNextDate}
+                disabled={isToday}
+                aria-label="다음 날짜"
+                className={cn(
+                  "hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg h-9 w-9",
+                  isToday && "opacity-30"
+                )}
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
+            </div>
+
+            {/* Tips Button */}
+            <Link href="/tips" className="w-full md:w-auto">
+              <Button
+                variant="default"
+                className="w-full md:w-auto bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+              >
+                💡 앱테크 꿀팁 보러가기
+              </Button>
+            </Link>
+          </div>
+
+          {/* Quiz Grid */}
+          <div className="mb-16">
+            <QuizCardComponent viewType="grid" />
+          </div>
+
+          {/* Info Section */}
+          <section className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-3xl p-8 md:p-10 shadow-sm border border-white/50 dark:border-slate-800 space-y-10">
+            <div>
+              <h2 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                <span className="text-2xl">💡</span> 왜 매일 확인해야 할까요?
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                앱테크는 스마트폰으로 소액 리워드를 쌓는 재테크 방식입니다. 특히{" "}
+                <strong className="text-purple-600 dark:text-purple-400">
+                  퀴즈형 이벤트
+                </strong>
+                는 정답 입력만으로 포인트를 쉽게 얻을 수 있어 인기가 많습니다.
+                퀴즈벨에서는{" "}
+                <strong className="text-slate-900 dark:text-slate-200">
+                  {quizItems
+                    .map((item) => `${item.typeKr}`)
+                    .slice(0, 3)
+                    .join(", ")}
+                </strong>{" "}
+                등 다양한 정답을 실시간으로 제공합니다.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-lg font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  📊 포인트 적립 꿀팁
+                </h3>
+                <ul className="space-y-3">
+                  {[
+                    "매일 방문해서 정답 확인하기",
+                    "앱 알림 설정으로 놓치지 않기",
+                    "정답 입력 후 제출 버튼 필수",
+                    "선착순/한정 시간 퀴즈 주의",
+                  ].map((item, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-slate-600 dark:text-slate-400"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  ✅ 이런 분들께 추천해요
+                </h3>
+                <ul className="space-y-3">
+                  {[
+                    "하루 5분으로 용돈 벌고 싶은 분",
+                    "앱테크를 처음 시작하는 분",
+                    "정답 찾을 시간이 부족한 분",
+                    "빠르게 포인트만 쌓고 싶은 분",
+                  ].map((item, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-slate-600 dark:text-slate-400"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-slate-200 dark:border-slate-800 text-center">
+              <p className="text-slate-500 dark:text-slate-500 text-sm">
+                지금 바로 위 퀴즈 카드를 클릭하여 포인트를 적립해보세요!
+              </p>
+            </div>
+          </section>
         </div>
-
-        {/* 날짜 선택기 */}
-        <div className="flex items-center justify-between mb-4">
-          <Button variant="outline" onClick={goPrevDate} aria-label="이전 날짜">
-            <ChevronLeft className="h-5 w-5" />
-          </Button>
-          <div className="text-xl font-bold">{clientDate || ""}</div>
-          <Button
-            variant="outline"
-            onClick={goNextDate}
-            disabled={isToday}
-            aria-label="다음 날짜"
-            className={isToday ? "opacity-50 cursor-not-allowed" : ""}
-          >
-            <ChevronRight className="h-5 w-5" />
-          </Button>
-        </div>
-
-        {/* 퀴즈 카드 그리드 */}
-        <QuizCardComponent viewType="grid" />
-
-        {/* 추가 설명 */}
-        <section className="mt-10 text-gray-800 text-lg leading-relaxed tracking-tight mb-10">
-          <h2 className="text-xl font-bold mb-4">
-            💡 앱테크 퀴즈, 왜 매일 확인해야 할까요?
-          </h2>
-          <p className="mb-4">
-            앱테크는 ‘앱’과 ‘재테크’의 합성어로, 스마트폰 애플리케이션을 통해
-            소액 리워드를 쌓는 신개념 재테크 방식입니다. 특히{" "}
-            <strong>퀴즈형 이벤트</strong>는 간단한 정답 입력만으로도 포인트를
-            쉽게 얻을 수 있어 많은 사용자들이 매일 참여하고 있습니다.
-          </p>
-          <p className="mb-4">
-            이 페이지에서는{" "}
-            <strong>
-              {quizItems
-                .map((item) => {
-                  return `${item.typeKr}(${item.title})`;
-                })
-                .join(", ")}
-            </strong>{" "}
-            등 다양한 앱의 정답을 매일 업데이트하고 있습니다.{" "}
-            <strong>퀴즈벨</strong>은 바쁜 일상 속에서도 정답만 빠르게 확인하고,
-            포인트를 적립할 수 있도록 도와 드립니다.
-          </p>
-
-          <h2 className="text-xl font-bold mt-8 mb-4">
-            📊 포인트 적립을 놓치지 않는 꿀팁
-          </h2>
-          <ul className="list-disc list-inside mb-6">
-            <li>
-              <strong>매일 방문</strong>해서 퀴즈 정답을 빠르게 확인하세요.
-            </li>
-            <li>
-              <strong>앱 알림 설정</strong>을 통해 퀴즈 오픈 시점을 놓치지
-              마세요.
-            </li>
-            <li>
-              정답 입력 후 <strong>제출 버튼</strong>을 꼭 눌러야 포인트가
-              적립됩니다.
-            </li>
-            <li>
-              일부 퀴즈는 <strong>한정 시간</strong> 또는{" "}
-              <strong>선착순</strong>으로 종료됩니다.
-            </li>
-          </ul>
-
-          <h2 className="text-xl font-bold mt-8 mb-4">
-            ✅ 이런 분들께 추천합니다
-          </h2>
-          <ul className="list-disc list-inside">
-            <li>
-              하루 5분으로 <strong>쏠쏠한 용돈</strong>을 만들고 싶은 분
-            </li>
-            <li>
-              <strong>앱테크 초보자</strong>로 무엇부터 시작할지 고민 중인 분
-            </li>
-            <li>
-              여러 앱을 동시에 쓰며 <strong>정답 찾기에 시간이 부족한</strong>{" "}
-              분
-            </li>
-            <li>
-              <strong>정답만 빠르게 보고</strong> 바로 입력하고 싶은 분
-            </li>
-          </ul>
-
-          <p className="mt-6">
-            아래에 나열된 퀴즈 카드들을 클릭하면 각 앱 퀴즈의 정답과 간단한 참여
-            방법을 확인할 수 있습니다. 지금 바로 참여하고, 포인트 리워드의
-            즐거움을 경험해보세요!
-          </p>
-        </section>
       </div>
     </>
   );

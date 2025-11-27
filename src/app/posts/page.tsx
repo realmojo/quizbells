@@ -12,6 +12,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { BookOpen, FileText, Sparkles } from "lucide-react";
 
 const LIMIT = 5; // 한 페이지당 게시글 수
 
@@ -40,63 +41,129 @@ export default function PostPage() {
   const totalPages = Math.ceil(total / LIMIT);
 
   return (
-    <div className="max-w-[720px] mx-auto space-y-4">
-      <PostTableComponents posts={posts} loading={loading} />
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950">
+      <div className="max-w-3xl mx-auto px-4 py-12 mb-20">
+        {/* Header Section */}
+        <div className="text-center mb-12 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-sm font-medium mb-2">
+            <BookOpen className="w-4 h-4" />
+            <span>최신 콘텐츠</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+            콘텐츠 목록
+          </h1>
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            앱테크와 퀴즈 관련 유용한 정보를 확인하세요.
+          </p>
+        </div>
 
-      {totalPages > 1 && (
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (page > 1) setPage(page - 1);
-                }}
-                className={page === 1 ? "pointer-events-none opacity-50" : ""}
-              />
-            </PaginationItem>
+        {/* Stats Card */}
+        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800 mb-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
+                <FileText className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">
+                  전체 게시글
+                </div>
+                <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                  {total}개
+                </div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-sm text-slate-600 dark:text-slate-400">
+                현재 페이지
+              </div>
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                {page} / {totalPages}
+              </div>
+            </div>
+          </div>
+        </div>
 
-            {[...Array(totalPages)].map((_, i) => {
-              const pageNum = i + 1;
-              // 현재 페이지만 강조
-              return (
-                <PaginationItem key={pageNum}>
-                  <PaginationLink
+        {/* Posts Table */}
+        <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl shadow-sm border border-white/50 dark:border-slate-800 overflow-hidden mb-8">
+          <PostTableComponents posts={posts} loading={loading} />
+        </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-4 shadow-sm border border-white/50 dark:border-slate-800">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
                     href="#"
-                    isActive={page === pageNum}
                     onClick={(e) => {
                       e.preventDefault();
-                      setPage(pageNum);
+                      if (page > 1) setPage(page - 1);
                     }}
-                  >
-                    {pageNum}
-                  </PaginationLink>
+                    className={
+                      page === 1 ? "pointer-events-none opacity-50" : ""
+                    }
+                  />
                 </PaginationItem>
-              );
-            })}
 
-            {totalPages > 10 && page < totalPages - 2 && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            )}
+                {[...Array(totalPages)].map((_, i) => {
+                  const pageNum = i + 1;
+                  // 현재 페이지만 강조
+                  return (
+                    <PaginationItem key={pageNum}>
+                      <PaginationLink
+                        href="#"
+                        isActive={page === pageNum}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setPage(pageNum);
+                        }}
+                      >
+                        {pageNum}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
 
-            <PaginationItem>
-              <PaginationNext
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (page < totalPages) setPage(page + 1);
-                }}
-                className={
-                  page === totalPages ? "pointer-events-none opacity-50" : ""
-                }
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
+                {totalPages > 10 && page < totalPages - 2 && (
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                )}
+
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (page < totalPages) setPage(page + 1);
+                    }}
+                    className={
+                      page === totalPages ? "pointer-events-none opacity-50" : ""
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && posts.length === 0 && (
+          <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl p-12 text-center shadow-sm border border-white/50 dark:border-slate-800">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 flex items-center justify-center">
+              <Sparkles className="w-10 h-10 text-blue-600 dark:text-blue-400" />
+            </div>
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">
+              게시글이 없습니다
+            </h3>
+            <p className="text-slate-600 dark:text-slate-400">
+              곧 새로운 콘텐츠가 업데이트될 예정입니다.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
