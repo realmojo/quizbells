@@ -1,13 +1,5 @@
 "use client";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import Link from "next/link";
 import { getQuitItem } from "@/utils/utils";
 import { Skeleton } from "@/components/ui/skeleton";

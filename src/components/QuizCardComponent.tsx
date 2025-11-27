@@ -5,7 +5,6 @@ import { format } from "date-fns";
 import { quizItems } from "@/utils/utils";
 import { Card, CardContent } from "./ui/card";
 import { useAppStore } from "@/store/useAppStore";
-import { cn } from "@/lib/utils";
 
 interface QuizCardComponentProps {
   viewType?: "grid" | "list";
