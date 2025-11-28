@@ -8,6 +8,16 @@ import { settingsStore } from "@/store/settingsStore";
 import AlarmSetting from "@/components/AlarmSetting";
 import { getUserAuth } from "@/utils/utils";
 import { updateSettings } from "@/utils/api";
+import {
+  Bell,
+  ChevronRight,
+  FileText,
+  HelpCircle,
+  Info,
+  Settings,
+  Shield,
+  Lock,
+} from "lucide-react";
 
 export default function SettingsPage() {
   const { settings, setSettings } = settingsStore();
@@ -17,12 +27,11 @@ export default function SettingsPage() {
 
   useEffect(() => {
     if (isSheetOpen) {
-      // Sheet 열릴 때 현재 상태를 푸시 (뒤로가기 대상이 되도록)
       window.history.pushState({ sheetOpen: true }, "");
 
       const handlePopState = (e: PopStateEvent) => {
         console.log(e);
-        setIsSheetOpen(false); // 뒤로가기 시 Sheet 닫기
+        setIsSheetOpen(false);
       };
 
       window.addEventListener("popstate", handlePopState);
@@ -38,7 +47,6 @@ export default function SettingsPage() {
     setSettings();
   }, []);
 
-  // ✅ 초기 설정 상태 불러오기
   useEffect(() => {
     if (settings?.isQuizAlarm) {
       setIsQuizAlarm(settings.isQuizAlarm === "Y");
@@ -49,88 +57,147 @@ export default function SettingsPage() {
 
   return (
     <>
-      <article className="mt-4 mb-24 flex flex-col items-center justify-center">
-        <section className="w-full max-w-[720px] ">
-          <h2
-            className="mb-6 text-xl px-4 font-bold"
-            onClick={() => setIsClicked(!isClicked)}
-          >
-            알림 설정
-          </h2>
-          {isClicked && (
-            <div className="px-4">
-              <p>{JSON.stringify(getUserAuth())}</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-50 dark:from-slate-950 dark:via-gray-950 dark:to-zinc-950">
+        <div className="max-w-3xl mx-auto px-4 py-12 mb-24">
+          {/* Header Section */}
+          <div className="text-center mb-12 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-medium mb-2">
+              <Settings className="w-4 h-4" />
+              <span>환경설정</span>
             </div>
-          )}
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-gray-600 dark:from-white dark:to-gray-400">
+              설정
+            </h1>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              알림 및 앱 설정을 관리하세요.
+            </p>
+          </div>
 
-          <ul className="space-y-4 ">
-            <li className="flex items-center justify-between border-b py-3 px-4">
-              <div className="flex flex-col ">
-                <Label className="text-md" htmlFor="random-alert">
-                  🔔 퀴즈 정답 알림 받기
-                </Label>
-                <span className="mt-1 text-xs text-gray-500">
-                  퀴즈 정답이 나오면 알람을 보내드립니다.
-                </span>
-                <span className="mt-1 text-xs text-gray-500">
-                  {settings?.alarmSettings === "*"
-                    ? "현재 모든 알림을 받습니다. 원치 않은 퀴즈가 있으시면 개별적으로 해제 가능합니다."
-                    : "현재 선택한 퀴즈만 알림을 받습니다. 원치 않은 퀴즈가 있으시면 개별적으로 해제 가능합니다."}
-                </span>
+          {/* Settings Content */}
+          <div className="space-y-8">
+            {/* Notification Settings */}
+            <section className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl shadow-sm border border-white/50 dark:border-slate-800 overflow-hidden">
+              <div className="p-6 border-b border-slate-100 dark:border-slate-800">
+                <h2
+                  className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2 cursor-pointer select-none"
+                  onClick={() => setIsClicked(!isClicked)}
+                >
+                  <Bell className="w-5 h-5 text-slate-500" />
+                  알림 설정
+                </h2>
+                {isClicked && (
+                  <div className="mt-4 p-4 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-mono break-all text-slate-600 dark:text-slate-400">
+                    {JSON.stringify(getUserAuth(), null, 2)}
+                  </div>
+                )}
               </div>
-              <Checkbox
-                id="quiz-alert"
-                checked={isQuizAlarm}
-                onCheckedChange={async (checked: boolean) => {
-                  // 1. 먼저 UI 반영
-                  setIsQuizAlarm(checked);
 
-                  const newValue = checked ? "Y" : "N";
+              <div className="p-6">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-1">
+                    <Label
+                      className="text-base font-semibold text-slate-900 dark:text-white cursor-pointer"
+                      htmlFor="quiz-alert"
+                    >
+                      퀴즈 정답 알림 받기
+                    </Label>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      퀴즈 정답이 나오면 실시간으로 알림을 보내드립니다.
+                    </p>
+                    <div className="pt-2">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                        {settings?.alarmSettings === "*"
+                          ? "모든 알림 수신 중"
+                          : "선택한 알림만 수신 중"}
+                      </span>
+                    </div>
+                  </div>
+                  <Checkbox
+                    id="quiz-alert"
+                    className="mt-1 w-6 h-6 border-2 data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900 dark:data-[state=checked]:bg-white dark:data-[state=checked]:border-white"
+                    checked={isQuizAlarm}
+                    onCheckedChange={async (checked: boolean) => {
+                      setIsQuizAlarm(checked);
+                      const newValue = checked ? "Y" : "N";
 
-                  if (newValue === "Y" && settings?.userId) {
-                    setIsSheetOpen(true);
-                  } else {
-                    setIsSheetOpen(false);
-                    await updateSettings(settings?.userId, {
-                      isQuizAlarm: newValue,
-                      alarmSettings: settings?.alarmSettings,
-                    });
-                  }
-                }}
-              />
-            </li>
-          </ul>
-          {/* 기존 알림 설정 <ul> 아래에 바로 추가 */}
+                      if (newValue === "Y" && settings?.userId) {
+                        setIsSheetOpen(true);
+                      } else {
+                        setIsSheetOpen(false);
+                        await updateSettings(settings?.userId, {
+                          isQuizAlarm: newValue,
+                          alarmSettings: settings?.alarmSettings,
+                        });
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            </section>
 
-          <h2 className="mb-6 text-xl font-bold mt-10 px-4">퀴즈벨 정보</h2>
-          <ul className="space-y-4 ">
-            <Link href="/about">
-              <li className="flex items-center justify-between border-b py-3 px-4 hover:bg-gray-50 cursor-pointer">
-                <span>📘 퀴즈벨 소개</span>
-                <span className="text-black-600 font-medium">→</span>
-              </li>
-            </Link>
-            <Link href="/faq">
-              <li className="flex items-center justify-between border-b py-3 px-4 hover:bg-gray-50 cursor-pointer">
-                <span>❓ 자주 묻는 질문 (FAQ)</span>
-                <span className="text-black-600 font-medium">→</span>
-              </li>
-            </Link>
-            <Link href="/privacy">
-              <li className="flex items-center justify-between border-b py-3 px-4 hover:bg-gray-50 cursor-pointer">
-                <span>🔒 개인정보 처리방침</span>
-                <span className="text-black-600 font-medium">→</span>
-              </li>
-            </Link>
-            <Link href="/terms">
-              <li className="flex items-center justify-between border-b py-3 px-4 hover:bg-gray-50 cursor-pointer">
-                <span>📜 이용약관</span>
-                <span className="text-black-600 font-medium">→</span>
-              </li>
-            </Link>
-          </ul>
-        </section>
-      </article>
+            {/* App Info Settings */}
+            <section className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl shadow-sm border border-white/50 dark:border-slate-800 overflow-hidden">
+              <div className="p-6 border-b border-slate-100 dark:border-slate-800">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Info className="w-5 h-5 text-slate-500" />
+                  퀴즈벨 정보
+                </h2>
+              </div>
+
+              <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                {[
+                  {
+                    href: "/about",
+                    icon: FileText,
+                    label: "퀴즈벨 소개",
+                    color: "text-green-600 dark:text-green-400",
+                    bg: "bg-green-100 dark:bg-green-900/30",
+                  },
+                  {
+                    href: "/faq",
+                    icon: HelpCircle,
+                    label: "자주 묻는 질문 (FAQ)",
+                    color: "text-violet-600 dark:text-violet-400",
+                    bg: "bg-violet-100 dark:bg-violet-900/30",
+                  },
+                  {
+                    href: "/privacy",
+                    icon: Lock,
+                    label: "개인정보 처리방침",
+                    color: "text-blue-600 dark:text-blue-400",
+                    bg: "bg-blue-100 dark:bg-blue-900/30",
+                  },
+                  {
+                    href: "/terms",
+                    icon: Shield,
+                    label: "이용약관",
+                    color: "text-indigo-600 dark:text-indigo-400",
+                    bg: "bg-indigo-100 dark:bg-indigo-900/30",
+                  },
+                ].map((item, index) => (
+                  <Link
+                    key={index}
+                    href={item.href}
+                    className="flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`w-10 h-10 rounded-xl ${item.bg} flex items-center justify-center`}
+                      >
+                        <item.icon className={`w-5 h-5 ${item.color}`} />
+                      </div>
+                      <span className="font-medium text-slate-900 dark:text-white group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">
+                        {item.label}
+                      </span>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 group-hover:translate-x-1 transition-all" />
+                  </Link>
+                ))}
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
       {isSheetOpen && <AlarmSetting isForceOpen={true} />}
     </>
   );

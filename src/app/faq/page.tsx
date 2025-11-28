@@ -1,6 +1,6 @@
-import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
 import React from "react";
+import { HelpCircle, MessageCircle } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "자주 묻는 질문 - 퀴즈벨(Quizbells) FAQ",
@@ -83,45 +83,94 @@ export default function FAQPage() {
   ];
 
   return (
-    <main className="mx-auto max-w-[720px] px-4 py-8 mb-20">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">
-        자주 묻는 질문 (FAQ)
-      </h1>
-      <Separator />
-      <section className="mt-8 space-y-6">
-        <div
-          className="space-y-6 text-gray-800"
-          itemScope
-          itemType="https://schema.org/FAQPage"
-        >
-          {faqList.map((faq, index) => (
-            <React.Fragment key={index}>
-              <div
-                itemProp="mainEntity"
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 dark:from-violet-950 dark:via-purple-950 dark:to-fuchsia-950">
+      <main className="mx-auto max-w-3xl px-4 py-12 mb-20">
+        {/* Header */}
+        <div className="text-center mb-12 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-300 text-sm font-medium mb-2">
+            <HelpCircle className="w-4 h-4" />
+            <span>궁금한 점이 있으신가요?</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400">
+            자주 묻는 질문
+          </h1>
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            퀴즈벨 서비스 이용에 도움이 되는 답변들을 모았습니다.
+          </p>
+        </div>
+
+        {/* FAQ List */}
+        <section className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl shadow-sm border border-white/50 dark:border-slate-800 overflow-hidden p-6 md:p-8">
+          <div
+            className="space-y-4"
+            itemScope
+            itemType="https://schema.org/FAQPage"
+          >
+            {faqList.map((faq, index) => (
+              <details
+                key={index}
+                className="group border border-slate-200 dark:border-slate-800 rounded-2xl bg-white/50 dark:bg-slate-800/50 open:bg-white dark:open:bg-slate-800 transition-all duration-300"
                 itemScope
+                itemProp="mainEntity"
                 itemType="https://schema.org/Question"
-                className="px-2"
               >
-                <div className="mb-2 flex items-center justify-between">
-                  <strong itemProp="name">Q. {faq.question}</strong>
-                </div>
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none select-none">
+                  <div className="flex items-center gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center text-violet-600 dark:text-violet-400 font-bold text-sm">
+                      Q
+                    </div>
+                    <span
+                      className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors"
+                      itemProp="name"
+                    >
+                      {faq.question}
+                    </span>
+                  </div>
+                  <div className="transform transition-transform duration-300 group-open:rotate-180">
+                    <svg
+                      className="w-5 h-5 text-slate-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                </summary>
                 <div
-                  itemProp="acceptedAnswer"
+                  className="px-6 pb-6 pt-0 ml-12"
                   itemScope
+                  itemProp="acceptedAnswer"
                   itemType="https://schema.org/Answer"
                 >
-                  <p itemProp="text">A. {faq.answer}</p>
+                  <div className="text-slate-600 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl">
+                    <span className="font-bold text-violet-600 dark:text-violet-400 mr-2">
+                      A.
+                    </span>
+                    <span itemProp="text">{faq.answer}</span>
+                  </div>
                 </div>
-              </div>
-              <Separator />
-            </React.Fragment>
-          ))}
+              </details>
+            ))}
+          </div>
+        </section>
+
+        {/* Contact CTA */}
+        <div className="mt-12 text-center">
+          <div className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 bg-white/50 dark:bg-slate-900/50 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20">
+            <MessageCircle className="w-4 h-4" />
+            <span>더 궁금한 점이 있으신가요? 고객센터로 문의해주세요.</span>
+          </div>
+          <p className="text-xs text-slate-400 dark:text-slate-500 mt-8">
+            &copy; {new Date().getFullYear()} 퀴즈벨. All rights reserved.
+          </p>
         </div>
-      </section>
-      <Separator className="my-8" />
-      <p className="text-xs text-gray-500 text-center mt-10">
-        &copy; {new Date().getFullYear()} 퀴즈벨. All rights reserved.
-      </p>
-    </main>
+      </main>
+    </div>
   );
 }
