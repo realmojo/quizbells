@@ -103,10 +103,13 @@ export default function SettingsPage() {
                     </Label>
                     <p className="text-sm text-slate-500 dark:text-slate-400">
                       퀴즈 정답이 나오면 실시간으로 알림을 보내드립니다.
+                      {isQuizAlarm}
                     </p>
                     <div className="pt-2">
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
-                        {settings?.alarmSettings === "*"
+                        {!isQuizAlarm
+                          ? "알람 수신 안함"
+                          : settings?.alarmSettings === "*"
                           ? "모든 알림 수신 중"
                           : "선택한 알림만 수신 중"}
                       </span>

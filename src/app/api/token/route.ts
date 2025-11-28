@@ -34,8 +34,19 @@ export async function POST(req: NextRequest) {
     const ip =
       forwarded?.split(",")[0] || req.headers.get("x-real-ip") || "unknown";
 
-    const url = `${API_URL}/token.php?userId=${userId}&fcmToken=${fcmToken}&joinType=${joinType}&ip=${ip}`;
-    const res = await fetch(url, { method: "POST" });
+    const url = `${API_URL}/token.php`;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        fcmToken,
+        joinType,
+        ip,
+      }),
+    });
     const data = await res.json();
     return NextResponse.json(data);
   } catch (err) {
@@ -58,8 +69,18 @@ export async function PATCH(req: NextRequest) {
     const ip =
       forwarded?.split(",")[0] || req.headers.get("x-real-ip") || "unknown";
 
-    const url = `${API_URL}/token.php?userId=${userId}&fcmToken=${fcmToken}&ip=${ip}`;
-    const res = await fetch(url, { method: "PATCH" });
+    const url = `${API_URL}/token.php`;
+    const res = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        fcmToken,
+        ip,
+      }),
+    });
     const data = await res.json();
     return NextResponse.json(data);
   } catch (err) {

@@ -61,9 +61,11 @@ export const getPostsList = async (
     limit: limit.toString(),
   });
 
+  console.log(123)
   const res = await fetch(`/api/post/list?${query.toString()}`, {
     cache: "no-store",
   });
+  console.log(234)
 
   if (!res.ok) return null;
 

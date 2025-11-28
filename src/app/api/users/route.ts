@@ -38,8 +38,17 @@ export async function PATCH(req: NextRequest) {
 
     const params = await req.json();
     const { isQuizAlarm, alarmSettings } = params;
-    const url = `${API_URL}/user.php?userId=${userId}&isQuizAlarm=${isQuizAlarm}&alarmSettings=${alarmSettings}`;
-    const res = await fetch(url, { method: "PATCH" });
+    const url = `${API_URL}/user.php?userId=${userId}`;
+    const res = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        isQuizAlarm,
+        alarmSettings,
+      }),
+    });
     const data = await res.json();
     return NextResponse.json(data);
   } catch (err) {

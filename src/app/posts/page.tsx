@@ -40,6 +40,86 @@ export default function PostPage() {
 
   const totalPages = Math.ceil(total / LIMIT);
 
+  // 페이지네이션 렌더링 로직 개선
+  const renderPaginationItems = () => {
+    const items = [];
+    const maxVisiblePages = 5; // 한 번에 보여줄 최대 페이지 번호 수
+
+    let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    // 첫 페이지 항상 표시
+    if (startPage > 1) {
+      items.push(
+        <PaginationItem key={1}>
+          <PaginationLink
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setPage(1);
+            }}
+          >
+            1
+          </PaginationLink>
+        </PaginationItem>
+      );
+      if (startPage > 2) {
+        items.push(
+          <PaginationItem key="ellipsis-start">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      items.push(
+        <PaginationItem key={i}>
+          <PaginationLink
+            href="#"
+            isActive={page === i}
+            onClick={(e) => {
+              e.preventDefault();
+              setPage(i);
+            }}
+          >
+            {i}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    // 마지막 페이지 항상 표시
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        items.push(
+          <PaginationItem key="ellipsis-end">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+      items.push(
+        <PaginationItem key={totalPages}>
+          <PaginationLink
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setPage(totalPages);
+            }}
+          >
+            {totalPages}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    return items;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950">
       <div className="max-w-3xl mx-auto px-4 py-12 mb-20">
@@ -78,7 +158,7 @@ export default function PostPage() {
                 현재 페이지
               </div>
               <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                {page} / {totalPages}
+                {page} / {totalPages > 0 ? totalPages : 1}
               </div>
             </div>
           </div>
@@ -107,30 +187,7 @@ export default function PostPage() {
                   />
                 </PaginationItem>
 
-                {[...Array(totalPages)].map((_, i) => {
-                  const pageNum = i + 1;
-                  // 현재 페이지만 강조
-                  return (
-                    <PaginationItem key={pageNum}>
-                      <PaginationLink
-                        href="#"
-                        isActive={page === pageNum}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setPage(pageNum);
-                        }}
-                      >
-                        {pageNum}
-                      </PaginationLink>
-                    </PaginationItem>
-                  );
-                })}
-
-                {totalPages > 10 && page < totalPages - 2 && (
-                  <PaginationItem>
-                    <PaginationEllipsis />
-                  </PaginationItem>
-                )}
+                {renderPaginationItems()}
 
                 <PaginationItem>
                   <PaginationNext
@@ -140,7 +197,9 @@ export default function PostPage() {
                       if (page < totalPages) setPage(page + 1);
                     }}
                     className={
-                      page === totalPages ? "pointer-events-none opacity-50" : ""
+                      page === totalPages
+                        ? "pointer-events-none opacity-50"
+                        : ""
                     }
                   />
                 </PaginationItem>
