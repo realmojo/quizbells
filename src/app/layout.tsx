@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
-
-import Script from "next/script";
 import Header from "@/components/layouts/Header";
 import RegisterServiceWorker from "@/app/register-service-worker";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -105,28 +103,35 @@ export default async function RootLayout({
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <Script
+        <script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-          strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
+        <script
+          id="google-analytics"
+          dangerouslySetInnerHTML={{
+            __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
               page_path: window.location.pathname,
             });
-          `}
-        </Script>
-        <Script type="text/javascript" src="//wcs.naver.net/wcslog.js" />
-        <Script id="naver-analytics" type="text/javascript">{`
+          `,
+          }}
+        />
+        <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js" />
+        <script
+          id="naver-analytics"
+          dangerouslySetInnerHTML={{
+            __html: `
              if(!wcs_add) var wcs_add = {};
               wcs_add["wa"] = "136538e329b3cb0";
               if(window.wcs) {
               wcs_do();
             }
-            `}</Script>
+            `,
+          }}
+        />
 
         <GoogleAdSense />
         <link rel="manifest" href="/manifest.json" />
