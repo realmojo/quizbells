@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/layouts/Header";
 import RegisterServiceWorker from "@/app/register-service-worker";
@@ -103,11 +104,19 @@ export default async function RootLayout({
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <script
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        <GoogleAdSense />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/icons/android-icon-48x48.png" />
+      </head>
+      <body>
+        {/* <ClientOnly /> */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-4009JNVXBL"
+          strategy="afterInteractive"
         />
-        <script
+        <Script
           id="google-analytics"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
             window.dataLayer = window.dataLayer || [];
@@ -119,9 +128,10 @@ export default async function RootLayout({
           `,
           }}
         />
-        <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js" />
-        <script
+        <Script src="//wcs.pstatic.net/wcslog.js" strategy="afterInteractive" />
+        <Script
           id="naver-analytics"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
              if(!wcs_add) var wcs_add = {};
@@ -132,13 +142,6 @@ export default async function RootLayout({
             `,
           }}
         />
-
-        <GoogleAdSense />
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/icons/android-icon-48x48.png" />
-      </head>
-      <body>
-        {/* <ClientOnly /> */}
         <NaverAnalyticsTracker />
         <GoogleAnalytics />
         <ForegroundNotification />
