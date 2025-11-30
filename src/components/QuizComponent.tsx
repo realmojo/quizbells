@@ -55,9 +55,9 @@ export default function QuizPage() {
               <Sparkles className="w-4 h-4" />
               <span>매일 업데이트되는 정답</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">
               오늘의 앱테크 퀴즈
-            </h1>
+            </h2>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
               다양한 앱의 퀴즈 정답을 한곳에서 확인하세요.
               <br className="hidden md:block" /> 정답을 맞추고 포인트를 적립하여
