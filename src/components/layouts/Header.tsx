@@ -1,5 +1,5 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Bell,
@@ -8,14 +8,25 @@ import {
   HelpCircle,
   Home,
   Lightbulb,
+  Menu,
   Settings,
   Shield,
   Sparkles,
   Trophy,
 } from "lucide-react";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { cn } from "@/lib/utils";
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
 
   // 경로별 제목과 아이콘 정의
   const getPageInfo = (path: string) => {
@@ -35,6 +46,44 @@ export default function Header() {
 
   const pageInfo = getPageInfo(pathname);
   const Icon = pageInfo.icon;
+
+  // 네비게이션 메뉴 항목
+  const menuItems = [
+    {
+      name: "퀴즈",
+      path: "/",
+      match: (path: string) =>
+        path === "/" || path.includes("/quiz") || path.startsWith("/quiz"),
+      icon: Bell,
+      activeColor: "text-purple-600 dark:text-purple-400",
+      bgColor: "bg-purple-100 dark:bg-purple-900/30",
+    },
+    {
+      name: "팁",
+      path: "/tips",
+      match: (path: string) => path.includes("/tips"),
+      icon: Lightbulb,
+      activeColor: "text-amber-600 dark:text-amber-400",
+      bgColor: "bg-amber-100 dark:bg-amber-900/30",
+    },
+    {
+      name: "콘텐츠",
+      path: "/posts",
+      match: (path: string) =>
+        path.includes("/posts") || path.includes("/post"),
+      icon: BookOpen,
+      activeColor: "text-blue-600 dark:text-blue-400",
+      bgColor: "bg-blue-100 dark:bg-blue-900/30",
+    },
+    {
+      name: "설정",
+      path: "/settings",
+      match: (path: string) => path === "/settings",
+      icon: Settings,
+      activeColor: "text-slate-600 dark:text-slate-400",
+      bgColor: "bg-slate-100 dark:bg-slate-800",
+    },
+  ];
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200/50 dark:border-slate-800/50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm">
@@ -56,17 +105,51 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* 오른쪽: 네비게이션 또는 액션 버튼 */}
-        <nav className="flex items-center gap-2">
-          {/* 간단한 네비게이션 아이콘들 (선택사항) */}
-          {/* <Link
-            href="/tips"
-            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-            aria-label="팁 보기"
-          >
-            <Lightbulb className="w-5 h-5 text-slate-600 dark:text-slate-400" />
-          </Link> */}
-        </nav>
+        {/* 오른쪽: 메뉴 아이콘 */}
+        <Drawer direction="right">
+          <DrawerTrigger asChild>
+            <button
+              className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              aria-label="메뉴 열기"
+            >
+              <Menu className="w-6 h-6 text-slate-700 dark:text-slate-300" />
+            </button>
+          </DrawerTrigger>
+          <DrawerContent className="max-w-sm">
+            <DrawerHeader>
+              <DrawerTitle className="text-xl font-bold">메뉴</DrawerTitle>
+            </DrawerHeader>
+            <div className="px-4 pb-4 space-y-2">
+              {menuItems.map((item) => {
+                const active = item.match(pathname);
+                const ItemIcon = item.icon;
+
+                return (
+                  <DrawerClose key={item.name} asChild>
+                    <button
+                      onClick={() => router.push(item.path)}
+                      className={cn(
+                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left",
+                        active
+                          ? cn(item.activeColor, item.bgColor)
+                          : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
+                      )}
+                    >
+                      <ItemIcon
+                        className={cn(
+                          "w-6 h-6",
+                          active ? item.activeColor : "text-slate-500 dark:text-slate-400"
+                        )}
+                        strokeWidth={active ? 2.5 : 2}
+                      />
+                      <span className="font-semibold">{item.name}</span>
+                    </button>
+                  </DrawerClose>
+                );
+              })}
+            </div>
+          </DrawerContent>
+        </Drawer>
       </div>
     </header>
   );

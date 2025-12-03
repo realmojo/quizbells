@@ -11,7 +11,6 @@ import SendAuthToSW from "@/components/SendAuthToSW";
 import ForegroundNotification from "@/components/ForegroundNotification";
 import AlarmSetting from "@/components/AlarmSetting";
 import { ReactNode } from "react";
-import BottomTabBar from "@/components/BottomTabBar";
 import { GoogleAdSense } from "@/components/AdsenseInit";
 // import ClientOnly from "@/components/ClientOnly";
 
@@ -152,7 +151,6 @@ export default async function RootLayout({
           {children}
           {/* {modal} */}
         </main>
-        <BottomTabBar />
         <Toaster
           position="bottom-center"
           toastOptions={{
