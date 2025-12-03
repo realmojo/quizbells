@@ -188,20 +188,18 @@ export default function AppOpen({ type }: { type: string }) {
     return null;
   }
 
-  const handleClick = () => {
-    const url = isIOS() ? appData.ios : appData.android;
-    window.open(url, "_self");
-  };
+  const url = isIOS() ? appData.ios : appData.android;
 
   return (
     <div className="w-full flex justify-center my-6">
-      <button
-        onClick={handleClick}
+      <a
+        href={url}
+        target="_self"
         className={`group w-full min-h-[50px] ${appData.bgColor} ${appData.hoverColor} ${appData.textColor} px-6 py-4 text-lg font-semibold shadow-md transition-all duration-300 hover:scale-102 rounded-md flex items-center justify-center`}
       >
         {appData.buttonText}
         <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-      </button>
+      </a>
     </div>
   );
 }
