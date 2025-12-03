@@ -209,8 +209,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
                   곧 정답이 업데이트될 예정입니다. 잠시 후 다시 확인해 주세요.
                 </p>
                 <p className="text-sm text-slate-500 dark:text-slate-500 mb-6">
-                  새로운 정답이 올라오면 알려드릴게요! 즐겨찾기 해두시면 편리해요
-                  😊
+                  새로운 정답이 올라오면 알려드릴게요! 즐겨찾기 해두시면
+                  편리해요 😊
                 </p>
 
                 <a
@@ -297,17 +297,15 @@ export default async function QuizPage({ params }: QuizPageParams) {
               ))}
             </div>
 
+            {/* App Open Button - 정답 아래에 배치 */}
+            <div className="mb-8">
+              <AppOpen type={type} />
+            </div>
+
             {/* Description Component */}
             <article className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <DescriptionComponent type={type} />
             </article>
-
-            {/* Fixed App Open Button */}
-            <div className="fixed bottom-14 left-0 w-full px-4 z-50">
-              <div className="mx-auto w-full max-w-xl md:px-4">
-                <AppOpen type={type} />
-              </div>
-            </div>
 
             <SocialShare
               title={`${item?.typeKr} ${item?.title} ${answerDateString} 퀴즈 정답 확인하고 앱테크 적립하세요`}
