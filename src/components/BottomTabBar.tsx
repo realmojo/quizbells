@@ -53,8 +53,8 @@ export default function BottomTabBar() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none flex justify-center pb-6 md:pb-8 safe-area-bottom">
-      <nav className="pointer-events-auto mx-4 flex h-16 w-full max-w-md items-center justify-around rounded-2xl border border-white/20 bg-white/90 px-2 shadow-2xl backdrop-blur-xl dark:border-slate-800/50 dark:bg-slate-900/90 dark:shadow-slate-950/50 transition-all duration-300">
+    <div className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none flex justify-center safe-area-bottom">
+      <nav className="pointer-events-auto flex h-16 w-full max-w-md items-center justify-around border border-white/20 bg-white/90 px-2 shadow-2xl backdrop-blur-xl dark:border-slate-800/50 dark:bg-slate-900/90 dark:shadow-slate-950/50 transition-all duration-300">
         {tabs.map((tab) => {
           const active = tab.match(pathname);
           const Icon = tab.icon;
