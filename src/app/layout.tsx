@@ -7,7 +7,7 @@ import NaverAnalyticsTracker from "@/components/NaverAnalyticsTracker";
 import "./globals.css";
 
 import SendAuthToSW from "@/components/SendAuthToSW";
-import InstallPromptBanner from "@/components/InstallPromptBanner";
+// import InstallPromptBanner from "@/components/InstallPromptBanner";
 import ForegroundNotification from "@/components/ForegroundNotification";
 import AlarmSetting from "@/components/AlarmSetting";
 import { ReactNode } from "react";
@@ -167,7 +167,7 @@ export default async function RootLayout({
         />
         <RegisterServiceWorker />
         <SendAuthToSW />
-        <InstallPromptBanner />
+        {/* <InstallPromptBanner /> */}
         <AlarmSetting />
         {/* <ClientOnly /> */}
       </body>
