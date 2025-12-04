@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import EmailSubscribe from "@/components/EmailSubscribe";
 
 export default function Footer() {
   const [isVisibleToken, setIsVisibleToken] = useState(false);
@@ -49,6 +50,15 @@ export default function Footer() {
             앱테크 팁
           </Link>
         </nav>
+
+        {/* 이메일 구독 */}
+        <div className="my-8">
+          <EmailSubscribe
+            title="새로운 소식을 받아보세요"
+            description="이메일을 입력하시면 최신 퀴즈 정보와 특별 이벤트 소식을 받아보실 수 있습니다."
+            className="max-w-md"
+          />
+        </div>
 
         {/* 브랜드 설명 */}
         <p className="leading-relaxed text-sm text-gray-700">
