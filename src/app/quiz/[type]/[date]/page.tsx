@@ -35,10 +35,13 @@ export async function generateMetadata({
   // params와 searchParams를 await로 해결
   const { type, date } = await params;
   // const resolvedSearchParams = await searchParams;
-  const answerDate = date === "today" ? format(getKoreaDate(), "yyyy-MM-dd") : (date || format(getKoreaDate(), "yyyy-MM-dd"));
+  const answerDate =
+    date === "today"
+      ? format(getKoreaDate(), "yyyy-MM-dd")
+      : date || format(getKoreaDate(), "yyyy-MM-dd");
 
   const item = getQuitItem(type);
-  
+
   // 날짜 포맷팅 (안전하게 처리)
   let dateLabel: string;
   try {
@@ -48,7 +51,8 @@ export async function generateMetadata({
     } else {
       dateLabel = format(getKoreaDate(), "yyyy년 MM월 dd일");
     }
-  } catch (error) {
+  } catch (e) {
+    console.error("날짜 파싱 오류:", e);
     dateLabel = format(getKoreaDate(), "yyyy년 MM월 dd일");
   }
 
@@ -100,11 +104,11 @@ export default async function QuizPage({ params }: QuizPageParams) {
   const answerDate =
     date === "today" ? format(getKoreaDate(), "yyyy-MM-dd") : date;
   const item = getQuitItem(type);
-  
+
   // 날짜 파싱 및 포맷팅 (안전하게 처리)
   let answerDateString: string;
   let dateLabel: string;
-  
+
   try {
     if (answerDate && /^\d{4}-\d{2}-\d{2}$/.test(answerDate)) {
       const parsedDate = parseISO(answerDate);
@@ -128,7 +132,9 @@ export default async function QuizPage({ params }: QuizPageParams) {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">퀴즈를 찾을 수 없습니다</h1>
-          <p className="text-gray-600">요청하신 퀴즈 타입({type})이 존재하지 않습니다.</p>
+          <p className="text-gray-600">
+            요청하신 퀴즈 타입({type})이 존재하지 않습니다.
+          </p>
         </div>
       </div>
     );
@@ -136,7 +142,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
   const h1Title = `${item.typeKr} ${item.title} ${answerDateString} 정답 확인하고 앱테크 적립하세요`;
   const firstDescription = `앱테크는 광고 시청이나 퀴즈 참여를 통해 포인트를 적립하는 방식으로 많은 사용자들의 관심을 받고 있습니다. ${answerDateString} 기준, ${item.typeKr} ${item.title} 등 다양한 앱에서 퀴즈 이벤트가 활발히 진행되고 있으며, 정답을 맞히면 현금처럼 사용 가능한 리워드를 받을 수 있어 앱 사용자들 사이에서 큰 호응을 얻고 있습니다.`;
-  
+
   let quizItem;
   try {
     quizItem = await getQuizbells(type, answerDate);
@@ -145,21 +151,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     quizItem = null;
   }
 
-  // 이스케이프된 JSON 문자열 처리
-  let contents = [];
-  if (quizItem?.contents) {
-    try {
-      // 이스케이프된 JSON 문자열을 정상적인 JSON으로 변환
-      const unescaped = quizItem.contents
-        .replace(/\\"/g, '"') // \" → "
-        .replace(/\\\\/g, "\\"); // \\ → \
-      contents = JSON.parse(unescaped);
-    } catch (err) {
-      console.error("JSON 파싱 오류:", err);
-      // 파싱 실패 시 빈 배열 반환
-      contents = [];
-    }
-  }
+  const contents = quizItem?.contents ?? [];
 
   const jsonLd = contents.map((quiz: any) => ({
     "@context": "https://schema.org",

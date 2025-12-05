@@ -35,15 +35,7 @@ export const getQuizbells = async (
   answerDate: string
 ): Promise<any | null> => {
   try {
-    // 서버 사이드와 클라이언트 사이드 모두에서 작동하도록 처리
-    const baseUrl = 
-      typeof window !== "undefined" 
-        ? window.location.origin 
-        : process.env.NEXT_PUBLIC_BASE_URL || 
-          process.env.VERCEL_URL 
-          ? `https://${process.env.VERCEL_URL}` 
-          : "http://localhost:3000";
-
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const url = `${baseUrl}/api/quizbells?type=${type}&answerDate=${answerDate}`;
 
     const res = await fetch(url, {

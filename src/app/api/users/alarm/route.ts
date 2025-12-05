@@ -1,23 +1,47 @@
 import { NextRequest, NextResponse } from "next/server";
-const API_URL = process.env.API_URL || "https://api.mindpang.com/api/quizbells";
+import { supabaseAdmin } from "@/lib/supabase";
 
-// ✅ user 정보 가져오기
+// ✅ 알림 대상 사용자 조회 (Supabase)
+// 테이블: quizbells_users
 export async function GET(req: NextRequest) {
   try {
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { success: false, error: "Supabase 설정이 완료되지 않았습니다." },
+        { status: 500 }
+      );
+    }
+
     const { searchParams } = new URL(req.url);
     const type = searchParams.get("type");
 
     if (!type) {
       return NextResponse.json(
-        { error: "Missing type parameter" },
+        { success: false, error: "type 파라미터가 필요합니다." },
         { status: 400 }
       );
     }
 
-    const url = `${API_URL}/alarmUsers.php?type=${type}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    return NextResponse.json(data);
+    // type별 알림 대상 조회
+    const { data, error } = await supabaseAdmin
+      .from("quizbells_users")
+      .select("*")
+      .eq("type", type)
+      .eq("isQuizAlarm", true);
+
+    if (error) {
+      console.error("🚨 Supabase query error:", error);
+      return NextResponse.json(
+        {
+          success: false,
+          error: "조회에 실패했습니다.",
+          details: error.message,
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(data || []);
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ success: false, error: errorMessage });

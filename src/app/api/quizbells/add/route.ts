@@ -1,31 +1,52 @@
 import { NextRequest, NextResponse } from "next/server";
+import { supabaseAdmin } from "@/lib/supabase";
 
-// ✅ 퀴즈벨 정답 등록
-// const query = `INSERT INTO quizbells (type, contents, answerDate) VALUES ('${type}', '${contents}', '${answerDate}')`;
+// ✅ 퀴즈벨 정답 등록 (Supabase)
+// 테이블: quizbells_answer
 export async function POST(req: NextRequest) {
   try {
-    const API_URL =
-      process.env.API_URL || "https://api.mindpang.com/api/quizbells";
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { success: false, error: "Supabase 설정이 완료되지 않았습니다." },
+        { status: 500 }
+      );
+    }
 
-    // Request body에서 JSON 데이터 받기
     const body = await req.json();
     const { type, answerDate, contents } = body;
 
-    // 외부 API에 JSON body로 전송
-    const url = `${API_URL}/itemAdd.php`;
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type,
-        contents,
-        answerDate,
-      }),
-    });
-    const data = await res.json();
-    return NextResponse.json(data);
+    if (!type || !answerDate || !contents) {
+      return NextResponse.json(
+        { success: false, error: "type, answerDate, contents는 필수입니다." },
+        { status: 400 }
+      );
+    }
+
+    const { data, error } = await supabaseAdmin
+      .from("quizbells_answer")
+      .insert([
+        {
+          type,
+          answerDate,
+          contents,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.error("🚨 Supabase insert error:", error);
+      return NextResponse.json(
+        {
+          success: false,
+          error: "저장에 실패했습니다.",
+          details: error.message,
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ success: true, data });
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
 
