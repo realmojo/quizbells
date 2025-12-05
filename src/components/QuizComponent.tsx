@@ -10,6 +10,7 @@ import { useAppStore } from "@/store/useAppStore";
 import { quizItems } from "@/utils/utils";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import EmailSubscribe from "./EmailSubscribe";
 
 export default function QuizPage() {
   const date = useAppStore((s) => s.date);
@@ -64,6 +65,8 @@ export default function QuizPage() {
               스마트한 앱테크를 시작해보세요.
             </p>
           </div>
+
+          <EmailSubscribe />
 
           {/* Controls Section */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl p-4 rounded-2xl border border-white/20 shadow-sm">

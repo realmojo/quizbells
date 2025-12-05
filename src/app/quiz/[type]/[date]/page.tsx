@@ -35,14 +35,27 @@ export async function generateMetadata({
   // params와 searchParams를 await로 해결
   const { type, date } = await params;
   // const resolvedSearchParams = await searchParams;
-  const answerDate = date || format(getKoreaDate(), "yyyy-MM-dd");
+  const answerDate = date === "today" ? format(getKoreaDate(), "yyyy-MM-dd") : (date || format(getKoreaDate(), "yyyy-MM-dd"));
 
   const item = getQuitItem(type);
+  
+  // 날짜 포맷팅 (안전하게 처리)
+  let dateLabel: string;
+  try {
+    if (answerDate && /^\d{4}-\d{2}-\d{2}$/.test(answerDate)) {
+      const parsedDate = parseISO(answerDate);
+      dateLabel = format(parsedDate, "yyyy년 MM월 dd일");
+    } else {
+      dateLabel = format(getKoreaDate(), "yyyy년 MM월 dd일");
+    }
+  } catch (error) {
+    dateLabel = format(getKoreaDate(), "yyyy년 MM월 dd일");
+  }
+
   const typeName = item?.typeKr || type;
   const typeTitle = item?.title || "";
-  const dateLabel = answerDate.replace(/-/g, "년 ").replace(/-/, "월 ") + "일";
-  const fullTitle = `${typeName} ${typeTitle} ${dateLabel === "today일" ? "오늘" : dateLabel} 퀴즈 정답 확인하고 앱테크 포인트 받으세요 | 퀴즈벨`;
-  const description = `${dateLabel === "today일" ? "오늘" : dateLabel} 기준 ${typeName} 퀴즈 정답을 한 눈에 확인하고, 앱테크 리워드를 적립해 보세요. 다양한 퀴즈 이벤트가 매일 업데이트됩니다.`;
+  const fullTitle = `${typeName} ${typeTitle} ${dateLabel} 퀴즈 정답 확인하고 앱테크 포인트 받으세요 | 퀴즈벨`;
+  const description = `${dateLabel} 기준 ${typeName} 퀴즈 정답을 한 눈에 확인하고, 앱테크 리워드를 적립해 보세요. 다양한 퀴즈 이벤트가 매일 업데이트됩니다.`;
 
   return {
     title: fullTitle,
@@ -87,15 +100,50 @@ export default async function QuizPage({ params }: QuizPageParams) {
   const answerDate =
     date === "today" ? format(getKoreaDate(), "yyyy-MM-dd") : date;
   const item = getQuitItem(type);
-  const dateLabel = answerDate.replace(/-/g, "년 ").replace(/-/, "월 ") + "일";
+  
+  // 날짜 파싱 및 포맷팅 (안전하게 처리)
+  let answerDateString: string;
+  let dateLabel: string;
+  
+  try {
+    if (answerDate && /^\d{4}-\d{2}-\d{2}$/.test(answerDate)) {
+      const parsedDate = parseISO(answerDate);
+      answerDateString = format(parsedDate, "yyyy년 MM월 dd일");
+      dateLabel = format(parsedDate, "yyyy년 MM월 dd일");
+    } else {
+      const koreaDate = getKoreaDate();
+      answerDateString = format(koreaDate, "yyyy년 MM월 dd일");
+      dateLabel = format(koreaDate, "yyyy년 MM월 dd일");
+    }
+  } catch (error) {
+    console.error("날짜 파싱 오류:", error);
+    const koreaDate = getKoreaDate();
+    answerDateString = format(koreaDate, "yyyy년 MM월 dd일");
+    dateLabel = format(koreaDate, "yyyy년 MM월 dd일");
+  }
 
-  const answerDateString = answerDate
-    ? format(parseISO(answerDate), "yyyy년 MM월 dd일")
-    : format(getKoreaDate(), "yyyy년 MM월 dd일");
+  // item이 없으면 404 처리
+  if (!item) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">퀴즈를 찾을 수 없습니다</h1>
+          <p className="text-gray-600">요청하신 퀴즈 타입({type})이 존재하지 않습니다.</p>
+        </div>
+      </div>
+    );
+  }
 
-  const h1Title = `${item?.typeKr} ${item?.title} ${answerDateString} 정답 확인하고 앱테크 적립하세요`;
-  const firstDescription = `앱테크는 광고 시청이나 퀴즈 참여를 통해 포인트를 적립하는 방식으로 많은 사용자들의 관심을 받고 있습니다. ${answerDateString} 기준, ${item?.typeKr} ${item?.title} 등 다양한 앱에서 퀴즈 이벤트가 활발히 진행되고 있으며, 정답을 맞히면 현금처럼 사용 가능한 리워드를 받을 수 있어 앱 사용자들 사이에서 큰 호응을 얻고 있습니다.`;
-  const quizItem = await getQuizbells(type, answerDate);
+  const h1Title = `${item.typeKr} ${item.title} ${answerDateString} 정답 확인하고 앱테크 적립하세요`;
+  const firstDescription = `앱테크는 광고 시청이나 퀴즈 참여를 통해 포인트를 적립하는 방식으로 많은 사용자들의 관심을 받고 있습니다. ${answerDateString} 기준, ${item.typeKr} ${item.title} 등 다양한 앱에서 퀴즈 이벤트가 활발히 진행되고 있으며, 정답을 맞히면 현금처럼 사용 가능한 리워드를 받을 수 있어 앱 사용자들 사이에서 큰 호응을 얻고 있습니다.`;
+  
+  let quizItem;
+  try {
+    quizItem = await getQuizbells(type, answerDate);
+  } catch (error) {
+    console.error("퀴즈 데이터 조회 오류:", error);
+    quizItem = null;
+  }
 
   // 이스케이프된 JSON 문자열 처리
   let contents = [];
@@ -179,7 +227,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
               />
             </div>
             <div className="text-sm text-center mb-8 text-slate-500 dark:text-slate-400 font-medium">
-              {`${answerDateString} ${item?.typeKr} ${item?.title} 퀴즈 정답`}
+              {`${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답`}
             </div>
 
             {/* Description */}
@@ -192,7 +240,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
               </p>
             </div>
 
-            <Adsense slotId={item?.slotId || "8409513997"} />
+            <Adsense slotId={item.slotId || "8409513997"} />
 
             {/* Empty State */}
             {contents.length === 0 && (
@@ -308,7 +356,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
             </article>
 
             <SocialShare
-              title={`${item?.typeKr} ${item?.title} ${answerDateString} 퀴즈 정답 확인하고 앱테크 적립하세요`}
+              title={`${item.typeKr} ${item.title} ${answerDateString} 퀴즈 정답 확인하고 앱테크 적립하세요`}
               url={`https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`}
               imageUrl="https://quizbells.com/icons/default-icon.png"
             />

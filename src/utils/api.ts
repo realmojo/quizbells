@@ -34,19 +34,33 @@ export const getQuizbells = async (
   type: string,
   answerDate: string
 ): Promise<any | null> => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+  try {
+    // 서버 사이드와 클라이언트 사이드 모두에서 작동하도록 처리
+    const baseUrl = 
+      typeof window !== "undefined" 
+        ? window.location.origin 
+        : process.env.NEXT_PUBLIC_BASE_URL || 
+          process.env.VERCEL_URL 
+          ? `https://${process.env.VERCEL_URL}` 
+          : "http://localhost:3000";
 
-  const url = `${baseUrl}/api/quizbells?type=${type}&answerDate=${answerDate}`;
-  console.log(1, url);
+    const url = `${baseUrl}/api/quizbells?type=${type}&answerDate=${answerDate}`;
 
-  const res = await fetch(url, {
-    cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
-  });
+    const res = await fetch(url, {
+      cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+    });
 
-  if (!res.ok) return null;
+    if (!res.ok) {
+      console.error(`API 호출 실패: ${res.status} ${res.statusText}`);
+      return null;
+    }
 
-  const data = await res.json();
-  return data;
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("getQuizbells 오류:", error);
+    return null;
+  }
 };
 
 // ✅ 게시글 목록 조회 (offset 기반)
