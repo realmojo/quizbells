@@ -1,6 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 
+// 한국 시간(KST, UTC+9)으로 현재 날짜/시간 가져오기
+const getKoreaTimeISOString = (): string => {
+  const now = new Date();
+  // 한국 시간대로 변환
+  const kstString = now.toLocaleString("en-US", { timeZone: "Asia/Seoul" });
+  const kstDate = new Date(kstString);
+  // ISO 문자열로 변환 (한국시간 기준)
+  const year = kstDate.getFullYear();
+  const month = String(kstDate.getMonth() + 1).padStart(2, "0");
+  const day = String(kstDate.getDate()).padStart(2, "0");
+  const hours = String(kstDate.getHours()).padStart(2, "0");
+  const minutes = String(kstDate.getMinutes()).padStart(2, "0");
+  const seconds = String(kstDate.getSeconds()).padStart(2, "0");
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
 // ✅ 토큰 삭제
 export async function DELETE(req: NextRequest) {
   try {
@@ -85,7 +101,7 @@ export async function POST(req: NextRequest) {
           fcmToken,
           joinType: joinType || null,
           ip,
-          updated_at: new Date().toISOString(),
+          regdated: getKoreaTimeISOString(),
         },
         {
           onConflict: "userId",
@@ -143,7 +159,7 @@ export async function PATCH(req: NextRequest) {
       .update({
         fcmToken,
         ip,
-        updated_at: new Date().toISOString(),
+        lastUpdated: getKoreaTimeISOString(),
       })
       .eq("userId", userId)
       .select()

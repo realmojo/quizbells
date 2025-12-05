@@ -4,13 +4,18 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  Bell,
+  Loader2,
+} from "lucide-react";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { useAppStore } from "@/store/useAppStore";
-import { quizItems } from "@/utils/utils";
-import Link from "next/link";
+import { quizItems, requestAlarmPermission } from "@/utils/utils";
 import { cn } from "@/lib/utils";
-import EmailSubscribe from "./EmailSubscribe";
+import { toast } from "sonner";
 
 export default function QuizPage() {
   const date = useAppStore((s) => s.date);
@@ -21,10 +26,28 @@ export default function QuizPage() {
   const isToday = format(date, "yyyy-MM-dd") === format(today, "yyyy-MM-dd");
 
   const [clientDate, setClientDate] = useState<string>("");
+  const [isRegistering, setIsRegistering] = useState(false);
 
   useEffect(() => {
     setClientDate(format(date, "yyyy년 M월 d일"));
   }, [date]);
+
+  const handleRegisterNotification = async () => {
+    setIsRegistering(true);
+    try {
+      const isGranted = await requestAlarmPermission();
+      if (isGranted) {
+        toast.success("알림 등록이 완료되었습니다! 🔔");
+      } else {
+        toast.error("알림 권한이 필요합니다.");
+      }
+    } catch (error) {
+      console.error("알림 등록 오류:", error);
+      toast.error("알림 등록에 실패했습니다.");
+    } finally {
+      setIsRegistering(false);
+    }
+  };
 
   return (
     <>
@@ -99,15 +122,25 @@ export default function QuizPage() {
               </Button>
             </div>
 
-            {/* Tips Button */}
-            <Link href="/tips" className="w-full md:w-auto">
-              <Button
-                variant="default"
-                className="w-full md:w-auto bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
-              >
-                💡 앱테크 꿀팁 보러가기
-              </Button>
-            </Link>
+            {/* 알림 등록 Button */}
+            <Button
+              variant="default"
+              onClick={handleRegisterNotification}
+              disabled={isRegistering}
+              className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+            >
+              {isRegistering ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  등록 중...
+                </>
+              ) : (
+                <>
+                  <Bell className="mr-2 h-4 w-4" />
+                  퀴즈 정답 알림 받기
+                </>
+              )}
+            </Button>
           </div>
 
           {/* Quiz Grid */}

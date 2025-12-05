@@ -298,12 +298,7 @@ export default function QuizModalClient({
 
       if (json?.contents) {
         try {
-          // 이스케이프된 JSON 문자열을 정상적인 JSON으로 변환
-          const unescaped = json.contents
-            .replace(/\\"/g, '"')  // \" → "
-            .replace(/\\\\/g, '\\'); // \\ → \
-          const parsed = JSON.parse(unescaped);
-          const filtered = parsed.filter((item: any) => item.answer);
+          const filtered = json.contents.filter((item: any) => item.answer);
 
           setQuizzes(filtered);
           setAnswerDate(json.answerDate || "");

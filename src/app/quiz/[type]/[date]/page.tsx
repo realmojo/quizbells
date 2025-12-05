@@ -5,7 +5,6 @@ import { format, parseISO } from "date-fns";
 import { getQuitItem, isIOS } from "@/utils/utils";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
-import AppOpen from "@/components/AppOpen";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { Button } from "@/components/ui/button";
@@ -259,7 +258,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                       ? "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703"
                       : "https://play.google.com/store/apps/details?id=com.mojoday.quizbells"
                   }
-                  target="_blank"
+                  target="_self"
                   rel="noopener noreferrer"
                   className="block"
                 >
@@ -293,25 +292,37 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     문제: {quiz.question}
                   </h2>
 
-                  <div
-                    className="rounded-xl border-2 border-emerald-200 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/50 dark:to-green-950/50 px-5 py-4 shadow-sm mb-3"
-                    itemProp="acceptedAnswer"
-                    itemScope
-                    itemType="https://schema.org/Answer"
+                  <a
+                    href={`/quiz/${type}/${date === "today" ? "today" : answerDate}/answer`}
+                    target="_self"
+                    className="block mb-3"
                   >
-                    <div className="flex items-center gap-2 mb-2">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                      <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
-                        정답
-                      </span>
-                    </div>
-                    <span
-                      itemProp="text"
-                      className="text-2xl font-extrabold text-emerald-800 dark:text-emerald-300"
+                    <div
+                      className="group rounded-xl border-2 border-emerald-300 dark:border-emerald-700 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 px-6 py-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer"
+                      itemProp="acceptedAnswer"
+                      itemScope
+                      itemType="https://schema.org/Answer"
                     >
-                      {quiz.answer}
-                    </span>
-                  </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-full bg-emerald-500 dark:bg-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 dark:group-hover:bg-emerald-500 transition-colors">
+                            <CheckCircle2 className="w-6 h-6 text-white" />
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-emerald-700 dark:text-emerald-300 mb-1">
+                              정답 확인하기
+                            </div>
+                            <div className="text-xs text-emerald-600 dark:text-emerald-400">
+                              클릭하여 정답 보기 →
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300 group-hover:text-emerald-800 dark:group-hover:text-emerald-200 transition-colors">
+                          →
+                        </div>
+                      </div>
+                    </div>
+                  </a>
 
                   {quiz.otherAnswers?.length > 0 && (
                     <div
@@ -335,11 +346,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
                   )}
                 </article>
               ))}
-            </div>
-
-            {/* App Open Button - 정답 아래에 배치 */}
-            <div className="mb-8">
-              <AppOpen type={type} />
             </div>
 
             {/* Description Component */}

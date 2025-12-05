@@ -218,7 +218,7 @@ export default function InstallPromptBanner({
                     isQuizAlarm: "Y",
                     alarmSettings: newValue,
                   });
-                  
+
                   localStorage.setItem("isFirstAlarmSetting", "true");
                 }
 
