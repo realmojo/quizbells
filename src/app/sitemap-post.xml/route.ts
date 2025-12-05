@@ -1,8 +1,8 @@
 // src/app/api/sitemap.xml/route.ts
-const BASE_URL = "https://quizbells.com";
-const types = require("@/utils/utils").quizItems;
+import { quizItems } from "@/utils/utils";
 
-const QUIZ_TYPES = types.map((type: any) => type.type);
+const BASE_URL = "https://quizbells.com";
+const QUIZ_TYPES = quizItems.map((type) => type.type);
 
 // 2025년 6월 1일부터 내일까지 포함된 날짜 리스트 생성
 function generateDatesFromStartToTomorrow(
