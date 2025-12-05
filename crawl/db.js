@@ -8,6 +8,7 @@ const getKoreaTime = () => {
 
 // 환경 변수에서 가져오거나 기본값 사용
 const API_URL = process.env.API_URL || "https://quizbells.com";
+// const API_URL = "http://localhost:3000";
 
 const quizItems = [
   {
@@ -142,6 +143,9 @@ const getQuizbells = async (type, answerDate) => {
   try {
     const url = `${API_URL}/api/quizbells?type=${type}&answerDate=${answerDate}`;
     const res = await axios.get(url);
+    if (res?.data?.success === false) {
+      return null;
+    }
     return res.data;
   } catch (e) {
     console.log(e);
@@ -160,6 +164,7 @@ const insertQuizbells = async (type, contents, answerDate) => {
       });
       return res.data;
     } catch (e) {
+      console.log(e);
       return null;
     }
   }
@@ -293,11 +298,10 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
       console.log(
         `✅ [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 크롤링 완료`
       );
-      const quizJson = escapeSQLString(JSON.stringify(quizzes));
       try {
         await insertQuizbells(
           type,
-          quizJson,
+          quizzes,
           getKoreaTime().format("YYYY-MM-DD")
         );
         isNotify = true;
@@ -343,9 +347,7 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
       console.log(
         `🔔 [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 알람 발송`
       );
-      // if (type !== "cashdoc") {
       await alarmNotify(type);
-      // }
       notifiedTypes.add(type); // ← 알람 보냈다고 기록
     }
   }
