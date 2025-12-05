@@ -66,7 +66,7 @@ export default function QuizPage() {
             </p>
           </div>
 
-          <EmailSubscribe />
+          {/* <EmailSubscribe /> */}
 
           {/* Controls Section */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl p-4 rounded-2xl border border-white/20 shadow-sm">
