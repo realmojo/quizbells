@@ -1,26 +1,8 @@
 // src/app/api/sitemap.xml/route.ts
 const BASE_URL = "https://quizbells.com";
+const types = require("@/utils/utils").quizItems;
 
-const QUIZ_TYPES = [
-  "toss",
-  "cashwalk",
-  "shinhan",
-  "okcashbag",
-  "cashdoc",
-  "kbstar",
-  "bitbunny",
-  "3o3",
-  "doctornow",
-  "mydoctor",
-  "kakaobank",
-  "kakaopay",
-  "hanabank",
-  "hpoint",
-  "climate",
-  "skstoa",
-  "auction",
-  "nh",
-];
+const QUIZ_TYPES = types.map((type: any) => type.type);
 
 // 2025년 6월 1일부터 내일까지 포함된 날짜 리스트 생성
 function generateDatesFromStartToTomorrow(
@@ -43,22 +25,11 @@ export async function GET() {
   const recentDates = generateDatesFromStartToTomorrow(); // 6/1 ~ 내일 포함
   const urls: { loc: string; lastmod: string }[] = [];
   // ✅ DB에서 게시글 목록 추가 (posts/{id})
-  try {
-    const API_URL =
-      process.env.API_URL || "https://api.mindpang.com/api/quizbells";
-    const url = `${API_URL}/sitemap.php`;
-    const res = await fetch(url);
-    const data = await res.json();
-
-    for (const post of data) {
-      urls.push({
-        loc: `${BASE_URL}/posts/${post.id}`,
-        lastmod: post.regdated,
-      });
-    }
-    console.log("✅ 게시글 데이터 조회 성공:", data);
-  } catch (err) {
-    console.error("❌ 게시글 데이터 조회 실패:", err);
+  for (const index of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
+    urls.push({
+      loc: `${BASE_URL}/posts/${index}`,
+      lastmod: "2025-12-05",
+    });
   }
 
   // 날짜 기준 정렬 → 하루 날짜당 모든 type 묶어서 넣기
