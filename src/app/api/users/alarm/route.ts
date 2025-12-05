@@ -22,12 +22,13 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // type별 알림 대상 조회
+    // 알림 대상 조회
+    // select * from quizbells_users where isQuizAlarm = 'Y' and (alarmSettings like '%toss%' or alarmSettings = '*')
     const { data, error } = await supabaseAdmin
       .from("quizbells_users")
       .select("*")
-      .eq("type", type)
-      .eq("isQuizAlarm", true);
+      .eq("isQuizAlarm", "Y")
+      .or(`alarmSettings.like.%${type}%,alarmSettings.eq.*`);
 
     if (error) {
       console.error("🚨 Supabase query error:", error);
