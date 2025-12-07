@@ -12,6 +12,7 @@ import ForegroundNotification from "@/components/ForegroundNotification";
 import AlarmSetting from "@/components/AlarmSetting";
 import { ReactNode } from "react";
 import { GoogleAdSense } from "@/components/AdsenseInit";
+import Script from "next/script";
 // import ClientOnly from "@/components/ClientOnly";
 
 export const metadata: Metadata = {
@@ -102,11 +103,11 @@ export default async function RootLayout({
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <script
+        <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4009JNVXBL"
           async
         />
-        <script
+        <Script
           id="google-analytics"
           dangerouslySetInnerHTML={{
             __html: `
