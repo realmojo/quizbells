@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +11,8 @@ import {
   Sparkles,
   Bell,
   Loader2,
+  Smartphone,
+  Download,
 } from "lucide-react";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { useAppStore } from "@/store/useAppStore";
@@ -88,9 +91,7 @@ export default function QuizPage() {
               스마트한 앱테크를 시작해보세요.
             </p>
           </div>
-
           {/* <EmailSubscribe /> */}
-
           {/* Controls Section */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl p-4 rounded-2xl border border-white/20 shadow-sm">
             {/* Date Navigation */}
@@ -142,12 +143,42 @@ export default function QuizPage() {
               )}
             </Button>
           </div>
-
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+            <Button
+              variant="default"
+              onClick={() => {
+                location.href =
+                  "https://play.google.com/store/apps/details?id=com.mojoday.quizbells";
+              }}
+              className="group relative w-full sm:w-auto sm:flex-1 max-w-xs overflow-hidden bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 hover:from-emerald-600 hover:via-green-600 hover:to-teal-700 text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 rounded-2xl py-6 px-8 border border-emerald-400/30 hover:border-emerald-300/50"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <div className="relative flex items-center justify-center gap-3">
+                <Smartphone className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-base">안드로이드 설치</span>
+                <Download className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-300" />
+              </div>
+            </Button>
+            <Button
+              variant="default"
+              onClick={() => {
+                location.href =
+                  "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703";
+              }}
+              className="group relative w-full sm:w-auto sm:flex-1 max-w-xs overflow-hidden bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:from-slate-600 hover:via-slate-700 hover:to-slate-800 text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 rounded-2xl py-6 px-8 border border-slate-500/30 hover:border-slate-400/50 dark:from-slate-600 dark:via-slate-700 dark:to-slate-900 dark:hover:from-slate-500 dark:hover:via-slate-600 dark:hover:to-slate-800"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <div className="relative flex items-center justify-center gap-3">
+                <Smartphone className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-base">앱 스토어 설치</span>
+                <Download className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-300" />
+              </div>
+            </Button>
+          </div>
           {/* Quiz Grid */}
           <div className="mb-16">
             <QuizCardComponent viewType="grid" />
           </div>
-
           {/* Info Section */}
           <section className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-3xl p-8 md:p-10 shadow-sm border border-white/50 dark:border-slate-800 space-y-10">
             <div>
