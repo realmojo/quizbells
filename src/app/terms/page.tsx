@@ -51,8 +51,8 @@ export default function TermsPage() {
             {/* Intro */}
             <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl p-6 text-slate-700 dark:text-slate-300 leading-relaxed border border-indigo-100 dark:border-indigo-800/50">
               <p>
-                본 약관은 <strong>퀴즈벨(이하 "회사")</strong>이 제공하는 퀴즈
-                정답 알림 서비스(이하 "서비스")의 이용과 관련하여 회사와 사용자
+                본 약관은 <strong>퀴즈벨(이하 회사)</strong>이 제공하는 퀴즈
+                정답 알림 서비스(이하 서비스)의 이용과 관련하여 회사와 사용자
                 간의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을
                 목적으로 합니다.
               </p>
@@ -66,8 +66,8 @@ export default function TermsPage() {
                   title: "1. 목적",
                   content: (
                     <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                      본 약관은 퀴즈벨(이하 "회사")이 제공하는 퀴즈 정답 알림
-                      서비스(이하 "서비스")의 이용과 관련하여 회사와 사용자 간의
+                      본 약관은 퀴즈벨(이하 회사)이 제공하는 퀴즈 정답 알림
+                      서비스(이하 서비스)의 이용과 관련하여 회사와 사용자 간의
                       권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을
                       목적으로 합니다.
                     </p>
@@ -79,11 +79,11 @@ export default function TermsPage() {
                   content: (
                     <ul className="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-400 ml-2">
                       <li>
-                        "서비스"란 회사가 운영하는 웹사이트 및 모바일 앱을 통해
+                        서비스란 회사가 운영하는 웹사이트 및 모바일 앱을 통해
                         퀴즈 정답 및 알림 정보를 제공하는 행위를 의미합니다.
                       </li>
                       <li>
-                        "사용자"란 본 약관에 따라 서비스를 이용하는 개인 또는
+                        사용자란 본 약관에 따라 서비스를 이용하는 개인 또는
                         법인을 의미합니다.
                       </li>
                     </ul>

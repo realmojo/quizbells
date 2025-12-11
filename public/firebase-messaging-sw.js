@@ -54,6 +54,7 @@ if (messaging && isSupported) {
   });
 
   self.addEventListener("install", (event) => {
+    console.log("🔐 설치 이벤트", event);
     self.skipWaiting();
   });
 

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {

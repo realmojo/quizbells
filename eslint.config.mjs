@@ -1,35 +1,26 @@
-// eslint.config.js (또는 .ts)
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  // 1. next + typescript 설정 확장
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-
-  // 2. 그 위에 추가 설정 (덮어쓰기 가능)
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "crawl/**",
+    "next-env.d.ts",
+  ]),
   {
-    files: ["**/*.ts", "**/*.tsx"],
-    languageOptions: {
-      parserOptions: {
-        project: "./tsconfig.json",
-      },
-    },
     rules: {
-      // ✅ any 허용: 완전히 끄기
       "@typescript-eslint/no-explicit-any": "off",
-      "react/no-unescaped-entities": "off",
-      // 또는 다음과 같이 경고만 띄우고 빌드 실패는 막을 수도 있음
-      // "@typescript-eslint/no-explicit-any": "warn",
+      "@next/next/no-sync-scripts": "off",
+      "@next/next/next-script-for-ga": "off",
     },
   },
-];
+]);
 
 export default eslintConfig;

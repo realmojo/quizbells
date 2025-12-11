@@ -135,8 +135,8 @@ export default function DescriptionComponents({ type }: { type: string }) {
           itemProp="description"
         >
           <strong>신한 쏠페이 퀴즈팡팡</strong>(구 신한플레이 OX퀴즈)은
-          신한카드의 모바일 결제 앱<strong>신한 SOL페이</strong>에서 '혜택' 탭 →
-          '퀴즈팡팡' 메뉴에서 참여할 수 있으며, 정답 맞히면{" "}
+          신한카드의 모바일 결제 앱<strong>신한 SOL페이</strong>에서 혜택 탭 →
+          퀴즈팡팡 메뉴에서 참여할 수 있으며, 정답 맞히면{" "}
           <strong>마이신한포인트</strong> 1P가 적립됩니다. 힌트를 확인하면 추가
           1P가 제공됩니다.
         </p>
@@ -145,7 +145,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>신한 슈퍼SOL 출석퀴즈</strong>는 '포인트 더 모으기' 메뉴에서
+          <strong>신한 슈퍼SOL 출석퀴즈</strong>는 포인트 더 모으기 메뉴에서
           참여 가능하며, 하루 정답 횟수가 누적되어 등급별 혜택이 주어지고, 월
           30회 정답 시 <strong>최대 10,000P</strong>까지 랜덤 적립됩니다.
         </p>
@@ -155,7 +155,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           itemProp="description"
         >
           <strong>신한 SOL뱅크 쏠야구 퀴즈</strong>는 신한은행의 모바일 앱{" "}
-          <strong>신한 SOL뱅크</strong> 및 <strong>슈퍼SOL</strong>의 '쏠야구'
+          <strong>신한 SOL뱅크</strong> 및 <strong>슈퍼SOL</strong>의 쏠야구
           탭에서 참여할 수 있는 야구 상식형 퀴즈입니다. 정답 제출 시{" "}
           <strong>2~100P</strong>가 추첨 방식으로 지급되며, 더블 이벤트 기간에는{" "}
           <strong>최대 200P</strong>까지 획득 가능합니다.
@@ -174,8 +174,8 @@ export default function DescriptionComponents({ type }: { type: string }) {
           itemProp="description"
         >
           또한 각 퀴즈는 월별 누적 참여 횟수에 따라 등급별 보상이 주어지며,
-          이벤트는 신한은행·신한카드 정책에 따라 조기 종료될 수 있으니{" "}
-          <strong>앱 내 '힌트 보기'와 진행 상황</strong>을 수시로 확인하는 것이
+          이벤트는 신한은행 신한카드 정책에 따라 조기 종료될 수 있으니{" "}
+          <strong>앱 내 힌트 보기와 진행 상황</strong>을 수시로 확인하는 것이
           좋습니다.
         </p>
       </>
@@ -282,7 +282,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           itemProp="description"
         >
           <strong>오케이캐시백(OK캐쉬백) 오!퀴즈</strong>는 OK캐시백 앱에서
-          제공하는 실시간 참여형 퀴즈 이벤트입니다. 사용자들은 앱 내 ‘오!퀴즈’
+          제공하는 실시간 참여형 퀴즈 이벤트입니다. 사용자들은 앱 내 오!퀴즈
           영역에서 간단한 퀴즈에 푸시 알림이나 앱 접근을 통해 즉시 참여할 수
           있고, 정답 시 <strong>캐시백 포인트</strong>를 적립할 수 있습니다.
         </p>
@@ -301,9 +301,9 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          오!퀴즈 정답은 ‘오케이캐시백 앱 내에서 확인 가능’하며, 특정 제휴
-          브랜드 및 이벤트성 퀴즈도 포함됩니다. 브랜드 정보나 힌트를 기반으로
-          문제를 풀게끔 구성되어 있어, 자연스럽게 제휴사 홍보 효과도 동반합니다.
+          오!퀴즈 정답은 오케이캐시백 앱 내에서 확인 가능하며, 특정 제휴 브랜드
+          및 이벤트성 퀴즈도 포함됩니다. 브랜드 정보나 힌트를 기반으로 문제를
+          풀게끔 구성되어 있어, 자연스럽게 제휴사 홍보 효과도 동반합니다.
         </p>
 
         <p
@@ -394,7 +394,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          매일 정답을 맞히면 스타포인트가 누적되며, 앱 내 ‘생활/혜택’ 메뉴에서
+          매일 정답을 맞히면 스타포인트가 누적되며, 앱 내 생활/혜택 메뉴에서
           퀴즈를 확인할 수 있습니다. 이렇게 모인 포인트는 다양한{" "}
           <strong>금융 서비스 또는 제휴 상품 혜택</strong>에 사용할 수 있습니다.
         </p>
@@ -445,7 +445,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           itemProp="description"
         >
           앱은 광고가 비교적 적고, 귀여운 토끼 캐릭터 UI가 특징입니다. 최근 iOS
-          버전 기준 평점 4.4점(1200개 평가 기준)을 기록했으며, 사용자들은 “광고
+          버전 기준 평점 4.4점(1200개 평가 기준)을 기록했으며, 사용자들은 광고
           없이 바로 포인트 적립” 등 긍정적인 평가를 남기고 있습니다.{" "}
         </p>
       </>
@@ -467,8 +467,8 @@ export default function DescriptionComponents({ type }: { type: string }) {
           itemProp="description"
         >
           삼쩜삼에서는 매일{" "}
-          <strong>“오늘의 경제 퀴즈” 또는 “삼쩜삼 OX 퀴즈”</strong>를 통해
-          퀴즈를 맞히고 포인트를 적립할 수 있습니다. 퀴즈는 대부분 OX 형식이며,
+          <strong>오늘의 경제 퀴즈 또는 삼쩜삼 OX 퀴즈</strong>를 통해 퀴즈를
+          맞히고 포인트를 적립할 수 있습니다. 퀴즈는 대부분 OX 형식이며,
           세금·경제 상식과 관련된 간단한 내용을 포함합니다.
         </p>
         <p
@@ -515,7 +515,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          닥터나우 앱에서는 <strong>“오늘의 퀴즈”</strong>라는 이름의 리워드형
+          닥터나우 앱에서는 <strong>오늘의 퀴즈</strong>라는 이름의 리워드형
           퀴즈 콘텐츠를 운영하고 있습니다. 사용자는 앱 내 퀴즈에 참여하여 정답을
           맞히면 포인트를 적립할 수 있습니다. 퀴즈는 건강상식, 의학지식 등과
           관련된 주제를 포함하고 있습니다.
@@ -563,7 +563,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          나만의 닥터에서는 <strong>“건강퀴즈”</strong>라는 이름의 콘텐츠를
+          나만의 닥터에서는 <strong>건강퀴즈</strong>라는 이름의 콘텐츠를
           운영하고 있습니다. 사용자는 퀴즈에 참여하여 정답을 맞히는 형식으로
           건강 관련 상식을 점검할 수 있습니다.
         </p>

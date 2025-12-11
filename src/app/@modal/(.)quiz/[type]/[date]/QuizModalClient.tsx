@@ -111,9 +111,9 @@ const useUpdateMetaTags = ({
     const siteName = "퀴즈벨";
     const typeName = getQuitItem(type)?.typeKr || type;
     const typeTitle = getQuitItem(type)?.title ?? "";
-    const quizTitle = `${typeName} ${typeTitle} ${answerDateString} 퀴즈 정답 확인하고 앱테크 적립하세요`;
+    const quizTitle = `${typeName} ${typeTitle} ${answerDateString} 정답`;
     const description = `${answerDateString} 기준 ${typeName} 퀴즈 정답을 한눈에 확인하세요. 퀴즈를 풀고 포인트도 적립하세요.`;
-    const ogDescription = `${typeName} ${answerDateString} 퀴즈 정답 확인하고 앱테크 리워드 적립!`;
+    const ogDescription = `${typeName} ${typeTitle} ${answerDateString} 정답`;
     const twitterDescription = `${typeName} 퀴즈 정답 및 리워드 정보`;
     const canonicalUrl = `https://quizbells.com/quiz/${type}/${answerDate}`;
 
@@ -410,7 +410,7 @@ export default function QuizModalClient({
                 itemProp="headline"
               >
                 {getQuitItem(type)?.typeKr} {getQuitItem(type)?.title}{" "}
-                {answerDateString} 정답 확인하고 앱테크 적립하세요
+                {answerDateString} 정답
               </h1>
 
               {/* 퀴즈 이미지 */}
@@ -548,7 +548,7 @@ export default function QuizModalClient({
               </article>
 
               <SocialShare
-                title={`${getQuitItem(type)?.typeKr} ${getQuitItem(type)?.title} ${answerDateString} 퀴즈 정답 확인하고 앱테크 적립하세요`}
+                title={`${getQuitItem(type)?.typeKr} ${getQuitItem(type)?.title} ${answerDateString} 정답`}
                 url={window.location.href}
                 imageUrl="https://quizbells.com/icons/default-icon.png"
               />

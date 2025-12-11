@@ -227,9 +227,7 @@ export default function AboutPage() {
                   className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-white/20"
                 >
                   <MessageCircle className="w-6 h-6 mb-3 opacity-80" />
-                  <p className="text-sm leading-relaxed opacity-90">
-                    "{review}"
-                  </p>
+                  <p className="text-sm leading-relaxed opacity-90">{review}</p>
                 </div>
               ))}
             </div>
