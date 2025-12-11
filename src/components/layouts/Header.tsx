@@ -155,6 +155,9 @@ export default function Header() {
             <Icon className="w-5 h-5 text-white" />
           </div>
           <div>
+            <div className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-indigo-600 dark:group-hover:from-purple-400 dark:group-hover:to-indigo-400 transition-all duration-300">
+              {pageInfo.title}
+            </div>
             {pathname === "/" && (
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 매일 업데이트되는 퀴즈 정답
