@@ -91,7 +91,7 @@ const quizItems = [
   },
   {
     type: "climate",
-    typeKr: "기후행동 기회소득",
+    typeKr: "기후행동 기후동행 기회소득",
     title: "오늘의 퀴즈",
     image: "/images/climate.png",
   },
@@ -103,7 +103,7 @@ const quizItems = [
   },
   {
     type: "hanabank",
-    typeKr: "하나은행",
+    typeKr: "하나은행 하나원큐",
     title: "오늘의 퀴즈",
     image: "/images/hanabank.png",
   },
@@ -279,6 +279,62 @@ const replaceAll = (str, search, replacement) => {
   return str.split(search).join(replacement);
 };
 
+const normalizeQuizItem = (quiz = {}) => {
+  return {
+    question: (quiz.question || "").trim(),
+    answer: (quiz.answer || "").trim(),
+  };
+};
+
+const parseContentsArray = (contents) => {
+  try {
+    if (Array.isArray(contents)) return contents;
+    if (typeof contents === "string") return JSON.parse(contents);
+    return [];
+  } catch (e) {
+    console.log("❎ 기존 contents 파싱 실패", e);
+    return [];
+  }
+};
+
+const compareQuizQA = (existingContents, quizzes) => {
+  const existing = parseContentsArray(existingContents).map(normalizeQuizItem);
+  const incoming = (quizzes || []).map(normalizeQuizItem);
+
+  const result = incoming.map((quiz, idx) => {
+    const isSame = existing.some(
+      (prev) => prev.question === quiz.question && prev.answer === quiz.answer
+    );
+    return { index: idx, ...quiz, isSame };
+  });
+
+  const mismatched = result.filter((item) => !item.isSame);
+
+  console.log("🧾 퀴즈 Q/A 비교 결과", {
+    totalExisting: existing.length,
+    totalIncoming: incoming.length,
+    matched: result.length - mismatched.length,
+    mismatched: mismatched.map(({ index, question, answer }) => ({
+      index,
+      question,
+      answer,
+    })),
+  });
+
+  return result;
+};
+
+const quizzesExistInContents = (existingContents, quizzes) => {
+  const existing = parseContentsArray(existingContents).map(normalizeQuizItem);
+  const incoming = (quizzes || []).map(normalizeQuizItem);
+
+  return incoming.every((quiz) =>
+    existing.some(
+      (prev) => prev.question === quiz.question && prev.answer === quiz.answer
+    )
+  );
+};
+
 const doInsert = async (quizzes, type, notifiedTypes) => {
   let shouldNotify = false;
 
@@ -311,6 +367,27 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
         isNotify = false;
       }
     } else {
+      if (getItem?.contents) {
+        const allExists = quizzesExistInContents(getItem.contents, quizzes);
+        console.log(
+          allExists
+            ? `🟢 모든 ${type}의 quizzes 가 기존 contents 에 존재합니다.`
+            : "🟠 신규 quizzes 중 일부/전체가 기존 contents 에 없습니다."
+        );
+
+        if (!allExists) {
+          getItem.contents.push(...quizzes);
+
+          try {
+            await updateQuizbells(getItem.id, getItem.contents);
+            shouldNotify = true;
+            isNotify = true;
+          } catch (e) {
+            isNotify = false;
+          }
+        }
+      }
+
       console.log(
         `✅ [${getKoreaTime().format("YYYY-MM-DD")}] 퀴즈 이미 존재 합니다 - ${type}`
       );
@@ -362,6 +439,8 @@ module.exports = {
   findNewQuizzes,
   replaceAll,
   sanitizeQuotesInJsonArray,
+  compareQuizQA,
+  quizzesExistInContents,
   doInsert,
   quizItems,
 };

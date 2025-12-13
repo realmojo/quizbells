@@ -107,7 +107,7 @@ export const quizItems = [
   },
   {
     type: "climate",
-    typeKr: "기후행동 기회소득",
+    typeKr: "기후행동 기후동행 기회소득",
     title: "오늘의 퀴즈",
     image: "/images/climate.png",
     slotId: "8079540616",
@@ -121,7 +121,7 @@ export const quizItems = [
   },
   {
     type: "hanabank",
-    typeKr: "하나은행",
+    typeKr: "하나은행 하나원큐",
     title: "퀴즈하나",
     image: "/images/hanabank.png",
     slotId: "6061233003",
