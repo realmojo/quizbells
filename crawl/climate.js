@@ -33,9 +33,6 @@ const getClimateQuiz = async () => {
         otherAnswers: [],
       },
     ];
-  }
-
-  if (quizzes.length > 0) {
     await doInsert(quizzes, "climate", new Set());
   }
 };

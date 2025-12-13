@@ -4,7 +4,7 @@ service: quizbells-crawler
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs20.x
   region: ap-northeast-2 # 서울 리전
   timeout: 900 # 15분 (최대)
   memorySize: 512
