@@ -38,13 +38,13 @@ const quizItems = [
   {
     type: "kakaopay",
     typeKr: "카카오페이",
-    title: "오늘의 퀴즈",
+    title: "퀴즈",
     image: "/images/kakaopay.png",
   },
   {
     type: "bitbunny",
     typeKr: "비트버니",
-    title: "오늘의 퀴즈",
+    title: "퀴즈",
     image: "/images/bitbunny.png",
   },
   {
@@ -68,13 +68,13 @@ const quizItems = [
   {
     type: "3o3",
     typeKr: "삼쩜삼",
-    title: "오늘의 퀴즈",
+    title: "퀴즈",
     image: "/images/3o3.png",
   },
   {
     type: "doctornow",
     typeKr: "닥터나우",
-    title: "오늘의 퀴즈",
+    title: "퀴즈",
     image: "/images/doctornow.png",
   },
   {
@@ -86,13 +86,13 @@ const quizItems = [
   {
     type: "hpoint",
     typeKr: "에이치포인트",
-    title: "오늘의 퀴즈",
+    title: "퀴즈",
     image: "/images/hpoint.png",
   },
   {
     type: "climate",
     typeKr: "기후행동 기후동행 기회소득",
-    title: "오늘의 퀴즈",
+    title: "퀴즈",
     image: "/images/climate.png",
   },
   {
