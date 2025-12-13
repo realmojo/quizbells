@@ -16,7 +16,7 @@ const getType = (title) => {
     return "okcashbag";
   } else if (title.includes("삼쩜삼")) {
     return "3o3";
-  } else if (title.includes("신한")) {
+  } else if (title.includes("신한") && title.includes("쏠")) {
     return "shinhan";
   } else if (title.includes("닥터나우")) {
     return "doctornow";
@@ -327,7 +327,7 @@ const extractHanabankQuizFromText = async (
 
   const quizzes = [
     {
-      type: "하나은행",
+      type: "하나은행 하나원큐",
       question,
       answer,
       otherAnswers: [],
@@ -411,31 +411,23 @@ const extractCashdocQuizFromText = async (title, text, type, notifiedTypes) => {
 };
 
 const extractNhQuizFromText = async (title, text, type, notifiedTypes) => {
-  let titles = title.split("정답!");
+  const question = title;
+  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerMatch = text.match(answerRegex);
+  const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
-  if (titles[1].length < 6) {
-    question = titles[0].trim(); // 날짜가 뒤로오는 경우
-  } else {
-    question = titles[1].trim(); // 날짜가 앞에 질문이 뒤에 오는 경우
-  }
+  if (!question || !answer) return null;
 
-  // ✅ 2. 정답 추출 개선
-  const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
-  let answer = answerMatch ? answerMatch[1].trim() : "";
+  const quizzes = [
+    {
+      type: "디깅퀴즈",
+      question,
+      answer,
+      otherAnswers: [],
+    },
+  ];
 
-  if (answer.length < 100) {
-    // 너무 길면 오류임
-    const quizzes = [
-      {
-        type: "디깅퀴즈",
-        question,
-        answer,
-        otherAnswers: [],
-      },
-    ];
-
-    await doInsert(quizzes, type, notifiedTypes);
-  }
+  await doInsert(quizzes, type, notifiedTypes);
 };
 
 const extractBitbunnyQuizFromText = async (
@@ -501,6 +493,7 @@ const extractKbankQuizFromText = async (title, text, type, notifiedTypes) => {
 
   await doInsert(quizzes, type, notifiedTypes);
 };
+
 const getVeil8000Quiz = async () => {
   const url =
     "https://m.blog.naver.com/api/blogs/veil8000/post-list?categoryNo=61&itemCount=30&logCode=0&page=1";
@@ -525,7 +518,6 @@ const getVeil8000Quiz = async () => {
       type: getType(post.titleWithInspectMessage),
     };
   });
-  // let quizItems = require("./veil8000.json");
 
   quizItems = quizItems.filter((post) => {
     if (
@@ -540,7 +532,6 @@ const getVeil8000Quiz = async () => {
 
   for (const post of quizItems) {
     const { title, content, type } = post;
-    console.log("type: ", type);
     if (title.includes("일정")) {
       console.log("일정 퀴즈 제외");
       continue;
