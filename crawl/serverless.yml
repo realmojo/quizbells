@@ -4,7 +4,7 @@ service: quizbells-crawler
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs18.x
   region: ap-northeast-2 # 서울 리전
   timeout: 900 # 15분 (최대)
   memorySize: 512
@@ -12,7 +12,7 @@ provider:
   environment:
     API_URL: ${env:API_URL, 'https://quizbells.com'}
     GOOGLE_CLIENT_EMAIL: ${env:GOOGLE_CLIENT_EMAIL, 'devupbox-google-api@devupbox.iam.gserviceaccount.com'}
-    GOOGLE_PRIVATE_KEY: ${env:GOOGLE_PRIVATE_KEY}
+    GOOGLE_PRIVATE_KEY: ${env:GOOGLE_PRIVATE_KEY, ''}
     LAST_INDEXED_DATE: ${env:LAST_INDEXED_DATE, ''}
   iamRoleStatements:
     - Effect: Allow
