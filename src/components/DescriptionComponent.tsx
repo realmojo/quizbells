@@ -598,7 +598,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>기후행동 기회소득</strong>은 서울특별시가 운영하는 시민 참여형
+          <strong>기후행동 기후동행 기회소득</strong>은 서울특별시가 운영하는 시민 참여형
           환경 인센티브 제도입니다. 서울 시민이 친환경 생활 실천을 하면 포인트를
           적립하고, 다양한 보상을 받을 수 있는 제도입니다.
         </p>
@@ -631,7 +631,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>기후행동 기회소득</strong>은 서울시 공식 홈페이지, 앱스토어 및
+          <strong>기후행동 기후동행 기회소득</strong>은 서울시 공식 홈페이지, 앱스토어 및
           구글플레이에서 다운로드 가능한 전용 앱을 통해 참여 가능합니다. 퀴즈와
           실천 인증 외에도 다양한 환경 캠페인에 참여할 수 있습니다.
         </p>
