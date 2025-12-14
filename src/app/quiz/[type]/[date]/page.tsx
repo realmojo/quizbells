@@ -305,7 +305,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     ) : (
                       ""
                     )}{" "}
-                    문제: {quiz.question}
+                    {quiz.question}
                   </h2>
 
                   <a
