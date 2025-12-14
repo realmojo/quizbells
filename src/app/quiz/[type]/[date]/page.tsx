@@ -146,19 +146,31 @@ export default async function QuizPage({ params }: QuizPageParams) {
   let quizItem = null;
   let lastDayQuizItem = null;
   try {
+    // 오늘 퀴즈 데이터 조회
     quizItem = await getQuizbells(type, answerDate);
+    quizItem =
+      quizItem?.contents.map((quiz: any) => ({
+        ...quiz,
+        isToday: true,
+      })) ?? [];
+
+    // 어제 퀴즈 데이터 조회
     lastDayQuizItem = await getQuizbells(
       type,
       moment(answerDate).subtract(1, "day").format("YYYY-MM-DD")
     );
+
+    lastDayQuizItem =
+      lastDayQuizItem?.contents.map((quiz: any) => ({
+        ...quiz,
+        isToday: false,
+      })) ?? [];
   } catch (error) {
     console.error("퀴즈 데이터 조회 오류:", error);
     quizItem = null;
   }
 
-  const contents = quizItem?.contents ?? [];
-
-  contents.push(...(lastDayQuizItem?.contents ?? []));
+  const contents = [...quizItem, ...lastDayQuizItem];
 
   const jsonLd = contents.map((quiz: any) => ({
     "@context": "https://schema.org",
@@ -297,13 +309,10 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     className="text-xl font-bold text-slate-900 dark:text-white mb-4"
                     itemProp="name"
                   >
-                    {moment(quiz.answerDate).isSame(
-                      moment(answerDate),
-                      "day"
-                    ) ? (
-                      <span className="text-indigo-500">[어제 퀴즈]</span>
+                    {quiz.isToday ? (
+                      <span className="text-green-500">[오늘 퀴즈]</span>
                     ) : (
-                      ""
+                      <span className="text-blue-500">[어제 퀴즈]</span>
                     )}{" "}
                     {quiz.question}
                   </h2>
