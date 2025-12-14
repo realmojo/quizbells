@@ -152,18 +152,20 @@ export default async function QuizPage({ params }: QuizPageParams) {
       quizItem?.contents.map((quiz: any) => ({
         ...quiz,
         isToday: true,
+        answerDate,
       })) ?? [];
 
     // 어제 퀴즈 데이터 조회
-    lastDayQuizItem = await getQuizbells(
-      type,
-      moment(answerDate).subtract(1, "day").format("YYYY-MM-DD")
-    );
+    const lastDayAnswerDate = moment(answerDate)
+      .subtract(1, "day")
+      .format("YYYY-MM-DD");
+    lastDayQuizItem = await getQuizbells(type, lastDayAnswerDate);
 
     lastDayQuizItem =
       lastDayQuizItem?.contents.map((quiz: any) => ({
         ...quiz,
         isToday: false,
+        answerDate: lastDayAnswerDate,
       })) ?? [];
   } catch (error) {
     console.error("퀴즈 데이터 조회 오류:", error);
@@ -318,7 +320,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                   </h2>
 
                   <a
-                    href={`/quiz/${type}/${date === "today" ? "today" : answerDate}/answer`}
+                    href={`/quiz/${type}/${quiz.isToday ? "today" : quiz.answerDate}/answer`}
                     target="_self"
                     className="block mb-3"
                   >
