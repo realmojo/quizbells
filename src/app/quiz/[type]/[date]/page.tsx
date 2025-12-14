@@ -316,7 +316,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     ) : (
                       <span className="text-blue-500">[어제 퀴즈]</span>
                     )}{" "}
-                    {quiz.question}
+                    {quiz.question || quiz.type}
                   </h2>
 
                   <a
