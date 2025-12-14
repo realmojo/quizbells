@@ -10,6 +10,7 @@ import QuizCardComponent from "@/components/QuizCardComponent";
 import { Button } from "@/components/ui/button";
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Lightbulb, Calendar } from "lucide-react";
+import moment from "moment";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 const getKoreaDate = (): Date => {
@@ -142,15 +143,22 @@ export default async function QuizPage({ params }: QuizPageParams) {
   const h1Title = `${item.typeKr} ${item.title} ${answerDateString} 정답`;
   const firstDescription = `앱테크는 광고 시청이나 퀴즈 참여를 통해 포인트를 적립하는 방식으로 많은 사용자들의 관심을 받고 있습니다. ${answerDateString} 기준, ${item.typeKr} ${item.title} 등 다양한 앱에서 퀴즈 이벤트가 활발히 진행되고 있으며, 정답을 맞히면 현금처럼 사용 가능한 리워드를 받을 수 있어 앱 사용자들 사이에서 큰 호응을 얻고 있습니다.`;
 
-  let quizItem;
+  let quizItem = null;
+  let lastDayQuizItem = null;
   try {
     quizItem = await getQuizbells(type, answerDate);
+    lastDayQuizItem = await getQuizbells(
+      type,
+      moment(answerDate).subtract(1, "day").format("YYYY-MM-DD")
+    );
   } catch (error) {
     console.error("퀴즈 데이터 조회 오류:", error);
     quizItem = null;
   }
 
   const contents = quizItem?.contents ?? [];
+
+  contents.push(...(lastDayQuizItem?.contents ?? []));
 
   const jsonLd = contents.map((quiz: any) => ({
     "@context": "https://schema.org",
@@ -289,6 +297,14 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     className="text-xl font-bold text-slate-900 dark:text-white mb-4"
                     itemProp="name"
                   >
+                    {moment(quiz.answerDate).isSame(
+                      moment(answerDate),
+                      "day"
+                    ) ? (
+                      <span className="text-indigo-500">[어제 퀴즈]</span>
+                    ) : (
+                      ""
+                    )}{" "}
                     문제: {quiz.question}
                   </h2>
 
