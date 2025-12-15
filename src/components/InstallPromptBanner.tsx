@@ -42,15 +42,20 @@ export default function InstallPromptBanner() {
       dismissedRef.current = true;
     }
 
-    if (isIOS()) {
-      if (!dismissedRef.current) {
-        setOpen(true);
+    // setTimeout을 사용하여 다음 이벤트 루프에서 상태 업데이트
+    const timer = setTimeout(() => {
+      if (isIOS()) {
+        if (!dismissedRef.current) {
+          setOpen(true);
+        }
+      } else {
+        if (detectDevice().isMobile && !dismissedRef.current) {
+          setOpen(true);
+        }
       }
-    } else {
-      if (detectDevice().isMobile && !dismissedRef.current) {
-        setOpen(true);
-      }
-    }
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, []);
 
   if (!open || detectDevice().isDesktop || isWebView()) return null;

@@ -1,4 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/layouts/Header";
 import RegisterServiceWorker from "@/app/register-service-worker";
@@ -12,28 +17,29 @@ import ForegroundNotification from "@/components/ForegroundNotification";
 import AlarmSetting from "@/components/AlarmSetting";
 import { ReactNode } from "react";
 import { GoogleAdSense } from "@/components/AdsenseInit";
-import Script from "next/script";
 // import ClientOnly from "@/components/ClientOnly";
 
 export const metadata: Metadata = {
-  title: "퀴즈벨 - 매일 쏟아지는 퀴즈 정답 알림 서비스 | QUIZBELLS",
+  title:
+    "퀴즈벨 - 오늘의 앱테크 퀴즈 정답 모음 | 신한쏠, 캐시워크, 토스 퀴즈 정답",
   description:
-    "퀴즈벨(QUIZBELLS)은 캐시워크, 신한쏠퀴즈, 토스행운퀴즈, 캐시닥, 오케이케시백 등 인기 앱의 퀴즈 정답을 가장 빠르게 알려주는 알림 기반 퀴즈 서비스입니다. 앱테크의 핵심, 퀴즈벨로 포인트 적립하세요!",
+    "매일 업데이트되는 앱테크 퀴즈 정답! 신한쏠퀴즈, 캐시워크, 토스 행운퀴즈, 캐시닥, 오케이캐시백 등 인기 앱의 퀴즈 정답을 실시간으로 확인하세요. 퀴즈 정답 푸시 알림으로 포인트 적립을 놓치지 마세요!",
   keywords: [
     "퀴즈벨",
     "QUIZBELLS",
     "퀴즈 정답",
+    "앱테크 퀴즈",
+    "신한쏠퀴즈 정답",
+    "캐시워크 퀴즈",
+    "토스 행운퀴즈",
+    "캐시닥 퀴즈",
+    "오케이캐시백 퀴즈",
+    "오늘의 퀴즈 정답",
     "앱테크",
-    "쏠퀴즈",
-    "캐시워크",
-    "토스퀴즈",
-    "포인트앱",
+    "포인트 적립",
+    "쏠퀴즈 정답",
     "퀴즈 알림",
-    "퀴즈 이벤트",
-    "출석퀴즈",
-    "캐시닥",
-    "오케이캐시백",
-    "신한쏠퀴즈",
+    "앱 퀴즈 정답 모음",
   ],
   authors: [
     {
@@ -46,20 +52,28 @@ export const metadata: Metadata = {
   applicationName: "QUIZBELLS",
   generator: "Next.js",
   category: "quiz, apptech, reward, entertainment",
-  // themeColor: "#1D4ED8",
-  // viewport: "width=device-width, initial-scale=1.0, maximum-scale=5.0",
   robots: "index, follow",
+  verification: {
+    google: "ouZeon6aBrcNKweLJU3eD7w5AjuYyq3MQFlk2jYv7d8",
+    other: {
+      "naver-site-verification": "3f64e7db8e8deef8c04f1aaffd716f53498e30ee",
+    },
+  },
+  icons: {
+    icon: "/icons/android-icon-48x48.png",
+  },
+  manifest: "/manifest.json",
   openGraph: {
-    title: "퀴즈벨 - 오늘의 퀴즈 정답 모음 알림 | QUIZBELLS",
+    title: "퀴즈벨 - 오늘의 앱테크 퀴즈 정답 모음",
     description:
-      "퀴즈벨(QUIZBELLS)은 캐시워크, 신한쏠퀴즈, 토스행운퀴즈, 캐시닥, 오케이케시백 등 인기 앱의 퀴즈 정답을 가장 빠르게 알려주는 알림 기반 퀴즈 서비스입니다. 앱테크의 핵심, 퀴즈벨로 포인트 적립하세요!",
+      "신한쏠퀴즈, 캐시워크, 토스 행운퀴즈 등 인기 앱테크 앱의 퀴즈 정답을 실시간으로 확인하세요. 알림으로 매일 포인트 적립!",
     url: "https://quizbells.com",
     siteName: "퀴즈벨",
     locale: "ko_KR",
     type: "website",
     images: [
       {
-        url: "https://quizbells.com/icons/og-image.png", // Open Graph 용 대표 이미지 (추천: 1200x630)
+        url: "https://quizbells.com/icons/og-image.png",
         width: 1200,
         height: 630,
         alt: "퀴즈벨 - 앱테크 퀴즈 정답 알림 서비스",
@@ -74,12 +88,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "퀴즈벨 - 퀴즈 정답 알림 서비스 | 앱테크로 포인트 적립하세요!",
+    title: "퀴즈벨 - 오늘의 앱테크 퀴즈 정답 모음",
     description:
-      "신한쏠퀴즈, 캐시워크, 토스행운퀴즈, 캐시닥, 오케이캐시백퀴즈벨(QUIZBELLS)은 캐시워크, 신한쏠퀴즈, 토스행운퀴즈, 캐시닥, 오케이케시백 등 인기 앱의 퀴즈 정답을 가장 빠르게 알려주는 알림 기반 퀴즈 서비스입니다. 앱테크의 핵심, 퀴즈벨로 포인트 적립하세요!",
-    site: "@quizbells_official",
-    creator: "@quizbells_official",
-    images: ["https://quizbells.com/icons/og-image.png"], // Twitter 카드용 이미지 (1200x630)
+      "신한쏠퀴즈, 캐시워크, 토스 행운퀴즈 등 퀴즈 정답을 실시간 업데이트! 알림으로 포인트 적립을 놓치지 마세요.",
+    images: ["https://quizbells.com/icons/og-image.png"],
+  },
+  alternates: {
+    canonical: "https://quizbells.com",
   },
 };
 
@@ -92,53 +107,104 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta
-          name="naver-site-verification"
-          content="3f64e7db8e8deef8c04f1aaffd716f53498e30ee"
+      <body>
+        <script id="naver-analytics" src="//wcs.naver.net/wcslog.js" />
+        <script
+          id="naver-analytics-init"
+          dangerouslySetInnerHTML={{
+            __html:
+              'if(!wcs_add) var wcs_add = {}; wcs_add["wa"] = "136538e329b3cb0"; if(window.wcs) {wcs_do();}',
+          }}
         />
-        <meta
-          name="google-site-verification"
-          content="ouZeon6aBrcNKweLJU3eD7w5AjuYyq3MQFlk2jYv7d8"
+        <script
+          id="google-tag-manager"
+          dangerouslySetInnerHTML={{
+            __html:
+              '(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script","dataLayer","GTM-M3V3PSB");',
+          }}
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <Script
+        {/* Google Analytics */}
+        <script
           src="https://www.googletagmanager.com/gtag/js?id=G-4009JNVXBL"
           async
         />
-        <Script
+        <script
           id="google-analytics"
           dangerouslySetInnerHTML={{
             __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+            gtag('config', 'G-4009JNVXBL', {
               page_path: window.location.pathname,
             });
           `,
           }}
         />
-        <script src="//wcs.pstatic.net/wcslog.js" async />
+        <GoogleAdSense />
+        {/* 구조화된 데이터 (Schema.org JSON-LD) - Organization & WebApplication */}
         <script
-          id="naver-analytics"
+          id="structured-data-organization"
+          type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: `
-             if(!wcs_add) var wcs_add = {};
-              wcs_add["wa"] = "136538e329b3cb0";
-              if(window.wcs) {
-              wcs_do();
-            }
-            `,
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "퀴즈벨",
+              alternateName: "QUIZBELLS",
+              url: "https://quizbells.com",
+              logo: "https://quizbells.com/icons/android-icon-192x192.png",
+              sameAs: [
+                "https://play.google.com/store/apps/details?id=com.mojoday.quizbells",
+                "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703",
+              ],
+            }),
           }}
         />
-
-        <GoogleAdSense />
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/icons/android-icon-48x48.png" />
-      </head>
-      <body>
+        <script
+          id="structured-data-webapp"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "퀴즈벨",
+              alternateName: "QUIZBELLS",
+              url: "https://quizbells.com",
+              description:
+                "매일 업데이트되는 앱테크 퀴즈 정답 모음. 신한쏠퀴즈, 캐시워크, 토스 행운퀴즈 등 인기 앱의 퀴즈 정답을 실시간으로 제공합니다.",
+              applicationCategory: "UtilityApplication",
+              operatingSystem: "Web, iOS, Android",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "KRW",
+              },
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.95",
+                ratingCount: "1500",
+                bestRating: "5",
+                worstRating: "1",
+              },
+              author: {
+                "@type": "Organization",
+                name: "QUIZBELLS",
+                url: "https://quizbells.com",
+              },
+              provider: {
+                "@type": "Organization",
+                name: "QUIZBELLS",
+                url: "https://quizbells.com",
+              },
+              potentialAction: {
+                "@type": "SearchAction",
+                target: "https://quizbells.com/quiz?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
         {/* <ClientOnly /> */}
         <NaverAnalyticsTracker />
         <GoogleAnalytics />

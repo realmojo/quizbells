@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Script from "next/script";
+
 import ImageComponents from "@/components/ImageComponets";
 import { format, parseISO } from "date-fns";
 import { getQuitItem, isIOS } from "@/utils/utils";
@@ -42,59 +42,73 @@ export async function generateMetadata({
 
   const item = getQuitItem(type);
 
-  // 날짜 포맷팅 (안전하게 처리)
-  let dateLabel: string;
+  // 네이버 검색 최적화: 날짜를 강조하는 짧은 포맷 (예: 12월 15일)
+  let shortDateLabel: string;
   try {
     if (answerDate && /^\d{4}-\d{2}-\d{2}$/.test(answerDate)) {
-      const parsedDate = parseISO(answerDate);
-      dateLabel = format(parsedDate, "yyyy년 MM월 dd일");
+      shortDateLabel = format(parseISO(answerDate), "M월 d일");
     } else {
-      dateLabel = format(getKoreaDate(), "yyyy년 MM월 dd일");
+      shortDateLabel = format(getKoreaDate(), "M월 d일");
     }
   } catch (e) {
-    console.error("날짜 파싱 오류:", e);
-    dateLabel = format(getKoreaDate(), "yyyy년 MM월 dd일");
+    shortDateLabel = format(getKoreaDate(), "M월 d일");
   }
 
   const typeName = item?.typeKr || type;
   const typeTitle = item?.title || "";
-  const fullTitle = `${typeName} ${typeTitle} 정답 ${dateLabel} | 퀴즈벨`;
-  const description = `${dateLabel} 기준 ${typeName} 퀴즈 정답을 한 눈에 확인하고, 앱테크 리워드를 적립해 보세요. 다양한 퀴즈 이벤트가 매일 업데이트됩니다.`;
+  // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
+  // 네이버 모바일 검색 가독성 최적화
+  const fullTitle = `${shortDateLabel} ${typeName} ${typeTitle} 정답 (실시간) | 퀴즈벨`;
+
+  // 설명문: 핵심 키워드 전진 배치
+  const description = `${shortDateLabel} ${typeName} ${typeTitle} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
 
   return {
     title: fullTitle,
     description,
     applicationName: "퀴즈벨",
     keywords: [
-      "퀴즈 정답",
+      `${typeName} 정답`,
+      `${shortDateLabel} ${typeName}`,
+      "실시간 정답",
+      "오늘의 퀴즈",
       "앱테크",
-      "포인트 적립",
-      "퀴즈벨",
       typeName,
       typeTitle,
-      "퀴즈 이벤트",
-      "오늘의 퀴즈",
     ],
     openGraph: {
       title: fullTitle,
       description,
-      url: `https://quizbells.com/quiz/${type}/${answerDate}`,
+      // 사용자가 수정한 전략(/today) 유지
+      url: `https://quizbells.com/quiz/${type}/today`,
       siteName: "퀴즈벨",
-      type: "website",
+      type: "article",
       locale: "ko_KR",
       images: [`https://quizbells.com/images/${type}.png`],
+      publishedTime: answerDate,
+      authors: ["퀴즈벨"],
+      section: "앱테크/재테크",
+      tags: [typeName, "앱테크", "퀴즈정답"],
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
+      images: [`https://quizbells.com/images/${type}.png`],
     },
     alternates: {
-      canonical: `https://quizbells.com/quiz/${type}/${answerDate}`,
+      canonical: `https://quizbells.com/quiz/${type}/today`,
     },
     robots: {
       index: true,
       follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
   };
 }
@@ -108,22 +122,24 @@ export default async function QuizPage({ params }: QuizPageParams) {
   // 날짜 파싱 및 포맷팅 (안전하게 처리)
   let answerDateString: string;
   let dateLabel: string;
+  let shortDateLabel: string;
 
   try {
+    let parsedDate: Date;
     if (answerDate && /^\d{4}-\d{2}-\d{2}$/.test(answerDate)) {
-      const parsedDate = parseISO(answerDate);
-      answerDateString = format(parsedDate, "yyyy년 MM월 dd일");
-      dateLabel = format(parsedDate, "yyyy년 MM월 dd일");
+      parsedDate = parseISO(answerDate);
     } else {
-      const koreaDate = getKoreaDate();
-      answerDateString = format(koreaDate, "yyyy년 MM월 dd일");
-      dateLabel = format(koreaDate, "yyyy년 MM월 dd일");
+      parsedDate = getKoreaDate();
     }
+    answerDateString = format(parsedDate, "yyyy년 MM월 dd일");
+    dateLabel = format(parsedDate, "yyyy년 MM월 dd일");
+    shortDateLabel = format(parsedDate, "M월 d일");
   } catch (error) {
     console.error("날짜 파싱 오류:", error);
     const koreaDate = getKoreaDate();
     answerDateString = format(koreaDate, "yyyy년 MM월 dd일");
     dateLabel = format(koreaDate, "yyyy년 MM월 dd일");
+    shortDateLabel = format(koreaDate, "M월 d일");
   }
 
   // item이 없으면 404 처리
@@ -140,8 +156,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
     );
   }
 
-  const h1Title = `${item.typeKr} ${item.title} ${answerDateString} 정답`;
-  const firstDescription = `앱테크는 광고 시청이나 퀴즈 참여를 통해 포인트를 적립하는 방식으로 많은 사용자들의 관심을 받고 있습니다. ${answerDateString} 기준, ${item.typeKr} ${item.title} 등 다양한 앱에서 퀴즈 이벤트가 활발히 진행되고 있으며, 정답을 맞히면 현금처럼 사용 가능한 리워드를 받을 수 있어 앱 사용자들 사이에서 큰 호응을 얻고 있습니다.`;
+  const h1Title = `${shortDateLabel} ${item.typeKr} ${item.title} 정답`;
+  const firstDescription = `${answerDateString} ${item.typeKr} ${item.title} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다.`;
 
   let quizItem = null;
   let lastDayQuizItem = null;
@@ -174,41 +190,89 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
   const contents = [...quizItem, ...lastDayQuizItem];
 
-  const jsonLd = contents.map((quiz: any) => ({
+  // FAQPage 구조화된 데이터 (검색결과 리치 스니펫용)
+  const faqJsonLd = {
     "@context": "https://schema.org",
-    "@type": "QAPage",
-    mainEntity: {
+    "@type": "FAQPage",
+    mainEntity: contents.map((quiz: any) => ({
       "@type": "Question",
-      name: quiz.question || "질문 없음",
-      text: quiz.question || "질문 없음",
-      answerCount: 1 + (quiz.otherAnswers?.length || 0),
+      name: `Q. ${quiz.question || item.typeKr + " 퀴즈 정답은 무엇인가요?"}`,
       acceptedAnswer: {
         "@type": "Answer",
-        text: quiz.answer,
-        upvoteCount: 100, // 정답 신뢰도 (선택)
-        dateCreated: answerDate,
+        text: `A. 정답은 [${quiz.answer}] 입니다. ${quiz.otherAnswers?.length > 0 ? `다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
       },
-      ...(quiz.otherAnswers?.length > 0 && {
-        suggestedAnswer: quiz.otherAnswers.map((alt: any) => ({
-          "@type": "Answer",
-          text: alt,
-          upvoteCount: 10,
-          dateCreated: answerDate,
-        })),
-      }),
+    })),
+  };
+
+  // Breadcrumb 구조화된 데이터
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "홈",
+        item: "https://quizbells.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: `${item.typeKr} 퀴즈`,
+        item: `https://quizbells.com/quiz/${type}/today`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `${shortDateLabel} 정답`,
+        item: `https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`,
+      },
+    ],
+  };
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: h1Title,
+    image: [`https://quizbells.com/images/${type}.png`],
+    datePublished: `${answerDate}T09:00:00+09:00`,
+    dateModified: `${answerDate}T${new Date().getHours()}:${new Date().getMinutes()}:00+09:00`, // 수정 시간 실시간 반영
+    author: [
+      {
+        "@type": "Organization",
+        name: "퀴즈벨",
+        url: "https://quizbells.com",
+      },
+      {
+        "@type": "Person",
+        name: "퀴즈벨 에디터",
+      },
+    ],
+    publisher: {
+      "@type": "Organization",
+      name: "퀴즈벨",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://quizbells.com/icons/android-icon-192x192.png",
+      },
     },
-  }));
+    description: firstDescription,
+  };
 
   return (
     <>
-      {jsonLd.map((data: any, index: number) => (
-        <Script
-          id={`jsonld-${type}-${answerDate}`}
-          key={`jsonld-${index}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-        />
-      ))}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950">
         <div className="max-w-xl mx-auto pt-6 pb-40 px-4">
           <section
