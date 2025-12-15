@@ -83,16 +83,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://quizbells.com/icons/og-image.png",
+        url: "https://quizbells.com/images/quizbells_og_1200.png",
         width: 1200,
         height: 630,
         alt: "퀴즈벨 - 앱테크 퀴즈 정답 알림 서비스",
-      },
-      {
-        url: "https://quizbells.com/icons/android-icon-192x192.png",
-        width: 192,
-        height: 192,
-        alt: "퀴즈벨 아이콘",
       },
     ],
   },
@@ -101,7 +95,7 @@ export const metadata: Metadata = {
     title: "퀴즈벨 - 오늘의 앱테크 퀴즈 정답 모음",
     description:
       "신한쏠퀴즈, 캐시워크, 토스 행운퀴즈 등 퀴즈 정답을 실시간 업데이트! 알림으로 포인트 적립을 놓치지 마세요.",
-    images: ["https://quizbells.com/icons/og-image.png"],
+    images: ["https://quizbells.com/images/quizbells_og_1200.png"],
   },
   alternates: {
     canonical: "https://quizbells.com",
