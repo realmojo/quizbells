@@ -58,7 +58,7 @@ export async function generateMetadata({
   const typeTitle = item?.title || "";
   // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
   // 네이버 모바일 검색 가독성 최적화
-  const fullTitle = `${shortDateLabel} ${typeName} ${typeTitle} 정답 (실시간) | 퀴즈벨`;
+  const fullTitle = `${shortDateLabel} ${typeName} ${typeTitle} 정답 | 퀴즈벨`;
 
   // 설명문: 핵심 키워드 전진 배치
   const description = `${shortDateLabel} ${typeName} ${typeTitle} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
