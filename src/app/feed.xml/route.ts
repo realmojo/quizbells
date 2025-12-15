@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { quizItems } from "@/utils/utils";
+import { parseISO } from "date-fns";
+
+import moment from "moment-timezone";
+
+const getKoreaDate = () => {
+  return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+};
 
 export async function GET() {
   try {
@@ -29,27 +36,32 @@ export async function GET() {
         const typeInfo = quizItems.find((q) => q.type === quiz.type);
         const typeName = typeInfo?.typeKr || quiz.type;
         const typeTitle = typeInfo?.title || "";
-        
+
         // Construct Title & URL
         // Title: [Date] [Type] [Title] Answer
         // e.g. 2024-12-15 Toss Fortune Quiz Answer
         const title = `${quiz.answerDate} ${typeName} ${typeTitle} 정답`;
-        const link = `${baseUrl}/quiz/${quiz.type}/${quiz.answerDate}`;
-        
+        const link =
+          quiz.answerDate === getKoreaDate()
+            ? `${baseUrl}/quiz/${quiz.type}/today`
+            : `${baseUrl}/quiz/${quiz.type}/${quiz.answerDate}`;
+
         // Description
         const description = `
           <![CDATA[
             <p>${quiz.question || "오늘의 퀴즈"}</p>
             <p><strong>정답: ${quiz.answer}</strong></p>
-            ${quiz.otherAnswers && quiz.otherAnswers.length > 0 
-              ? `<p>다른 정답: ${quiz.otherAnswers.join(", ")}</p>` 
-              : ""}
+            ${
+              quiz.otherAnswers && quiz.otherAnswers.length > 0
+                ? `<p>다른 정답: ${quiz.otherAnswers.join(", ")}</p>`
+                : ""
+            }
           ]]>
         `;
 
         // Image
         // Use the static image for the quiz type if available
-        const imageUrl = typeInfo?.image 
+        const imageUrl = typeInfo?.image
           ? `${baseUrl}${typeInfo.image}`
           : `${baseUrl}/icons/og-image.png`;
 
