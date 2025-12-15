@@ -58,7 +58,7 @@ export async function generateMetadata({
   const typeTitle = item?.title || "";
   // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
   // 네이버 모바일 검색 가독성 최적화
-  const fullTitle = `${typeName} ${typeTitle} ${shortDateLabel} 정답 | 퀴즈벨`;
+  const fullTitle = `${typeName} ${typeTitle} 정답 ${shortDateLabel}`;
 
   // 설명문: 핵심 키워드 전진 배치
   const description = `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
@@ -156,7 +156,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     );
   }
 
-  const h1Title = `${item.typeKr} ${item.title} ${shortDateLabel} 정답`;
+  const h1Title = `${item.typeKr} ${item.title} 정답 ${shortDateLabel}`;
   const firstDescription = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다.`;
 
   let quizItem = null;
