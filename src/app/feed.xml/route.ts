@@ -9,6 +9,33 @@ const getKoreaDate = () => {
   return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 };
 
+const answerLabelByType: Record<string, string> = {
+  toss: "🎯 토스 행운퀴즈 정답",
+  cashwalk: "🏃 캐시워크 돈버는퀴즈 정답",
+  shinhan: "💙 신한쏠페이 쏠퀴즈, 퀴즈팡팡, 출석퀴즈 정답",
+  kakaobank: "💛 카카오뱅크 OX 정답",
+  kakaopay: "💛 카카오페이 퀴즈타임 정답",
+  bitbunny: "🐰 비트버니 퀴즈 정답",
+  okcashbag: "🧡 오케이캐시백 오퀴즈 정답",
+  cashdoc: "💰 캐시닥 용돈퀴즈 정답",
+  kbstar: "💛 KB스타/KBPAY 도전미션 스타퀴즈, 퀴즈 정답",
+  "3o3": "3o3 퀴즈 정답",
+  doctornow: "닥터나우 퀴즈 정답",
+  mydoctor: "나만의닥터 건강퀴즈 정답",
+  hpoint: "💎 H포인트 퀴즈 정답",
+  skstoa: "SK 스토아 퀴즈타임 정답",
+  hanabank: "🍀 하나은행 퀴즈하나 정답",
+  auction: "옥션 매일퀴즈 정답",
+  nh: "농협 디깅퀴즈 정답",
+  kbank: "케이뱅크 미션퀴즈 정답",
+  climate: "🌏 기후행동 기회소득 퀴즈 정답",
+};
+
+const getAnswerLabel = (type?: string, typeName?: string) => {
+  if (!type) return `정답`;
+  return answerLabelByType[type] || `${typeName || type} 정답`;
+};
+
 export async function GET() {
   try {
     if (!supabaseAdmin) {
@@ -50,12 +77,7 @@ export async function GET() {
         const description = `
           <![CDATA[
             <p>${quiz.question || "오늘의 퀴즈"}</p>
-            <p><strong>정답: ${quiz.answer}</strong></p>
-            ${
-              quiz.otherAnswers && quiz.otherAnswers.length > 0
-                ? `<p>다른 정답: ${quiz.otherAnswers.join(", ")}</p>`
-                : ""
-            }
+            <p><strong>${getAnswerLabel(quiz.type, typeName)}을 확인하세요.</strong></p>
           ]]>
         `;
 
