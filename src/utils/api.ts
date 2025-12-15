@@ -68,9 +68,7 @@ export const getPostsList = async (
     limit: limit.toString(),
   });
 
-  const res = await fetch(`/api/post/list?${query.toString()}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`/api/post/list?${query.toString()}`);
 
   if (!res.ok) return null;
 
@@ -86,9 +84,7 @@ export const getPost = async (id: string): Promise<any | null> => {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
-  const res = await fetch(`${baseUrl}/api/post?id=${id}`, {
-    cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
-  });
+  const res = await fetch(`${baseUrl}/api/post?id=${id}`);
 
   if (!res.ok) return null;
 
