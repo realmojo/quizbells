@@ -52,7 +52,17 @@ export const metadata: Metadata = {
   applicationName: "QUIZBELLS",
   generator: "Next.js",
   category: "quiz, apptech, reward, entertainment",
-  robots: "index, follow",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   verification: {
     google: "ouZeon6aBrcNKweLJU3eD7w5AjuYyq3MQFlk2jYv7d8",
     other: {
