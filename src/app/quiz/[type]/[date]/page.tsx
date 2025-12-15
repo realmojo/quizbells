@@ -156,8 +156,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
     );
   }
 
-  const h1Title = `${shortDateLabel} ${item.typeKr} ${item.title} 정답`;
-  const firstDescription = `${answerDateString} ${item.typeKr} ${item.title} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다.`;
+  const h1Title = `${item.typeKr} ${item.title} ${shortDateLabel} 정답`;
+  const firstDescription = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다.`;
 
   let quizItem = null;
   let lastDayQuizItem = null;
