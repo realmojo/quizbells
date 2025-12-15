@@ -84,7 +84,7 @@ export async function generateMetadata({
       siteName: "퀴즈벨",
       type: "article",
       locale: "ko_KR",
-      images: [`https://quizbells.com/images/${type}.png`],
+      images: [`https://quizbells.com/icons/og-image.png`],
       publishedTime: answerDate,
       authors: ["퀴즈벨"],
       section: "앱테크/재테크",
@@ -94,7 +94,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [`https://quizbells.com/images/${type}.png`],
+      images: [`https://quizbells.com/icons/og-image.png`],
     },
     alternates: {
       canonical: `https://quizbells.com/quiz/${type}/today`,
@@ -447,7 +447,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
             <SocialShare
               title={`${item.typeKr} ${item.title} ${answerDateString} 정답`}
               url={`https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`}
-              imageUrl="https://quizbells.com/icons/default-icon.png"
+              imageUrl="https://quizbells.com/icons/og-image.png"
             />
 
             {/* Related Quizzes */}

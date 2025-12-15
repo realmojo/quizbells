@@ -550,7 +550,7 @@ export default function QuizModalClient({
               <SocialShare
                 title={`${getQuitItem(type)?.typeKr} ${getQuitItem(type)?.title} ${answerDateString} 정답`}
                 url={window.location.href}
-                imageUrl="https://quizbells.com/icons/default-icon.png"
+                imageUrl="https://quizbells.com/icons/og-image.png"
               />
 
               <article className="mb-6 px-4 bg-white tracking-tight">
