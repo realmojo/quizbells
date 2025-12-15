@@ -48,7 +48,8 @@ export const getQuizbells = async (
     }
 
     const data = await res.json();
-    return data;
+
+    return data?.contents?.length ? data : null;
   } catch (error) {
     console.error("getQuizbells 오류:", error);
     return null;

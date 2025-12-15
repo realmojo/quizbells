@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
     if (!data) {
       return NextResponse.json(
         { success: false, error: "데이터가 없습니다." },
-        { status: 404 }
+        { status: 200 }
       );
     }
 
