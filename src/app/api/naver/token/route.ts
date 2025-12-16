@@ -23,6 +23,7 @@ export async function POST(request: Request) {
       return NextResponse.json(data, { status: 400 });
     }
 
+    console.log("Token Data:", data);
     return NextResponse.json(data);
   } catch (error) {
     console.error("Token Error:", error);
