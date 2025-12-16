@@ -19,8 +19,11 @@ export async function POST(request: Request) {
     // FormData 사용 (multipart/form-data)
     // 인코딩 이슈 없이 한글을 가장 안전하게 보내는 방법
     const formData = new FormData();
+    // 네이버 카페 API는 HTML을 지원하므로 줄바꿈(\n)을 <br>로 변환해야 함
+    const htmlContent = content.replace(/\n/g, "<br>");
+    
     formData.append("subject", encodeURI(subject));
-    formData.append("content", encodeURI(content));
+    formData.append("content", encodeURI(htmlContent));
 
     const response = await fetch(apiURL, {
       method: "POST",
