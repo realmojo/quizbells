@@ -12,7 +12,7 @@ import React from "react";
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-sky-50 dark:from-blue-950 dark:via-cyan-950 dark:to-sky-950">
-      <main className="mx-auto max-w-3xl px-4 py-12 mb-20">
+      <main className="mx-auto max-w-3xl px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-sm font-medium mb-2">
@@ -112,10 +112,10 @@ export default function PrivacyPolicyPage() {
                       </p>
                       <a
                         className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold hover:underline"
-                        href="mailto:quizbell.help@gmail.com"
+                        href="mailto:quizbells.official@gmail.com"
                       >
                         <Mail className="w-4 h-4" />
-                        quizbell.help@gmail.com
+                        quizbells.official@gmail.com
                       </a>
                       <p className="text-sm text-slate-500 dark:text-slate-500 mt-2">
                         문의사항은 신속히 검토 및 처리해드리겠습니다.

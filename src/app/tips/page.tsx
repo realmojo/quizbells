@@ -70,7 +70,7 @@ export default function AppTechTipsPage() {
       </Head>
 
       <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-orange-950 dark:to-amber-950">
-        <main className="mx-auto max-w-3xl px-4 py-12 mb-20">
+        <main className="mx-auto max-w-3xl px-4 py-12">
           {/* Header Section */}
           <div className="text-center mb-12 space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-300 text-sm font-medium mb-2">

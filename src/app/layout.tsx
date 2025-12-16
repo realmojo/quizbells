@@ -6,6 +6,7 @@ export const viewport: Viewport = {
 };
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/layouts/Header";
+import Footer from "@/components/layouts/Footer";
 import RegisterServiceWorker from "@/app/register-service-worker";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import NaverAnalyticsTracker from "@/components/NaverAnalyticsTracker";
@@ -218,6 +219,7 @@ export default async function RootLayout({
           {children}
           {/* {modal} */}
         </main>
+        <Footer />
         <Toaster
           position="bottom-center"
           toastOptions={{

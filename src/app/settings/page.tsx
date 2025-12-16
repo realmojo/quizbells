@@ -58,7 +58,7 @@ export default function SettingsPage() {
   return (
     <>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-50 dark:from-slate-950 dark:via-gray-950 dark:to-zinc-950">
-        <div className="max-w-3xl mx-auto px-4 py-12 mb-24">
+        <div className="max-w-3xl mx-auto px-4 py-12">
           {/* Header Section */}
           <div className="text-center mb-12 space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-medium mb-2">
@@ -110,8 +110,8 @@ export default function SettingsPage() {
                         {!isQuizAlarm
                           ? "알람 수신 안함"
                           : settings?.alarmSettings === "*"
-                          ? "모든 알림 수신 중"
-                          : "선택한 알림만 수신 중"}
+                            ? "모든 알림 수신 중"
+                            : "선택한 알림만 수신 중"}
                       </span>
                     </div>
                   </div>

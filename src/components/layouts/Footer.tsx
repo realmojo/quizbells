@@ -1,86 +1,144 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import EmailSubscribe from "@/components/EmailSubscribe";
 
 export default function Footer() {
   const [isVisibleToken, setIsVisibleToken] = useState(false);
 
   return (
-    <footer className="w-full border-t bg-white py-6">
-      <div className="container mx-auto px-4 text-center text-sm text-gray-700">
-        {/* 로고 및 개발자 토큰 */}
-        <div className="mb-3 flex justify-center">
-          <Image
-            src="/icons/android-icon-72x72.png"
-            alt="퀴즈벨 로고"
-            width={32}
-            height={32}
-            priority
-            onDoubleClick={() => {
-              setIsVisibleToken(true);
-            }}
-          />
-        </div>
-        {isVisibleToken && (
-          <div className="text-xs text-gray-500 mb-2">
-            <p>Token: {localStorage.getItem("cpnow-auth")}</p>
+    <footer className="w-full border-t border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 pt-16 pb-8">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          {/* Brand Section */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Image
+                src="/images/quizbells_logo.png"
+                alt="Quizbells Logo"
+                width={40}
+                height={40}
+                className="rounded-lg shadow-sm"
+              />
+              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
+                QUIZBELLS
+              </span>
+            </div>
+            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+              매일 업데이트되는 앱테크 퀴즈 정답과 <br />
+              다양한 리워드 정보를 가장 빠르게 만나보세요.
+            </p>
           </div>
-        )}
 
-        {/* 네비게이션 바 */}
-        <nav className="mt-4 flex justify-center gap-6 text-sm">
-          <Link href="/" className="hover:underline">
-            홈
-          </Link>
-          <Link href="/tips" className="hover:underline">
-            팁
-          </Link>
-          <Link href="/quiz" className="hover:underline">
-            퀴즈
-          </Link>
-          <Link href="/posts" className="hover:underline">
-            포스트
-          </Link>
-          <Link
-            href="/tips"
-            className="hover:underline font-semibold text-blue-700"
-          >
-            앱테크 팁
-          </Link>
-        </nav>
+          {/* Links Section 1 */}
+          <div>
+            <h3 className="font-semibold text-slate-900 dark:text-white mb-6">
+              서비스
+            </h3>
+            <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+              <li>
+                <Link
+                  href="/"
+                  className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                >
+                  홈
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/quiz/toss/today"
+                  className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                >
+                  오늘의 퀴즈
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/posts"
+                  className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                >
+                  커뮤니티
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tips"
+                  className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                >
+                  앱테크 꿀팁
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-        {/* 이메일 구독 */}
-        <div className="my-8">
-          <EmailSubscribe
-            title="새로운 소식을 받아보세요"
-            description="이메일을 입력하시면 최신 퀴즈 정보와 특별 이벤트 소식을 받아보실 수 있습니다."
-            className="max-w-md"
-          />
+          {/* Links Section 2 */}
+          <div>
+            <h3 className="font-semibold text-slate-900 dark:text-white mb-6">
+              고객지원
+            </h3>
+            <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+              {/* <li>
+                <Link href="/faq" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                  자주 묻는 질문
+                </Link>
+              </li> */}
+              <li>
+                <Link
+                  href="/contact"
+                  className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                >
+                  광고/제휴 문의
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about"
+                  className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                >
+                  서비스 소개
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                >
+                  개인정보처리방침
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms"
+                  className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                >
+                  이용약관
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        {/* 브랜드 설명 */}
-        <p className="leading-relaxed text-sm text-gray-700">
-          <strong>퀴즈벨(Quizbell)</strong>은 퀴즈 정답과 앱테크 정보를
-          실시간으로 제공하는 서비스입니다. 다양한 퀴즈 유형을 빠르게 확인하고,
-          포인트 리워드를 효율적으로 적립하세요. 퀴즈벨은 여러분의 스마트한 N잡
-          생활을 응원합니다.
-        </p>
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-slate-500 dark:text-slate-500">
+            © {new Date().getFullYear()} Quizbells. All rights reserved.
+          </p>
 
-        {/* 카피라이트 */}
-        <p className="mt-2 text-xs text-gray-400">
-          © 2025 퀴즈벨(Quizbell). All rights reserved.
-        </p>
-
-        {/* 링크: 개인정보처리방침 */}
-        <div className="mt-3">
-          <Link
-            href="/privacy"
-            className="text-xs text-gray-500 hover:underline"
+          <div
+            className="text-xs text-slate-400 cursor-pointer hover:text-slate-600 transition-colors"
+            onDoubleClick={() => setIsVisibleToken(!isVisibleToken)}
           >
-            개인정보처리방침 보기
-          </Link>
+            {isVisibleToken ? (
+              <span className="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
+                Token:{" "}
+                {typeof window !== "undefined"
+                  ? localStorage.getItem("cpnow-auth")?.slice(0, 10) + "..."
+                  : ""}
+              </span>
+            ) : (
+              <span>Developer Access</span>
+            )}
+          </div>
         </div>
       </div>
     </footer>

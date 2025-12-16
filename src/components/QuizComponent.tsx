@@ -50,7 +50,7 @@ export default function QuizPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-purple-950">
-      <article className="max-w-3xl mx-auto px-4 py-12 mb-10">
+      <article className="max-w-3xl mx-auto px-4 py-12">
         {/* Header Section */}
         <header className="text-center mb-12 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-sm font-medium mb-2">

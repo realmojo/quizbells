@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-slate-50 dark:from-indigo-950 dark:via-blue-950 dark:to-slate-950">
-      <main className="mx-auto max-w-3xl px-4 py-12 mb-20">
+      <main className="mx-auto max-w-3xl px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 text-sm font-medium mb-2">
@@ -173,9 +173,9 @@ export default function TermsPage() {
                       </p>
                       <a
                         className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold hover:underline"
-                        href="mailto:quizbell.help@gmail.com"
+                        href="mailto:quizbells.official@gmail.com"
                       >
-                        quizbell.help@gmail.com
+                        quizbells.official@gmail.com
                       </a>
                     </div>
                   ),
