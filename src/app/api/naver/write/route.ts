@@ -20,14 +20,14 @@ export async function POST(request: Request) {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
       },
       // 네이버 API는 x-www-form-urlencoded 또는 multipart/form-data를 요구할 수 있음.
       // v1 API 문서를 기준으로 form-urlencoded 전송
       body: new URLSearchParams({
         subject: subject,
         content: content,
-      }),
+      }).toString(),
     });
 
     const data = await response.json();
