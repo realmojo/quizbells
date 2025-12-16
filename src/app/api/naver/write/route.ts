@@ -16,18 +16,19 @@ export async function POST(request: Request) {
     // 이미지 첨부가 필요하면 multipart/form-data 처리가 필요하지만, 여기서는 텍스트/HTML 글쓰기만 구현합니다.
     const apiURL = `https://openapi.naver.com/v1/cafe/${clubId}/menu/${menuId}/articles`;
 
+    // 네이버 공식 문서/예제에 따라 직접 인코딩 후 쿼리 스트링 생성
+    // URLSearchParams는 내부적으로 인코딩을 수행하지만, 네이버 API 호환성을 위해 직접 처리
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedContent = encodeURIComponent(content);
+    const bodyString = `subject=${encodedSubject}&content=${encodedContent}`;
+
     const response = await fetch(apiURL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "text/json; charset=utf-8",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      // 네이버 API는 x-www-form-urlencoded 또는 multipart/form-data를 요구할 수 있음.
-      // v1 API 문서를 기준으로 form-urlencoded 전송
-      body: JSON.stringify({
-        subject: subject,
-        content: content,
-      }),
+      body: bodyString,
     });
     //   https://quizbells.com/naver-cafe?code=jAFdXMunqSnJUlrjnc&state=sm0q06z6ca
     const data = await response.json();
