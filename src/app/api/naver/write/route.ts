@@ -26,7 +26,6 @@ export async function POST(request: Request) {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: bodyString,
     });
