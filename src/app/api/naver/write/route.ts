@@ -19,8 +19,8 @@ export async function POST(request: Request) {
     // FormData 사용 (multipart/form-data)
     // 인코딩 이슈 없이 한글을 가장 안전하게 보내는 방법
     const formData = new FormData();
-    formData.append("subject", subject);
-    formData.append("content", content);
+    formData.append("subject", encodeURI(subject));
+    formData.append("content", encodeURI(content));
 
     const response = await fetch(apiURL, {
       method: "POST",
