@@ -12,9 +12,7 @@ function NaverCafeWriteContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [accessToken, setAccessToken] = useState(
-    "AAAAPOkEJ-nQ_NDBE7oPIMVTNHa2A-fnRuI8uVoV0ILHdT2p5UiEpWweGEZx8S0D5rLkoN9SGLSO9OukDlRciGbisEY"
-  );
+  const [accessToken, setAccessToken] = useState("");
   const [loading, setLoading] = useState(false);
 
   // 카페 목록 상수
