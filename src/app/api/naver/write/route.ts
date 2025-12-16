@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     const formData = new FormData();
     // 네이버 카페 API는 HTML을 지원하므로 줄바꿈(\n)을 <br>로 변환해야 함
     const htmlContent = content.replace(/\n/g, "<br>");
-    
+
     formData.append("subject", encodeURI(subject));
     formData.append("content", encodeURI(htmlContent));
 

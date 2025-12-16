@@ -62,6 +62,7 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
           ],
         });
       } catch (e) {
+        console.error("카카오톡 공유 에러:", e);
         // 이미 버튼이 생성되었을 경우 에러 무시
       }
     };

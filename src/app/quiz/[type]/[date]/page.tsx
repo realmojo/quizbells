@@ -51,6 +51,7 @@ export async function generateMetadata({
       shortDateLabel = format(getKoreaDate(), "M월 d일");
     }
   } catch (e) {
+    console.error("날짜 파싱 오류:", e);
     shortDateLabel = format(getKoreaDate(), "M월 d일");
   }
 
