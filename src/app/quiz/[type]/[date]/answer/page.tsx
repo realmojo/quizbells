@@ -4,6 +4,7 @@ import { getQuitItem } from "@/utils/utils";
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Calendar, ArrowLeft, Lightbulb } from "lucide-react";
 import AppOpen from "@/components/AppOpen";
+import CoupangPartnerAd from "@/components/CoupangPartnerAd";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 const getKoreaDate = (): Date => {
@@ -176,6 +177,8 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
               {h1Title}
             </h1>
           </div>
+
+          <CoupangPartnerAd />
 
           {/* Empty State */}
           {contents.length === 0 && (
