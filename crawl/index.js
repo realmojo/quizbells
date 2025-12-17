@@ -6,7 +6,7 @@ const getKoreaTime = () => {
 };
 const { getVeil8000Quiz } = require("./veil8000");
 const { getClimateQuiz } = require("./climate");
-const { getBntNews } = require("./bntnews");
+const { getBntNewsByToss, getBntNewsByCashwork } = require("./bntnews");
 const { google } = require("googleapis");
 const request = require("request");
 const path = require("path");
@@ -83,9 +83,16 @@ const run = async () => {
     await Promise.all([
       (async () => {
         try {
-          await getBntNews(); // BNT News 토스 행운퀴즈
+          await getBntNewsByToss(); // BNT News 토스, 캐시워크 행운퀴즈
         } catch (err) {
           console.error("❌ BNT News 토스 오류:", err.message || err);
+        }
+      })(),
+      (async () => {
+        try {
+          await getBntNewsByCashwork(); // BNT News 캐시워크 행운퀴즈
+        } catch (err) {
+          console.error("❌ BNT News 캐시워크 오류:", err.message || err);
         }
       })(),
       (async () => {
