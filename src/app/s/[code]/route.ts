@@ -20,7 +20,7 @@ export async function GET(
 
     const { data, error } = await supabaseAdmin
       .from("quizbells_short_links")
-      .select("original_url")
+      .select("id, original_url, clicks")
       .eq("code", code)
       .single();
 
@@ -29,8 +29,11 @@ export async function GET(
       return NextResponse.redirect(new URL("/?error=link_not_found", req.url));
     }
 
-    // Optional: Async click tracking (fire and forget, don't await)
-    // supabaseAdmin.rpc('increment_click', { code });
+    // Update click count asynchronously
+    await supabaseAdmin
+      .from("quizbells_short_links")
+      .update({ clicks: (data.clicks || 0) + 1 })
+      .eq("id", data.id);
 
     return NextResponse.redirect(new URL(data.original_url, req.url));
   } catch (err) {
