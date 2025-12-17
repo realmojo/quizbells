@@ -1,23 +1,23 @@
 export default function CoupangPartnerAd() {
   const coupangItems = [
     {
-      url: "https://naver.me/GnRHwk2A",
+      url: "https://naver.me/GnRHw1eJ",
       img: "/images/cp/cp-1.png",
     },
     {
-      url: "https://naver.me/55PhMOAw",
+      url: "https://naver.me/F5aYt2rN",
       img: "/images/cp/cp-2.png",
     },
     {
-      url: "https://naver.me/5AgSbDrS",
+      url: "https://naver.me/FbqX3ydL",
       img: "/images/cp/cp-3.png",
     },
     {
-      url: "https://naver.me/xDCwyLrt",
+      url: "https://naver.me/FIN4DZgA",
       img: "/images/cp/cp-4.png",
     },
     {
-      url: "https://naver.me/FgT9hVPC",
+      url: "https://naver.me/GFCjJ8VB",
       img: "/images/cp/cp-5.png",
     },
   ];
