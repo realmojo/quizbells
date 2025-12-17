@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   ChevronLeft,
@@ -15,6 +16,7 @@ import { useAppStore } from "@/store/useAppStore";
 import { isWebView, quizItems, requestAlarmPermission } from "@/utils/utils";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import EventLink from "./EventLink";
 
 export default function QuizPage() {
   const date = useAppStore((s) => s.date);
@@ -121,7 +123,11 @@ export default function QuizPage() {
             )}
           </Button>
         </nav>
-        {!isWebView() && (
+
+        {/* 여기 이벤트 페이지 추가 */}
+        {/* Event Banner Link */}
+        <EventLink />
+        {/* {!isWebView() && (
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
             <Button
               variant="default"
@@ -164,7 +170,7 @@ export default function QuizPage() {
               </div>
             </Button>
           </div>
-        )}
+        )} */}
         {/* Quiz Grid */}
         <section className="mb-16" aria-label="오늘의 퀴즈 정답">
           <QuizCardComponent viewType="grid" />

@@ -1,5 +1,4 @@
 import EventCard from "@/components/EventCard";
-import CoupangPartnerAd from "@/components/CoupangPartnerAd";
 import { Gift, TrendingUp, Wallet, Star } from "lucide-react";
 
 export default function EventPage() {
@@ -64,7 +63,130 @@ export default function EventPage() {
       url: "https://quizbells.com/s/J64riw",
       image: "/images/cp/event/cp-event-10.png",
     },
+    {
+      id: 11,
+      title: "가전디지털, 갤럭시 버즈",
+      url: "https://quizbells.com/s/uDgZlp",
+      image: "/images/cp/event/cp-event-11.png",
+    },
+    {
+      id: 12,
+      title: "가전디지털, 가성비 게이밍 모니터",
+      url: "https://quizbells.com/s/8wMOAY",
+      image: "/images/cp/event/cp-event-12.png",
+    },
+    {
+      id: 13,
+      title: "로켓패션, 프리미엄 키즈 선물하기",
+      url: "https://quizbells.com/s/GYVd3b",
+      image: "/images/cp/event/cp-event-13.jpg",
+    },
+    {
+      id: 14,
+      title: "로켓패션, 키즈 셀렉트",
+      url: "https://quizbells.com/s/wGZDMr",
+      image: "/images/cp/event/cp-event-14.png",
+    },
+    {
+      id: 15,
+      title: "로켓패션, 반품 마켓",
+      url: "https://quizbells.com/s/RMAb0r",
+      image: "/images/cp/event/cp-event-15.png",
+    },
+    {
+      id: 16,
+      title: "쿠팡트래블, 매일 만나는 여행 특가",
+      url: "https://quizbells.com/s/ilCMJU",
+      image: "/images/cp/event/cp-event-16.png",
+    },
+    {
+      id: 17,
+      title: "홈인테리어, 로켓설치 가구/리빙 특가 상품",
+      url: "https://quizbells.com/s/uHQqIu",
+      image: "/images/cp/event/cp-event-17.png",
+    },
+    {
+      id: 18,
+      title: "주방용품, 이주의 키친트렌드",
+      url: "https://quizbells.com/s/4aG1oh",
+      image: "/images/cp/event/cp-event-18.png",
+    },
+    {
+      id: 19,
+      title: "도서/문구, 노벨문학상",
+      url: "https://quizbells.com/s/ognCby",
+      image: "/images/cp/event/cp-event-19.png",
+    },
+    {
+      id: 20,
+      title: "도서/문구, 책 한잔",
+      url: "https://quizbells.com/s/GGwKpl",
+      image: "/images/cp/event/cp-event-20.png",
+    },
+    {
+      id: 21,
+      title: "로켓패션, 러닝 스페셜티관",
+      url: "https://quizbells.com/s/8zkElJ",
+      image: "/images/cp/event/cp-event-21.jpg",
+    },
+    {
+      id: 22,
+      title: "반려동물용품, 관상어/소동물 용품",
+      url: "https://quizbells.com/s/E2ZDjW",
+      image: "/images/cp/event/cp-event-22.png",
+    },
+    {
+      id: 23,
+      title: "로켓프레시, 1일 1특가",
+      url: "https://quizbells.com/s/xOH1bk",
+      image: "/images/cp/event/cp-event-23.png",
+    },
+    {
+      id: 24,
+      title: "도서/문구, 유아&어린이 전집",
+      url: "https://quizbells.com/s/vWEiic",
+      image: "/images/cp/event/cp-event-24.png",
+    },
+    {
+      id: 25,
+      title: "가전디지털, AI가전 모음전",
+      url: "https://quizbells.com/s/J0eUFf",
+      image: "/images/cp/event/cp-event-25.png",
+    },
+    {
+      id: 26,
+      title: "이달의 신상",
+      url: "https://quizbells.com/s/p8UvmH",
+      image: "/images/cp/event/cp-event-26.png",
+    },
+    {
+      id: 27,
+      title: "문구/오피스, 집순이의 취미생활",
+      url: "https://quizbells.com/s/a2yIB8",
+      image: "/images/cp/event/cp-event-27.png",
+    },
+    {
+      id: 28,
+      title: "골드박스",
+      url: "https://quizbells.com/s/LA0GE6",
+      image: "/images/cp/event/cp-event-28.png",
+    },
+    {
+      id: 29,
+      title: "로켓프레시, 고기역전",
+      url: "https://quizbells.com/s/P1xcct",
+      image: "/images/cp/event/cp-event-29.png",
+    },
+    {
+      id: 30,
+      title: "로켓패션, C.STREET",
+      url: "https://quizbells.com/s/b3he6c",
+      image: "/images/cp/event/cp-event-30.png",
+    },
   ];
+
+  const shuffleEventList = eventList.sort(() => Math.random() - 0.5);
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-12 px-4">
       <div className="container mx-auto max-w-2xl">
@@ -90,7 +212,7 @@ export default function EventPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            {eventList.map((event) => (
+            {shuffleEventList.map((event) => (
               <EventCard
                 key={event.id}
                 url={event.url}

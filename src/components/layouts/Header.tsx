@@ -125,6 +125,14 @@ export default function Header() {
       bgColor: "bg-purple-100 dark:bg-purple-900/30",
     },
     {
+      name: "이벤트",
+      path: "/event",
+      match: (path: string) => path === "/event",
+      icon: Gift,
+      activeColor: "text-red-600 dark:text-red-400",
+      bgColor: "bg-red-100 dark:bg-red-900/30",
+    },
+    {
       name: "팁",
       path: "/tips",
       match: (path: string) => path.includes("/tips"),
@@ -140,14 +148,6 @@ export default function Header() {
       icon: BookOpen,
       activeColor: "text-blue-600 dark:text-blue-400",
       bgColor: "bg-blue-100 dark:bg-blue-900/30",
-    },
-    {
-      name: "이벤트",
-      path: "/event",
-      match: (path: string) => path === "/event",
-      icon: Gift,
-      activeColor: "text-red-600 dark:text-red-400",
-      bgColor: "bg-red-100 dark:bg-red-900/30",
     },
     {
       name: "설정",
@@ -182,8 +182,18 @@ export default function Header() {
         </Link>
 
         {/* 오른쪽: 메뉴 아이콘 */}
-        <Drawer direction="right">
-          <DrawerTrigger asChild>
+        <div className="flex items-center gap-1">
+          <Link
+            href="/event"
+            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative group"
+            aria-label="이벤트 페이지"
+          >
+            <Gift className="w-6 h-6 text-slate-700 dark:text-slate-300 group-hover:text-red-500 transition-colors" />
+            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+          </Link>
+
+          <Drawer direction="right">
+            <DrawerTrigger asChild>
             <button
               className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               aria-label="메뉴 열기"
@@ -227,7 +237,8 @@ export default function Header() {
               })}
             </div>
           </DrawerContent>
-        </Drawer>
+          </Drawer>
+        </div>
       </div>
     </header>
   );
