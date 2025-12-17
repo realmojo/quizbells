@@ -13,6 +13,7 @@ import {
   Shield,
   Sparkles,
   Trophy,
+  Gift,
 } from "lucide-react";
 import {
   Drawer,
@@ -59,6 +60,12 @@ export default function Header() {
         title: "운세",
         icon: Sparkles,
         gradient: "from-pink-600 to-purple-600",
+      };
+    if (path === "/event")
+      return {
+        title: "이벤트",
+        icon: Gift,
+        gradient: "from-red-600 to-pink-600",
       };
     if (path === "/sale")
       return {
@@ -133,6 +140,14 @@ export default function Header() {
       icon: BookOpen,
       activeColor: "text-blue-600 dark:text-blue-400",
       bgColor: "bg-blue-100 dark:bg-blue-900/30",
+    },
+    {
+      name: "이벤트",
+      path: "/event",
+      match: (path: string) => path === "/event",
+      icon: Gift,
+      activeColor: "text-red-600 dark:text-red-400",
+      bgColor: "bg-red-100 dark:bg-red-900/30",
     },
     {
       name: "설정",
