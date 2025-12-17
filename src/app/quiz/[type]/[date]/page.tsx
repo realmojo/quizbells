@@ -415,27 +415,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
                       </div>
                     </div>
                   </a>
-
-                  {quiz.otherAnswers?.length > 0 && (
-                    <div
-                      className="rounded-xl border-2 border-amber-200 dark:border-amber-800 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/50 dark:to-yellow-950/50 px-5 py-4 shadow-sm"
-                      itemProp="suggestedAnswer"
-                      itemScope
-                      itemType="https://schema.org/SuggestedAnswer"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-                        <span className="text-sm font-bold text-amber-700 dark:text-amber-400">
-                          다른 정답
-                        </span>
-                      </div>
-                      <div className="text-xl font-bold text-amber-800 dark:text-amber-300">
-                        <span itemProp="text">
-                          {quiz.otherAnswers.join(", ")}
-                        </span>
-                      </div>
-                    </div>
-                  )}
                 </article>
               ))}
             </div>

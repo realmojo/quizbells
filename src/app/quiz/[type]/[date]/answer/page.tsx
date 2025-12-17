@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { format, parseISO } from "date-fns";
 import { getQuitItem } from "@/utils/utils";
 import { getQuizbells } from "@/utils/api";
-import { CheckCircle2, Calendar, ArrowLeft } from "lucide-react";
+import { CheckCircle2, Calendar, ArrowLeft, Lightbulb } from "lucide-react";
 import AppOpen from "@/components/AppOpen";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
@@ -214,6 +214,26 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
                     {quiz.answer}
                   </span>
                 </div>
+                {quiz.otherAnswers?.length > 0 && (
+                  <div
+                    className="rounded-xl border-2 border-amber-200 dark:border-amber-800 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/50 dark:to-yellow-950/50 px-5 py-4 shadow-sm mt-4"
+                    itemProp="suggestedAnswer"
+                    itemScope
+                    itemType="https://schema.org/SuggestedAnswer"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                      <span className="text-sm font-bold text-amber-700 dark:text-amber-400">
+                        다른 정답
+                      </span>
+                    </div>
+                    <div className="text-xl font-bold text-amber-800 dark:text-amber-300">
+                      <span itemProp="text">
+                        {quiz.otherAnswers.join(", ")}
+                      </span>
+                    </div>
+                  </div>
+                )}
               </article>
             ))}
           </div>
