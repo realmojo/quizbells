@@ -22,6 +22,18 @@ export default function EventPage() {
       url: "https://quizbells.com/s/fysE1I",
       image: "/images/cp/cp-event-3.png",
     },
+    {
+      id: 4,
+      title: "로켓프레시, 마트 기획전 쿠폰",
+      url: "https://quizbells.com/s/Ql0ssQ",
+      image: "/images/cp/cp-event-4.png",
+    },
+    {
+      id: 5,
+      title: "로켓프레시, 식단관리",
+      url: "https://quizbells.com/s/PJ06Oz",
+      image: "/images/cp/cp-event-5.png",
+    },
   ];
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-12 px-4">
@@ -49,11 +61,7 @@ export default function EventPage() {
 
           <div className="grid grid-cols-2 gap-4">
             {eventList.map((event) => (
-              <EventCard
-                key={event.id}
-                url={event.url}
-                img={event.image}
-              />
+              <EventCard key={event.id} url={event.url} img={event.image} />
             ))}
           </div>
 
