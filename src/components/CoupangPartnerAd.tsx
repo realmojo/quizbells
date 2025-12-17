@@ -20,6 +20,18 @@ export default function CoupangPartnerAd() {
       url: "https://naver.me/GFCjJ8VB",
       img: "/images/cp/cp-5.png",
     },
+    {
+      url: "https://naver.me/FOZj6Bli",
+      img: "/images/cp/cp-6.png",
+    },
+    {
+      url: "https://naver.me/xfYBqn1V",
+      img: "/images/cp/cp-7.png",
+    },
+    {
+      url: "https://naver.me/FdodmcmD",
+      img: "/images/cp/cp-8.png",
+    },
   ];
 
   const randomItem =
