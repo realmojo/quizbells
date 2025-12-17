@@ -1,13 +1,35 @@
 const axios = require("axios");
 const moment = require("moment-timezone");
 const cheerio = require("cheerio");
-
 // 한국 시간(KST, UTC+9)으로 현재 시간 가져오기
 const getKoreaTime = () => {
   return moment().tz("Asia/Seoul");
 };
 
 const { doInsert } = require("./db");
+
+const cleanHtml = ($content, $) => {
+  // adsbygoogle 관련 요소들 제거
+  $content.find(".adsbygoogle").remove(); // adsbygoogle 클래스를 가진 모든 요소 제거
+  $content.find("ins.adsbygoogle").remove(); // ins 태그 중 adsbygoogle 클래스 제거
+  $content.find("div.adsbygoogle").remove(); // div 태그 중 adsbygoogle 클래스 제거
+
+  // adsbygoogle 관련 script 태그 제거
+  $content.find("script").each((i, el) => {
+    const scriptContent = $(el).html() || "";
+    if (scriptContent.includes("adsbygoogle")) {
+      $(el).remove();
+    }
+  });
+
+  // googleBanner 클래스를 가진 div도 제거 (광고 배너)
+  $content.find(".googleBanner").remove();
+  $content.find("div.googleBanner").remove();
+  $content.find("br").remove();
+
+  console.log(234234);
+  return $content;
+};
 
 const getBntNewsByToss = async () => {
   console.log("BNT News 토스 행운퀴즈 크롤링 시작");
@@ -325,6 +347,9 @@ const getBntNewsByOkCashbag = async () => {
 
   const $ = cheerio.load(data);
 
+  // 두번째꺼 테스트 할 때
+  // const firstTitle = $("h4.title:eq(1)").html();
+  // const aLink = $("h4.title:eq(1)").parent().attr("href");
   const firstTitle = $("h4.title").html();
   const aLink = $("h4.title").parent().attr("href");
 
@@ -336,20 +361,148 @@ const getBntNewsByOkCashbag = async () => {
     const bntNewsResponse = await axios.get(bntNewsUrl);
 
     const $ = cheerio.load(bntNewsResponse.data);
-    const content = $("div.content").html() || "";
+    const $content = $("div.content");
 
-    console.log("content", content);
+    let content = cleanHtml($content, $).html() || "";
 
     const quizzes = [];
+    const $contentClean = cheerio.load(content);
+    const seenQuizzes = new Set();
 
-    // HTML 태그를 줄바꿈으로 치환하여 텍스트화 (p, br, div)
+    // 패턴 1: "퀴즈 정답은 'XXX'이다." 형식 찾기
+    const answerPattern = /퀴즈\s*정답은\s*['"]([^'"]+)['"]\s*이다\./gi;
+    let answerMatch;
+
+    while ((answerMatch = answerPattern.exec(content)) !== null) {
+      // 정답에서 HTML 태그 제거 (strong 태그 등)
+      const answerHtml = answerMatch[1];
+      const $answer = cheerio.load(answerHtml);
+      const answer = $answer.text().trim();
+
+      const answerIndex = answerMatch.index;
+
+      // 정답 앞의 텍스트에서 "○" 문자가 있는 부분 찾기
+      const textBeforeAnswer = content.substring(0, answerIndex);
+
+      // "○" 문자가 포함된 부분 찾기
+      const circleIndex = textBeforeAnswer.lastIndexOf("○");
+
+      if (circleIndex !== -1) {
+        // "문제" 키워드가 있는지 확인하고, "문제"부터 "○" 문자가 포함된 전체 문장 추출
+        const problemIndex = textBeforeAnswer.lastIndexOf("문제");
+
+        let questionText = "";
+
+        if (problemIndex !== -1 && problemIndex < circleIndex) {
+          // "문제"부터 정답 직전까지의 전체 텍스트 추출 (○ 문자가 포함된 전체 문장)
+          questionText = textBeforeAnswer.substring(problemIndex);
+        } else {
+          // "문제" 키워드가 없으면 "○" 문자부터 추출
+          questionText = textBeforeAnswer.substring(circleIndex);
+        }
+
+        // HTML 태그 제거 및 텍스트 정리
+        questionText = questionText
+          .replace(/<[^>]+>/g, " ") // HTML 태그 제거
+          .replace(/\s+/g, " ") // 연속된 공백 제거
+          .trim();
+
+        // 문제가 너무 짧거나 비어있으면 스킵
+        if (questionText && questionText.length > 5) {
+          const uniqueKey = `${questionText}|||${answer}`;
+          if (!seenQuizzes.has(uniqueKey)) {
+            seenQuizzes.add(uniqueKey);
+            quizzes.push({
+              type: "오퀴즈",
+              question: questionText,
+              answer: answer,
+              otherAnswers: [],
+            });
+          }
+        }
+      } else {
+        // "○" 문자가 없으면 "문제" 키워드가 있는 부분 찾기
+        const problemMatch = textBeforeAnswer.match(
+          /([^<]*문제[^<]*?)(?=퀴즈\s*정답은)/
+        );
+
+        if (problemMatch) {
+          // 문제 텍스트 추출 (HTML 태그 제거)
+          let question = problemMatch[1]
+            .replace(/<[^>]+>/g, " ") // HTML 태그 제거
+            .replace(/\s+/g, " ") // 연속된 공백 제거
+            .trim();
+
+          // "문제" 키워드 앞의 제목 부분 제거 (예: "오전 10시 ... 문제" -> 문제 부분만)
+          const problemIndex = question.lastIndexOf("문제");
+          if (problemIndex !== -1) {
+            question = question.substring(problemIndex + 2).trim(); // "문제" 다음부터
+          }
+
+          // 문제가 너무 짧거나 비어있으면 스킵
+          if (question && question.length > 5) {
+            const uniqueKey = `${question}|||${answer}`;
+            if (!seenQuizzes.has(uniqueKey)) {
+              seenQuizzes.add(uniqueKey);
+              quizzes.push({
+                type: "오퀴즈",
+                question: question,
+                answer: answer,
+                otherAnswers: [],
+              });
+            }
+          }
+        }
+      }
+    }
+
+    // 패턴 2: strong 태그 내부의 문제-정답 쌍 찾기
+    $contentClean("strong").each((i, el) => {
+      const strongHtml = $contentClean(el).html() || "";
+      const strongText = $contentClean(el).text().trim();
+
+      // "○" 문자와 "퀴즈 정답은"이 모두 포함된 경우
+      if (strongText.includes("○") && strongText.includes("퀴즈 정답은")) {
+        const answerMatch = strongText.match(
+          /퀴즈\s*정답은\s*['"]([^'"]+)['"]/
+        );
+        if (answerMatch) {
+          // 정답에서 HTML 태그 제거
+          const answerHtml = answerMatch[1];
+          const $answer = cheerio.load(answerHtml);
+          const answer = $answer.text().trim();
+
+          const circleIndex = strongText.indexOf("○");
+          const answerIndex = strongText.indexOf("퀴즈 정답은");
+
+          if (circleIndex !== -1 && answerIndex > circleIndex) {
+            let question = strongText
+              .substring(circleIndex, answerIndex)
+              .trim();
+
+            if (question && question.length > 5) {
+              const uniqueKey = `${question}|||${answer}`;
+              if (!seenQuizzes.has(uniqueKey)) {
+                seenQuizzes.add(uniqueKey);
+                quizzes.push({
+                  type: "오퀴즈",
+                  question: question,
+                  answer: answer,
+                  otherAnswers: [],
+                });
+              }
+            }
+          }
+        }
+      }
+    });
 
     console.log("quizzes", quizzes);
-    // if (quizzes.length > 0) {
-    //   await doInsert(quizzes, "okcashbag", new Set());
-    // } else {
-    //   console.log("퀴즈를 찾을 수 없습니다.");
-    // }
+    if (quizzes.length > 0) {
+      await doInsert(quizzes, "okcashbag", new Set());
+    } else {
+      console.log("퀴즈를 찾을 수 없습니다.");
+    }
   } else {
     console.log("오늘 날짜가 아닙니다.");
   }

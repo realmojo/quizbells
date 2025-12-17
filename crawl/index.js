@@ -106,20 +106,20 @@ const run = async () => {
           console.error("❌ BNT News 오퀴즈 오류:", err.message || err);
         }
       })(),
-      // (async () => {
-      //   try {
-      //     await getClimateQuiz(); // 기후행동 기회소득, 비트버니
-      //   } catch (err) {
-      //     console.error("❌ 기후행동 기회소득 오류:", err.message || err);
-      //   }
-      // })(),
-      // (async () => {
-      //   try {
-      //     await getVeil8000Quiz(); //  3o3, doctornow, mydoctor, kakaobank, hpoint, kakaopay
-      //   } catch (err) {
-      //     console.error("❌ Veil8000 오류:", err.message || err);
-      //   }
-      // })(),
+      (async () => {
+        try {
+          await getClimateQuiz(); // 기후행동 기회소득, 비트버니
+        } catch (err) {
+          console.error("❌ 기후행동 기회소득 오류:", err.message || err);
+        }
+      })(),
+      (async () => {
+        try {
+          await getVeil8000Quiz(); //  3o3, doctornow, mydoctor, kakaobank, hpoint, kakaopay
+        } catch (err) {
+          console.error("❌ Veil8000 오류:", err.message || err);
+        }
+      })(),
     ]);
   } catch (err) {
     console.error(
@@ -128,22 +128,22 @@ const run = async () => {
     );
   }
 
-  // console.log(
-  //   `✅ [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 완료`
-  // );
+  console.log(
+    `✅ [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 완료`
+  );
 
-  // if (hasIndexedToday()) {
-  //   console.log("❎ 이미 오늘 인덱싱 완료");
-  //   return;
-  // }
+  if (hasIndexedToday()) {
+    console.log("❎ 이미 오늘 인덱싱 완료");
+    return;
+  }
 
-  // const urls = getUrlsToIndex();
+  const urls = getUrlsToIndex();
 
-  // for (const url of urls) {
-  //   await googleIndexingApi(url);
-  // }
+  for (const url of urls) {
+    await googleIndexingApi(url);
+  }
 
-  // setIndexedToday(); // ✅ 오늘 실행 완료 기록
+  setIndexedToday(); // ✅ 오늘 실행 완료 기록
 };
 
 // 최초 1회 실행
