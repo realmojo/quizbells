@@ -65,7 +65,7 @@ export const quizItems = [
   },
   {
     type: "cashdoc",
-    typeKr: "캐시닥",
+    typeKr: "캐시닥·타임스프레드",
     title: "용돈퀴즈",
     image: "/images/cashdoc.png",
     slotId: "8878968030",
