@@ -7,6 +7,7 @@ const getKoreaTime = () => {
 };
 
 const { doInsert } = require("./db");
+const { contactcenterinsights_v1 } = require("googleapis");
 
 const cleanHtml = ($content, $) => {
   // adsbygoogle 관련 요소들 제거
@@ -27,7 +28,6 @@ const cleanHtml = ($content, $) => {
   $content.find("div.googleBanner").remove();
   $content.find("br").remove();
 
-  console.log(234234);
   return $content;
 };
 
@@ -50,18 +50,19 @@ const getBntNewsByToss = async () => {
     const bntNewsResponse = await axios.get(bntNewsUrl);
 
     const $ = cheerio.load(bntNewsResponse.data);
-    const content = $("div.content").html() || "";
+    const $content = $("div.content");
 
+    let content = cleanHtml($content, $).html() || "";
+
+    const $contentClean = cheerio.load(content);
     const quizzes = [];
-    const $content = cheerio.load(content);
 
-    // 방법 1: strong 태그들을 순회하면서 질문-정답 쌍 찾기
-    const strongElements = $content("strong").toArray();
+    const strongElements = $contentClean("strong").toArray();
     const seenQuizzes = new Set();
 
     for (let i = 0; i < strongElements.length; i++) {
-      const currentHtml = $content(strongElements[i]).html() || "";
-      const currentText = $content(strongElements[i]).text().trim();
+      const currentHtml = $contentClean(strongElements[i]).html() || "";
+      const currentText = $contentClean(strongElements[i]).text().trim();
 
       // 현재 strong 태그 내부에 "정답 -" 패턴이 있는지 확인
       const answerPattern = /정답\s*-\s*([^<\n&]+)/gi;
@@ -78,7 +79,7 @@ const getBntNewsByToss = async () => {
       // 케이스 1: 이전 strong이 질문이고, 현재 strong의 첫 번째 정답과 매칭
       // 예: <strong>네이버플러스 스토어</strong><br><strong>정답 - 3, 30<br>...</strong>
       if (i > 0 && answers.length > 0) {
-        const prevText = $content(strongElements[i - 1])
+        const prevText = $contentClean(strongElements[i - 1])
           .text()
           .trim();
         if (
@@ -146,7 +147,7 @@ const getBntNewsByToss = async () => {
       // 케이스 3: 현재 strong이 질문이고, 다음 strong이 정답인 경우
       // 예: <strong>파브리 추천 신메뉴</strong><br><strong>정답 - 시그니처포크</strong>
       if (i < strongElements.length - 1 && !currentText.includes("정답")) {
-        const nextText = $content(strongElements[i + 1])
+        const nextText = $contentClean(strongElements[i + 1])
           .text()
           .trim();
         if (nextText.startsWith("정답")) {
@@ -222,7 +223,11 @@ const getBntNewsByCashwork = async () => {
     const bntNewsResponse = await axios.get(bntNewsUrl);
 
     const $ = cheerio.load(bntNewsResponse.data);
-    const content = $("div.content").html() || "";
+
+    const d = $("div.content");
+    d.find("ins").remove();
+    d.find("script").remove();
+    const content = d.html() || "";
 
     const quizzes = [];
 
@@ -497,7 +502,6 @@ const getBntNewsByOkCashbag = async () => {
       }
     });
 
-    console.log("quizzes", quizzes);
     if (quizzes.length > 0) {
       await doInsert(quizzes, "okcashbag", new Set());
     } else {
