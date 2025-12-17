@@ -5,6 +5,7 @@ import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Calendar, ArrowLeft, Lightbulb } from "lucide-react";
 import AppOpen from "@/components/AppOpen";
 import CoupangPartnerAd from "@/components/CoupangPartnerAd";
+import { Fragment } from "react";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 const getKoreaDate = (): Date => {
@@ -195,7 +196,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
           {/* Answer Cards */}
           <div className="space-y-6 mb-8">
             {contents.map((quiz: any, idx: number) => (
-              <>
+              <Fragment key={idx}>
                 <article
                   key={idx}
                   className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800"
@@ -252,7 +253,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
 
                 {/* 2개 나오고 그 다음에 쿠팡 파트너스 광고 */}
                 {idx > 0 && idx % 2 === 1 && <CoupangPartnerAd />}
-              </>
+              </Fragment>
             ))}
           </div>
 

@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import {
-  Copy,
-  Link as LinkIcon,
-  ArrowRight,
-  Loader2,
-  Sparkles,
-} from "lucide-react";
+import { Copy, Link as LinkIcon, Loader2, Sparkles } from "lucide-react";
 
 export default function ShortenPage() {
   const [url, setUrl] = useState("");
@@ -39,6 +33,7 @@ export default function ShortenPage() {
         toast.error(data.error || "URL 생성에 실패했습니다.");
       }
     } catch (err) {
+      console.error(err);
       toast.error("오류가 발생했습니다.");
     } finally {
       setLoading(false);
