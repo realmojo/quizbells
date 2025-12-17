@@ -5,6 +5,10 @@ export default function CoupangPartnerAd() {
       img: "/images/cp/cp-1.png",
     },
     {
+      url: "https://naver.me/55PhMOAw",
+      img: "/images/cp/cp-2.png",
+    },
+    {
       url: "https://naver.me/5AgSbDrS",
       img: "/images/cp/cp-3.png",
     },
