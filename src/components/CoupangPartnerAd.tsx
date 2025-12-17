@@ -1,6 +1,3 @@
-"use client";
-import { useEffect, useState } from "react";
-
 export default function CoupangPartnerAd() {
   const coupangItems = [
     {
@@ -58,23 +55,14 @@ export default function CoupangPartnerAd() {
     },
   ];
 
-  const [randomItem, setRandomItem] = useState<(typeof coupangItems)[0] | null>(
-    null
-  );
-
-  useEffect(() => {
-    setRandomItem(
-      coupangItems[Math.floor(Math.random() * coupangItems.length)]
-    );
-  }, []);
+  const randomItem =
+    coupangItems[Math.floor(Math.random() * coupangItems.length)];
 
   return (
     <div className="mb-4">
-      {randomItem && (
-        <a href={randomItem.url} target="_blank">
-          <img src={randomItem.img} alt="event-img" className="w-full h-auto" />
-        </a>
-      )}
+      <a href={randomItem.url} target="_blank">
+        <img src={randomItem.img} alt="event-img" className="w-full h-auto" />
+      </a>
     </div>
   );
 }
