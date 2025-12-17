@@ -132,8 +132,19 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
     quizItem = null;
   }
 
-  // 이스케이프된 JSON 문자열 처리
-  const contents = quizItem?.contents ?? [];
+  const contentMerges = quizItem?.contents ?? [];
+
+  const prevAnswers: string[] = [];
+  const contents: any[] = [];
+
+  contentMerges.forEach((q: any) => {
+    if (prevAnswers.includes(q.answer)) {
+      console.log("이미 존재하는 정답", q.answer);
+      return;
+    }
+    prevAnswers.push(q.answer);
+    contents.push(q);
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950">

@@ -182,7 +182,7 @@ const getBntNewsByToss = async () => {
 };
 
 const getBntNewsByCashwork = async () => {
-  console.log("BNT News 캐시워크 행운퀴즈 크롤링 시작");
+  console.log("BNT News 캐시워크 크롤링 시작");
   const url = "https://www.bntnews.co.kr/article/search?searchText=캐시워크";
 
   const { data } = await axios.get(url);
@@ -203,7 +203,6 @@ const getBntNewsByCashwork = async () => {
     const content = $("div.content").html() || "";
 
     const quizzes = [];
-    const $content = cheerio.load(content);
 
     // HTML 태그를 줄바꿈으로 치환하여 텍스트화 (p, br, div)
     let textContent = content
@@ -318,7 +317,46 @@ const getBntNewsByCashwork = async () => {
   }
 };
 
+const getBntNewsByOkCashbag = async () => {
+  console.log("BNT News 오퀴즈 크롤링 시작");
+  const url = "https://www.bntnews.co.kr/article/search?searchText=오퀴즈";
+
+  const { data } = await axios.get(url);
+
+  const $ = cheerio.load(data);
+
+  const firstTitle = $("h4.title").html();
+  const aLink = $("h4.title").parent().attr("href");
+
+  const today1 = getKoreaTime().format("M월 D일");
+  const today2 = getKoreaTime().format("M월D일");
+
+  if (firstTitle.includes(today1) || firstTitle.includes(today2)) {
+    const bntNewsUrl = `https://www.bntnews.co.kr${aLink}`;
+    const bntNewsResponse = await axios.get(bntNewsUrl);
+
+    const $ = cheerio.load(bntNewsResponse.data);
+    const content = $("div.content").html() || "";
+
+    console.log("content", content);
+
+    const quizzes = [];
+
+    // HTML 태그를 줄바꿈으로 치환하여 텍스트화 (p, br, div)
+
+    console.log("quizzes", quizzes);
+    // if (quizzes.length > 0) {
+    //   await doInsert(quizzes, "okcashbag", new Set());
+    // } else {
+    //   console.log("퀴즈를 찾을 수 없습니다.");
+    // }
+  } else {
+    console.log("오늘 날짜가 아닙니다.");
+  }
+};
+
 module.exports = {
   getBntNewsByToss,
   getBntNewsByCashwork,
+  getBntNewsByOkCashbag,
 };

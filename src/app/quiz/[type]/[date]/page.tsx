@@ -189,7 +189,19 @@ export default async function QuizPage({ params }: QuizPageParams) {
     quizItem = null;
   }
 
-  const contents = [...quizItem, ...lastDayQuizItem];
+  const contentMerges = [...quizItem, ...lastDayQuizItem];
+
+  const prevAnswers: string[] = [];
+  const contents: any[] = [];
+
+  contentMerges.forEach((q: any) => {
+    if (prevAnswers.includes(q.answer)) {
+      console.log("이미 존재하는 정답", q.answer);
+      return;
+    }
+    prevAnswers.push(q.answer);
+    contents.push(q);
+  });
 
   // FAQPage 구조화된 데이터 (검색결과 리치 스니펫용)
   const faqJsonLd = {
