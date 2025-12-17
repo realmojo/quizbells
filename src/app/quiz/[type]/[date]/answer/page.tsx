@@ -260,6 +260,10 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
           <div className="mb-8">
             <AppOpen type={type} />
           </div>
+          <div className="text-sm text-slate-500 dark:text-slate-400 mt-4">
+            이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의
+            수수료를 제공받습니다.
+          </div>
         </section>
       </div>
     </div>
