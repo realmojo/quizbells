@@ -105,10 +105,8 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  // modal,
 }: Readonly<{
   children: ReactNode;
-  // modal: ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -223,7 +221,6 @@ export default async function RootLayout({
         <main className="min-h-[80vh] w-full">
           <Header />
           {children}
-          {/* {modal} */}
         </main>
         <Footer />
         <Toaster

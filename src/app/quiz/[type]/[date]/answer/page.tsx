@@ -139,7 +139,6 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
 
   contentMerges.forEach((q: any) => {
     if (prevAnswers.includes(q.answer)) {
-      console.log("이미 존재하는 정답", q.answer);
       return;
     }
     prevAnswers.push(q.answer);

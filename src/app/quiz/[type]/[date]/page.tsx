@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Lightbulb, Calendar } from "lucide-react";
 import moment from "moment";
+import CoupangPartnerAd from "@/components/CoupangPartnerAd";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 const getKoreaDate = (): Date => {
@@ -196,7 +197,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
   contentMerges.forEach((q: any) => {
     if (prevAnswers.includes(q.answer)) {
-      console.log("이미 존재하는 정답", q.answer);
       return;
     }
     prevAnswers.push(q.answer);
@@ -306,7 +306,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
                 {h1Title}
               </h1>
             </div>
-
             {/* Image Section */}
             <div className="mb-6 rounded-2xl overflow-hidden shadow-lg ring-1 ring-slate-900/5 dark:ring-white/10">
               <ImageComponents
@@ -319,7 +318,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
             <div className="text-sm text-center mb-8 text-slate-500 dark:text-slate-400 font-medium">
               {`${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답`}
             </div>
-
             {/* Description */}
             <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 mb-8 shadow-sm border border-white/50 dark:border-slate-800">
               <p
@@ -329,9 +327,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
                 {firstDescription}
               </p>
             </div>
-
-            <Adsense slotId={item.slotId || "8409513997"} />
-
+            <CoupangPartnerAd />
+            {/* <Adsense slotId={item.slotId || "8409513997"} /> */}
             {/* Empty State */}
             {contents.length === 0 && (
               <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
@@ -367,7 +364,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
                 </a>
               </div>
             )}
-
             {/* Quiz Cards */}
             <div className="space-y-4 mb-8">
               {contents.map((quiz: any, idx: number) => (
@@ -430,18 +426,15 @@ export default async function QuizPage({ params }: QuizPageParams) {
                 </article>
               ))}
             </div>
-
             {/* Description Component */}
             <article className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <DescriptionComponent type={type} />
             </article>
-
             <SocialShare
               title={`${item.typeKr} ${item.title} ${answerDateString} 정답`}
               url={`https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`}
               imageUrl="https://quizbells.com/icons/og-image.png"
             />
-
             {/* Related Quizzes */}
             <article className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
