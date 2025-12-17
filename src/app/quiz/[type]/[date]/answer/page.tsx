@@ -195,59 +195,64 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
           {/* Answer Cards */}
           <div className="space-y-6 mb-8">
             {contents.map((quiz: any, idx: number) => (
-              <article
-                key={idx}
-                className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800"
-                itemScope
-                itemType="https://schema.org/Question"
-              >
-                <h2
-                  className="text-xl font-bold text-slate-900 dark:text-white mb-6"
-                  itemProp="name"
-                >
-                  {quiz.question}
-                </h2>
-
-                <div
-                  className="rounded-xl border-2 border-emerald-200 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/50 dark:to-green-950/50 px-5 py-4 shadow-sm"
-                  itemProp="acceptedAnswer"
+              <>
+                <article
+                  key={idx}
+                  className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800"
                   itemScope
-                  itemType="https://schema.org/Answer"
+                  itemType="https://schema.org/Question"
                 >
-                  <div className="flex items-center gap-2 mb-3">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                    <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
-                      정답
+                  <h2
+                    className="text-xl font-bold text-slate-900 dark:text-white mb-6"
+                    itemProp="name"
+                  >
+                    {quiz.question}
+                  </h2>
+
+                  <div
+                    className="rounded-xl border-2 border-emerald-200 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/50 dark:to-green-950/50 px-5 py-4 shadow-sm"
+                    itemProp="acceptedAnswer"
+                    itemScope
+                    itemType="https://schema.org/Answer"
+                  >
+                    <div className="flex items-center gap-2 mb-3">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                      <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+                        정답
+                      </span>
+                    </div>
+                    <span
+                      itemProp="text"
+                      className="text-3xl font-extrabold text-emerald-800 dark:text-emerald-300"
+                    >
+                      {quiz.answer}
                     </span>
                   </div>
-                  <span
-                    itemProp="text"
-                    className="text-3xl font-extrabold text-emerald-800 dark:text-emerald-300"
-                  >
-                    {quiz.answer}
-                  </span>
-                </div>
-                {quiz.otherAnswers?.length > 0 && (
-                  <div
-                    className="rounded-xl border-2 border-amber-200 dark:border-amber-800 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/50 dark:to-yellow-950/50 px-5 py-4 shadow-sm mt-4"
-                    itemProp="suggestedAnswer"
-                    itemScope
-                    itemType="https://schema.org/SuggestedAnswer"
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-                      <span className="text-sm font-bold text-amber-700 dark:text-amber-400">
-                        다른 정답
-                      </span>
+                  {quiz.otherAnswers?.length > 0 && (
+                    <div
+                      className="rounded-xl border-2 border-amber-200 dark:border-amber-800 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/50 dark:to-yellow-950/50 px-5 py-4 shadow-sm mt-4"
+                      itemProp="suggestedAnswer"
+                      itemScope
+                      itemType="https://schema.org/SuggestedAnswer"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                        <span className="text-sm font-bold text-amber-700 dark:text-amber-400">
+                          다른 정답
+                        </span>
+                      </div>
+                      <div className="text-xl font-bold text-amber-800 dark:text-amber-300">
+                        <span itemProp="text">
+                          {quiz.otherAnswers.join(", ")}
+                        </span>
+                      </div>
                     </div>
-                    <div className="text-xl font-bold text-amber-800 dark:text-amber-300">
-                      <span itemProp="text">
-                        {quiz.otherAnswers.join(", ")}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </article>
+                  )}
+                </article>
+
+                {/* 2개 나오고 그 다음에 쿠팡 파트너스 광고 */}
+                {idx > 0 && idx % 2 === 1 && <CoupangPartnerAd />}
+              </>
             ))}
           </div>
 

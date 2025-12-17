@@ -367,63 +367,67 @@ export default async function QuizPage({ params }: QuizPageParams) {
             {/* Quiz Cards */}
             <div className="space-y-4 mb-8">
               {contents.map((quiz: any, idx: number) => (
-                <article
-                  key={idx}
-                  className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800 hover:shadow-lg transition-all duration-300"
-                  itemScope
-                  itemType="https://schema.org/Question"
-                >
-                  <div
-                    className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium mb-3"
-                    itemProp="about"
-                  >
-                    📌 <span>{quiz.type}</span>
-                  </div>
-
-                  <h2
-                    className="text-xl font-bold text-slate-900 dark:text-white mb-4"
-                    itemProp="name"
-                  >
-                    {quiz.isToday ? (
-                      <span className="text-green-500">[오늘 퀴즈]</span>
-                    ) : (
-                      <span className="text-blue-500">[어제 퀴즈]</span>
-                    )}{" "}
-                    {quiz.question || quiz.type}
-                  </h2>
-
-                  <a
-                    href={`/quiz/${type}/${quiz.isToday ? "today" : quiz.answerDate}/answer`}
-                    target="_self"
-                    className="block mb-3"
+                <>
+                  <article
+                    key={idx}
+                    className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800 hover:shadow-lg transition-all duration-300"
+                    itemScope
+                    itemType="https://schema.org/Question"
                   >
                     <div
-                      className="group rounded-xl border-2 border-emerald-300 dark:border-emerald-700 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 px-6 py-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer"
-                      itemProp="acceptedAnswer"
-                      itemScope
-                      itemType="https://schema.org/Answer"
+                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium mb-3"
+                      itemProp="about"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-full bg-emerald-500 dark:bg-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 dark:group-hover:bg-emerald-500 transition-colors">
-                            <CheckCircle2 className="w-6 h-6 text-white" />
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium text-emerald-700 dark:text-emerald-300 mb-1">
-                              정답 확인하기
+                      📌 <span>{quiz.type}</span>
+                    </div>
+
+                    <h2
+                      className="text-xl font-bold text-slate-900 dark:text-white mb-4"
+                      itemProp="name"
+                    >
+                      {quiz.isToday ? (
+                        <span className="text-green-500">[오늘 퀴즈]</span>
+                      ) : (
+                        <span className="text-blue-500">[어제 퀴즈]</span>
+                      )}{" "}
+                      {quiz.question || quiz.type}
+                    </h2>
+
+                    <a
+                      href={`/quiz/${type}/${quiz.isToday ? "today" : quiz.answerDate}/answer`}
+                      target="_self"
+                      className="block mb-3"
+                    >
+                      <div
+                        className="group rounded-xl border-2 border-emerald-300 dark:border-emerald-700 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 px-6 py-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer"
+                        itemProp="acceptedAnswer"
+                        itemScope
+                        itemType="https://schema.org/Answer"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-full bg-emerald-500 dark:bg-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 dark:group-hover:bg-emerald-500 transition-colors">
+                              <CheckCircle2 className="w-6 h-6 text-white" />
                             </div>
-                            <div className="text-xs text-emerald-600 dark:text-emerald-400">
-                              클릭하여 정답 보기 →
+                            <div>
+                              <div className="text-sm font-medium text-emerald-700 dark:text-emerald-300 mb-1">
+                                정답 확인하기
+                              </div>
+                              <div className="text-xs text-emerald-600 dark:text-emerald-400">
+                                클릭하여 정답 보기 →
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300 group-hover:text-emerald-800 dark:group-hover:text-emerald-200 transition-colors">
-                          →
+                          <div className="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300 group-hover:text-emerald-800 dark:group-hover:text-emerald-200 transition-colors">
+                            →
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </a>
-                </article>
+                    </a>
+                  </article>
+                  {/* 2개 나오고 그 다음에 쿠팡 파트너스 광고 */}
+                  {idx > 0 && idx % 2 === 1 && <CoupangPartnerAd />}
+                </>
               ))}
             </div>
             {/* Description Component */}
