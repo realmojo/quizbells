@@ -65,7 +65,7 @@ function NaverCafeWriteContent() {
 
           if (effectiveClubId === "22290117") {
             data.result.menus = data.result.menus.filter((menu: any) => {
-              const includeMenuIds = [564, 532, 542, 543, 549, 556];
+              const includeMenuIds = [564, 532, 542, 543, 549, 556, 533];
 
               return includeMenuIds.includes(menu.menuId);
             });
