@@ -9,3 +9,5 @@ Crawl-delay: 1
 
 # Disallow admin or private paths if any
 Disallow: /api/
+
+#DaumWebMasterTool:34a57ac8a419165cc7ea8d891eff111633ffc72102d05ff94498967d578ba6d9:yi66Srl+AIS4g6lN/iGwtA==
