@@ -58,6 +58,12 @@ export default function EventPage() {
       url: "https://quizbells.com/s/5KDkxP",
       image: "/images/cp/event/cp-event-9.png",
     },
+    {
+      id: 10,
+      title: "가전디지털, 프리미엄 게이밍 노트북",
+      url: "https://quizbells.com/s/J64riw",
+      image: "/images/cp/event/cp-event-10.png",
+    },
   ];
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-12 px-4">
@@ -85,7 +91,12 @@ export default function EventPage() {
 
           <div className="grid grid-cols-2 gap-4">
             {eventList.map((event) => (
-              <EventCard key={event.id} url={event.url} img={event.image} />
+              <EventCard
+                key={event.id}
+                url={event.url}
+                img={event.image}
+                title={event.title}
+              />
             ))}
           </div>
 
