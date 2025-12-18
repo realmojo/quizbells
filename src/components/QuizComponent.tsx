@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   ChevronLeft,

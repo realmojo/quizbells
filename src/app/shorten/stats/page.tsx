@@ -6,11 +6,6 @@ import { format } from "date-fns";
 import { toast } from "sonner";
 import { BarChart3, Calendar, Loader2, Lock, TrendingUp } from "lucide-react";
 
-type DailyStatRaw = {
-  access_date: string;
-  clicks: number;
-};
-
 type DailyAggregated = {
   date: string;
   totalClicks: number;
