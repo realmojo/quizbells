@@ -18,7 +18,10 @@ export async function GET(request: NextRequest) {
   });
 
   if (response.ok) {
-    return NextResponse.json({ message: "IndexNow request sent successfully" });
+    return NextResponse.json({
+      status: "ok",
+      message: "IndexNow request sent successfully",
+    });
   } else {
     return NextResponse.json(
       { message: "Failed to send IndexNow request" },
