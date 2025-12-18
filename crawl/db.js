@@ -355,6 +355,15 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
         `✅ [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 크롤링 완료`
       );
       try {
+        // 네이버 인덱싱 처리하기
+        const { data } = await axios.get(
+          `https://quizbells.com/api/naver/indexnow?type=${type}`
+        );
+        if (data.status === "ok") {
+          console.log(`✅ ${type} 네이버 인덱싱 처리 성공`);
+        } else {
+          console.log("❌ 네이버 인덱싱 처리 실패");
+        }
         await insertQuizbells(
           type,
           quizzes,
