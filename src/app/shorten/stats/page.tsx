@@ -81,8 +81,11 @@ export default function ShortenStatsPage() {
   const fetchStats = useCallback(async () => {
     setLoading(true);
     try {
-      // 오늘 날짜 문자열 (YYYY-MM-DD 형식)
-      const today = format(new Date(), "yyyy-MM-dd");
+      // 오늘 날짜 문자열 (YYYY-MM-DD 형식) - 한국 시간 기준
+      const now = new Date();
+      const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+      const kstTime = new Date(utcTime + 9 * 60 * 60 * 1000); // UTC+9
+      const today = format(kstTime, "yyyy-MM-dd");
 
       // 쿼리 빌더 시작
       // Supabase 조인: 외래키 관계에 따라 문법이 다를 수 있음
