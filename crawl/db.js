@@ -335,6 +335,21 @@ const quizzesExistInContents = (existingContents, quizzes) => {
   );
 };
 
+const naverIndexNow = async (type) => {
+  try {
+    const { data } = await axios.get(
+      `https://quizbells.com/api/naver/indexnow?type=${type}`
+    );
+    if (data.status === "ok") {
+      console.log(`✅ ${type} 네이버 인덱싱 처리 성공`);
+    } else {
+      console.log("❌ 네이버 인덱싱 처리 실패", data.message);
+    }
+  } catch (e) {
+    console.log("❌ 네이버 인덱싱 처리 실패", e);
+  }
+};
+
 const doInsert = async (quizzes, type, notifiedTypes) => {
   let shouldNotify = false;
 
@@ -355,15 +370,7 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
         `✅ [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 크롤링 완료`
       );
       try {
-        // 네이버 인덱싱 처리하기
-        const { data } = await axios.get(
-          `https://quizbells.com/api/naver/indexnow?type=${type}`
-        );
-        if (data.status === "ok") {
-          console.log(`✅ ${type} 네이버 인덱싱 처리 성공`);
-        } else {
-          console.log("❌ 네이버 인덱싱 처리 실패");
-        }
+        await naverIndexNow(type);
         await insertQuizbells(
           type,
           quizzes,
@@ -388,6 +395,7 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
           getItem.contents.push(...quizzes);
 
           try {
+            await naverIndexNow(type);
             await updateQuizbells(getItem.id, getItem.contents);
             shouldNotify = true;
             isNotify = true;
