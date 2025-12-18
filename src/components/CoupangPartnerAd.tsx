@@ -7,7 +7,7 @@ export default function CoupangPartnerAd() {
       // url: "https://link.coupang.com/a/dfopJs",
       url: "https://quizbells.com/s/BhlQfq",
       img: "/images/cp/cp-1.png",
-      title: "퀴즈 1기분 좋은 선물! E쿠폰/기프티콘",
+      title: "기분 좋은 선물! E쿠폰/기프티콘",
     },
     {
       // url: "https://naver.me/F5aYt2rN",
