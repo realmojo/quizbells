@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { format } from "date-fns";
 
 export async function GET(
   req: NextRequest,
@@ -35,10 +36,17 @@ export async function GET(
 
     (async () => {
       try {
+        // 한국 시간 기준 날짜 계산 (YYYY-MM-DD 형식)
+        const now = new Date();
+        const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+        const kstTime = new Date(utcTime + 9 * 60 * 60 * 1000); // UTC+9
+        const kstDate = format(kstTime, "yyyy-MM-dd");
+
         const { error: rpcError } = await supabaseAdmin.rpc(
           "increment_link_clicks",
           {
             p_link_id: data.id,
+            p_access_date: kstDate, // 한국 시간 기준 날짜 전달
           }
         );
 
