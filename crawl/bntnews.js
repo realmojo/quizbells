@@ -333,7 +333,6 @@ const getBntNewsByCashwork = async () => {
     // type 필드 일괄 정리 (한글 명칭 등)
     quizzes.forEach((q) => (q.type = "캐시워크 돈버는퀴즈"));
 
-    console.log("quizzes", quizzes);
     if (quizzes.length > 0) {
       await doInsert(quizzes, "cashwalk", new Set());
     } else {

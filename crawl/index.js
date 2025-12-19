@@ -11,6 +11,7 @@ const {
   getBntNewsByCashwork,
   getBntNewsByOkCashbag,
 } = require("./bntnews");
+const { getBookshelfJourneyQuiz } = require("./bookshelf-journey");
 const { google } = require("googleapis");
 const request = require("request");
 const path = require("path");
@@ -85,6 +86,13 @@ const run = async () => {
 
   try {
     await Promise.all([
+      (async () => {
+        try {
+          await getBookshelfJourneyQuiz(); // Bookshelf Journey 퀴즈
+        } catch (err) {
+          console.error("❌ Bookshelf Journey 오류:", err.message || err);
+        }
+      })(),
       (async () => {
         try {
           await getBntNewsByToss(); // BNT News 토스, 캐시워크 행운퀴즈

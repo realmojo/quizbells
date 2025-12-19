@@ -598,9 +598,9 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>기후행동 기후동행 기회소득</strong>은 서울특별시가 운영하는 시민 참여형
-          환경 인센티브 제도입니다. 서울 시민이 친환경 생활 실천을 하면 포인트를
-          적립하고, 다양한 보상을 받을 수 있는 제도입니다.
+          <strong>기후행동 기후동행 기회소득</strong>은 서울특별시가 운영하는
+          시민 참여형 환경 인센티브 제도입니다. 서울 시민이 친환경 생활 실천을
+          하면 포인트를 적립하고, 다양한 보상을 받을 수 있는 제도입니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
@@ -631,9 +631,10 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>기후행동 기후동행 기회소득</strong>은 서울시 공식 홈페이지, 앱스토어 및
-          구글플레이에서 다운로드 가능한 전용 앱을 통해 참여 가능합니다. 퀴즈와
-          실천 인증 외에도 다양한 환경 캠페인에 참여할 수 있습니다.
+          <strong>기후행동 기후동행 기회소득</strong>은 서울시 공식 홈페이지,
+          앱스토어 및 구글플레이에서 다운로드 가능한 전용 앱을 통해 참여
+          가능합니다. 퀴즈와 실천 인증 외에도 다양한 환경 캠페인에 참여할 수
+          있습니다.
         </p>
       </>
     );
@@ -934,6 +935,44 @@ export default function DescriptionComponents({ type }: { type: string }) {
 
         <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
           참여 전 반드시 케이뱅크 앱의{" "}
+          <strong>이벤트 상세 페이지의 안내사항 및 유의사항</strong>을 확인하는
+          것이 좋습니다.
+        </p>
+      </>
+    );
+  } else if (type === "monimo") {
+    return (
+      <>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          <strong>모니모 모니스쿨 퀴즈</strong>는 모니모에서 운영하는 퀴즈
+          이벤트입니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          사용자는 <strong>모니모 앱 접속 후</strong>, 메인 홈 또는 이벤트
+          메뉴에 있는 <strong>퀴즈 이벤트 배너</strong>를 클릭하여 퀴즈에 참여할
+          수 있습니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          퀴즈는 일반적으로{" "}
+          <strong>
+            모니모의 금융상품, 서비스, 디지털 금융 정보, 생활 금융 상식
+          </strong>
+          과 관련된 객관식 문제 형식이며, 퀴즈 참여 시{" "}
+          <strong>포인트 또는 경품 추첨 기회</strong>를 제공하는 프로모션과 함께
+          진행됩니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          모니모 모니스쿨 퀴즈는{" "}
+          <strong>매주 또는 특정 기간 동안 한정적으로 진행</strong>되며, 퀴즈
+          정답을 맞힐 경우 즉시 리워드가 지급되거나 추첨 이벤트에 자동 응모되는
+          방식이 사용됩니다. 일부 퀴즈의 경우{" "}
+          <strong>
+            모니모 관련 콘텐츠를 확인한 뒤 정답을 맞히는 미션형 퀴즈
+          </strong>
+          로 제공되기도 합니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          참여 전 반드시 모니모 앱의{" "}
           <strong>이벤트 상세 페이지의 안내사항 및 유의사항</strong>을 확인하는
           것이 좋습니다.
         </p>

@@ -38,7 +38,7 @@ export const quizItems = [
   {
     type: "nh",
     typeKr: "농협",
-    title: "디깅 퀴즈",
+    title: "디깅퀴즈",
     image: "/images/nh.png",
     slotId: "7102851930",
   },
@@ -139,6 +139,13 @@ export const quizItems = [
     title: "미션 퀴즈",
     image: "/images/kbank.png",
     slotId: "5629572527",
+  },
+  {
+    type: "monimo",
+    typeKr: "모니모",
+    title: "모니스쿨 퀴즈",
+    image: "/images/monimo.png",
+    slotId: "4867186355",
   },
 ];
 

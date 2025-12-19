@@ -165,7 +165,7 @@ const APP_DATA: Record<string, AppData> = {
     ios: "https://apps.apple.com/kr/app/nh%EC%98%AC%EC%9B%90%EB%B1%85%ED%81%AC-%EB%86%8D%ED%98%91%EC%9D%80%ED%96%89-%EB%8C%80%ED%91%9C-%ED%94%8C%EB%9E%AB%ED%8F%BC/id1641628055",
     android:
       "https://play.google.com/store/apps/details?id=com.nonghyup.nhallonebank",
-    buttonText: "농협 퀴즈 참여하기",
+    buttonText: "디깅 퀴즈 참여하기",
     bgColor: "bg-green-700",
     hoverColor: "hover:bg-green-700",
     textColor: "text-white",
@@ -175,6 +175,15 @@ const APP_DATA: Record<string, AppData> = {
     android:
       "https://play.google.com/store/apps/details?id=com.kbankwith.smartbank",
     buttonText: "케이뱅크 퀴즈 참여하기",
+    bgColor: "bg-blue-600",
+    hoverColor: "hover:bg-blue-600",
+    textColor: "text-white",
+  },
+  monimo: {
+    ios: "https://apps.apple.com/kr/app/monimo-%EB%AA%A8%EB%8B%88%EB%AA%A8-%EC%82%BC%EC%84%B1%EA%B8%88%EC%9C%B5%EB%84%A4%ED%8A%B8%EC%9B%8D%EC%8A%A4/id379577046",
+    android:
+      "https://play.google.com/store/apps/details?id=net.ib.android.smcard&hl=ko",
+    buttonText: "모니스쿨 퀴즈 참여하기",
     bgColor: "bg-blue-600",
     hoverColor: "hover:bg-blue-600",
     textColor: "text-white",

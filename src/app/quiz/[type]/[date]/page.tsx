@@ -16,6 +16,7 @@ import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
 import { Fragment } from "react";
 import EventLink from "@/components/EventLink";
 import { supabaseAdmin } from "@/lib/supabase";
+import PWAInstallButton from "@/components/PWAInstallButton";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 const getKoreaDate = (): Date => {
@@ -489,20 +490,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                   편리해요 😊
                 </p>
 
-                <a
-                  href={
-                    isIOS()
-                      ? "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703"
-                      : "https://play.google.com/store/apps/details?id=com.mojoday.quizbells"
-                  }
-                  target="_self"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <Button className="w-full px-6 py-6 text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl">
-                    🔔 퀴즈 정답 알림받기
-                  </Button>
-                </a>
+                <PWAInstallButton />
               </div>
             )}
             {/* Quiz Cards */}
