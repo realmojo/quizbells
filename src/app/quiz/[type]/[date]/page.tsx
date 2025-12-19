@@ -289,14 +289,14 @@ export default async function QuizPage({ params }: QuizPageParams) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950">
-        <div className="max-w-xl mx-auto pt-6 pb-40 px-4">
+        <div className="max-w-xl mx-auto pt-6 pb-40">
           <section
             id="quiz-content"
             itemScope
             itemType="https://schema.org/WebPage"
           >
             {/* Header Section */}
-            <div className="mb-8">
+            <div className="mb-8 px-4">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 text-sm font-medium mb-4">
                 <Calendar className="w-4 h-4" />
                 <span>{answerDateString}</span>
@@ -312,7 +312,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
             <Adsense slotId={item.slotId || "8409513997"} />
 
             {/* Description */}
-            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-4 mb-4 shadow-sm border border-white/50 dark:border-slate-800 overflow-hidden">
+            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md mt-4 p-4 mb-4 shadow-sm border border-white/50 dark:border-slate-800 overflow-hidden">
               {/* Image Section - float-left로 배치 */}
               <div className="float-left w-[94px] max-h-[94px] mr-4 mb-2 rounded-xl overflow-hidden shadow-lg ring-1 ring-slate-900/5 dark:ring-white/10">
                 <div className="h-full w-full [&>img]:h-full [&>img]:w-full [&>img]:object-contain">
@@ -341,7 +341,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
             <CoupangPartnerAd />
             {/* Empty State */}
             {contents.length === 0 && (
-              <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
+              <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
                 <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 flex items-center justify-center">
                   <Lightbulb className="w-10 h-10 text-indigo-600 dark:text-indigo-400" />
                 </div>
@@ -380,7 +380,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                 <Fragment key={idx}>
                   <article
                     key={idx}
-                    className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800 hover:shadow-lg transition-all duration-300"
+                    className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800 hover:shadow-lg transition-all duration-300"
                     itemScope
                     itemType="https://schema.org/Question"
                   >
@@ -442,7 +442,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
               ))}
             </div>
             {/* Description Component */}
-            <article className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800">
+            <article className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <DescriptionComponent type={type} />
               <div className="text-sm text-slate-500 dark:text-slate-400 mt-4">
                 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의
@@ -455,7 +455,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
               imageUrl="https://quizbells.com/icons/og-image.png"
             />
             {/* Related Quizzes */}
-            <article className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800">
+            <article className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
                 <Lightbulb className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                 앱테크 퀴즈 목록 ({dateLabel} 기준)

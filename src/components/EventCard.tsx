@@ -9,7 +9,7 @@ interface EventCardProps {
 export default function EventCard({ url, img, title }: EventCardProps) {
   return (
     <div className="w-full">
-      <div className="relative overflow-hidden rounded-2xl shadow-md bg-white">
+      <div className="relative overflow-hidden shadow-md bg-white">
         {/* Background Image Container */}
         <div className="relative w-full">
           <a href={url} target="_blank">

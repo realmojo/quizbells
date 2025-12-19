@@ -77,7 +77,7 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
   }, [title, url, imageUrl]);
 
   return (
-    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-white/50 dark:border-slate-800 text-center mb-8">
+    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-8 shadow-sm border border-white/50 dark:border-slate-800 text-center mb-8">
       <div className="flex items-center justify-center gap-2 mb-6">
         <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-full text-indigo-600 dark:text-indigo-400">
           <Share2 className="w-5 h-5" />
