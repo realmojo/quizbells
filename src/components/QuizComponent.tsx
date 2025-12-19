@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +17,12 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import EventLink from "./EventLink";
 
+// PWA 설치 프롬프트 이벤트 타입
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
 export default function QuizPage() {
   const date = useAppStore((s) => s.date);
   const goPrevDate = useAppStore((s) => s.goPrevDate);
@@ -27,19 +33,125 @@ export default function QuizPage() {
 
   const [clientDate, setClientDate] = useState<string>("");
   const [isRegistering, setIsRegistering] = useState(false);
+  const [isPWAInstalled, setIsPWAInstalled] = useState(false);
+  const deferredPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
     setClientDate(format(date, "yyyy년 M월 d일"));
   }, [date]);
 
+  // PWA 설치 여부 확인
+  useEffect(() => {
+    const checkPWAInstalled = () => {
+      // standalone 모드로 실행 중인지 확인 (Android, Desktop)
+      const isStandalone =
+        window.matchMedia("(display-mode: standalone)").matches ||
+        (window.navigator as any).standalone === true; // iOS Safari
+
+      setIsPWAInstalled(isStandalone);
+    };
+
+    checkPWAInstalled();
+
+    // display-mode 변경 감지 (설치 후 standalone 모드로 전환)
+    const mediaQuery = window.matchMedia("(display-mode: standalone)");
+    const handleChange = () => {
+      checkPWAInstalled();
+    };
+
+    // 일부 브라우저에서는 change 이벤트를 지원하지 않을 수 있음
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleChange);
+      return () => {
+        mediaQuery.removeEventListener("change", handleChange);
+      };
+    }
+  }, []);
+
+  // PWA 설치 프롬프트 이벤트 캡처
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      // 기본 프롬프트 방지
+      e.preventDefault();
+      // 이벤트 저장
+      deferredPromptRef.current = e as BeforeInstallPromptEvent;
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    // beforeinstallprompt 이벤트가 발생하지 않으면 이미 설치되었을 가능성
+    // 일정 시간 후에도 이벤트가 없으면 설치된 것으로 간주
+    const timeout = setTimeout(() => {
+      if (!deferredPromptRef.current && !isPWAInstalled) {
+        // standalone 모드가 아니더라도 설치 프롬프트가 없으면 이미 설치되었을 수 있음
+        const isStandalone =
+          window.matchMedia("(display-mode: standalone)").matches ||
+          (window.navigator as any).standalone === true;
+
+        if (isStandalone) {
+          setIsPWAInstalled(true);
+        }
+      }
+    }, 1000);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+      clearTimeout(timeout);
+    };
+  }, [isPWAInstalled]);
+
+  // PWA 설치 프롬프트 표시 함수
+  const promptPWAInstall = async () => {
+    if (!deferredPromptRef.current) {
+      // 설치 프롬프트가 없는 경우 (이미 설치됨 또는 지원 안 함)
+      toast.info("이미 설치되어 있거나 설치를 지원하지 않는 브라우저입니다.");
+      return false;
+    }
+
+    try {
+      // 설치 프롬프트 표시
+      await deferredPromptRef.current.prompt();
+
+      // 사용자 선택 대기
+      const { outcome } = await deferredPromptRef.current.userChoice;
+
+      if (outcome === "accepted") {
+        toast.success("PWA 설치가 시작됩니다! 🎉");
+        // 이벤트 초기화
+        deferredPromptRef.current = null;
+        // 설치 완료 후 상태 업데이트 (약간의 지연 후)
+        setTimeout(() => {
+          setIsPWAInstalled(true);
+        }, 500);
+        return true;
+      } else {
+        toast.info("설치가 취소되었습니다.");
+        return false;
+      }
+    } catch (error) {
+      console.error("PWA 설치 프롬프트 오류:", error);
+      toast.error("설치 중 오류가 발생했습니다.");
+      return false;
+    }
+  };
+
   const handleRegisterNotification = async () => {
     setIsRegistering(true);
     try {
-      const isGranted = await requestAlarmPermission();
-      if (isGranted) {
-        toast.success("알림 등록이 완료되었습니다! 🔔");
-      } else {
-        toast.error("알림 권한이 필요합니다.");
+      // 먼저 PWA 설치 프롬프트 표시
+      const installed = await promptPWAInstall();
+
+      // PWA 설치 후 알림 권한 요청
+      if (installed || !deferredPromptRef.current) {
+        const isGranted = await requestAlarmPermission();
+        if (isGranted) {
+          toast.success("알림 등록이 완료되었습니다! 🔔");
+        } else {
+          toast.error("알림 권한이 필요합니다.");
+        }
       }
     } catch (error) {
       console.error("알림 등록 오류:", error);
@@ -102,25 +214,27 @@ export default function QuizPage() {
             </Button>
           </div>
 
-          {/* 알림 등록 Button */}
-          <Button
-            variant="default"
-            onClick={handleRegisterNotification}
-            disabled={isRegistering}
-            className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
-          >
-            {isRegistering ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                등록 중...
-              </>
-            ) : (
-              <>
-                <Bell className="mr-2 h-4 w-4" />
-                퀴즈 정답 알림 받기
-              </>
-            )}
-          </Button>
+          {/* 알림 등록 Button - PWA가 설치되지 않은 경우에만 표시 */}
+          {!isPWAInstalled && (
+            <Button
+              variant="default"
+              onClick={handleRegisterNotification}
+              disabled={isRegistering}
+              className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+            >
+              {isRegistering ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  등록 중...
+                </>
+              ) : (
+                <>
+                  <Bell className="mr-2 h-4 w-4" />
+                  퀴즈 정답 알림 받기
+                </>
+              )}
+            </Button>
+          )}
         </nav>
 
         {/* 여기 이벤트 페이지 추가 */}
