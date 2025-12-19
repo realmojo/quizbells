@@ -4,11 +4,20 @@ import { useEffect, useState, useRef } from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
   Bell,
   Loader2,
+  CheckCircle2,
 } from "lucide-react";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { useAppStore } from "@/store/useAppStore";
@@ -34,6 +43,8 @@ export default function QuizPage() {
   const [clientDate, setClientDate] = useState<string>("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [isPWAInstalled, setIsPWAInstalled] = useState(false);
+  const [showInstallSuccessDialog, setShowInstallSuccessDialog] =
+    useState(false);
   const deferredPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
@@ -119,9 +130,10 @@ export default function QuizPage() {
       const { outcome } = await deferredPromptRef.current.userChoice;
 
       if (outcome === "accepted") {
-        toast.success("앱 설치가 되었습니다! 앱에서 알림을 허용해주세요 🎉");
         // 이벤트 초기화
         deferredPromptRef.current = null;
+        // 설치 성공 알림창 표시
+        setShowInstallSuccessDialog(true);
         // 설치 완료 후 상태 업데이트 (약간의 지연 후)
         setTimeout(() => {
           setIsPWAInstalled(true);
@@ -368,6 +380,38 @@ export default function QuizPage() {
           </div>
         </section>
       </article>
+
+      {/* 설치 성공 알림창 */}
+      <Dialog
+        open={showInstallSuccessDialog}
+        onOpenChange={setShowInstallSuccessDialog}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-400" />
+              </div>
+            </div>
+            <DialogTitle className="text-center text-xl font-bold">
+              앱 설치가 완료되었습니다! 🎉
+            </DialogTitle>
+            <DialogDescription className="text-center pt-2">
+              설치된 앱으로 이동하여 알림을 허용해주세요.
+              <br />
+              알림을 허용하시면 퀴즈 정답을 실시간으로 받아보실 수 있습니다.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-center">
+            <Button
+              onClick={() => setShowInstallSuccessDialog(false)}
+              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              확인
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

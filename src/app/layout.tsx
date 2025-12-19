@@ -191,10 +191,10 @@ export default async function RootLayout({
               },
               aggregateRating: {
                 "@type": "AggregateRating",
-                ratingValue: "4.95",
-                ratingCount: "1500",
+                ratingValue: "5",
                 bestRating: "5",
                 worstRating: "1",
+                ratingCount: "4.95",
               },
               author: {
                 "@type": "Organization",

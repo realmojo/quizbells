@@ -73,8 +73,10 @@ const jsonLd = {
   },
   aggregateRating: {
     "@type": "AggregateRating",
-    ratingValue: "4.8",
-    ratingCount: "1000",
+    ratingValue: "5",
+    bestRating: "5",
+    worstRating: "1",
+    ratingCount: "4.95",
   },
   featureList: [
     "실시간 퀴즈 정답 알림",
