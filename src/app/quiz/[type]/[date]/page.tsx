@@ -394,7 +394,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
       ratingValue: "5",
       bestRating: "5",
       worstRating: "1",
-      ratingCount: "4.95",
+      ratingCount: "1000",
     },
     interactionStatistic: [
       {

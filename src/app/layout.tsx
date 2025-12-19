@@ -194,7 +194,7 @@ export default async function RootLayout({
                 ratingValue: "5",
                 bestRating: "5",
                 worstRating: "1",
-                ratingCount: "4.95",
+                ratingCount: "1000",
               },
               author: {
                 "@type": "Organization",
