@@ -12,6 +12,7 @@ import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Lightbulb, Calendar } from "lucide-react";
 import moment from "moment";
 import CoupangPartnerAd from "@/components/CoupangPartnerAd";
+import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
 import { Fragment } from "react";
 import EventLink from "@/components/EventLink";
 
@@ -338,7 +339,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
               {`${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답`}
             </div>
 
-            <CoupangPartnerAd />
+            <CoupangPartnerAdBanner />
             {/* Empty State */}
             {contents.length === 0 && (
               <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
