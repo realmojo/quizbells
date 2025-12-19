@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import ImageComponents from "@/components/ImageComponets";
 import { format, parseISO } from "date-fns";
 import { getQuitItem, isIOS } from "@/utils/utils";
-// import Adsense from "@/components/Adsense";
+import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
@@ -161,7 +161,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
   }
 
   const h1Title = `${item.typeKr} ${item.title} 정답 ${shortDateLabel} | 퀴즈벨`;
-  const firstDescription = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다.`;
+  const firstDescription = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
 
   let quizItem = null;
   let lastDayQuizItem = null;
@@ -308,29 +308,37 @@ export default async function QuizPage({ params }: QuizPageParams) {
                 {h1Title}
               </h1>
             </div>
-            {/* Image Section */}
-            <div className="mb-6 rounded-2xl overflow-hidden shadow-lg ring-1 ring-slate-900/5 dark:ring-white/10">
-              <ImageComponents
-                answerDate={answerDateString?.toString() || ""}
-                type={type}
-                width={600}
-                height={600}
-              />
-            </div>
-            <div className="text-sm text-center mb-8 text-slate-500 dark:text-slate-400 font-medium">
-              {`${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답`}
-            </div>
+
+            <Adsense slotId={item.slotId || "8409513997"} />
+
             {/* Description */}
-            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 mb-4 shadow-sm border border-white/50 dark:border-slate-800">
+            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-4 mb-4 shadow-sm border border-white/50 dark:border-slate-800 overflow-hidden">
+              {/* Image Section - float-left로 배치 */}
+              <div className="float-left w-[94px] max-h-[94px] mr-4 mb-2 rounded-xl overflow-hidden shadow-lg ring-1 ring-slate-900/5 dark:ring-white/10">
+                <div className="h-full w-full [&>img]:h-full [&>img]:w-full [&>img]:object-contain">
+                  <ImageComponents
+                    answerDate={answerDateString?.toString() || ""}
+                    type={type}
+                    width={100}
+                    height={100}
+                  />
+                </div>
+              </div>
+              {/* Description Section - 이미지 옆에서 시작, 길어지면 아래로 */}
               <p
                 className="text-slate-700 dark:text-slate-300 text-base leading-relaxed"
                 itemProp="description"
               >
                 {firstDescription}
               </p>
+              {/* float clear */}
+              <div className="clear-both"></div>
             </div>
+            <div className="text-sm text-center mb-8 text-slate-500 dark:text-slate-400 font-medium">
+              {`${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답`}
+            </div>
+
             <CoupangPartnerAd />
-            {/* <Adsense slotId={item.slotId || "8409513997"} /> */}
             {/* Empty State */}
             {contents.length === 0 && (
               <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
