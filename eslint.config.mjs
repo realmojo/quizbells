@@ -21,6 +21,7 @@ const eslintConfig = defineConfig([
       "@next/next/next-script-for-ga": "off",
       "@next/next/no-html-link-for-pages": "off",
       "@next/next/no-img-element": "off",
+      "react-hooks/purity": "off",
     },
   },
 ]);

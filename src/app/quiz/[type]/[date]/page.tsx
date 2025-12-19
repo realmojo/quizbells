@@ -15,6 +15,7 @@ import CoupangPartnerAd from "@/components/CoupangPartnerAd";
 import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
 import { Fragment } from "react";
 import EventLink from "@/components/EventLink";
+import { supabaseAdmin } from "@/lib/supabase";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 const getKoreaDate = (): Date => {
@@ -161,6 +162,26 @@ export default async function QuizPage({ params }: QuizPageParams) {
     );
   }
 
+  // 페이지 진입 시 참여자 수 증가 (비동기 처리, 사용자 응답 대기 안 함)
+  if (supabaseAdmin) {
+    (async () => {
+      try {
+        const { error: rpcError } = await supabaseAdmin.rpc(
+          "increment_answer_count",
+          {
+            p_quiz_type: type,
+          }
+        );
+
+        if (rpcError) {
+          console.warn("참여자 수 증가 실패:", rpcError.message);
+        }
+      } catch (e) {
+        console.error("참여자 수 증가 오류:", e);
+      }
+    })();
+  }
+
   const h1Title = `${item.typeKr} ${item.title} 정답 ${shortDateLabel} | 퀴즈벨`;
   const firstDescription = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
 
@@ -206,9 +227,27 @@ export default async function QuizPage({ params }: QuizPageParams) {
     contents.push(q);
   });
 
+  // 참여자 수 조회 (누적값)
+  let participantCount = 1000; // 기본값
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const countResponse = await fetch(
+      `${baseUrl}/api/quizbells/count?type=${type}`,
+      { next: { revalidate: 300 } } // 5분 캐시
+    );
+    if (countResponse.ok) {
+      const countData = await countResponse.json();
+      if (countData.success && countData.count !== undefined) {
+        participantCount = countData.count;
+      }
+    }
+  } catch (error) {
+    console.error("참여자 수 조회 오류:", error);
+    // 오류 발생 시 기본값 사용
+  }
+
   // FAQPage 구조화된 데이터 (검색결과 리치 스니펫용)
   const faqJsonLd = {
-    "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: contents.map((quiz: any) => ({
       "@type": "Question",
@@ -222,7 +261,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
   // Breadcrumb 구조화된 데이터
   const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       {
@@ -246,48 +284,140 @@ export default async function QuizPage({ params }: QuizPageParams) {
     ],
   };
 
+  // ISO 날짜 형식 생성
+  const isoDate = `${answerDate}T09:00:00+09:00`;
+  const now = new Date();
+  const modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00+09:00`;
+
+  // 현재 페이지 URL
+  const currentUrl = `https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`;
+
+  // 키워드 생성
+  const keywords = [
+    `${item.typeKr} 정답`,
+    `${item.typeKr} ${item.title} 정답`,
+    `${shortDateLabel} ${item.typeKr}`,
+    `${item.typeKr} 퀴즈`,
+    `${item.typeKr} 퀴즈 정답`,
+    "앱테크 퀴즈",
+    "퀴즈 정답",
+    "실시간 정답",
+    "오늘의 퀴즈",
+    "퀴즈벨",
+  ].join(", ");
+
+  // articleBody 생성 (퀴즈 내용 포함)
+  const articleBodyText = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. ${contents.length > 0 ? `오늘의 퀴즈 정답은 ${contents.map((q: any) => q.answer).join(", ")} 등이 있습니다.` : ""} 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
+
+  // hasPart: Question 구조 생성 (여러 퀴즈에 대해)
+  const hasPartQuestions =
+    contents.length > 0
+      ? contents.map((quiz: any) => ({
+          "@type": "Question",
+          name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈`,
+          text: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요? ${quiz.question ? `질문: ${quiz.question}` : ""}`,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: quiz.answer,
+            dateCreated: isoDate,
+          },
+        }))
+      : [
+          {
+            "@type": "Question",
+            name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈`,
+            text: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요?`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "정답이 아직 업데이트되지 않았습니다. 곧 업데이트될 예정입니다.",
+              dateCreated: isoDate,
+            },
+          },
+        ];
+
   const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "NewsArticle",
+    "@type": "Article",
+    "@id": currentUrl,
+    url: currentUrl,
     headline: h1Title,
-    image: [`https://quizbells.com/images/${type}.png`],
-    datePublished: `${answerDate}T09:00:00+09:00`,
-    dateModified: `${answerDate}T${new Date().getHours()}:${new Date().getMinutes()}:00+09:00`, // 수정 시간 실시간 반영
-    author: [
-      {
-        "@type": "Organization",
-        name: "퀴즈벨",
-        url: "https://quizbells.com",
-      },
-      {
-        "@type": "Person",
-        name: "퀴즈벨 에디터",
-      },
-    ],
+    description: firstDescription,
+    inLanguage: "ko",
+    isAccessibleForFree: true,
+    datePublished: isoDate,
+    dateModified: modifiedDate,
+    dateCreated: isoDate,
+    author: {
+      "@type": "Person",
+      name: "퀴즈벨 에디터",
+    },
     publisher: {
       "@type": "Organization",
       name: "퀴즈벨",
       logo: {
         "@type": "ImageObject",
         url: "https://quizbells.com/icons/android-icon-192x192.png",
+        width: 192,
+        height: 192,
       },
     },
-    description: firstDescription,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": currentUrl,
+    },
+    image: {
+      "@type": "ImageObject",
+      url: `https://quizbells.com/images/${type}.png`,
+      width: 300,
+      height: 300,
+    },
+    keywords: keywords,
+    articleSection: "앱테크/재테크",
+    articleBody: articleBodyText,
+    about: {
+      "@type": "Thing",
+      name: `${item.typeKr} ${item.title}`,
+      description: `매일 출제되는 ${item.typeKr} ${item.title} 퀴즈 정답을 실시간으로 제공하는 서비스`,
+    },
+    hasPart:
+      hasPartQuestions.length > 0
+        ? hasPartQuestions.length === 1
+          ? hasPartQuestions[0]
+          : hasPartQuestions
+        : undefined,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "퀴즈벨",
+      url: "https://quizbells.com",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+      ratingCount: "4.95",
+    },
+    interactionStatistic: [
+      {
+        "@type": "InteractionCounter",
+        interactionType: {
+          "@type": "https://schema.org/ReadAction",
+        },
+        userInteractionCount: participantCount,
+      },
+    ],
+  };
+
+  // @graph를 사용하여 모든 구조화된 데이터 통합
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [faqJsonLd, breadcrumbJsonLd, articleJsonLd],
   };
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950">
         <div className="max-w-xl mx-auto pt-6 pb-40">

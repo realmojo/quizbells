@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { settingsStore } from "@/store/settingsStore";
 import AlarmSetting from "@/components/AlarmSetting";
-import { getUserAuth } from "@/utils/utils";
+// import { getUserAuth } from "@/utils/utils";
 import { updateSettings } from "@/utils/api";
 import {
   Bell,
