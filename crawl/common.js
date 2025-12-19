@@ -1,4 +1,4 @@
-export const getType = (title) => {
+const getType = (title) => {
   if (title.includes("토스")) {
     return "toss";
   } else if (title.includes("오퀴즈")) {
@@ -51,3 +51,5 @@ export const getType = (title) => {
     return "monimo";
   }
 };
+
+module.exports = { getType };
