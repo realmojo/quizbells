@@ -1,6 +1,5 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Bell,
   BookOpen,
@@ -27,7 +26,6 @@ import { cn } from "@/lib/utils";
 
 export default function Header() {
   const pathname = usePathname();
-  const router = useRouter();
 
   // 경로별 제목과 아이콘 정의
   const getPageInfo = (path: string) => {

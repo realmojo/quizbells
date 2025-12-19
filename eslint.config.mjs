@@ -19,6 +19,8 @@ const eslintConfig = defineConfig([
       "@typescript-eslint/no-explicit-any": "off",
       "@next/next/no-sync-scripts": "off",
       "@next/next/next-script-for-ga": "off",
+      "@next/next/no-html-link-for-pages": "off",
+      "@next/next/no-img-element": "off",
     },
   },
 ]);

@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { useAppStore } from "@/store/useAppStore";
-import { isWebView, quizItems, requestAlarmPermission } from "@/utils/utils";
+import { quizItems, requestAlarmPermission } from "@/utils/utils";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import EventLink from "./EventLink";

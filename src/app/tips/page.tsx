@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { tips } from "./tipsData";
 import { Metadata } from "next";
 import Head from "next/head";

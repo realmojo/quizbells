@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { getQuitItem } from "@/utils/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar, User, ArrowRight } from "lucide-react";
