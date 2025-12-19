@@ -2,12 +2,11 @@ import { Metadata } from "next";
 
 import ImageComponents from "@/components/ImageComponets";
 import { format, parseISO } from "date-fns";
-import { getQuitItem, isIOS } from "@/utils/utils";
+import { getQuitItem } from "@/utils/utils";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
-import { Button } from "@/components/ui/button";
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Lightbulb, Calendar } from "lucide-react";
 import moment from "moment";
