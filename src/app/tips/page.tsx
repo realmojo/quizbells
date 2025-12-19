@@ -112,9 +112,10 @@ export default function AppTechTipsPage() {
           {/* Tips List */}
           <div className="space-y-4">
             {tips.map((tip: any, index: number) => (
-              <Link
+              <a
                 key={tip.id}
                 href={`/tips/${tip.id}`}
+                target="_self"
                 className="block group"
               >
                 <article className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
@@ -147,7 +148,7 @@ export default function AppTechTipsPage() {
                     <ArrowRight className="w-4 h-4" />
                   </div>
                 </article>
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -163,13 +164,14 @@ export default function AppTechTipsPage() {
               위의 팁들을 활용하면 누구나 앱테크 고수가 될 수 있습니다. 오늘부터
               실천해보세요!
             </p>
-            <Link
+            <a
               href="/"
+              target="_self"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white text-amber-600 font-bold rounded-xl hover:bg-amber-50 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               <span>퀴즈 정답 보러가기</span>
               <ArrowRight className="w-5 h-5" />
-            </Link>
+            </a>
           </div>
         </main>
       </div>

@@ -62,12 +62,11 @@ export default async function TipDetailPage({
             <p className="text-slate-600 dark:text-slate-400 mb-6">
               요청하신 팁이 존재하지 않습니다.
             </p>
-            <Link href="/tips">
+            <a href="/tips" target="_self">
               <Button className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                팁 목록으로 돌아가기
+                <ArrowLeft className="w-4 h-4 mr-2" />팁 목록으로 돌아가기
               </Button>
-            </Link>
+            </a>
           </div>
         </main>
       </div>
@@ -83,8 +82,9 @@ export default async function TipDetailPage({
       <div className="max-w-4xl mx-auto px-4 py-12 mb-20">
         {/* Breadcrumb */}
         <div className="mb-8">
-          <Link
+          <a
             href="/tips"
+            target="_self"
             className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
           >
             <Home className="w-4 h-4" />
@@ -93,7 +93,7 @@ export default async function TipDetailPage({
             <span className="text-slate-900 dark:text-white font-medium">
               상세보기
             </span>
-          </Link>
+          </a>
         </div>
 
         {/* Main Content Card */}
@@ -141,8 +141,9 @@ export default async function TipDetailPage({
         {/* Navigation */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           {prev ? (
-            <Link
+            <a
               href={`/tips/${prev.id}`}
+              target="_self"
               className="group bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800 hover:shadow-lg transition-all duration-300"
             >
               <div className="flex items-center gap-3 mb-2">
@@ -154,14 +155,15 @@ export default async function TipDetailPage({
               <h3 className="text-base font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                 {prev.title}
               </h3>
-            </Link>
+            </a>
           ) : (
             <div />
           )}
 
           {next ? (
-            <Link
+            <a
               href={`/tips/${next.id}`}
+              target="_self"
               className="group bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800 hover:shadow-lg transition-all duration-300 text-right"
             >
               <div className="flex items-center justify-end gap-3 mb-2">
@@ -173,7 +175,7 @@ export default async function TipDetailPage({
               <h3 className="text-base font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                 {next.title}
               </h3>
-            </Link>
+            </a>
           ) : (
             <div />
           )}
@@ -181,15 +183,14 @@ export default async function TipDetailPage({
 
         {/* Back to List Button */}
         <div className="text-center">
-          <Link href="/tips">
+          <a href="/tips" target="_self">
             <Button
               variant="outline"
               className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border-white/50 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-lg transition-all duration-300"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              팁 목록으로 돌아가기
+              <ArrowLeft className="w-4 h-4 mr-2" />팁 목록으로 돌아가기
             </Button>
-          </Link>
+          </a>
         </div>
       </div>
     </div>

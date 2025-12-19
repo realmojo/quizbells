@@ -150,24 +150,14 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950">
-      <div className="max-w-xl mx-auto pt-6 pb-40 px-4">
+      <div className="max-w-xl mx-auto pt-6 pb-4">
         <section
           id="quiz-content"
           itemScope
           itemType="https://schema.org/WebPage"
         >
-          {/* Back Button */}
-          <a
-            target="_self"
-            href={`/quiz/${type}/${date === "today" ? "today" : answerDate}`}
-            className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 mb-6 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>퀴즈 목록으로 돌아가기</span>
-          </a>
-
           {/* Header Section */}
-          <div className="mb-6">
+          <div className="mb-6 px-4">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 text-sm font-medium mb-4">
               <Calendar className="w-4 h-4" />
               <span>{answerDateString}</span>
@@ -184,7 +174,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
 
           {/* Empty State */}
           {contents.length === 0 && (
-            <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
+            <div className="mt-4 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
               <p className="text-xl font-bold mb-3 text-slate-900 dark:text-white">
                 등록된 퀴즈가 아직 없습니다.
               </p>
@@ -195,12 +185,12 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
           )}
 
           {/* Answer Cards */}
-          <div className="space-y-6 mb-8">
+          <div className="space-y-6 mb-8 mt-4">
             {contents.map((quiz: any, idx: number) => (
               <Fragment key={idx}>
                 <article
                   key={idx}
-                  className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800"
+                  className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800"
                   itemScope
                   itemType="https://schema.org/Question"
                 >
@@ -260,10 +250,10 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
           </div>
 
           {/* App Open Button - 정답 아래에 배치 */}
-          <div className="mb-8">
+          <div className="mb-8 px-4">
             <AppOpen type={type} />
           </div>
-          <div className="text-sm text-slate-500 dark:text-slate-400 mt-4">
+          <div className="text-sm text-slate-400 dark:text-slate-400 mt-4 px-4">
             이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의
             수수료를 제공받습니다.
           </div>

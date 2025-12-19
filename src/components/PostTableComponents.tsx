@@ -35,9 +35,10 @@ export default function PostTableComponents({
   return (
     <div className="divide-y divide-slate-200 dark:divide-slate-800">
       {posts.map((post) => (
-        <Link
+        <a
           key={post.id}
           href={`/posts/${post.id}`}
+          target="_self"
           className="block group hover:bg-white/50 dark:hover:bg-slate-800/50 transition-all duration-300"
         >
           <article className="p-6">
@@ -64,7 +65,7 @@ export default function PostTableComponents({
               </div>
             </div>
           </article>
-        </Link>
+        </a>
       ))}
     </div>
   );

@@ -178,9 +178,10 @@ export default function SettingsPage() {
                     bg: "bg-indigo-100 dark:bg-indigo-900/30",
                   },
                 ].map((item, index) => (
-                  <Link
+                  <a
                     key={index}
                     href={item.href}
+                    target="_self"
                     className="flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group cursor-pointer"
                   >
                     <div className="flex items-center gap-4">
@@ -194,7 +195,7 @@ export default function SettingsPage() {
                       </span>
                     </div>
                     <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 group-hover:translate-x-1 transition-all" />
-                  </Link>
+                  </a>
                 ))}
               </div>
             </section>

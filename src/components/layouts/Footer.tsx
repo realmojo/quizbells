@@ -38,36 +38,40 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
               <li>
-                <Link
+                <a
                   href="/"
+                  target="_self"
                   className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                 >
                   홈
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="/quiz/toss/today"
+                  target="_self"
                   className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                 >
                   오늘의 퀴즈
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="/posts"
+                  target="_self"
                   className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                 >
                   커뮤니티
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="/tips"
+                  target="_self"
                   className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                 >
                   앱테크 꿀팁
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -78,42 +82,41 @@ export default function Footer() {
               고객지원
             </h3>
             <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-              {/* <li>
-                <Link href="/faq" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                  자주 묻는 질문
-                </Link>
-              </li> */}
               <li>
-                <Link
+                <a
                   href="/contact"
+                  target="_self"
                   className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                 >
                   광고/제휴 문의
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="/about"
+                  target="_self"
                   className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                 >
                   서비스 소개
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="/privacy"
+                  target="_self"
                   className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                 >
                   개인정보처리방침
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="/terms"
+                  target="_self"
                   className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                 >
                   이용약관
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

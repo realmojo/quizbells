@@ -38,11 +38,11 @@ export default function NotFound() {
 
             <Separator />
 
-            <Link href="/">
+            <a href="/" target="_self">
               <Button variant="default" className="mt-4">
                 🏠 홈으로 돌아가기
               </Button>
-            </Link>
+            </a>
           </CardContent>
         </Card>
       </main>

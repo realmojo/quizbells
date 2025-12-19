@@ -163,7 +163,7 @@ export default function Header() {
     <header className="sticky top-0 z-40 w-full border-b border-slate-200/50 dark:border-slate-800/50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm">
       <div className="container mx-auto flex h-16 w-full max-w-3xl items-center justify-between px-4">
         {/* 왼쪽: 로고 + 제목 */}
-        <Link href="/" className="flex items-center gap-3 group">
+        <a href="/" target="_self" className="flex items-center gap-3 group">
           <div
             className={`w-10 h-10 rounded-xl bg-gradient-to-br ${pageInfo.gradient} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105`}
           >
@@ -179,64 +179,66 @@ export default function Header() {
               </p>
             )}
           </div>
-        </Link>
+        </a>
 
         {/* 오른쪽: 메뉴 아이콘 */}
         <div className="flex items-center gap-1">
-          <Link
+          <a
             href="/event"
+            target="_self"
             className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative group"
             aria-label="이벤트 페이지"
           >
             <Gift className="w-6 h-6 text-slate-700 dark:text-slate-300 group-hover:text-red-500 transition-colors" />
             <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-          </Link>
+          </a>
 
           <Drawer direction="right">
             <DrawerTrigger asChild>
-            <button
-              className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              aria-label="메뉴 열기"
-            >
-              <Menu className="w-6 h-6 text-slate-700 dark:text-slate-300" />
-            </button>
-          </DrawerTrigger>
-          <DrawerContent className="max-w-sm">
-            <DrawerHeader>
-              <DrawerTitle className="text-xl font-bold">메뉴</DrawerTitle>
-            </DrawerHeader>
-            <div className="px-4 pb-4 space-y-2">
-              {menuItems.map((item) => {
-                const active = item.match(pathname);
-                const ItemIcon = item.icon;
+              <button
+                className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="메뉴 열기"
+              >
+                <Menu className="w-6 h-6 text-slate-700 dark:text-slate-300" />
+              </button>
+            </DrawerTrigger>
+            <DrawerContent className="max-w-sm">
+              <DrawerHeader>
+                <DrawerTitle className="text-xl font-bold">메뉴</DrawerTitle>
+              </DrawerHeader>
+              <div className="px-4 pb-4 space-y-2">
+                {menuItems.map((item) => {
+                  const active = item.match(pathname);
+                  const ItemIcon = item.icon;
 
-                return (
-                  <DrawerClose key={item.name} asChild>
-                    <button
-                      onClick={() => router.push(item.path)}
-                      className={cn(
-                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left",
-                        active
-                          ? cn(item.activeColor, item.bgColor)
-                          : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
-                      )}
-                    >
-                      <ItemIcon
+                  return (
+                    <DrawerClose key={item.name} asChild>
+                      <a
+                        href={item.path}
+                        target="_self"
                         className={cn(
-                          "w-6 h-6",
+                          "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left",
                           active
-                            ? item.activeColor
-                            : "text-slate-500 dark:text-slate-400"
+                            ? cn(item.activeColor, item.bgColor)
+                            : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
                         )}
-                        strokeWidth={active ? 2.5 : 2}
-                      />
-                      <span className="font-semibold">{item.name}</span>
-                    </button>
-                  </DrawerClose>
-                );
-              })}
-            </div>
-          </DrawerContent>
+                      >
+                        <ItemIcon
+                          className={cn(
+                            "w-6 h-6",
+                            active
+                              ? item.activeColor
+                              : "text-slate-500 dark:text-slate-400"
+                          )}
+                          strokeWidth={active ? 2.5 : 2}
+                        />
+                        <span className="font-semibold">{item.name}</span>
+                      </a>
+                    </DrawerClose>
+                  );
+                })}
+              </div>
+            </DrawerContent>
           </Drawer>
         </div>
       </div>

@@ -93,9 +93,9 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
       </p>
 
       <div className="flex justify-center items-center gap-4 sm:gap-6">
-        <Link
+        <a
           href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}&hashtags=퀴즈벨`}
-          target="_blank"
+          target="_self"
           className="group relative flex items-center justify-center w-14 h-14 bg-black rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
           aria-label="X(트위터) 공유"
         >
@@ -106,7 +106,7 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
             height={24}
             className="invert dark:invert-0"
           />
-        </Link>
+        </a>
 
         <button
           onClick={shareFacebook}
