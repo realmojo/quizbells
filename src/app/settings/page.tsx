@@ -84,11 +84,11 @@ export default function SettingsPage() {
                   <Bell className="w-5 h-5 text-slate-500" />
                   알림 설정
                 </h2>
-                {isClicked && (
+                {/* {isClicked && (
                   <div className="mt-4 p-4 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-mono break-all text-slate-600 dark:text-slate-400">
                     {JSON.stringify(getUserAuth(), null, 2)}
                   </div>
-                )}
+                )} */}
               </div>
 
               <div className="p-6">

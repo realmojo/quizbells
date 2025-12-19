@@ -119,7 +119,7 @@ export default function QuizPage() {
       const { outcome } = await deferredPromptRef.current.userChoice;
 
       if (outcome === "accepted") {
-        toast.success("PWA 설치가 시작됩니다! 🎉");
+        toast.success("앱 설치가 되었습니다! 앱에서 알림을 허용해주세요 🎉");
         // 이벤트 초기화
         deferredPromptRef.current = null;
         // 설치 완료 후 상태 업데이트 (약간의 지연 후)
