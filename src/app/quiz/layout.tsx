@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "Ariticle",
   name: "퀴즈벨",
   alternateName: "QUIZBELLS",
   description:

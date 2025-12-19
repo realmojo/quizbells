@@ -151,7 +151,7 @@ export default async function RootLayout({
           }}
         />
         <GoogleAdSense />
-        {/* 구조화된 데이터 (Schema.org JSON-LD) - Organization & WebApplication */}
+        {/* 구조화된 데이터 (Schema.org JSON-LD) - Organization & Ariticle */}
         <script
           id="structured-data-organization"
           type="application/ld+json"
@@ -176,7 +176,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "WebApplication",
+              "@type": "Article",
               name: "퀴즈벨",
               alternateName: "QUIZBELLS",
               url: "https://quizbells.com",
