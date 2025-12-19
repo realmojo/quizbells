@@ -48,8 +48,8 @@ const APP_DATA: Record<string, AppData> = {
     textColor: "text-black",
   },
   kakaopay: {
-    ios: "https://link.kakaopay.com/_/9mQy4i0",
-    android: "https://link.kakaopay.com/_/9mQy4i0",
+    ios: "https://apps.apple.com/kr/app/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%8E%98%EC%9D%B4/id1464496236",
+    android: "https://play.google.com/store/apps/details?id=com.kakaopay.app",
     buttonText: "카카오페이 퀴즈 참여하기",
     bgColor: "bg-yellow-300",
     hoverColor: "hover:bg-yellow-300",
