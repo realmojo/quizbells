@@ -71,13 +71,6 @@ const jsonLd = {
     price: "0",
     priceCurrency: "KRW",
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5",
-    bestRating: "5",
-    worstRating: "1",
-    ratingCount: "1000",
-  },
   featureList: [
     "실시간 퀴즈 정답 알림",
     "다양한 앱테크 플랫폼 지원",

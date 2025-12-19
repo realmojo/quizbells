@@ -189,13 +189,6 @@ export default async function RootLayout({
                 price: "0",
                 priceCurrency: "KRW",
               },
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "5",
-                bestRating: "5",
-                worstRating: "1",
-                ratingCount: "1000",
-              },
               author: {
                 "@type": "Organization",
                 name: "QUIZBELLS",
