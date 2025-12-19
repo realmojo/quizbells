@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { useAppStore } from "@/store/useAppStore";
-import { quizItems, requestAlarmPermission } from "@/utils/utils";
+import { quizItems } from "@/utils/utils";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import EventLink from "./EventLink";
@@ -142,17 +142,18 @@ export default function QuizPage() {
     setIsRegistering(true);
     try {
       // 먼저 PWA 설치 프롬프트 표시
-      const installed = await promptPWAInstall();
+      // const installed = await promptPWAInstall();
+      promptPWAInstall();
 
       // PWA 설치 후 알림 권한 요청
-      if (installed || !deferredPromptRef.current) {
-        const isGranted = await requestAlarmPermission();
-        if (isGranted) {
-          toast.success("알림 등록이 완료되었습니다! 🔔");
-        } else {
-          toast.error("알림 권한이 필요합니다.");
-        }
-      }
+      // if (installed || !deferredPromptRef.current) {
+      //   const isGranted = await requestAlarmPermission();
+      //   if (isGranted) {
+      //     toast.success("알림 등록이 완료되었습니다! 🔔");
+      //   } else {
+      //     toast.error("알림 권한이 필요합니다.");
+      //   }
+      // }
     } catch (error) {
       console.error("알림 등록 오류:", error);
       toast.error("알림 등록에 실패했습니다.");
