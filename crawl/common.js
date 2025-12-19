@@ -52,4 +52,50 @@ const getType = (title) => {
   }
 };
 
-module.exports = { getType };
+const getTypeKr = (type) => {
+  if (type === "toss") {
+    return "토스";
+  } else if (type === "okcashbag") {
+    return "오케이캐시백";
+  } else if (type === "3o3") {
+    return "삼쩜삼";
+  } else if (type === "shinhan") {
+    return "신한퀴즈";
+  } else if (type === "doctornow") {
+    return "닥터나우";
+  } else if (type === "mydoctor") {
+    return "나만의닥터";
+  } else if (type === "kakaobank") {
+    return "카카오뱅크";
+  } else if (type === "kakaopay") {
+    return "카카오페이";
+  } else if (type === "hpoint") {
+    return "에이치포인트";
+  } else if (type === "bitbunny") {
+    return "비트버니";
+  } else if (type === "nh") {
+    return "농협";
+  } else if (type === "skstoa") {
+    return "스토아";
+  } else if (type === "cashwalk") {
+    return "캐시워크";
+  } else if (type === "hanabank") {
+    return "하나은행";
+  } else if (type === "kbstar") {
+    return "KB스타";
+  } else if (type === "auction") {
+    return "옥션";
+  } else if (type === "cashdoc") {
+    return "캐시닥";
+  } else if (type === "kbank") {
+    return "케이뱅크";
+  } else if (type === "climate") {
+    return "기후행동 기후동행 기회소득";
+  } else if (type === "monimo") {
+    return "모니스쿨";
+  } else {
+    return type;
+  }
+};
+
+module.exports = { getType, getTypeKr };

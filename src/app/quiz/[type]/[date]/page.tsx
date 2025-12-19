@@ -9,13 +9,10 @@ import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Lightbulb, Calendar } from "lucide-react";
-import moment from "moment";
-import CoupangPartnerAd from "@/components/CoupangPartnerAd";
+import moment from "moment-timezone";
 import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
-import { Fragment } from "react";
 import EventLink from "@/components/EventLink";
 import { supabaseAdmin } from "@/lib/supabase";
-import PWAInstallButton from "@/components/PWAInstallButton";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 const getKoreaDate = (): Date => {
@@ -187,6 +184,13 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
   let quizItem = null;
   let lastDayQuizItem = null;
+
+  // 어제 날짜 계산 (한국 시간 기준)
+  const lastDayAnswerDate = moment
+    .tz(answerDate, "Asia/Seoul")
+    .subtract(1, "day")
+    .format("YYYY-MM-DD");
+
   try {
     // 오늘 퀴즈 데이터 조회
     quizItem = await getQuizbells(type, answerDate);
@@ -198,9 +202,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
       })) ?? [];
 
     // 어제 퀴즈 데이터 조회
-    const lastDayAnswerDate = moment(answerDate)
-      .subtract(1, "day")
-      .format("YYYY-MM-DD");
     lastDayQuizItem = await getQuizbells(type, lastDayAnswerDate);
 
     lastDayQuizItem =
@@ -458,99 +459,69 @@ export default async function QuizPage({ params }: QuizPageParams) {
               {/* float clear */}
               <div className="clear-both"></div>
             </div>
-            <div className="text-sm text-center mb-8 text-slate-500 dark:text-slate-400 font-medium">
+            <div className="text-sm text-center mb-4 text-slate-500 dark:text-slate-400 font-medium">
               {`${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답`}
             </div>
 
             <CoupangPartnerAdBanner />
-            {/* Empty State */}
-            {contents.length === 0 && (
-              <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 flex items-center justify-center">
-                  <Lightbulb className="w-10 h-10 text-indigo-600 dark:text-indigo-400" />
-                </div>
-                <p className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">
-                  {answerDateString}
-                  <br />
-                  등록된 퀴즈가 아직 없습니다.
-                </p>
-                <p className="text-base mb-4 text-slate-600 dark:text-slate-400">
-                  곧 정답이 업데이트될 예정입니다. 잠시 후 다시 확인해 주세요.
-                </p>
-                <p className="text-sm text-slate-500 dark:text-slate-500 mb-6">
-                  새로운 정답이 올라오면 알려드릴게요! 즐겨찾기 해두시면
-                  편리해요 😊
-                </p>
-
-                <PWAInstallButton />
-              </div>
-            )}
-            {/* Quiz Cards */}
+            {/* Quiz Cards - 오늘/어제 퀴즈 모두 확인하기 버튼 */}
             <div className="space-y-4 mb-8">
-              {contents.map((quiz: any, idx: number) => (
-                <Fragment key={idx}>
-                  <article
-                    key={idx}
-                    className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800 hover:shadow-lg transition-all duration-300"
-                    itemScope
-                    itemType="https://schema.org/Question"
-                  >
-                    <div
-                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium mb-3"
-                      itemProp="about"
-                    >
-                      📌 <span>{quiz.type}</span>
-                    </div>
-
-                    <h2
-                      className="text-xl font-bold text-slate-900 dark:text-white mb-4"
-                      itemProp="name"
-                    >
-                      {quiz.isToday ? (
-                        <span className="text-green-500">[오늘 퀴즈]</span>
-                      ) : (
-                        <span className="text-blue-500">[어제 퀴즈]</span>
-                      )}{" "}
-                      {quiz.question || quiz.type}
-                    </h2>
-
-                    <a
-                      href={`/quiz/${type}/${quiz.isToday ? "today" : quiz.answerDate}/answer`}
-                      target="_self"
-                      className="block mb-3"
-                    >
-                      <div
-                        className="group rounded-xl border-2 border-emerald-300 dark:border-emerald-700 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 px-6 py-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer"
-                        itemProp="acceptedAnswer"
-                        itemScope
-                        itemType="https://schema.org/Answer"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-full bg-emerald-500 dark:bg-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 dark:group-hover:bg-emerald-500 transition-colors">
-                              <CheckCircle2 className="w-6 h-6 text-white" />
-                            </div>
-                            <div>
-                              <div className="text-sm font-medium text-emerald-700 dark:text-emerald-300 mb-1">
-                                정답 확인하기
-                              </div>
-                              <div className="text-xs text-emerald-600 dark:text-emerald-400">
-                                클릭하여 정답 보기 →
-                              </div>
-                            </div>
-                          </div>
-                          <div className="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300 group-hover:text-emerald-800 dark:group-hover:text-emerald-200 transition-colors">
-                            →
-                          </div>
+              {/* 오늘 퀴즈 정답 모두 확인하기 */}
+              <a
+                href={`/quiz/${type}/today/answer`}
+                target="_self"
+                className="block"
+              >
+                <div className="group bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-6 shadow-sm border-2 border-green-300 dark:border-green-700 rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-full bg-green-500 dark:bg-green-600 flex items-center justify-center group-hover:bg-green-600 dark:group-hover:bg-green-500 transition-colors">
+                        <CheckCircle2 className="w-8 h-8 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-green-700 dark:text-green-300 mb-1">
+                          오늘 퀴즈 정답 모두 확인하기
+                        </div>
+                        <div className="text-sm text-green-600 dark:text-green-400">
+                          퀴즈 정답을 한번에 확인 →
                         </div>
                       </div>
-                    </a>
-                  </article>
-                  {/* 2개 나오고 그 다음에 쿠팡 파트너스 광고 */}
-                  {idx === 0 && <EventLink />}
-                  {idx > 0 && idx % 2 === 1 && <CoupangPartnerAd />}
-                </Fragment>
-              ))}
+                    </div>
+                    <div className="text-3xl font-extrabold text-green-700 dark:text-green-300 group-hover:text-green-800 dark:group-hover:text-green-200 transition-colors">
+                      →
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href={`/quiz/${type}/${lastDayAnswerDate}/answer`}
+                target="_self"
+                className="block"
+              >
+                <div className="group bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-6 shadow-sm border-2 border-blue-300 dark:border-blue-700 rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-full bg-blue-500 dark:bg-blue-600 flex items-center justify-center group-hover:bg-blue-600 dark:group-hover:bg-blue-500 transition-colors">
+                        <CheckCircle2 className="w-8 h-8 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-blue-700 dark:text-blue-300 mb-1">
+                          어제 퀴즈 정답 모두 확인하기
+                        </div>
+                        <div className="text-sm text-blue-600 dark:text-blue-400">
+                          개의 퀴즈 정답을 한번에 확인 →
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-3xl font-extrabold text-blue-700 dark:text-blue-300 group-hover:text-blue-800 dark:group-hover:text-blue-200 transition-colors">
+                      →
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <EventLink />
             </div>
             {/* Description Component */}
             <article className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">

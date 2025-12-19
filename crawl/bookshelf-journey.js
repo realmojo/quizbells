@@ -8,7 +8,7 @@ const getKoreaTime = () => {
 };
 
 const { doInsert } = require("./db");
-const { getType } = require("./common");
+const { getType, getTypeKr } = require("./common");
 
 // 스크립트 태그에서 QUIZ_DATA 객체 추출
 const extractQuizDataFromScript = (html) => {
@@ -61,7 +61,7 @@ const extractBookshelfJourneyQuizFromText = async (
     if (cleanAnswer) {
       const quizzes = [
         {
-          type: type,
+          type: getTypeKr(type),
           question: quizData.question.replace(/^Q\.\s*/, ""), // "Q. " 제거
           answer: cleanAnswer,
           otherAnswers: [],
@@ -89,7 +89,7 @@ const extractBookshelfJourneyQuizFromText = async (
 
         const quizzes = [
           {
-            type: type,
+            type: getTypeKr(type),
             question: questionText
               ? questionText.replace(` (${moment().format("MM/DD")})`, "")
               : "",

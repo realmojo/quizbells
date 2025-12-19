@@ -7,6 +7,7 @@ import AppOpen from "@/components/AppOpen";
 import CoupangPartnerAd from "@/components/CoupangPartnerAd";
 import { Fragment } from "react";
 import EventLink from "@/components/EventLink";
+import PWAInstallButton from "@/components/PWAInstallButton";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 const getKoreaDate = (): Date => {
@@ -178,9 +179,12 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
               <p className="text-xl font-bold mb-3 text-slate-900 dark:text-white">
                 등록된 퀴즈가 아직 없습니다.
               </p>
-              <p className="text-base text-slate-600 dark:text-slate-400">
+              <p className="text-base text-slate-600 dark:text-slate-400 mb-6">
                 곧 정답이 업데이트될 예정입니다.
               </p>
+              <div className="mt-6">
+                <PWAInstallButton />
+              </div>
             </div>
           )}
 
