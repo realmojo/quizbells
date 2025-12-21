@@ -8,6 +8,7 @@ import CoupangPartnerAd from "@/components/CoupangPartnerAd";
 import { Fragment } from "react";
 import EventLink from "@/components/EventLink";
 import PWAInstallButton from "@/components/PWAInstallButton";
+import Adsense from "@/components/Adsense";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 const getKoreaDate = (): Date => {
@@ -171,6 +172,8 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
             </h1>
           </div>
 
+          <Adsense slotId={item.slotId || "8409513997"} />
+
           {/* Empty State */}
           {contents.length === 0 && (
             <div className="mt-4 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
@@ -187,7 +190,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
           )}
 
           {/* Answer Cards */}
-          <div className="space-y-6 mb-8 mt-4">
+          <div className="space-y-4">
             {contents.map((quiz: any, idx: number) => (
               <Fragment key={idx}>
                 <article
