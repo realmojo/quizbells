@@ -2,7 +2,7 @@ import { Gift } from "lucide-react";
 
 export default function EventLink() {
   return (
-    <a href="/event" target="_self" className="block">
+    <a href="/event" target="_self" className="block px-4 my-4">
       <div className="group bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-6 shadow-sm border-2 border-pink-300 dark:border-pink-700 rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">

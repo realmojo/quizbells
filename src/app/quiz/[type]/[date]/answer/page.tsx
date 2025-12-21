@@ -171,8 +171,6 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
             </h1>
           </div>
 
-          <CoupangPartnerAd />
-
           {/* Empty State */}
           {contents.length === 0 && (
             <div className="mt-4 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
@@ -247,11 +245,11 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
                 </article>
 
                 {/* 2개 나오고 그 다음에 쿠팡 파트너스 광고 */}
-                {idx === 0 && <EventLink />}
-                {idx > 0 && idx % 2 === 1 && <CoupangPartnerAd />}
+                {idx > 0 && idx % 3 === 1 && <CoupangPartnerAd />}
               </Fragment>
             ))}
           </div>
+          <EventLink />
 
           {/* App Open Button - 정답 아래에 배치 */}
           <div className="mb-8 px-4">
