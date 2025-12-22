@@ -118,4 +118,3 @@ Cloudflare Pages는 자동으로 Next.js를 감지하지만, 필요시 수동 �
 - [Cloudflare Pages 문서](https://developers.cloudflare.com/pages/)
 - [Next.js on Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/nextjs/)
 - [Cloudflare Pages 환경 변수](https://developers.cloudflare.com/pages/platform/build-configuration/#environment-variables)
-
