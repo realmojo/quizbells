@@ -1,13 +1,7 @@
 const axios = require("axios");
-const moment = require("moment-timezone");
 const cheerio = require("cheerio");
 
-// 한국 시간(KST, UTC+9)으로 현재 시간 가져오기
-const getKoreaTime = () => {
-  return moment().tz("Asia/Seoul");
-};
-
-const { doInsert } = require("./db");
+const { doInsert, getKoreaTime } = require("./db");
 const { getType, getTypeKr } = require("./common");
 
 // 스크립트 태그에서 QUIZ_DATA 객체 추출
@@ -91,7 +85,7 @@ const extractBookshelfJourneyQuizFromText = async (
           {
             type: getTypeKr(type),
             question: questionText
-              ? questionText.replace(` (${moment().format("MM/DD")})`, "")
+              ? questionText.replace(` (${getKoreaTime().format("MM/DD")})`, "")
               : "",
             answer: answerText
               ? answerText

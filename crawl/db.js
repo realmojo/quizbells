@@ -1,9 +1,31 @@
 const axios = require("axios");
-const moment = require("moment-timezone");
 
 // 한국 시간(KST, UTC+9)으로 현재 시간 가져오기
 const getKoreaTime = () => {
-  return moment().tz("Asia/Seoul");
+  const now = new Date();
+  // UTC 시간에 9시간(한국 시간대)을 더함
+  const utcTime = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
+  const koreaTime = new Date(utcTime + (9 * 60 * 60 * 1000)); // UTC+9
+  
+  // moment와 호환되는 객체 반환
+  return {
+    format: (formatStr) => {
+      const year = koreaTime.getFullYear();
+      const month = String(koreaTime.getMonth() + 1).padStart(2, "0");
+      const day = String(koreaTime.getDate()).padStart(2, "0");
+      
+      if (formatStr === "M월 D일") {
+        return `${month}월 ${day}일`;
+      }
+      if (formatStr === "M월D일") {
+        return `${month}월${day}일`;
+      }
+      // 기본값
+      return `${year}-${month}-${day}`;
+    },
+    toDate: () => koreaTime,
+    valueOf: () => koreaTime.getTime(),
+  };
 };
 
 // 환경 변수에서 가져오거나 기본값 사용
@@ -460,4 +482,5 @@ module.exports = {
   quizzesExistInContents,
   doInsert,
   quizItems,
+  getKoreaTime, // 한국 시간 함수 export
 };

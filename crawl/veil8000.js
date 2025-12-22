@@ -1,13 +1,7 @@
 const axios = require("axios");
-const moment = require("moment-timezone");
 // const fs = require("fs");
 
-// 한국 시간(KST, UTC+9)으로 현재 시간 가져오기
-const getKoreaTime = () => {
-  return moment().tz("Asia/Seoul");
-};
-
-const { doInsert } = require("./db");
+const { doInsert, getKoreaTime } = require("./db");
 const { getType } = require("./common");
 
 const extract3o3QuizFromText = async (title, text, type, notifiedTypes) => {
@@ -452,6 +446,7 @@ const extractKbankQuizFromText = async (title, text, type, notifiedTypes) => {
 };
 
 const getVeil8000Quiz = async () => {
+  console.log("🔍 [Veil8000] 퀴즈 크롤링 시작");
   const url =
     "https://m.blog.naver.com/api/blogs/veil8000/post-list?categoryNo=61&itemCount=30&logCode=0&page=1";
   const headers = {

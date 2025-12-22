@@ -1,9 +1,8 @@
-const moment = require("moment-timezone");
 const { getVeil8000Quiz } = require("./veil8000");
 const { getClimateQuiz } = require("./climate");
 const { google } = require("googleapis");
 const request = require("request");
-const { quizItems } = require("./db");
+const { quizItems, getKoreaTime } = require("./db");
 
 // 환경 변수에서 Google API 키 정보 가져오기
 const getGoogleKey = () => {
@@ -22,11 +21,6 @@ const getGoogleKey = () => {
       "Google API 키를 찾을 수 없습니다. 환경 변수를 설정하세요."
     );
   }
-};
-
-// 한국 시간(KST, UTC+9)으로 현재 시간 가져오기
-const getKoreaTime = () => {
-  return moment().tz("Asia/Seoul");
 };
 
 // 인덱싱할 URL 목록 만들기

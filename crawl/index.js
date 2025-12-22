@@ -1,9 +1,4 @@
-const moment = require("moment-timezone");
-
-// 한국 시간(KST, UTC+9)으로 현재 시간 가져오기
-const getKoreaTime = () => {
-  return moment().tz("Asia/Seoul");
-};
+const { getKoreaTime } = require("./db");
 const { getVeil8000Quiz } = require("./veil8000");
 const { getClimateQuiz } = require("./climate");
 const {

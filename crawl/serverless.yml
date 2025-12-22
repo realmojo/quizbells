@@ -22,6 +22,20 @@ provider:
         - logs:PutLogEvents
       Resource: "arn:aws:logs:*:*:*"
 
+package:
+  patterns:
+    - '!package-lock.json'
+    - '!yarn.lock'
+    - '!.git/**'
+    - '!.serverless/**'
+    - '!*.md'
+    - '!deploy.sh'
+    - '!log.sh'
+    - '!last-indexing.txt'
+    - 'node_modules/**'  # node_modules 포함
+  individually: false
+  excludeDevDependencies: false  # devDependencies도 포함 (필요한 경우)
+
 functions:
   crawler:
     handler: lambda.handler
