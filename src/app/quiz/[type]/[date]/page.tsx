@@ -549,19 +549,12 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     </div>
                   </a>
                 </section>
-
-                {/* 2개 나오고 그 다음에 쿠팡 파트너스 광고 */}
-                {idx > 0 && idx % 3 === 1 && <CoupangPartnerAd />}
               </Fragment>
             ))}
             <EventLink />
             {/* Description Component */}
             <section className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <DescriptionComponent type={type} />
-              <div className="text-sm text-slate-500 dark:text-slate-400 mt-4">
-                이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의
-                수수료를 제공받습니다.
-              </div>
             </section>
             <SocialShare
               title={`${item.typeKr} ${item.title} ${answerDateString} 정답`}

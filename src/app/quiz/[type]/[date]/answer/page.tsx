@@ -246,9 +246,6 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
                     </div>
                   )}
                 </article>
-
-                {/* 2개 나오고 그 다음에 쿠팡 파트너스 광고 */}
-                {idx > 0 && idx % 3 === 1 && <CoupangPartnerAd />}
               </Fragment>
             ))}
           </div>
@@ -257,10 +254,6 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
           {/* App Open Button - 정답 아래에 배치 */}
           <div className="mb-8 px-4">
             <AppOpen type={type} />
-          </div>
-          <div className="text-sm text-slate-400 dark:text-slate-400 mt-4 px-4">
-            이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의
-            수수료를 제공받습니다.
           </div>
         </section>
       </div>
