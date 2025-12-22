@@ -1,8 +1,15 @@
+const { getKoreaTime } = require("./db");
 const { getVeil8000Quiz } = require("./veil8000");
 const { getClimateQuiz } = require("./climate");
+const {
+  getBntNewsByToss,
+  getBntNewsByCashwork,
+  getBntNewsByOkCashbag,
+} = require("./bntnews");
+const { getBookshelfJourneyQuiz } = require("./bookshelf-journey");
 const { google } = require("googleapis");
 const request = require("request");
-const { quizItems, getKoreaTime } = require("./db");
+const { quizItems } = require("./db");
 
 // 환경 변수에서 Google API 키 정보 가져오기
 const getGoogleKey = () => {
@@ -101,6 +108,34 @@ const run = async () => {
 
   try {
     await Promise.all([
+      (async () => {
+        try {
+          await getBookshelfJourneyQuiz(); // Bookshelf Journey 퀴즈
+        } catch (err) {
+          console.error("❌ Bookshelf Journey 오류:", err.message || err);
+        }
+      })(),
+      (async () => {
+        try {
+          await getBntNewsByToss(); // BNT News 토스, 캐시워크 행운퀴즈
+        } catch (err) {
+          console.error("❌ BNT News 토스 오류:", err.message || err);
+        }
+      })(),
+      (async () => {
+        try {
+          await getBntNewsByCashwork(); // BNT News 캐시워크 행운퀴즈
+        } catch (err) {
+          console.error("❌ BNT News 캐시워크 오류:", err.message || err);
+        }
+      })(),
+      (async () => {
+        try {
+          await getBntNewsByOkCashbag(); // BNT News 오퀴즈
+        } catch (err) {
+          console.error("❌ BNT News 오퀴즈 오류:", err.message || err);
+        }
+      })(),
       (async () => {
         try {
           await getClimateQuiz(); // 기후행동 기회소득, 비트버니
