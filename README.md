@@ -29,8 +29,22 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Deploy on Cloudflare Pages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+이 프로젝트는 Cloudflare Pages로 배포됩니다.
+
+자세한 배포 가이드는 [CLOUDFLARE_DEPLOY.md](./CLOUDFLARE_DEPLOY.md)를 참고하세요.
+
+주요 단계:
+1. Cloudflare Pages에 Git 저장소 연결
+2. 빌드 설정: Framework preset = Next.js
+3. 환경 변수 설정 (Dashboard에서)
+4. 배포 완료
+
+### Deploy on Vercel (대안)
+
+Vercel에서도 배포할 수 있습니다:
+- [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
+- [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying)
