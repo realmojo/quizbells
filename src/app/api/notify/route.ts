@@ -1,14 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
-import { messaging } from "@/lib/firebase-admin"; // firebase-admin 초기화된 인스턴스
 
-// firebase-admin은 Node.js 전용이므로 Edge Runtime을 사용할 수 없습니다
-// export const runtime = 'edge'; // 제거 - Node.js Runtime 사용
+export const runtime = 'edge';
+
+// Firebase Cloud Messaging REST API를 직접 호출 (Edge Runtime 호환)
+async function sendFCMNotification(message: any) {
+  const projectId = process.env.PROJECT_ID;
+  const accessToken = process.env.FCM_ACCESS_TOKEN; // 서비스 계정 Access Token
+  
+  if (!projectId || !accessToken) {
+    throw new Error("FCM configuration missing: PROJECT_ID or FCM_ACCESS_TOKEN");
+  }
+
+  const url = `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`;
+  
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ message }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`FCM API error: ${response.status} - ${errorText}`);
+  }
+
+  return await response.json();
+}
 
 // ✅ POST 요청 처리
 export async function POST(req: NextRequest) {
   try {
     const reqItems = await req.json();
     const { token, title, body, link, icon } = reqItems;
+    
     const message = {
       token,
       notification: {
@@ -20,10 +47,7 @@ export async function POST(req: NextRequest) {
         payload: {
           aps: {
             "mutable-content": 1,
-            // "content-available": 1,
-            // // 포그라운드에서도 소리와 배지 표시
             alert: {
-              // 이 부분이 중요!
               title: title,
               body: body,
             },
@@ -42,7 +66,6 @@ export async function POST(req: NextRequest) {
         click_action: "FLUTTER_NOTIFICATION_CLICK",
       },
       android: {
-        // Android용 설정 분리
         notification: {
           title,
           body,
@@ -56,13 +79,18 @@ export async function POST(req: NextRequest) {
       },
     };
 
-    console.log(message);
-
-    const response = await messaging.send(message as any);
-
-    return NextResponse.json({ success: true, messageId: response });
+    const response = await sendFCMNotification(message);
+    
+    return NextResponse.json({ 
+      success: true, 
+      messageId: response.name || response 
+    });
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
-    return NextResponse.json({ success: false, error: errorMessage });
+    console.error("FCM Error:", errorMessage);
+    return NextResponse.json({ 
+      success: false, 
+      error: errorMessage 
+    }, { status: 500 });
   }
 }
