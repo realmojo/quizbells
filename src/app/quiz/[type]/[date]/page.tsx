@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 import ImageComponents from "@/components/ImageComponets";
 import { format, parseISO } from "date-fns";
@@ -11,7 +11,7 @@ import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Lightbulb, Calendar } from "lucide-react";
-import moment from "moment-timezone";
+import { subDays } from "date-fns";
 import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
 import CoupangPartnerAd from "@/components/CoupangPartnerAd";
 import EventLink from "@/components/EventLink";
@@ -20,13 +20,13 @@ import { Fragment } from "react/jsx-runtime";
 import PWAInstallButton from "@/components/PWAInstallButton";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
+// Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
 const getKoreaDate = (): Date => {
   const now = new Date();
-  // 한국 시간대(Asia/Seoul)의 현재 시간을 가져옴
-  const koreaTimeString = now.toLocaleString("en-US", {
-    timeZone: "Asia/Seoul",
-  });
-  return new Date(koreaTimeString);
+  // UTC 시간에 9시간(한국 시간대)을 더함
+  const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const koreaTime = new Date(utcTime + 9 * 60 * 60 * 1000); // UTC+9
+  return koreaTime;
 };
 
 type QuizPageParams = {
@@ -191,10 +191,23 @@ export default async function QuizPage({ params }: QuizPageParams) {
   let lastDayQuizItem = null;
 
   // 어제 날짜 계산 (한국 시간 기준)
-  const lastDayAnswerDate = moment
-    .tz(answerDate, "Asia/Seoul")
-    .subtract(1, "day")
-    .format("YYYY-MM-DD");
+  let lastDayAnswerDate: string;
+  try {
+    if (answerDate && /^\d{4}-\d{2}-\d{2}$/.test(answerDate)) {
+      const parsedDate = parseISO(answerDate);
+      const yesterday = subDays(parsedDate, 1);
+      lastDayAnswerDate = format(yesterday, "yyyy-MM-dd");
+    } else {
+      const koreaDate = getKoreaDate();
+      const yesterday = subDays(koreaDate, 1);
+      lastDayAnswerDate = format(yesterday, "yyyy-MM-dd");
+    }
+  } catch (error) {
+    console.error("날짜 계산 오류:", error);
+    const koreaDate = getKoreaDate();
+    const yesterday = subDays(koreaDate, 1);
+    lastDayAnswerDate = format(yesterday, "yyyy-MM-dd");
+  }
 
   try {
     // 오늘 퀴즈 데이터 조회
@@ -220,7 +233,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     quizItem = null;
   }
 
-  const contentMerges = [...quizItem, ...lastDayQuizItem];
+  const contentMerges = [...quizItem.reverse(), ...lastDayQuizItem];
 
   const prevAnswers: string[] = [];
   const contents: any[] = [];

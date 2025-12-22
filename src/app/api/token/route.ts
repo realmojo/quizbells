@@ -4,18 +4,20 @@ import { supabaseAdmin } from "@/lib/supabase";
 export const runtime = 'edge';
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜/시간 가져오기
+// Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
 const getKoreaTimeISOString = (): string => {
   const now = new Date();
-  // 한국 시간대로 변환
-  const kstString = now.toLocaleString("en-US", { timeZone: "Asia/Seoul" });
-  const kstDate = new Date(kstString);
+  // UTC 시간에 9시간(한국 시간대)을 더함
+  const utcTime = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
+  const koreaTime = new Date(utcTime + (9 * 60 * 60 * 1000)); // UTC+9
+  
   // ISO 문자열로 변환 (한국시간 기준)
-  const year = kstDate.getFullYear();
-  const month = String(kstDate.getMonth() + 1).padStart(2, "0");
-  const day = String(kstDate.getDate()).padStart(2, "0");
-  const hours = String(kstDate.getHours()).padStart(2, "0");
-  const minutes = String(kstDate.getMinutes()).padStart(2, "0");
-  const seconds = String(kstDate.getSeconds()).padStart(2, "0");
+  const year = koreaTime.getFullYear();
+  const month = String(koreaTime.getMonth() + 1).padStart(2, "0");
+  const day = String(koreaTime.getDate()).padStart(2, "0");
+  const hours = String(koreaTime.getHours()).padStart(2, "0");
+  const minutes = String(koreaTime.getMinutes()).padStart(2, "0");
+  const seconds = String(koreaTime.getSeconds()).padStart(2, "0");
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 

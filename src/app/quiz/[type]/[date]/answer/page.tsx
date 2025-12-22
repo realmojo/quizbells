@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { format, parseISO } from "date-fns";
 import { getQuitItem } from "@/utils/utils";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Calendar, Lightbulb } from "lucide-react";
 import AppOpen from "@/components/AppOpen";
@@ -13,12 +13,13 @@ import PWAInstallButton from "@/components/PWAInstallButton";
 import Adsense from "@/components/Adsense";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
+// Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
 const getKoreaDate = (): Date => {
   const now = new Date();
-  const koreaTimeString = now.toLocaleString("en-US", {
-    timeZone: "Asia/Seoul",
-  });
-  return new Date(koreaTimeString);
+  // UTC 시간에 9시간(한국 시간대)을 더함
+  const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const koreaTime = new Date(utcTime + 9 * 60 * 60 * 1000); // UTC+9
+  return koreaTime;
 };
 
 type AnswerPageParams = {
@@ -139,7 +140,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
     quizItem = null;
   }
 
-  const contentMerges = quizItem?.contents ?? [];
+  const contentMerges = quizItem?.contents.reverse() ?? [];
 
   const prevAnswers: string[] = [];
   const contents: any[] = [];

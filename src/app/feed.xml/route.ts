@@ -1,13 +1,18 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { quizItems } from "@/utils/utils";
+import { format } from "date-fns";
 
 export const runtime = 'edge';
 
-import moment from "moment-timezone";
-
-const getKoreaDate = () => {
-  return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+// 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
+// Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
+const getKoreaDate = (): string => {
+  const now = new Date();
+  // UTC 시간에 9시간(한국 시간대)을 더함
+  const utcTime = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
+  const koreaTime = new Date(utcTime + (9 * 60 * 60 * 1000)); // UTC+9
+  return format(koreaTime, "yyyy-MM-dd");
 };
 
 const answerLabelByType: Record<string, string> = {
