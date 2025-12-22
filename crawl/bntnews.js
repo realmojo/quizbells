@@ -195,7 +195,7 @@ const getBntNewsByToss = async () => {
       console.log("퀴즈를 찾을 수 없습니다.");
     }
   } else {
-    console.log("오늘 날짜가 아닙니다.");
+    console.log("BNT News 토스 행운퀴즈 크롤링 오늘 날짜가 아닙니다.");
   }
 };
 
@@ -334,7 +334,7 @@ const getBntNewsByCashwork = async () => {
       console.log("퀴즈를 찾을 수 없습니다.");
     }
   } else {
-    console.log("오늘 날짜가 아닙니다.");
+    console.log("BNT News 캐시워크 크롤링 오늘 날짜가 아닙니다.");
   }
 };
 
@@ -502,7 +502,7 @@ const getBntNewsByOkCashbag = async () => {
       console.log("퀴즈를 찾을 수 없습니다.");
     }
   } else {
-    console.log("오늘 날짜가 아닙니다.");
+    console.log("BNT News 오퀴즈 크롤링 오늘 날짜가 아닙니다.");
   }
 };
 
