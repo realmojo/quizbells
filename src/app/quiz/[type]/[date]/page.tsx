@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 
+export const runtime = 'edge';
+
 import ImageComponents from "@/components/ImageComponets";
 import { format, parseISO } from "date-fns";
 import { getQuitItem } from "@/utils/utils";

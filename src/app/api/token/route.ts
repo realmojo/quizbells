@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 
+export const runtime = 'edge';
+
 // 한국 시간(KST, UTC+9)으로 현재 날짜/시간 가져오기
 const getKoreaTimeISOString = (): string => {
   const now = new Date();

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 
+export const runtime = 'edge';
+
 // ✅ 게시글 1개 조회 API (Supabase)
 export async function GET(req: NextRequest) {
   try {

@@ -2,6 +2,8 @@ import PostComponent from "@/components/PostComponent";
 import { getPost } from "@/utils/api";
 import { getPlainTextFromFirstParagraph, getQuitItem } from "@/utils/utils";
 
+export const runtime = 'edge';
+
 export async function generateMetadata({
   params,
 }: {

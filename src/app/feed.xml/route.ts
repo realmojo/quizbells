@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { quizItems } from "@/utils/utils";
 
+export const runtime = 'edge';
+
 import moment from "moment-timezone";
 
 const getKoreaDate = () => {

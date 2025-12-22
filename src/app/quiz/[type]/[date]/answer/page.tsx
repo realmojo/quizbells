@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { format, parseISO } from "date-fns";
 import { getQuitItem } from "@/utils/utils";
+
+export const runtime = 'edge';
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Calendar, Lightbulb } from "lucide-react";
 import AppOpen from "@/components/AppOpen";

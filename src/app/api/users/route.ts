@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 
+export const runtime = 'edge';
+
 // ✅ user 정보 가져오기
 export async function GET(req: NextRequest) {
   try {

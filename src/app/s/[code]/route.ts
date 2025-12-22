@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { format } from "date-fns";
 
+export const runtime = 'edge';
+
 export async function GET(
   req: NextRequest,
   props: { params: Promise<{ code: string }> }

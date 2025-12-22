@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { messaging } from "@/lib/firebase-admin"; // firebase-admin 초기화된 인스턴스
 
+export const runtime = 'edge';
+
 // ✅ POST 요청 처리
 export async function POST(req: NextRequest) {
   try {

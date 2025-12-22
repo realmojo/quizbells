@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
     unoptimized: false, // Cloudflare Pages는 이미지 최적화를 지원
   },
   // Cloudflare Pages를 위한 추가 설정
+  // API Routes가 있으므로 output: 'export'는 사용하지 않습니다
+  // Cloudflare Pages가 자동으로 Edge Functions로 변환합니다
 };
 
 export default nextConfig;

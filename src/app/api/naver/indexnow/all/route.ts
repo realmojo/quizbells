@@ -1,6 +1,8 @@
 import { quizItems } from "@/utils/utils";
 import { NextResponse } from "next/server";
 
+export const runtime = 'edge';
+
 export async function GET() {
   const host = "quizbells.com";
   const key = "b21c58144b521f5656d122efdeaa208f";

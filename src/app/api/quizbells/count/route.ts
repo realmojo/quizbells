@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 
+export const runtime = 'edge';
+
 // ✅ 퀴즈 정답 참여자 수 조회 API
 // 테이블: quizbells_answer_count
 export async function GET(req: NextRequest) {
