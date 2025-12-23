@@ -6,7 +6,6 @@ export const runtime = "edge";
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Calendar, Lightbulb } from "lucide-react";
 import AppOpen from "@/components/AppOpen";
-import CoupangPartnerAd from "@/components/CoupangPartnerAd";
 import { Fragment } from "react";
 import EventLink from "@/components/EventLink";
 import PWAInstallButton from "@/components/PWAInstallButton";

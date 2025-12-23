@@ -35,7 +35,11 @@ export const getQuizbells = async (
   answerDate: string
 ): Promise<any | null> => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    // 클라이언트에서는 상대 경로 사용, 서버에서는 절대 경로 사용
+    const isClient = typeof window !== "undefined";
+    const baseUrl = isClient
+      ? ""
+      : process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const url = `${baseUrl}/api/quizbells?type=${type}&answerDate=${answerDate}`;
 
     const res = await fetch(url, {
@@ -53,6 +57,37 @@ export const getQuizbells = async (
   } catch (error) {
     console.error("getQuizbells 오류:", error);
     return null;
+  }
+};
+
+// ✅ 오늘 날짜의 모든 퀴즈 타입 정답 조회 (한 번에)
+export const getTodayQuizbells = async (
+  answerDate: string,
+  isNew: boolean = false
+): Promise<Record<string, any> | Record<string, boolean>> => {
+  try {
+    // 클라이언트에서는 상대 경로 사용, 서버에서는 절대 경로 사용
+    const isClient = typeof window !== "undefined";
+    const baseUrl = isClient
+      ? ""
+      : process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const url = `${baseUrl}/api/quizbells/today?answerDate=${answerDate}${isNew ? "&isNew=true" : ""}`;
+
+    const res = await fetch(url, {
+      cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+    });
+
+    if (!res.ok) {
+      console.error(`API 호출 실패: ${res.status} ${res.statusText}`);
+      return {};
+    }
+
+    const data = await res.json();
+
+    return data || {};
+  } catch (error) {
+    console.error("getTodayQuizbells 오류:", error);
+    return {};
   }
 };
 

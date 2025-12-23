@@ -13,7 +13,6 @@ import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Lightbulb, Calendar } from "lucide-react";
 import { subDays } from "date-fns";
 import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
-import CoupangPartnerAd from "@/components/CoupangPartnerAd";
 import EventLink from "@/components/EventLink";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";

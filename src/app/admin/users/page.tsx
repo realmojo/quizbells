@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
-import { Users, Search, UserCheck, Bell, Settings } from "lucide-react";
+import { Users, Search, UserCheck, Bell } from "lucide-react";
 
 const LIMIT = 20; // 한 페이지당 사용자 수
 
@@ -302,9 +302,7 @@ export default function AdminUsersPage() {
                         {user.userId || "-"}
                       </TableCell>
                       <TableCell className="font-mono text-xs">
-                        {user.token
-                          ? `${user.token.substring(0, 20)}...`
-                          : "-"}
+                        {user.token ? `${user.token.substring(0, 20)}...` : "-"}
                       </TableCell>
                       <TableCell>
                         <span
@@ -387,4 +385,3 @@ export default function AdminUsersPage() {
     </div>
   );
 }
-

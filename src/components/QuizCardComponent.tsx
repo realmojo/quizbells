@@ -5,6 +5,8 @@ import { format } from "date-fns";
 import { quizItems } from "@/utils/utils";
 import { Card, CardContent } from "./ui/card";
 import { useAppStore } from "@/store/useAppStore";
+import { useEffect, useState } from "react";
+import { getTodayQuizbells } from "@/utils/api";
 
 interface QuizCardComponentProps {
   viewType?: "grid" | "list";
@@ -18,6 +20,102 @@ export default function QuizCardComponent({
   const isToday = format(date, "yyyy-MM-dd") === format(today, "yyyy-MM-dd");
   const answerDate = format(date, "yyyy-MM-dd");
 
+  // 오늘 날짜의 퀴즈 정답 존재 여부 (한 번만 API 호출)
+  const [hasAnswers, setHasAnswers] = useState<Record<string, boolean>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [hiddenBadges, setHiddenBadges] = useState<Set<string>>(new Set());
+
+  const STORAGE_KEY = "hideQuizBadgeDate";
+
+  const setHideBadgeStorage = (dateStr: string, type: string) => {
+    if (typeof window === "undefined") return;
+    try {
+      const key = `${STORAGE_KEY}_${type}`;
+      localStorage.setItem(key, dateStr);
+    } catch (e) {
+      console.error("배지 숨김 상태 저장 실패:", e);
+    }
+  };
+
+  const getHideBadgeStorage = (type: string): string | null => {
+    if (typeof window === "undefined") return null;
+    try {
+      const key = `${STORAGE_KEY}_${type}`;
+      return localStorage.getItem(key);
+    } catch (e) {
+      console.error("배지 숨김 상태 조회 실패:", e);
+      return null;
+    }
+  };
+
+  // 한국 시간으로 오늘 날짜 계산
+  const getKoreaDate = (): string => {
+    const now = new Date();
+    const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+    const koreaTime = new Date(utcTime + 9 * 60 * 60 * 1000); // UTC+9
+    return format(koreaTime, "yyyy-MM-dd");
+  };
+
+  // 배지 노출 여부를 로컬스토리지로 제어
+  useEffect(() => {
+    if (!isToday) {
+      setHiddenBadges(new Set());
+      return;
+    }
+    const todayDate = getKoreaDate();
+    const hidden = new Set<string>();
+    quizItems.forEach((quiz) => {
+      const stored = getHideBadgeStorage(quiz.type);
+      if (stored === todayDate) {
+        hidden.add(quiz.type);
+      }
+    });
+    setHiddenBadges(hidden);
+  }, [isToday]);
+
+  useEffect(() => {
+    // 오늘 날짜일 때만 API 호출
+    if (!isToday) {
+      setIsLoading(false);
+      return;
+    }
+
+    // 한 번만 모든 퀴즈 타입의 정답 존재 여부 확인
+    const checkAllAnswers = async () => {
+      try {
+        const todayDate = getKoreaDate();
+
+        // 한 번의 API 호출로 모든 퀴즈 타입의 오늘 날짜 정답 존재 여부만 조회 (isNew=true)
+        const data = (await getTodayQuizbells(todayDate, true)) as Record<
+          string,
+          boolean
+        >;
+
+        // API에서 이미 boolean 값으로 반환되므로 그대로 사용
+        setHasAnswers(data);
+      } catch (error) {
+        console.error("퀴즈 정답 확인 오류:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAllAnswers();
+  }, [isToday]);
+
+  const handleCardClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    type: string,
+    todayDate: string
+  ) => {
+    // 배지가 표시되어 있고 아직 숨겨지지 않았다면 배지 숨김 처리
+    if (isToday && !isLoading && hasAnswers[type] && !hiddenBadges.has(type)) {
+      setHideBadgeStorage(todayDate, type);
+      setHiddenBadges((prev) => new Set(prev).add(type));
+    }
+    // 페이지 이동은 정상적으로 진행됨
+  };
+
   return viewType === "grid" ? (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {quizItems.map((quiz) => {
@@ -29,6 +127,7 @@ export default function QuizCardComponent({
             key={quiz.type}
             target="_self"
             className="block group"
+            onClick={(e) => handleCardClick(e, quiz.type, getKoreaDate())}
           >
             <Card className="h-full border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden rounded-2xl ring-1 ring-slate-900/5 dark:ring-white/10">
               <CardContent className="p-0">
@@ -42,6 +141,15 @@ export default function QuizCardComponent({
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* 오늘 정답이 있으면 빨간색 동그라미 배지 표시 */}
+                  {isToday &&
+                    !isLoading &&
+                    hasAnswers[quiz.type] &&
+                    !hiddenBadges.has(quiz.type) && (
+                      <div className="absolute top-2 right-2 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center shadow-lg z-10 animate-pulse ring-2 ring-red-300 ring-offset-2">
+                        <span className="text-white font-bold text-sm">N</span>
+                      </div>
+                    )}
                 </div>
                 <div className="p-4">
                   <h2 className="text-base font-bold text-slate-900 dark:text-white mb-1 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
@@ -68,6 +176,7 @@ export default function QuizCardComponent({
             key={quiz.type}
             target="_self"
             className="block group"
+            onClick={(e) => handleCardClick(e, quiz.type, getKoreaDate())}
           >
             <Card className="border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden rounded-xl ring-1 ring-slate-900/5 dark:ring-white/10">
               <CardContent className="flex p-0">
@@ -79,6 +188,15 @@ export default function QuizCardComponent({
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                     priority
                   />
+                  {/* 오늘 정답이 있으면 빨간색 동그라미 배지 표시 */}
+                  {isToday &&
+                    !isLoading &&
+                    hasAnswers[quiz.type] &&
+                    !hiddenBadges.has(quiz.type) && (
+                      <div className="absolute top-1 right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center shadow-lg z-10 animate-pulse ring-2 ring-red-300 ring-offset-1">
+                        <span className="text-white font-bold text-xs">N</span>
+                      </div>
+                    )}
                 </div>
                 <div className="flex flex-col justify-center p-4">
                   <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
