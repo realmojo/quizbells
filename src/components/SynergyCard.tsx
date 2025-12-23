@@ -52,7 +52,7 @@ export default function SynergyCard({
   return (
     <a
       // href="/quiz/curiosity/today"
-      href="https://pflow.app"
+      href="https://pflow.app/calculator/fomo"
       target="_blank"
       className="group relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
     >
