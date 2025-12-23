@@ -62,8 +62,6 @@ export default function SynergyCard({
       />
 
       {/* Decorative Circles */}
-      <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 rounded-full bg-white/10 blur-xl" />
-      <div className="absolute bottom-0 left-0 -mb-4 -ml-4 w-20 h-20 rounded-full bg-black/10 blur-lg" />
 
       <div className="relative p-5 flex items-center justify-between gap-4">
         <div className="flex-1">
