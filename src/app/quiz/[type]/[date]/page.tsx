@@ -438,13 +438,9 @@ export default async function QuizPage({ params }: QuizPageParams) {
             itemType="https://schema.org/WebPage"
           >
             {/* Header Section */}
-            <div className="mb-8 px-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 text-sm font-medium mb-4">
-                <Calendar className="w-4 h-4" />
-                <span>{answerDateString}</span>
-              </div>
+            <div className="mb-4 px-4">
               <h1
-                className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-indigo-600 dark:from-white dark:to-indigo-400 mb-4 leading-tight"
+                className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-indigo-600 dark:from-white dark:to-indigo-400 leading-tight"
                 itemProp="headline"
               >
                 {h1Title}
@@ -520,7 +516,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     📌 <span>{quiz.type}</span>
                   </div>
                   <h2
-                    className="text-xl font-bold text-slate-900 dark:text-white mb-4"
+                    className="text-md font-bold text-slate-900 dark:text-white mb-4"
                     itemProp="name"
                   >
                     {quiz.isToday ? (
@@ -548,7 +544,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                             <CheckCircle2 className="w-6 h-6 text-white" />
                           </div>
                           <div>
-                            <div className="text-sm font-medium text-emerald-700 dark:text-emerald-300 mb-1">
+                            <div className="text-xl font-medium text-emerald-700 dark:text-emerald-300 mb-1">
                               정답 확인하기
                             </div>
                             <div className="text-xs text-emerald-600 dark:text-emerald-400">

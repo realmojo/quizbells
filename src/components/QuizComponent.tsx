@@ -25,6 +25,7 @@ import { quizItems } from "@/utils/utils";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import EventLink from "./EventLink";
+import EarningsSummary from "@/components/EarningsSummary";
 
 // PWA 설치 프롬프트 이벤트 타입
 interface BeforeInstallPromptEvent extends Event {
@@ -178,7 +179,7 @@ export default function QuizPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-purple-950">
       <article className="max-w-3xl mx-auto px-4 py-12">
         {/* Header Section */}
-        <header className="text-center mb-12 space-y-4">
+        <header className="text-center mb-4 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-sm font-medium mb-2">
             <Sparkles className="w-4 h-4" />
             <span>매일 업데이트되는 정답</span>
@@ -186,12 +187,10 @@ export default function QuizPage() {
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">
             오늘의 앱테크 퀴즈
           </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            다양한 앱의 퀴즈 정답을 한곳에서 확인하세요.
-            <br className="hidden md:block" /> 정답을 맞추고 포인트를 적립하여
-            스마트한 앱테크를 시작해보세요.
-          </p>
         </header>
+
+        {/* 오늘 예상 수익 요약 */}
+        <EarningsSummary />
         {/* <EmailSubscribe /> */}
         {/* Controls Section */}
         <nav
