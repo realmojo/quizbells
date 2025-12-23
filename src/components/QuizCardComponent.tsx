@@ -146,8 +146,13 @@ export default function QuizCardComponent({
                     !isLoading &&
                     hasAnswers[quiz.type] &&
                     !hiddenBadges.has(quiz.type) && (
-                      <div className="absolute top-2 right-2 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center shadow-lg z-10 animate-pulse ring-2 ring-red-300 ring-offset-2">
-                        <span className="text-white font-bold text-sm">N</span>
+                      <div className="absolute top-2 right-2 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center shadow-lg z-10 animate-pulse ring-2 ring-red-300 ring-offset-2">
+                        <span
+                          className="text-white font-bold"
+                          style={{ fontSize: "10px", marginRight: "1px" }}
+                        >
+                          N
+                        </span>
                       </div>
                     )}
                 </div>
