@@ -76,7 +76,7 @@ export default function AppTechTipsPage() {
               <TrendingUp className="w-4 h-4" />
               <span>실전 노하우 공개</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-orange-600 dark:from-amber-400 dark:to-orange-400">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-linear-to-br from-amber-600 to-orange-600 dark:from-amber-400 dark:to-orange-400">
               앱테크 고수가 되는 법
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
@@ -120,7 +120,7 @@ export default function AppTechTipsPage() {
                 <article className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/50 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                   {/* Badge */}
                   <div className="flex items-center justify-between mb-3">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 text-amber-700 dark:text-amber-300 text-xs font-bold">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-linear-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 text-amber-700 dark:text-amber-300 text-xs font-bold">
                       <Lightbulb className="w-3.5 h-3.5" />
                       <span>TIP #{index + 1}</span>
                     </div>

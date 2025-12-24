@@ -194,7 +194,7 @@ export default function EventPage() {
           <div className="inline-flex items-center justify-center p-3 bg-red-100 dark:bg-red-900/30 rounded-2xl mb-4">
             <Gift className="w-8 h-8 text-red-600 dark:text-red-400" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-pink-600 dark:from-red-400 dark:to-pink-400">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-linear-to-br from-red-600 to-pink-600 dark:from-red-400 dark:to-pink-400">
             진행중인 이벤트
           </h1>
           <p className="text-slate-600 dark:text-slate-400 mt-2">

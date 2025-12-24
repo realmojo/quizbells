@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
             <Shield className="w-4 h-4" />
             <span>개인정보 보호</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-linear-to-br from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400">
             개인정보처리방침
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">

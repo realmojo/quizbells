@@ -120,7 +120,7 @@ export default function PWAInstallButton() {
       <Button
         onClick={handleInstall}
         disabled={isInstalling}
-        className="w-full px-6 py-6 text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+        className="w-full px-6 py-6 text-lg font-bold bg-linear-to-br from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
       >
         {isInstalling ? "설치 중..." : "🔔 퀴즈 정답 알림 받기"}
       </Button>

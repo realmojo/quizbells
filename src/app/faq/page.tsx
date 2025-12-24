@@ -91,7 +91,7 @@ export default function FAQPage() {
             <HelpCircle className="w-4 h-4" />
             <span>궁금한 점이 있으신가요?</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-linear-to-br from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400">
             자주 묻는 질문
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">

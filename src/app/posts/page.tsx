@@ -129,7 +129,7 @@ export default function PostPage() {
             <BookOpen className="w-4 h-4" />
             <span>최신 콘텐츠</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-linear-to-br from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
             콘텐츠 목록
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">

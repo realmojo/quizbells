@@ -65,7 +65,7 @@ export default function AboutPage() {
             <Rocket className="w-4 h-4" />
             <span>앱테크의 시작</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-linear-to-br from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400">
             퀴즈벨 소개
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">

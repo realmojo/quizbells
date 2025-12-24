@@ -184,7 +184,7 @@ export default function QuizPage() {
             <Sparkles className="w-4 h-4" />
             <span>매일 업데이트되는 정답</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-linear-to-br from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">
             오늘의 앱테크 퀴즈
           </h1>
         </header>
@@ -262,7 +262,7 @@ export default function QuizPage() {
               }}
               className="group relative w-full sm:w-auto sm:flex-1 max-w-xs overflow-hidden bg-linear-to-br from-emerald-500 via-green-500 to-teal-600 hover:from-emerald-600 hover:via-green-600 hover:to-teal-700 text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 rounded-2xl py-6 px-8 border border-emerald-400/30 hover:border-emerald-300/50"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <div className="absolute inset-0 bg-linear-to-br from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               <div className="relative flex items-center justify-center gap-3">
                 <svg
                   className="w-6 h-6"
@@ -282,7 +282,7 @@ export default function QuizPage() {
               }}
               className="group relative w-full sm:w-auto sm:flex-1 max-w-xs overflow-hidden bg-linear-to-br from-slate-700 via-slate-800 to-slate-900 hover:from-slate-600 hover:via-slate-700 hover:to-slate-800 text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 rounded-2xl py-6 px-8 border border-slate-500/30 hover:border-slate-400/50 dark:from-slate-600 dark:via-slate-700 dark:to-slate-900 dark:hover:from-slate-500 dark:hover:via-slate-600 dark:hover:to-slate-800"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <div className="absolute inset-0 bg-linear-to-br from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               <div className="relative flex items-center justify-center gap-3">
                 <svg
                   className="w-6 h-6"

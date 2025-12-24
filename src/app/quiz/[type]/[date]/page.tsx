@@ -10,7 +10,7 @@ import SocialShare from "@/components/SocialShare";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { getQuizbells } from "@/utils/api";
-import { CheckCircle2, Lightbulb } from "lucide-react";
+import { CheckCircle2, Lightbulb, ArrowRight } from "lucide-react";
 import { subDays } from "date-fns";
 import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
 import EventLink from "@/components/EventLink";
@@ -441,7 +441,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
             {/* Header Section */}
             <div className="mb-4 px-4">
               <h1
-                className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-indigo-600 dark:from-white dark:to-indigo-400 leading-tight"
+                className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-linear-to-br from-slate-900 to-indigo-600 dark:from-white dark:to-indigo-400 leading-tight"
                 itemProp="headline"
               >
                 {h1Title}
@@ -502,9 +502,56 @@ export default async function QuizPage({ params }: QuizPageParams) {
               </div>
             )}
 
+            {/* 요약 CTA - 문제 리스트 위 */}
+            {contents.length > 0 && (
+              <div className="mb-6 bg-linear-to-br from-emerald-50 via-green-50 to-teal-50 dark:from-emerald-900/20 dark:via-green-900/20 dark:to-teal-900/20 border-2 border-emerald-200 dark:border-emerald-800 p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="flex items-start gap-4">
+                  {/* <div className="shrink-0 w-12 h-12 rounded-full bg-emerald-500 dark:bg-emerald-600 flex items-center justify-center text-2xl">
+                    💰
+                  </div> */}
+                  <div className="flex-1">
+                    <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">
+                      💰 {item.typeKr} {item.title} 요약
+                    </h2>
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                        <span className="font-semibold">총 문제 수:</span>
+                        <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                          {contents.length}개
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                        <span className="font-semibold">예상 적립:</span>
+                        <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                          약 {Math.round(contents.length * 50)} ~{" "}
+                          {Math.round(contents.length * 200)}원
+                        </span>
+                      </div>
+                    </div>
+                    <a
+                      href={`/quiz/${type}/${date === "today" ? "today" : answerDate}/answer`}
+                      target="_self"
+                      className="w-full group relative inline-flex items-center justify-center gap-3 px-8 py-6 bg-linear-to-r from-emerald-500 via-green-500 to-teal-500 hover:from-emerald-600 hover:via-green-600 hover:to-teal-600 dark:from-emerald-600 dark:via-green-600 dark:to-teal-600 dark:hover:from-emerald-500 dark:hover:via-green-500 dark:hover:to-teal-500 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 animate-pulse hover:animate-none ring-4 ring-emerald-200/50 dark:ring-emerald-800/50 hover:ring-emerald-300/70 dark:hover:ring-emerald-700/70 overflow-hidden"
+                    >
+                      {/* 반짝이는 배경 효과 */}
+                      <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+
+                      {/* 텍스트와 아이콘 */}
+                      <span className="relative z-10 flex items-center gap-3">
+                        <span className="text-xl">👉</span>
+                        <span>정답 바로 보기</span>
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {contents.map((quiz: any, idx: number) => (
               <Fragment key={idx}>
                 <section
+                  id={`quiz-${idx}`}
                   key={idx}
                   className="mb-4 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800 hover:shadow-lg transition-all duration-300"
                   itemScope

@@ -64,7 +64,7 @@ export default async function TipDetailPage({
               요청하신 팁이 존재하지 않습니다.
             </p>
             <a href="/tips" target="_self">
-              <Button className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+              <Button className="bg-linear-to-br from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
                 <ArrowLeft className="w-4 h-4 mr-2" />팁 목록으로 돌아가기
               </Button>
             </a>
@@ -101,7 +101,7 @@ export default async function TipDetailPage({
         <article className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl shadow-lg border border-white/50 dark:border-slate-800 overflow-hidden mb-8">
           {/* Header */}
           <header className="p-8 md:p-10 border-b border-slate-200 dark:border-slate-800">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 text-amber-700 dark:text-amber-300 text-sm font-bold mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-linear-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 text-amber-700 dark:text-amber-300 text-sm font-bold mb-4">
               <Lightbulb className="w-4 h-4" />
               <span>TIP #{tip.id}</span>
             </div>

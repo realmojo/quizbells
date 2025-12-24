@@ -226,7 +226,7 @@ export default function InstallPromptBanner({
                 setIsSheetOpen(false);
                 await setSettings();
               }}
-              className="w-full h-14 text-lg font-bold rounded-xl bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 dark:from-white dark:to-slate-200 dark:text-slate-900 dark:hover:from-slate-200 dark:hover:to-slate-300 shadow-lg hover:shadow-xl transition-all duration-300"
+              className="w-full h-14 text-lg font-bold rounded-xl bg-linear-to-br from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 dark:from-white dark:to-slate-200 dark:text-slate-900 dark:hover:from-slate-200 dark:hover:to-slate-300 shadow-lg hover:shadow-xl transition-all duration-300"
             >
               알림 받고 시작하기
             </Button>

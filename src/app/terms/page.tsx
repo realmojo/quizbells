@@ -37,7 +37,7 @@ export default function TermsPage() {
             <Scale className="w-4 h-4" />
             <span>서비스 이용 약관</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-linear-to-br from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400">
             이용약관
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">

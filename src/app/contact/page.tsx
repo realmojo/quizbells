@@ -19,7 +19,7 @@ export default function ContactPage() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center py-20 px-4">
       <div className="w-full max-w-3xl bg-white dark:bg-slate-900 rounded-3xl shadow-xl overflow-hidden border border-slate-200 dark:border-slate-800 relative">
         {/* Decorative Background Elements */}
-        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500" />
+        <div className="absolute top-0 left-0 w-full h-2 bg-linear-to-br from-purple-500 via-indigo-500 to-blue-500" />
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl" />
 
@@ -29,7 +29,7 @@ export default function ContactPage() {
               <Mail className="w-10 h-10 text-purple-600 dark:text-purple-400" />
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
+            <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-br from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
               Contact Us
             </h1>
 

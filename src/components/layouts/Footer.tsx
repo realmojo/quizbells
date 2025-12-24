@@ -20,7 +20,7 @@ export default function Footer() {
                 height={40}
                 className="rounded-lg shadow-sm"
               />
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
+              <span className="text-xl font-bold bg-clip-text text-transparent bg-linear-to-br from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
                 QUIZBELLS
               </span>
             </div>

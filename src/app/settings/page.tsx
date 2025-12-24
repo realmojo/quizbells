@@ -64,7 +64,7 @@ export default function SettingsPage() {
               <Settings className="w-4 h-4" />
               <span>환경설정</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-gray-600 dark:from-white dark:to-gray-400">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-linear-to-br from-slate-900 to-gray-600 dark:from-white dark:to-gray-400">
               설정
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
