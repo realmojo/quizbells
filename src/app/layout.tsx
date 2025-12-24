@@ -11,7 +11,7 @@ import RegisterServiceWorker from "@/app/register-service-worker";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import NaverAnalyticsTracker from "@/components/NaverAnalyticsTracker";
 import "./globals.css";
-
+import Script from "next/script";
 import SendAuthToSW from "@/components/SendAuthToSW";
 // import InstallPromptBanner from "@/components/InstallPromptBanner";
 import ForegroundNotification from "@/components/ForegroundNotification";
@@ -111,15 +111,21 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <script id="naver-analytics" src="//wcs.naver.net/wcslog.js" />
-        <script
+        <Script
+          strategy="beforeInteractive"
+          id="naver-analytics"
+          src="//wcs.naver.net/wcslog.js"
+        />
+        <Script
+          strategy="beforeInteractive"
           id="naver-analytics-init"
           dangerouslySetInnerHTML={{
             __html:
               'if(!wcs_add) var wcs_add = {}; wcs_add["wa"] = "136538e329b3cb0"; if(window.wcs) {wcs_do();}',
           }}
         />
-        <script
+        <Script
+          strategy="beforeInteractive"
           id="google-tag-manager"
           dangerouslySetInnerHTML={{
             __html:
@@ -127,11 +133,13 @@ export default async function RootLayout({
           }}
         />
         {/* Google Analytics */}
-        <script
+        <Script
+          strategy="beforeInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-4009JNVXBL"
           async
         />
-        <script
+        <Script
+          strategy="beforeInteractive"
           id="google-analytics"
           dangerouslySetInnerHTML={{
             __html: `
@@ -144,7 +152,8 @@ export default async function RootLayout({
           `,
           }}
         />
-        <script
+        <Script
+          strategy="beforeInteractive"
           id="clarity-tracking"
           dangerouslySetInnerHTML={{
             __html: `(function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt"; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "umxzbajlwf");`,
@@ -152,7 +161,8 @@ export default async function RootLayout({
         />
         <GoogleAdSense />
         {/* 구조화된 데이터 (Schema.org JSON-LD) - Organization & Ariticle */}
-        <script
+        <Script
+          strategy="beforeInteractive"
           id="structured-data-organization"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -170,7 +180,8 @@ export default async function RootLayout({
             }),
           }}
         />
-        <script
+        <Script
+          strategy="beforeInteractive"
           id="structured-data-webapp"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
