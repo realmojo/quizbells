@@ -10,6 +10,7 @@ import { Fragment } from "react";
 import EventLink from "@/components/EventLink";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import Adsense from "@/components/Adsense";
+import QuizFeedback from "@/components/QuizFeedback";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 // Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
@@ -248,9 +249,22 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
                     </div>
                   )}
                 </article>
+                {idx === 0 && (
+                  <div className="mt-4 mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <QuizFeedback
+                      type={type}
+                      date={
+                        date === "today"
+                          ? format(getKoreaDate(), "yyyy-MM-dd")
+                          : answerDate
+                      }
+                    />
+                  </div>
+                )}
               </Fragment>
             ))}
           </div>
+
           <EventLink />
 
           {/* App Open Button - 정답 아래에 배치 */}
