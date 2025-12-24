@@ -25,7 +25,7 @@ export default function ContactPage() {
 
         <div className="p-8 md:p-16 text-center space-y-10 relative z-10">
           <div className="space-y-4">
-            <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-100 to-indigo-100 dark:from-purple-900/30 dark:to-indigo-900/30 rounded-full flex items-center justify-center mb-6 shadow-sm">
+            <div className="w-20 h-20 mx-auto bg-linear-to-br from-purple-100 to-indigo-100 dark:from-purple-900/30 dark:to-indigo-900/30 rounded-full flex items-center justify-center mb-6 shadow-sm">
               <Mail className="w-10 h-10 text-purple-600 dark:text-purple-400" />
             </div>
 

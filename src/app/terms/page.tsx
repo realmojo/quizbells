@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-slate-50 dark:from-indigo-950 dark:via-blue-950 dark:to-slate-950">
+    <div className="min-h-screen bg-linear-to-br from-indigo-50 via-blue-50 to-slate-50 dark:from-indigo-950 dark:via-blue-950 dark:to-slate-950">
       <main className="mx-auto max-w-3xl px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12 space-y-4">

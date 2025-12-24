@@ -153,7 +153,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950">
       <div className="max-w-xl mx-auto pt-6 pb-4">
         <section
           id="quiz-content"
@@ -209,7 +209,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
                   </h2>
 
                   <div
-                    className="rounded-xl border-2 border-emerald-200 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/50 dark:to-green-950/50 px-5 py-4 shadow-sm"
+                    className="rounded-xl border-2 border-emerald-200 dark:border-emerald-800 bg-linear-to-br from-emerald-50 to-green-50 dark:from-emerald-950/50 dark:to-green-950/50 px-5 py-4 shadow-sm"
                     itemProp="acceptedAnswer"
                     itemScope
                     itemType="https://schema.org/Answer"
@@ -229,7 +229,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
                   </div>
                   {quiz.otherAnswers?.length > 0 && (
                     <div
-                      className="rounded-xl border-2 border-amber-200 dark:border-amber-800 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/50 dark:to-yellow-950/50 px-5 py-4 shadow-sm mt-4"
+                      className="rounded-xl border-2 border-amber-200 dark:border-amber-800 bg-linear-to-br from-amber-50 to-yellow-50 dark:from-amber-950/50 dark:to-yellow-950/50 px-5 py-4 shadow-sm mt-4"
                       itemProp="suggestedAnswer"
                       itemScope
                       itemType="https://schema.org/SuggestedAnswer"

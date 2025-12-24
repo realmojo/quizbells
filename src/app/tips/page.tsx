@@ -68,7 +68,7 @@ export default function AppTechTipsPage() {
         ></script>
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-orange-950 dark:to-amber-950">
+      <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-orange-950 dark:to-amber-950">
         <main className="mx-auto max-w-3xl px-4 py-12">
           {/* Header Section */}
           <div className="text-center mb-12 space-y-4">
@@ -152,7 +152,7 @@ export default function AppTechTipsPage() {
           </div>
 
           {/* CTA Section */}
-          <div className="mt-12 bg-gradient-to-br from-amber-500 to-orange-500 dark:from-amber-600 dark:to-orange-600 rounded-3xl p-8 md:p-10 text-center shadow-lg">
+          <div className="mt-12 bg-linear-to-br from-amber-500 to-orange-500 dark:from-amber-600 dark:to-orange-600 rounded-3xl p-8 md:p-10 text-center shadow-lg">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
               <Sparkles className="w-8 h-8 text-white" />
             </div>

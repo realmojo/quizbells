@@ -11,7 +11,7 @@ import React from "react";
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-sky-50 dark:from-blue-950 dark:via-cyan-950 dark:to-sky-950">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-cyan-50 to-sky-50 dark:from-blue-950 dark:via-cyan-950 dark:to-sky-950">
       <main className="mx-auto max-w-3xl px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12 space-y-4">

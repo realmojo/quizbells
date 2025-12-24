@@ -56,7 +56,7 @@ export default function SettingsPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-50 dark:from-slate-950 dark:via-gray-950 dark:to-zinc-950">
+      <div className="min-h-screen bg-linear-to-br from-slate-50 via-gray-50 to-zinc-50 dark:from-slate-950 dark:via-gray-950 dark:to-zinc-950">
         <div className="max-w-3xl mx-auto px-4 py-12">
           {/* Header Section */}
           <div className="text-center mb-12 space-y-4">

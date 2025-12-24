@@ -57,7 +57,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-green-50 dark:from-emerald-950 dark:via-teal-950 dark:to-green-950">
+    <div className="min-h-screen bg-linear-to-br from-emerald-50 via-teal-50 to-green-50 dark:from-emerald-950 dark:via-teal-950 dark:to-green-950">
       <main className="mx-auto max-w-3xl px-4 py-12">
         {/* Header Section */}
         <div className="text-center mb-12 space-y-4">
@@ -102,8 +102,8 @@ export default function AboutPage() {
               </div>
               <div className="w-full md:w-1/3 flex justify-center">
                 <div className="relative w-32 h-32">
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-200 to-teal-200 dark:from-emerald-800 dark:to-teal-800 rounded-full blur-2xl opacity-50 animate-pulse" />
-                  <div className="relative w-full h-full bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl rotate-6 flex items-center justify-center shadow-xl">
+                  <div className="absolute inset-0 bg-linear-to-br from-emerald-200 to-teal-200 dark:from-emerald-800 dark:to-teal-800 rounded-full blur-2xl opacity-50 animate-pulse" />
+                  <div className="relative w-full h-full bg-linear-to-br from-emerald-500 to-teal-500 rounded-3xl rotate-6 flex items-center justify-center shadow-xl">
                     <Sparkles className="w-16 h-16 text-white" />
                   </div>
                 </div>
@@ -212,7 +212,7 @@ export default function AboutPage() {
           </section>
 
           {/* Reviews */}
-          <section className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl p-8 text-white shadow-lg">
+          <section className="bg-linear-to-br from-emerald-500 to-teal-600 rounded-3xl p-8 text-white shadow-lg">
             <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
               <Users className="w-5 h-5" />
               사용자 후기

@@ -176,7 +176,7 @@ export default function QuizPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-purple-950">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-purple-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-purple-950">
       <article className="max-w-3xl mx-auto px-4 py-12">
         {/* Header Section */}
         <header className="text-center mb-4 space-y-4">
@@ -260,7 +260,7 @@ export default function QuizPage() {
                 location.href =
                   "https://play.google.com/store/apps/details?id=com.mojoday.quizbells";
               }}
-              className="group relative w-full sm:w-auto sm:flex-1 max-w-xs overflow-hidden bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 hover:from-emerald-600 hover:via-green-600 hover:to-teal-700 text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 rounded-2xl py-6 px-8 border border-emerald-400/30 hover:border-emerald-300/50"
+              className="group relative w-full sm:w-auto sm:flex-1 max-w-xs overflow-hidden bg-linear-to-br from-emerald-500 via-green-500 to-teal-600 hover:from-emerald-600 hover:via-green-600 hover:to-teal-700 text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 rounded-2xl py-6 px-8 border border-emerald-400/30 hover:border-emerald-300/50"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               <div className="relative flex items-center justify-center gap-3">
@@ -280,7 +280,7 @@ export default function QuizPage() {
                 location.href =
                   "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703";
               }}
-              className="group relative w-full sm:w-auto sm:flex-1 max-w-xs overflow-hidden bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:from-slate-600 hover:via-slate-700 hover:to-slate-800 text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 rounded-2xl py-6 px-8 border border-slate-500/30 hover:border-slate-400/50 dark:from-slate-600 dark:via-slate-700 dark:to-slate-900 dark:hover:from-slate-500 dark:hover:via-slate-600 dark:hover:to-slate-800"
+              className="group relative w-full sm:w-auto sm:flex-1 max-w-xs overflow-hidden bg-linear-to-br from-slate-700 via-slate-800 to-slate-900 hover:from-slate-600 hover:via-slate-700 hover:to-slate-800 text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 rounded-2xl py-6 px-8 border border-slate-500/30 hover:border-slate-400/50 dark:from-slate-600 dark:via-slate-700 dark:to-slate-900 dark:hover:from-slate-500 dark:hover:via-slate-600 dark:hover:to-slate-800"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               <div className="relative flex items-center justify-center gap-3">

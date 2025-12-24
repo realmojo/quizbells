@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 export async function generateMetadata({
   params,
@@ -51,10 +51,10 @@ export default async function TipDetailPage({
 
   if (!tip) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-orange-950 dark:to-amber-950">
+      <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-orange-950 dark:to-amber-950">
         <main className="max-w-3xl mx-auto py-20 px-4">
           <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl p-12 text-center shadow-lg border border-white/50 dark:border-slate-800">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 flex items-center justify-center">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-linear-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 flex items-center justify-center">
               <Lightbulb className="w-10 h-10 text-amber-600 dark:text-amber-400" />
             </div>
             <h1 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">
@@ -79,7 +79,7 @@ export default async function TipDetailPage({
   const next = tips[idx + 1];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-orange-950 dark:to-amber-950">
+    <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-orange-950 dark:to-amber-950">
       <div className="max-w-4xl mx-auto px-4 py-12 mb-20">
         {/* Breadcrumb */}
         <div className="mb-8">

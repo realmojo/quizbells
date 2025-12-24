@@ -10,7 +10,7 @@ import SocialShare from "@/components/SocialShare";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { getQuizbells } from "@/utils/api";
-import { CheckCircle2, Lightbulb, Calendar } from "lucide-react";
+import { CheckCircle2, Lightbulb } from "lucide-react";
 import { subDays } from "date-fns";
 import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
 import EventLink from "@/components/EventLink";
@@ -66,7 +66,7 @@ export async function generateMetadata({
   const typeTitle = item?.title || "";
   // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
   // 네이버 모바일 검색 가독성 최적화
-  const fullTitle = `${typeName} ${typeTitle} 정답 ${shortDateLabel} | 퀴즈벨`;
+  const fullTitle = `${typeName} ${typeTitle} 오늘 정답 ${shortDateLabel} | 퀴즈벨`;
 
   // 설명문: 핵심 키워드 전진 배치
   const description = `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
@@ -184,7 +184,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     })();
   }
 
-  const h1Title = `${item.typeKr} ${item.title} 정답 ${shortDateLabel} | 퀴즈벨`;
+  const h1Title = `${item.typeKr} ${item.title} 오늘 정답 ${shortDateLabel} | 퀴즈벨`;
   const firstDescription = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
 
   let quizItem = null;
@@ -431,7 +431,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950">
+      <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950">
         <div className="max-w-xl mx-auto pt-6 pb-40">
           <main
             id="quiz-content"
@@ -482,7 +482,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
             {contents.length === 0 && (
               <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-10 text-center shadow-lg border border-white/50 dark:border-slate-800 mb-10">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 flex items-center justify-center">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-linear-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 flex items-center justify-center">
                   <Lightbulb className="w-10 h-10 text-indigo-600 dark:text-indigo-400" />
                 </div>
                 <p className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">
@@ -534,7 +534,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     className="block mb-3"
                   >
                     <div
-                      className="group rounded-xl border-2 border-emerald-300 dark:border-emerald-700 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 px-6 py-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer"
+                      className="group rounded-xl border-2 border-emerald-300 dark:border-emerald-700 bg-linear-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 px-6 py-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer"
                       itemProp="acceptedAnswer"
                       itemScope
                       itemType="https://schema.org/Answer"

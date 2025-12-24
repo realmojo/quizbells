@@ -58,7 +58,7 @@ export default function SynergyCard({
     >
       {/* Background Gradient */}
       <div
-        className={`absolute inset-0 bg-gradient-to-br ${variant.bgGradient}`}
+        className={`absolute inset-0 bg-linear-to-br ${variant.bgGradient}`}
       />
 
       {/* Decorative Circles */}

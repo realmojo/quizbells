@@ -163,7 +163,7 @@ export default function Header() {
         {/* 왼쪽: 로고 + 제목 */}
         <a href="/" target="_self" className="flex items-center gap-3 group">
           <div
-            className={`w-10 h-10 rounded-xl bg-gradient-to-br ${pageInfo.gradient} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105`}
+            className={`w-10 h-10 rounded-xl bg-linear-to-br ${pageInfo.gradient} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105`}
           >
             <Icon className="w-5 h-5 text-white" />
           </div>

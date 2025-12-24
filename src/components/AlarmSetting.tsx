@@ -106,7 +106,7 @@ export default function InstallPromptBanner({
         >
           <SheetHeader className="p-6 pb-2 text-left space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+              <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
                 <Bell className="w-6 h-6 text-white" />
               </div>
               <div>
