@@ -271,6 +271,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
           <div className="mb-8 px-4">
             <AppOpen type={type} />
           </div>
+          <Adsense slotId="9099705716" format="autorelaxed" />
         </section>
       </div>
     </div>

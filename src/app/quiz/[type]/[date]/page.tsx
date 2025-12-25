@@ -621,6 +621,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
               url={`https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`}
               imageUrl="https://quizbells.com/icons/og-image.png"
             />
+
+            <Adsense slotId="9099705716" format="autorelaxed" />
             {/* Related Quizzes */}
             <section className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">

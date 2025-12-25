@@ -3,11 +3,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, Calculator, TrendingUp, Coins } from "lucide-react";
 
-interface SynergyCardProps {
-  type?: "curiosity" | "motivation" | "comparison";
-  onClick?: () => void;
-}
-
 const copyVariants = [
   {
     icon: Calculator,
@@ -35,10 +30,7 @@ const copyVariants = [
   },
 ];
 
-export default function SynergyCard({
-  type = "curiosity",
-  onClick,
-}: SynergyCardProps) {
+export default function SynergyCard() {
   const [variant, setVariant] = useState(copyVariants[0]);
 
   useEffect(() => {

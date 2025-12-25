@@ -9,9 +9,10 @@ import { useEffect } from "react";
 
 type AdsenseProps = {
   slotId: string;
+  format?: "auto" | "autorelaxed";
 };
 
-export default function Adsense({ slotId }: AdsenseProps) {
+export default function Adsense({ slotId, format = "auto" }: AdsenseProps) {
   const isDev = process.env.NODE_ENV === "development";
 
   /* eslint-disable react-hooks/exhaustive-deps */
@@ -39,7 +40,7 @@ export default function Adsense({ slotId }: AdsenseProps) {
       style={{ display: "block" }}
       data-ad-client="ca-pub-9130836798889522"
       data-ad-slot={slotId}
-      data-ad-format="auto"
+      data-ad-format={format || "auto"}
       data-full-width-responsive="true"
     />
   );
