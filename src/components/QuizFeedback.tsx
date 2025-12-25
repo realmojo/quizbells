@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -17,17 +17,7 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
     null
   );
 
-  useEffect(() => {
-    fetchStats();
-    if (typeof window !== "undefined") {
-      const vote = localStorage.getItem(`feedback_${type}_${date}`);
-      if (vote === "helpful" || vote === "notHelpful") {
-        setHasVoted(vote);
-      }
-    }
-  }, [type, date]);
-
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const res = await fetch(`/api/feedback?type=${type}`);
       if (res.ok) {
@@ -37,7 +27,17 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
     } catch (e) {
       console.error(e);
     }
-  };
+  }, [type]);
+
+  useEffect(() => {
+    fetchStats();
+    if (typeof window !== "undefined") {
+      const vote = localStorage.getItem(`feedback_${type}_${date}`);
+      if (vote === "helpful" || vote === "notHelpful") {
+        setHasVoted(vote);
+      }
+    }
+  }, [type, date, fetchStats]);
 
   const handleVote = async (isHelpful: boolean) => {
     if (hasVoted) {

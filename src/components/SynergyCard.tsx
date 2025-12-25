@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowRight, Calculator, TrendingUp, Coins } from "lucide-react";
 
 const copyVariants = [
@@ -31,13 +31,12 @@ const copyVariants = [
 ];
 
 export default function SynergyCard() {
-  const [variant, setVariant] = useState(copyVariants[0]);
-
-  useEffect(() => {
-    // 랜덤하게 3가지 중 하나 선택 (A/B 테스트 시뮬레이션)
+  // 랜덤하게 3가지 중 하나 선택 (A/B 테스트 시뮬레이션)
+  // useState의 lazy initialization을 사용하여 초기 렌더링 시 한 번만 실행
+  const [variant] = useState(() => {
     const randomIdx = Math.floor(Math.random() * copyVariants.length);
-    setVariant(copyVariants[randomIdx]);
-  }, []);
+    return copyVariants[randomIdx];
+  });
 
   const Icon = variant.icon;
 

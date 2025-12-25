@@ -7,7 +7,6 @@ export const GoogleAdSense: FunctionComponent = () => {
   }
   return (
     <Script
-      strategy="beforeInteractive"
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9130836798889522"
       crossOrigin="anonymous"

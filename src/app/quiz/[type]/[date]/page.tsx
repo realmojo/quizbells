@@ -18,6 +18,7 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import SynergyCard from "@/components/SynergyCard";
+import VisitTracker from "@/components/VisitTracker";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 // Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
@@ -427,6 +428,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
   return (
     <>
+      {/* 방문 기록 추적 (today 페이지일 때만) */}
+      {date === "today" && <VisitTracker type={type} />}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

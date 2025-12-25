@@ -7,6 +7,8 @@ import { Card, CardContent } from "./ui/card";
 import { useAppStore } from "@/store/useAppStore";
 import { useEffect, useState } from "react";
 import { getTodayQuizbells } from "@/utils/api";
+import { sortQuizzesByVisitHistory } from "@/utils/visitHistory";
+import { Skeleton } from "./ui/skeleton";
 
 interface QuizCardComponentProps {
   viewType?: "grid" | "list";
@@ -24,6 +26,10 @@ export default function QuizCardComponent({
   const [hasAnswers, setHasAnswers] = useState<Record<string, boolean>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [hiddenBadges, setHiddenBadges] = useState<Set<string>>(new Set());
+  // 정렬된 퀴즈 목록 (정렬 완료 후에만 설정)
+  const [sortedQuizItems, setSortedQuizItems] = useState<
+    typeof quizItems | null
+  >(null);
 
   const STORAGE_KEY = "hideQuizBadgeDate";
 
@@ -55,6 +61,16 @@ export default function QuizCardComponent({
     const koreaTime = new Date(utcTime + 9 * 60 * 60 * 1000); // UTC+9
     return format(koreaTime, "yyyy-MM-dd");
   };
+
+  // 정렬된 퀴즈 목록 준비 (마운트 시 한 번만 실행)
+  useEffect(() => {
+    // 클라이언트 사이드에서만 실행
+    if (typeof window === "undefined") return;
+
+    // 정렬 수행
+    const sorted = sortQuizzesByVisitHistory(quizItems);
+    setSortedQuizItems(sorted);
+  }, []);
 
   // 배지 노출 여부를 로컬스토리지로 제어
   useEffect(() => {
@@ -116,9 +132,52 @@ export default function QuizCardComponent({
     // 페이지 이동은 정상적으로 진행됨
   };
 
+  // 정렬이 완료될 때까지 로딩 표시
+  if (sortedQuizItems === null) {
+    return viewType === "grid" ? (
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {quizItems.map((quiz) => (
+          <Card
+            key={quiz.type}
+            className="h-full border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm overflow-hidden rounded-2xl ring-1 ring-slate-900/5 dark:ring-white/10"
+          >
+            <CardContent className="p-0">
+              <div className="w-full aspect-square relative overflow-hidden">
+                <Skeleton className="w-full h-full" />
+              </div>
+              <div className="p-4">
+                <Skeleton className="h-5 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    ) : (
+      <div className="flex flex-col space-y-4">
+        {quizItems.map((quiz) => (
+          <Card
+            key={quiz.type}
+            className="border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm overflow-hidden rounded-xl ring-1 ring-slate-900/5 dark:ring-white/10"
+          >
+            <CardContent className="flex p-0">
+              <div className="relative w-24 h-24 flex-shrink-0">
+                <Skeleton className="w-full h-full" />
+              </div>
+              <div className="flex flex-col justify-center p-4 flex-1">
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+
   return viewType === "grid" ? (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      {quizItems.map((quiz) => {
+      {sortedQuizItems.map((quiz) => {
         const href = `/quiz/${quiz.type}/${isToday ? "today" : answerDate}`;
 
         return (
@@ -172,7 +231,7 @@ export default function QuizCardComponent({
     </div>
   ) : (
     <div className="flex flex-col space-y-4">
-      {quizItems.map((quiz) => {
+      {sortedQuizItems.map((quiz) => {
         const href = `/quiz/${quiz.type}/${isToday ? "today" : answerDate}`;
 
         return (
