@@ -13,7 +13,6 @@ import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Lightbulb, ArrowRight } from "lucide-react";
 import { subDays } from "date-fns";
 import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
-import EventLink from "@/components/EventLink";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";
 import PWAInstallButton from "@/components/PWAInstallButton";
@@ -614,7 +613,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
                 {idx === 0 && <SynergyCard />}
               </Fragment>
             ))}
-            <EventLink />
             {/* Description Component */}
             <section className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <DescriptionComponent type={type} />

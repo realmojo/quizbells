@@ -251,7 +251,6 @@ export default function QuizPage() {
 
         {/* 여기 이벤트 페이지 추가 */}
         {/* Event Banner Link */}
-        <EventLink />
         {/* {!isWebView() && (
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
             <Button

@@ -7,7 +7,6 @@ import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Calendar, Lightbulb } from "lucide-react";
 import AppOpen from "@/components/AppOpen";
 import { Fragment } from "react";
-import EventLink from "@/components/EventLink";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import Adsense from "@/components/Adsense";
 import QuizFeedback from "@/components/QuizFeedback";
@@ -264,8 +263,6 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
               </Fragment>
             ))}
           </div>
-
-          <EventLink />
 
           {/* App Open Button - 정답 아래에 배치 */}
           <div className="mb-8 px-4">
