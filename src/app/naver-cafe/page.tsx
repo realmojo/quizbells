@@ -17,7 +17,7 @@ function NaverCafeWriteContent() {
 
   // 카페 목록 상수
   const CAFE_LIST = [
-    { id: "31625508", name: "퀴즈벨 공식 홈" },
+    { id: "31632186", name: "재테크플로우" },
     { id: "22290117", name: "월급쟁이 재테크연구카페" },
     { id: "30786704", name: "정가를 거부하는 사람들" },
     { id: "direct", name: "직접 입력" },
