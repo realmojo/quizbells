@@ -24,7 +24,6 @@ import { useAppStore } from "@/store/useAppStore";
 import { quizItems } from "@/utils/utils";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import EventLink from "./EventLink";
 import EarningsSummary from "@/components/EarningsSummary";
 
 // PWA 설치 프롬프트 이벤트 타입

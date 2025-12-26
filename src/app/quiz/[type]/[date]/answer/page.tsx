@@ -52,8 +52,8 @@ export async function generateMetadata({
 
   const typeName = item?.typeKr || type;
   const typeTitle = item?.title || "";
-  const fullTitle = `${typeName} ${typeTitle} 퀴즈 ${dateLabel} 정답 확인 | 퀴즈벨`;
-  const description = `${typeName} ${typeTitle} 퀴즈 ${dateLabel} 기준 정답을 확인하고, 앱테크 리워드를 적립해 보세요.`;
+  const fullTitle = `${typeName} ${typeTitle} ${dateLabel} 정답 확인 | 퀴즈벨`;
+  const description = `${typeName} ${typeTitle} ${dateLabel} 기준 정답을 확인하고, 앱테크 리워드를 적립해 보세요.`;
 
   return {
     title: fullTitle,
