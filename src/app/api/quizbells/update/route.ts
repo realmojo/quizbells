@@ -15,14 +15,28 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { id, contents, updated } = body;
+    const { id, contents } = body;
 
-    if (!id || !contents || !updated) {
+    if (!id || !contents) {
       return NextResponse.json(
-        { success: false, error: "id, contents, updated는 필수입니다." },
+        { success: false, error: "id, contents는 필수입니다." },
         { status: 400 }
       );
     }
+
+    // 현재 시간을 YYYY-MM-DD HH:mm:ss.microseconds 형식으로 생성
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    const milliseconds = String(now.getMilliseconds()).padStart(3, "0");
+    // 마이크로초는 밀리초를 6자리로 확장 (예: 576 -> 576000)
+    const microseconds = milliseconds.padEnd(6, "0");
+
+    const updated = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${microseconds}`;
 
     const { data, error } = await supabaseAdmin
       .from("quizbells_answer")

@@ -244,7 +244,7 @@ const alarmNotify = async (type) => {
 
       // 1. 알림 자체 비활성화
       if (item.isQuizAlarm !== "Y") {
-        console.log(`🔕 ${item.fcmToken} 유저에게 발송 안 함 (알림 비활성화)`);
+        // console.log(`🔕 ${item.fcmToken} 유저에게 발송 안 함 (알림 비활성화)`);
         continue;
       }
 
@@ -259,9 +259,9 @@ const alarmNotify = async (type) => {
 
       // 4. 조건 체크 후 발송
       if (allowedTypes === "ALL" || allowedTypes.includes(quizType)) {
-        console.log(
-          `🔔 [${getQuizItems(quizType).typeKr}] ${item.fcmToken} 유저에게 발송`
-        );
+        // console.log(
+        //   `🔔 [${getQuizItems(quizType).typeKr}] ${item.fcmToken} 유저에게 발송`
+        // );
         axios.post(`${API_URL}/api/notify`, params);
       } else {
         console.log(
