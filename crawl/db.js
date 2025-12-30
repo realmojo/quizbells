@@ -204,15 +204,14 @@ const insertQuizbells = async (type, contents, answerDate) => {
   }
 };
 
-const updateQuizbells = async (id, contents, updated) => {
-  if (id && contents && updated) {
+const updateQuizbells = async (id, contents) => {
+  if (id && contents) {
     try {
       const url = `${API_URL}/api/quizbells/update`;
 
       const res = await axios.post(url, {
         id,
         contents,
-        updated,
       });
       return res.data;
     } catch (e) {
@@ -472,11 +471,7 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
 
           try {
             await naverIndexNow(type);
-            await updateQuizbells(
-              getItem.id,
-              getItem.contents,
-              getKoreaTime().format("YYYY-MM-DD HH:mm:ss")
-            );
+            await updateQuizbells(getItem.id, getItem.contents);
             shouldNotify = true;
             isNotify = true;
           } catch (e) {

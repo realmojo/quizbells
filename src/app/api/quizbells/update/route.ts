@@ -24,15 +24,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 현재 시간을 YYYY-MM-DD HH:mm:ss.microseconds 형식으로 생성
+    // 현재 시간을 한국 시간(UTC+9)으로 변환하여 YYYY-MM-DD HH:mm:ss.microseconds 형식으로 생성
     const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const seconds = String(now.getSeconds()).padStart(2, "0");
-    const milliseconds = String(now.getMilliseconds()).padStart(3, "0");
+    const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+    const koreaTime = new Date(utcTime + 9 * 60 * 60 * 1000); // UTC+9
+
+    const year = koreaTime.getFullYear();
+    const month = String(koreaTime.getMonth() + 1).padStart(2, "0");
+    const day = String(koreaTime.getDate()).padStart(2, "0");
+    const hours = String(koreaTime.getHours()).padStart(2, "0");
+    const minutes = String(koreaTime.getMinutes()).padStart(2, "0");
+    const seconds = String(koreaTime.getSeconds()).padStart(2, "0");
+    const milliseconds = String(koreaTime.getMilliseconds()).padStart(3, "0");
     // 마이크로초는 밀리초를 6자리로 확장 (예: 576 -> 576000)
     const microseconds = milliseconds.padEnd(6, "0");
 
