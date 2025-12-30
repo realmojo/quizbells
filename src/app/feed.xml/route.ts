@@ -3,15 +3,15 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { quizItems } from "@/utils/utils";
 import { format } from "date-fns";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 // Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
 const getKoreaDate = (): string => {
   const now = new Date();
   // UTC 시간에 9시간(한국 시간대)을 더함
-  const utcTime = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
-  const koreaTime = new Date(utcTime + (9 * 60 * 60 * 1000)); // UTC+9
+  const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const koreaTime = new Date(utcTime + 9 * 60 * 60 * 1000); // UTC+9
   return format(koreaTime, "yyyy-MM-dd");
 };
 
@@ -55,6 +55,8 @@ export async function GET() {
       .order("id", { ascending: false })
       .limit(30);
 
+    // updated 컬럼이 포함되도록 확인 (이미 *로 조회하므로 포함됨)
+
     if (error) {
       console.error("RSS Feed Error:", error);
       return new NextResponse("Database Error", { status: 500 });
@@ -63,6 +65,53 @@ export async function GET() {
     const baseUrl = "https://quizbells.com";
     const date = new Date().toUTCString();
 
+    // 날짜 포맷팅 헬퍼 함수
+    const formatDateForTitle = (dateString: string): string => {
+      try {
+        const date = new Date(dateString);
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${month}월 ${day}일`;
+      } catch {
+        return dateString;
+      }
+    };
+
+    // pubDate를 위한 시간 포맷팅 (분/초 단위까지 정밀도 향상)
+    const formatPubDate = (quiz: any): string => {
+      // updated 컬럼이 있으면 사용, 없으면 createdAt, 둘 다 없으면 answerDate
+      const dateTime =
+        quiz.updated || quiz.createdAt || `${quiz.answerDate}T09:00:00+09:00`;
+      try {
+        const date = new Date(dateTime);
+        return date.toUTCString();
+      } catch {
+        // 폴백: answerDate를 사용하되 현재 시간의 시/분/초 추가
+        const now = new Date();
+        const dateStr = quiz.answerDate || getKoreaDate();
+        const date = new Date(
+          `${dateStr}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}+09:00`
+        );
+        return date.toUTCString();
+      }
+    };
+
+    // 퀴즈 내용에서 정답 키워드 추출
+    const extractAnswerKeywords = (quiz: any): string => {
+      const keywords: string[] = [];
+      if (quiz.answer) {
+        keywords.push(quiz.answer);
+      }
+      if (
+        quiz.otherAnswers &&
+        Array.isArray(quiz.otherAnswers) &&
+        quiz.otherAnswers.length > 0
+      ) {
+        keywords.push(...quiz.otherAnswers.slice(0, 3)); // 최대 3개만
+      }
+      return keywords.length > 0 ? keywords.join(", ") : "";
+    };
+
     const itemsXml = quizzes
       ?.map((quiz) => {
         // Find quiz type info
@@ -70,38 +119,59 @@ export async function GET() {
         const typeName = typeInfo?.typeKr || quiz.type;
         const typeTitle = typeInfo?.title || "";
 
-        // Construct Title & URL
-        // Title: [Date] [Type] [Title] Answer
-        // e.g. 2024-12-15 Toss Fortune Quiz Answer
-        const title = `${quiz.answerDate} ${typeName} ${typeTitle} 정답`;
+        // 날짜 포맷팅
+        const dateLabel = formatDateForTitle(quiz.answerDate);
+
+        // 제목 강화: [실시간 업데이트] 키워드 추가
+        const title = `[실시간 업데이트] ${dateLabel} ${typeName} ${typeTitle} 정답 확인${quiz.answer ? ` (${quiz.answer}${quiz.otherAnswers?.length > 0 ? ` 등` : ""})` : ""}`;
+
         const link =
           quiz.answerDate === getKoreaDate()
             ? `${baseUrl}/quiz/${quiz.type}/today`
             : `${baseUrl}/quiz/${quiz.type}/${quiz.answerDate}`;
 
-        // Description
+        // 정답 키워드 추출
+        const answerKeywords = extractAnswerKeywords(quiz);
+
+        // 본문 내용 확장 (정답 정보와 키워드 포함)
+        const contentText = `
+          <![CDATA[
+            <h2>${typeName} ${typeTitle} ${dateLabel} 정답</h2>
+            ${quiz.question ? `<p><strong>질문:</strong> ${quiz.question}</p>` : ""}
+            <p><strong>정답:</strong> ${quiz.answer || "확인 중"}</p>
+            ${answerKeywords ? `<p><strong>키워드:</strong> ${answerKeywords}</p>` : ""}
+            ${quiz.otherAnswers && quiz.otherAnswers.length > 0 ? `<p><strong>다른 정답:</strong> ${quiz.otherAnswers.join(", ")}</p>` : ""}
+            <p>${getAnswerLabel(quiz.type, typeName)}을 확인하고 포인트를 적립하세요!</p>
+            <p><a href="${link}">${link}</a></p>
+          ]]>
+        `;
+
+        // Description (간단한 버전)
         const description = `
           <![CDATA[
-            <p>${quiz.question || "오늘의 퀴즈"}</p>
-            <p><strong>${getAnswerLabel(quiz.type, typeName)}을 확인하세요.</strong></p>
+            <p>${quiz.question || `${typeName} ${typeTitle} 퀴즈`}</p>
+            <p><strong>정답: ${quiz.answer || "확인 중"}</strong></p>
+            <p>${getAnswerLabel(quiz.type, typeName)}을 확인하세요.</p>
           ]]>
         `;
 
         // Image
-        // Use the static image for the quiz type if available
         const imageUrl = typeInfo?.image
           ? `${baseUrl}${typeInfo.image}`
           : `${baseUrl}/icons/og-image.png`;
+
+        // pubDate: updated 컬럼 사용 (분/초 단위까지 정밀도 향상)
+        const pubDate = formatPubDate(quiz);
 
         return `
           <item>
             <title>${title}</title>
             <link>${link}</link>
             <guid>${link}</guid>
-            <pubDate>${new Date(quiz.createdAt || quiz.answerDate).toUTCString()}</pubDate>
+            <pubDate>${pubDate}</pubDate>
             <description>${description}</description>
             <media:content url="${imageUrl}" type="image/png" medium="image" width="600" height="600" />
-            <content:encoded>${description}</content:encoded>
+            <content:encoded>${contentText}</content:encoded>
           </item>
         `;
       })
