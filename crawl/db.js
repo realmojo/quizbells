@@ -4,16 +4,16 @@ const axios = require("axios");
 const getKoreaTime = () => {
   const now = new Date();
   // UTC 시간에 9시간(한국 시간대)을 더함
-  const utcTime = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
-  const koreaTime = new Date(utcTime + (9 * 60 * 60 * 1000)); // UTC+9
-  
+  const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const koreaTime = new Date(utcTime + 9 * 60 * 60 * 1000); // UTC+9
+
   // moment와 호환되는 객체 반환
   return {
     format: (formatStr) => {
       const year = koreaTime.getFullYear();
       const month = String(koreaTime.getMonth() + 1).padStart(2, "0");
       const day = String(koreaTime.getDate()).padStart(2, "0");
-      
+
       if (formatStr === "M월 D일") {
         return `${month}월 ${day}일`;
       }
@@ -372,6 +372,45 @@ const naverIndexNow = async (type) => {
   }
 };
 
+// 전체 퀴즈 타입에 대해 네이버 인덱싱 실행 (1시간마다 실행용)
+const naverIndexNowAll = async () => {
+  console.log(
+    `🔍 [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 전체 퀴즈 네이버 인덱싱 시작`
+  );
+
+  const results = [];
+
+  for (const item of quizItems) {
+    try {
+      await naverIndexNow(item.type);
+      results.push({ type: item.type, status: "success" });
+      // 각 타입 사이에 약간의 딜레이 (API 부하 방지)
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    } catch (e) {
+      console.error(`❌ ${item.type} 네이버 인덱싱 실패:`, e);
+      results.push({ type: item.type, status: "failed", error: e.message });
+    }
+  }
+
+  const successCount = results.filter((r) => r.status === "success").length;
+  const failCount = results.filter((r) => r.status === "failed").length;
+
+  console.log(
+    `✅ [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 전체 퀴즈 네이버 인덱싱 완료 (성공: ${successCount}, 실패: ${failCount})`
+  );
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: "전체 퀴즈 네이버 인덱싱 완료",
+      timestamp: getKoreaTime().format("YYYY-MM-DD HH:mm:ss"),
+      results: results,
+      successCount: successCount,
+      failCount: failCount,
+    }),
+  };
+};
+
 const doInsert = async (quizzes, type, notifiedTypes) => {
   let shouldNotify = false;
 
@@ -483,4 +522,5 @@ module.exports = {
   doInsert,
   quizItems,
   getKoreaTime, // 한국 시간 함수 export
+  naverIndexNowAll, // 전체 퀴즈 네이버 인덱싱 함수 export
 };

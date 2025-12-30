@@ -1,4 +1,4 @@
-const { getKoreaTime } = require("./db");
+const { getKoreaTime, naverIndexNowAll } = require("./db");
 const { getVeil8000Quiz } = require("./veil8000");
 const { getClimateQuiz } = require("./climate");
 const {
@@ -191,7 +191,7 @@ const run = async () => {
   };
 };
 
-// Lambda 핸들러 함수
+// Lambda 핸들러 함수 (크롤링)
 exports.handler = async (event, context) => {
   // Lambda는 최대 15분까지 실행 가능
   context.callbackWaitsForEmptyEventLoop = false;
@@ -205,6 +205,25 @@ exports.handler = async (event, context) => {
       statusCode: 500,
       body: JSON.stringify({
         error: error.message || "크롤링 실행 중 오류 발생",
+        timestamp: getKoreaTime().format("YYYY-MM-DD HH:mm:ss"),
+      }),
+    };
+  }
+};
+
+// 전체 퀴즈 네이버 인덱싱 핸들러 (1시간마다 실행)
+exports.naverIndexNowHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    const result = await naverIndexNowAll();
+    return result;
+  } catch (error) {
+    console.error("❌ 네이버 인덱싱 Lambda 실행 오류:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: error.message || "네이버 인덱싱 실행 중 오류 발생",
         timestamp: getKoreaTime().format("YYYY-MM-DD HH:mm:ss"),
       }),
     };

@@ -49,6 +49,19 @@ functions:
           path: /crawl
           method: get
           cors: true
+  
+  naverIndexNow:
+    handler: lambda.naverIndexNowHandler
+    events:
+      # EventBridge (CloudWatch Events)로 1시간마다 실행
+      - schedule:
+          rate: rate(1 hour) # 1시간마다 실행
+          enabled: true
+      # 또는 API Gateway로 수동 실행
+      - http:
+          path: /naver-indexnow
+          method: get
+          cors: true
 # plugins:
 #   - serverless-offline # 로컬 테스트용 (선택사항, 필요시 설치: npm install -D serverless-offline)
 

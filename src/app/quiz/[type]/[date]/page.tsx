@@ -420,6 +420,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     author: {
       "@type": "Person",
       name: "퀴즈벨 에디터",
+      url: "https://quizbells.com",
     },
     // Publisher 정보 보강 (필수 항목)
     publisher: {
