@@ -80,50 +80,41 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>캐시워크</strong>는 걷기만 해도 포인트(캐시)를 지급하는
-          대표적인 만보기 앱입니다. 사용자들의 건강한 습관 형성을 돕기 위해
-          100걸음당 1캐시를 적립해주며, 하루 최대 10,000보까지 보상을 받을 수
-          있습니다.
+          <strong>돈버는퀴즈</strong>는 각 회차당 1회만 참여할 수 있으며, 정답을
+          맞혀 캐시를 획득한 후에는 퀴즈 내용이 변경되더라도 재참여가
+          불가능합니다. 정답을 반복 입력하거나 부정한 방법으로 당첨금을 중복
+          수령할 경우 서비스 이용이 제한될 수 있으므로 정당한 참여가
+          필수적입니다.
         </p>
 
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          이와 함께 제공되는 <strong>캐시워크 퀴즈</strong>는 다양한 브랜드와
-          협업해 출제되는 퀴즈 이벤트입니다. 퀴즈에 참여해 정답을 맞히면 랜덤한
-          캐시를 추가로 적립할 수 있으며, 상금이 모두 소진되면 해당 퀴즈는
-          종료됩니다.
+          <strong>캐시딜과 제로딜</strong>은 3시간 동안만 진행되는 타임특가 쇼핑
+          행사로, 상품 구매 후 배송이 완료되면 구매 확정 시 포인트를 지급합니다.
+          포인트는 상품별로 최대 7%까지 적립되며, 다양한 프로모션과 연계하여
+          더욱 높은 혜택을 누릴 수 있는 것이 특징입니다.
         </p>
 
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          퀴즈는 <strong>힌트 보기</strong> 기능을 통해 제휴 브랜드의 상품 또는
-          캠페인 내용을 소개하고, 사용자는 이를 바탕으로 정답을 추측하거나 직접
-          검색해볼 수 있습니다. 자연스럽게 브랜드와 사용자의 연결 고리를 만드는
-          구조입니다.
+          <strong>돈버는라방</strong>은 라이브 커머스를 3분 이상 시청하기만 해도
+          캐시를 얻을 수 있는 효율적인 리워드 기능입니다. '알림받기' 설정을
+          활용하면 방송 시작과 동시에 안내를 받을 수 있어, 선착순으로 지급되는
+          보상을 놓치지 않고 챙길 수 있습니다.
         </p>
 
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>퀴즈 외에도</strong> 캐시워크에서는 다양한 리워드 기능이
-          제공됩니다. 출석체크, 보물상자 클릭, 행운 룰렛 등으로 추가 캐시를
-          획득할 수 있으며, 앱에서 직접 사용할 수 있는 할인쿠폰이나 모바일
-          상품권으로 교환이 가능합니다.
-        </p>
-
-        <p
-          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
-          itemProp="description"
-        >
-          이러한 퀴즈 시스템은 단순한 정보 전달을 넘어 사용자에게 실질적인
-          혜택을 제공하며, 브랜드 입장에서는 높은 홍보 효과를 기대할 수
-          있습니다. 캐시워크는 건강 관리와 소소한 재테크를 동시에 실현할 수 있는
-          대표적인 <strong>앱테크 플랫폼</strong>입니다.
+          <strong>만보기 기능</strong>은 캐시워크의 핵심으로, 하루 최대
+          10,000보까지 걸음 수에 비례하여 캐시를 적립해주며 이는 건강한 생활
+          습관 형성을 돕습니다. 앱은 사용자의 위치를 기반으로 최적화된 혜택을
+          제공하기 위해 백그라운드 상태에서도 위치 데이터를 수집할 수 있습니다.
         </p>
       </>
     );
