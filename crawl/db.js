@@ -153,6 +153,12 @@ const quizItems = [
     title: "미션 퀴즈",
     image: "/images/kbank.png",
   },
+  {
+    type: "monimo",
+    typeKr: "모니모",
+    title: "모니스쿨 퀴즈",
+    image: "/images/monimo.png",
+  },
 ];
 
 const escapeSQLString = (str) => {
