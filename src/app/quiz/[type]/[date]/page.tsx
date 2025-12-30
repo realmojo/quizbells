@@ -268,16 +268,30 @@ export default async function QuizPage({ params }: QuizPageParams) {
   }
 
   // FAQPage 구조화된 데이터 (검색결과 리치 스니펫용)
+  // 구글 공식 FAQPage 형식에 맞춰 정확하게 구성
   const faqJsonLd = {
+    "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: contents.map((quiz: any) => ({
-      "@type": "Question",
-      name: `Q. ${quiz.question || item.typeKr + " 퀴즈 정답은 무엇인가요?"}`,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: `A. 정답은 [${quiz.answer}] 입니다. ${quiz.otherAnswers?.length > 0 ? `다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
-      },
-    })),
+    mainEntity:
+      contents.length > 0
+        ? contents.map((quiz: any) => ({
+            "@type": "Question",
+            name: `${answerDateString} ${item.typeKr} ${item.title} ${quiz.question || "퀴즈"} 정답`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
+            },
+          }))
+        : [
+            {
+              "@type": "Question",
+              name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요?`,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "정답이 아직 업데이트되지 않았습니다. 곧 업데이트될 예정입니다.",
+              },
+            },
+          ],
   };
 
   // Breadcrumb 구조화된 데이터
@@ -380,32 +394,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
   // articleBody 생성 (퀴즈 내용 포함)
   const articleBodyText = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. ${contents.length > 0 ? `오늘의 퀴즈 정답은 ${contents.map((q: any) => q.answer).join(", ")} 등이 있습니다.` : ""} 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
 
-  // hasPart: Question 구조 생성 (여러 퀴즈에 대해)
-  const hasPartQuestions =
-    contents.length > 0
-      ? contents.map((quiz: any) => ({
-          "@type": "Question",
-          name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈`,
-          text: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요? ${quiz.question ? `질문: ${quiz.question}` : ""}`,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: quiz.answer,
-            dateCreated: isoDate,
-          },
-        }))
-      : [
-          {
-            "@type": "Question",
-            name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈`,
-            text: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요?`,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "정답이 아직 업데이트되지 않았습니다. 곧 업데이트될 예정입니다.",
-              dateCreated: isoDate,
-            },
-          },
-        ];
-
   const articleJsonLd = {
     "@type": "Article",
     "@id": currentUrl,
@@ -472,12 +460,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
       name: `${item.typeKr} ${item.title}`,
       description: `매일 출제되는 ${item.typeKr} ${item.title} 퀴즈 정답을 실시간으로 제공하는 서비스`,
     },
-    hasPart:
-      hasPartQuestions.length > 0
-        ? hasPartQuestions.length === 1
-          ? hasPartQuestions[0]
-          : hasPartQuestions
-        : undefined,
+    // hasPart 제거: Article 타입에서 Question을 hasPart에 넣으면 에러 발생
+    // FAQPage의 mainEntity에 Question을 넣는 것이 올바른 방법
     isPartOf: {
       "@type": "WebSite",
       "@id": "https://quizbells.com/#website",
