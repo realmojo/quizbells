@@ -386,6 +386,17 @@ const naverIndexNow = async (type) => {
   }
 };
 
+const updateLastUpdated = async () => {
+  try {
+    const url = `${API_URL}/api/quizbells/lastUpdated`;
+    const res = await axios.get(url);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
 // 전체 퀴즈 타입에 대해 네이버 인덱싱 실행 (1시간마다 실행용)
 const naverIndexNowAll = async () => {
   console.log(
@@ -393,31 +404,12 @@ const naverIndexNowAll = async () => {
   );
 
   const results = [];
-  const todayDate = getKoreaTime().format("YYYY-MM-DD");
 
   for (const item of quizItems) {
     try {
       // 네이버 인덱싱 실행
+      await updateLastUpdated();
       await naverIndexNow(item.type);
-
-      // 해당 날짜의 updated 값을 최신으로 업데이트
-      try {
-        const quizData = await getQuizbells(item.type, todayDate);
-        if (quizData && quizData.contents && quizData.contents.length > 0) {
-          // 가장 최신 레코드 사용 (id가 가장 큰 것)
-          const latestRecord = quizData.contents[0];
-          if (latestRecord.id && latestRecord.contents) {
-            await updateQuizbells(latestRecord.id, latestRecord.contents);
-            console.log(`✅ ${item.type} updated 시간 업데이트 완료`);
-          }
-        }
-      } catch (updateError) {
-        console.error(
-          `⚠️ ${item.type} updated 시간 업데이트 실패:`,
-          updateError.message
-        );
-        // updated 업데이트 실패해도 네이버 인덱싱은 성공으로 처리
-      }
 
       results.push({ type: item.type, status: "success" });
       // 각 타입 사이에 약간의 딜레이 (API 부하 방지)
