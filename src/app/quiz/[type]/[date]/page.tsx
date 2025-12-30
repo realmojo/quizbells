@@ -339,11 +339,25 @@ export default async function QuizPage({ params }: QuizPageParams) {
   if (latestUpdated) {
     try {
       const updatedDate = new Date(latestUpdated);
+      const now = new Date();
+
+      // updatedDate가 현재보다 미래면, 시간대 변환 문제로 간주하고 조정
+      let targetDate = updatedDate;
+
+      // updatedDate가 현재보다 미래인 경우 (시간대 문제)
+      if (updatedDate > now) {
+        // updated가 UTC로 저장되어 있고 한국 시간으로 해석된 경우
+        // UTC 시간으로 변환 (9시간 빼기)
+        targetDate = new Date(updatedDate.getTime() - 9 * 60 * 60 * 1000);
+      }
+
       // 현재 시간과의 차이를 계산하여 상대 시간으로 표시
-      updatedTimeDisplay = formatDistanceToNow(updatedDate, {
+      // formatDistanceToNow는 과거 시간이면 "전", 미래 시간이면 "후"를 표시
+      updatedTimeDisplay = formatDistanceToNow(targetDate, {
         addSuffix: true,
         locale: ko,
       });
+
       // SEO를 위한 ISO 8601 형식 (기계가 읽을 수 있는 형식)
       updatedTimeISO = updatedDate.toISOString();
     } catch (e) {

@@ -102,7 +102,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           itemProp="description"
         >
           <strong>돈버는라방</strong>은 라이브 커머스를 3분 이상 시청하기만 해도
-          캐시를 얻을 수 있는 효율적인 리워드 기능입니다. '알림받기' 설정을
+          캐시를 얻을 수 있는 효율적인 리워드 기능입니다. 알림받기 설정을
           활용하면 방송 시작과 동시에 안내를 받을 수 있어, 선착순으로 지급되는
           보상을 놓치지 않고 챙길 수 있습니다.
         </p>
