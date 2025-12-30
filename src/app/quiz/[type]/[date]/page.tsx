@@ -3,7 +3,8 @@ import { Metadata } from "next";
 export const runtime = "edge";
 
 import ImageComponents from "@/components/ImageComponets";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, formatDistanceToNow } from "date-fns";
+import { ko } from "date-fns/locale";
 import { getQuitItem } from "@/utils/utils";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
@@ -16,7 +17,6 @@ import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";
 import PWAInstallButton from "@/components/PWAInstallButton";
-import SynergyCard from "@/components/SynergyCard";
 import VisitTracker from "@/components/VisitTracker";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
@@ -209,21 +209,25 @@ export default async function QuizPage({ params }: QuizPageParams) {
     lastDayAnswerDate = format(yesterday, "yyyy-MM-dd");
   }
 
+  let todayUpdated: string | null = null;
+  let yesterdayUpdated: string | null = null;
+
   try {
     // 오늘 퀴즈 데이터 조회
-    quizItem = await getQuizbells(type, answerDate);
+    const todayQuizData = await getQuizbells(type, answerDate);
+    todayUpdated = todayQuizData?.updated || null; // updated 컬럼 직접 조회
     quizItem =
-      quizItem?.contents.map((quiz: any) => ({
+      todayQuizData?.contents.map((quiz: any) => ({
         ...quiz,
         isToday: true,
         answerDate,
       })) ?? [];
 
     // 어제 퀴즈 데이터 조회
-    lastDayQuizItem = await getQuizbells(type, lastDayAnswerDate);
-
+    const yesterdayQuizData = await getQuizbells(type, lastDayAnswerDate);
+    yesterdayUpdated = yesterdayQuizData?.updated || null; // updated 컬럼 직접 조회
     lastDayQuizItem =
-      lastDayQuizItem?.contents.map((quiz: any) => ({
+      yesterdayQuizData?.contents.map((quiz: any) => ({
         ...quiz,
         isToday: false,
         answerDate: lastDayAnswerDate,
@@ -305,8 +309,49 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
   // ISO 날짜 형식 생성
   const isoDate = `${answerDate}T09:00:00+09:00`;
+
+  // updated 컬럼에서 최신 업데이트 시간 가져오기 (오늘 데이터의 updated 사용)
+  const latestUpdated = todayUpdated;
+
+  // modifiedDate: updated가 있으면 사용, 없으면 현재 시간
   const now = new Date();
-  const modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00+09:00`;
+  let modifiedDate: string;
+
+  if (latestUpdated) {
+    try {
+      // updated가 ISO 형식이거나 타임스탬프일 수 있으므로 Date 객체로 변환
+      const updatedDate = new Date(latestUpdated);
+      const year = updatedDate.getFullYear();
+      const month = String(updatedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(updatedDate.getDate()).padStart(2, "0");
+      const hours = String(updatedDate.getHours()).padStart(2, "0");
+      const minutes = String(updatedDate.getMinutes()).padStart(2, "0");
+      modifiedDate = `${year}-${month}-${day}T${hours}:${minutes}:00+09:00`;
+    } catch (e) {
+      console.error("업데이트 시간 파싱 오류:", e);
+      modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00+09:00`;
+    }
+  } else {
+    modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00+09:00`;
+  }
+
+  // 표시용 업데이트 시간 포맷팅 (상대 시간: 몇 분 전, 몇 시간 전 등)
+  let updatedTimeDisplay: string | null = null;
+  let updatedTimeISO: string | null = null; // SEO를 위한 ISO 형식
+  if (latestUpdated) {
+    try {
+      const updatedDate = new Date(latestUpdated);
+      // 현재 시간과의 차이를 계산하여 상대 시간으로 표시
+      updatedTimeDisplay = formatDistanceToNow(updatedDate, {
+        addSuffix: true,
+        locale: ko,
+      });
+      // SEO를 위한 ISO 8601 형식 (기계가 읽을 수 있는 형식)
+      updatedTimeISO = updatedDate.toISOString();
+    } catch (e) {
+      console.error("업데이트 시간 포맷팅 오류:", e);
+    }
+  }
 
   // 현재 페이지 URL
   const currentUrl = `https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`;
@@ -448,6 +493,14 @@ export default async function QuizPage({ params }: QuizPageParams) {
               >
                 {h1Title}
               </h1>
+              {updatedTimeDisplay && updatedTimeISO && (
+                <div className="mt-1 text-xs text-right text-slate-400 dark:text-slate-500">
+                  최종 업데이트:{" "}
+                  <time dateTime={updatedTimeISO} itemProp="dateModified">
+                    {updatedTimeDisplay}
+                  </time>
+                </div>
+              )}
             </div>
 
             <Adsense slotId={item.slotId || "8409513997"} />
@@ -610,7 +663,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                   </a>
                 </section>
 
-                {idx === 0 && <SynergyCard />}
+                {/* {idx === 0 && <gyCard />} */}
               </Fragment>
             ))}
             {/* Description Component */}

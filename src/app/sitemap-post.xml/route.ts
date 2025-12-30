@@ -1,5 +1,6 @@
 // src/app/api/sitemap.xml/route.ts
 import { quizItems } from "@/utils/utils";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export const runtime = "edge";
 
@@ -48,6 +49,8 @@ function generateDatesLastMonth(): string[] {
 export async function GET() {
   const recentDates = generateDatesLastMonth(); // 최근 1개월(30일) + 내일 포함
   const todayDate = getKoreaDateString(); // 오늘 날짜 (항상 최신)
+  const todayDateOnly = todayDate.split("T")[0]; // YYYY-MM-DD 형식
+
   const urls: {
     loc: string;
     lastmod: string;
@@ -77,14 +80,86 @@ export async function GET() {
     }
   }
 
-  // 각 타입별 today 경로는 항상 오늘 날짜로 설정하고 최고 우선순위 설정
-  for (const type of QUIZ_TYPES) {
-    urls.unshift({
-      loc: `${BASE_URL}/quiz/${type}/today`,
-      lastmod: todayDate, // 항상 오늘 날짜 (최신, W3C Datetime 포맷)
-      priority: "1.0", // 최고 우선순위
-      changefreq: "hourly", // /today 경로는 hourly로 변경
-    });
+  // 각 타입별 today 경로는 실제 updated 시간을 조회하여 설정
+  if (supabaseAdmin) {
+    try {
+      // 오늘 날짜의 모든 타입 데이터를 한 번에 조회 (updated 필드 포함)
+      const { data: todayQuizData, error } = await supabaseAdmin
+        .from("quizbells_answer")
+        .select("type, updated")
+        .eq("answerDate", todayDateOnly)
+        .in("type", QUIZ_TYPES);
+
+      if (error) {
+        console.error("Sitemap updated 시간 조회 오류:", error);
+      }
+
+      // 타입별로 updated 시간 매핑
+      const updatedMap = new Map<string, string>();
+      if (todayQuizData && todayQuizData.length > 0) {
+        todayQuizData.forEach((item: any) => {
+          if (item.updated) {
+            const existing = updatedMap.get(item.type);
+            // 더 최신 시간이면 업데이트
+            if (!existing || new Date(item.updated) > new Date(existing)) {
+              updatedMap.set(item.type, item.updated);
+            }
+          }
+        });
+      }
+
+      // 각 타입별 today 경로 추가
+      for (const type of QUIZ_TYPES) {
+        const updatedTime = updatedMap.get(type);
+        let lastmod: string;
+
+        if (updatedTime) {
+          try {
+            // updated 시간을 W3C Datetime 포맷으로 변환
+            const updatedDate = new Date(updatedTime);
+            const year = updatedDate.getFullYear();
+            const month = String(updatedDate.getMonth() + 1).padStart(2, "0");
+            const day = String(updatedDate.getDate()).padStart(2, "0");
+            const hours = String(updatedDate.getHours()).padStart(2, "0");
+            const minutes = String(updatedDate.getMinutes()).padStart(2, "0");
+            lastmod = `${year}-${month}-${day}T${hours}:${minutes}:00+09:00`;
+          } catch (e) {
+            console.error(`타입 ${type}의 updated 시간 파싱 오류:`, e);
+            lastmod = todayDate; // 파싱 실패 시 오늘 날짜 사용
+          }
+        } else {
+          lastmod = todayDate; // updated가 없으면 오늘 날짜 사용
+        }
+
+        urls.unshift({
+          loc: `${BASE_URL}/quiz/${type}/today`,
+          lastmod: lastmod,
+          priority: "1.0", // 최고 우선순위
+          changefreq: "hourly", // /today 경로는 hourly로 변경
+        });
+      }
+    } catch (error) {
+      console.error("Sitemap today 경로 생성 오류:", error);
+      // 오류 발생 시 기본값 사용
+      for (const type of QUIZ_TYPES) {
+        urls.unshift({
+          loc: `${BASE_URL}/quiz/${type}/today`,
+          lastmod: todayDate,
+          priority: "1.0",
+          changefreq: "hourly",
+        });
+      }
+    }
+  } else {
+    // Supabase가 없으면 기본값 사용
+    for (const type of QUIZ_TYPES) {
+      urls.unshift({
+        loc: `${BASE_URL}/quiz/${type}/today`,
+        lastmod: todayDate,
+        priority: "1.0",
+        changefreq: "hourly",
+      });
+    }
   }
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
