@@ -210,7 +210,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
   }
 
   let todayUpdated: string | null = null;
-  let yesterdayUpdated: string | null = null;
 
   try {
     // 오늘 퀴즈 데이터 조회
@@ -225,7 +224,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
     // 어제 퀴즈 데이터 조회
     const yesterdayQuizData = await getQuizbells(type, lastDayAnswerDate);
-    yesterdayUpdated = yesterdayQuizData?.updated || null; // updated 컬럼 직접 조회
     lastDayQuizItem =
       yesterdayQuizData?.contents.map((quiz: any) => ({
         ...quiz,
