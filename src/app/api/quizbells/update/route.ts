@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 // ✅ 퀴즈벨 정답 수정 (Supabase)
 // 테이블: quizbells_answer
@@ -15,18 +15,18 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { id, contents } = body;
+    const { id, contents, answerDate } = body;
 
-    if (!id || !contents) {
+    if (!id || !contents || !answerDate) {
       return NextResponse.json(
-        { success: false, error: "id, contents는 필수입니다." },
+        { success: false, error: "id, contents, answerDate는 필수입니다." },
         { status: 400 }
       );
     }
 
     const { data, error } = await supabaseAdmin
       .from("quizbells_answer")
-      .update({ contents })
+      .update({ contents, answerDate })
       .eq("id", id)
       .select()
       .single();
