@@ -37,8 +37,7 @@ export async function GET() {
       .from("quizbells_answer")
       .update({ updated })
       .eq("answerDate", answerDate)
-      .select()
-      .single();
+      .select();
 
     if (error) {
       console.error("🚨 Supabase update error:", error);
