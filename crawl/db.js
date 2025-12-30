@@ -20,6 +20,9 @@ const getKoreaTime = () => {
       if (formatStr === "M월D일") {
         return `${month}월${day}일`;
       }
+      if (formatStr === "YYYY-MM-DD HH:mm:ss") {
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      }
       // 기본값
       return `${year}-${month}-${day}`;
     },
@@ -192,16 +195,19 @@ const insertQuizbells = async (type, contents, answerDate) => {
   }
 };
 
-const updateQuizbells = async (id, contents) => {
-  if (id && contents) {
+const updateQuizbells = async (id, contents, answerDate) => {
+  if (id && contents && answerDate) {
     try {
       const url = `${API_URL}/api/quizbells/update`;
+
       const res = await axios.post(url, {
         id,
         contents,
+        answerDate,
       });
       return res.data;
     } catch (e) {
+      console.log(e);
       return null;
     }
   }
@@ -457,7 +463,11 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
 
           try {
             await naverIndexNow(type);
-            await updateQuizbells(getItem.id, getItem.contents);
+            await updateQuizbells(
+              getItem.id,
+              getItem.contents,
+              getKoreaTime().format("YYYY-MM-DD HH:mm:ss")
+            );
             shouldNotify = true;
             isNotify = true;
           } catch (e) {
