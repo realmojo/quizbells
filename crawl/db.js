@@ -13,6 +13,9 @@ const getKoreaTime = () => {
       const year = koreaTime.getFullYear();
       const month = String(koreaTime.getMonth() + 1).padStart(2, "0");
       const day = String(koreaTime.getDate()).padStart(2, "0");
+      const hours = String(koreaTime.getHours()).padStart(2, "0");
+      const minutes = String(koreaTime.getMinutes()).padStart(2, "0");
+      const seconds = String(koreaTime.getSeconds()).padStart(2, "0");
 
       if (formatStr === "M월 D일") {
         return `${month}월 ${day}일`;
