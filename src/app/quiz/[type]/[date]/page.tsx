@@ -315,9 +315,9 @@ export default async function QuizPage({ params }: QuizPageParams) {
   let updatedTimeDisplay: string | null = null;
   let updatedTimeISO: string | null = null; // SEO를 위한 ISO 형식
   let modifiedDate: string; // dateModified용 W3C Datetime 포맷
-  
+
   const now = new Date();
-  
+
   if (latestUpdated) {
     try {
       const updatedDate = new Date(latestUpdated);
@@ -341,14 +341,15 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
       // SEO를 위한 ISO 8601 형식 (기계가 읽을 수 있는 형식)
       updatedTimeISO = updatedDate.toISOString();
-      
-      // dateModified용 W3C Datetime 포맷 (한국 시간대 +09:00)
+
+      // dateModified용 W3C Datetime 포맷 (한국 시간대 +09:00, 초 단위까지 정밀도 향상)
       const year = targetDate.getFullYear();
       const month = String(targetDate.getMonth() + 1).padStart(2, "0");
       const day = String(targetDate.getDate()).padStart(2, "0");
       const hours = String(targetDate.getHours()).padStart(2, "0");
       const minutes = String(targetDate.getMinutes()).padStart(2, "0");
-      modifiedDate = `${year}-${month}-${day}T${hours}:${minutes}:00+09:00`;
+      const seconds = String(targetDate.getSeconds()).padStart(2, "0");
+      modifiedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+09:00`;
     } catch (e) {
       console.error("업데이트 시간 포맷팅 오류:", e);
       // 오류 발생 시 기본값 사용
@@ -420,25 +421,47 @@ export default async function QuizPage({ params }: QuizPageParams) {
       "@type": "Person",
       name: "퀴즈벨 에디터",
     },
+    // Publisher 정보 보강 (필수 항목)
     publisher: {
       "@type": "Organization",
+      "@id": "https://quizbells.com/#organization",
       name: "퀴즈벨",
+      alternateName: "QUIZBELLS",
+      url: "https://quizbells.com",
       logo: {
         "@type": "ImageObject",
         url: "https://quizbells.com/icons/android-icon-192x192.png",
         width: 192,
         height: 192,
       },
+      sameAs: [
+        "https://play.google.com/store/apps/details?id=com.mojoday.quizbells",
+        "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703",
+      ],
     },
+    // mainEntityOfPage 추가 (페이지의 핵심 콘텐츠임을 명시)
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": currentUrl,
+      url: currentUrl,
+      name: h1Title,
+      description: firstDescription,
+      inLanguage: "ko",
+      isPartOf: {
+        "@type": "WebSite",
+        "@id": "https://quizbells.com/#website",
+        name: "퀴즈벨",
+        url: "https://quizbells.com",
+      },
     },
+    // Image 정보 보강 (검색 결과 썸네일 노출 확률 향상)
     image: {
       "@type": "ImageObject",
       url: `https://quizbells.com/images/${type}.png`,
-      width: 300,
-      height: 300,
+      width: 1200,
+      height: 630,
+      alt: `${item.typeKr} ${item.title} 퀴즈 정답`,
+      caption: `${item.typeKr} ${item.title} ${answerDateString} 정답`,
     },
     keywords: keywords,
     articleSection: "앱테크/재테크",
@@ -456,6 +479,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
         : undefined,
     isPartOf: {
       "@type": "WebSite",
+      "@id": "https://quizbells.com/#website",
       name: "퀴즈벨",
       url: "https://quizbells.com",
     },
