@@ -11,7 +11,7 @@ import { sortQuizzesByVisitHistory } from "@/utils/visitHistory";
 import { Skeleton } from "./ui/skeleton";
 
 interface QuizCardComponentProps {
-  viewType?: "grid" | "list";
+  viewType?: "grid" | "list" | "image";
 }
 
 export default function QuizCardComponent({
@@ -134,6 +134,25 @@ export default function QuizCardComponent({
 
   // 정렬이 완료될 때까지 로딩 표시
   if (sortedQuizItems === null) {
+    if (viewType === "image") {
+      return (
+        <div className="grid grid-cols-3 gap-4">
+          {quizItems.map((quiz) => (
+            <Card
+              key={quiz.type}
+              className="border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm overflow-hidden rounded-2xl ring-1 ring-slate-900/5 dark:ring-white/10"
+            >
+              <CardContent className="p-0">
+                <div className="w-full aspect-square relative overflow-hidden">
+                  <Skeleton className="w-full h-full" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      );
+    }
+
     return viewType === "grid" ? (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {quizItems.map((quiz) => (
@@ -171,6 +190,55 @@ export default function QuizCardComponent({
             </CardContent>
           </Card>
         ))}
+      </div>
+    );
+  }
+
+  if (viewType === "image") {
+    return (
+      <div className="grid grid-cols-3 gap-4">
+        {sortedQuizItems.map((quiz) => {
+          const href = `/quiz/${quiz.type}/${isToday ? "today" : answerDate}`;
+
+          return (
+            <a
+              href={href}
+              key={quiz.type}
+              target="_self"
+              className="block group"
+              onClick={(e) => handleCardClick(e, quiz.type, getKoreaDate())}
+            >
+              <Card className="border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden rounded-2xl ring-1 ring-slate-900/5 dark:ring-white/10">
+                <CardContent className="p-0">
+                  <div className="w-full aspect-square relative overflow-hidden">
+                    <Image
+                      src={quiz.image}
+                      alt={`${quiz.typeKr} 퀴즈 썸네일`}
+                      fill
+                      sizes="(max-width: 768px) 33vw, 200px"
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      priority
+                    />
+                    {/* 오늘 정답이 있으면 빨간색 동그라미 배지 표시 */}
+                    {isToday &&
+                      !isLoading &&
+                      hasAnswers[quiz.type] &&
+                      !hiddenBadges.has(quiz.type) && (
+                        <div className="absolute top-2 right-2 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center shadow-lg z-10 animate-pulse ring-2 ring-red-300 ring-offset-2">
+                          <span
+                            className="text-white font-bold"
+                            style={{ fontSize: "10px", marginRight: "1px" }}
+                          >
+                            N
+                          </span>
+                        </div>
+                      )}
+                  </div>
+                </CardContent>
+              </Card>
+            </a>
+          );
+        })}
       </div>
     );
   }

@@ -311,35 +311,16 @@ export default async function QuizPage({ params }: QuizPageParams) {
   // updated 컬럼에서 최신 업데이트 시간 가져오기 (오늘 데이터의 updated 사용)
   const latestUpdated = todayUpdated;
 
-  // modifiedDate: updated가 있으면 사용, 없으면 현재 시간
-  const now = new Date();
-  let modifiedDate: string;
-
-  if (latestUpdated) {
-    try {
-      // updated가 ISO 형식이거나 타임스탬프일 수 있으므로 Date 객체로 변환
-      const updatedDate = new Date(latestUpdated);
-      const year = updatedDate.getFullYear();
-      const month = String(updatedDate.getMonth() + 1).padStart(2, "0");
-      const day = String(updatedDate.getDate()).padStart(2, "0");
-      const hours = String(updatedDate.getHours()).padStart(2, "0");
-      const minutes = String(updatedDate.getMinutes()).padStart(2, "0");
-      modifiedDate = `${year}-${month}-${day}T${hours}:${minutes}:00+09:00`;
-    } catch (e) {
-      console.error("업데이트 시간 파싱 오류:", e);
-      modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00+09:00`;
-    }
-  } else {
-    modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00+09:00`;
-  }
-
   // 표시용 업데이트 시간 포맷팅 (상대 시간: 몇 분 전, 몇 시간 전 등)
   let updatedTimeDisplay: string | null = null;
   let updatedTimeISO: string | null = null; // SEO를 위한 ISO 형식
+  let modifiedDate: string; // dateModified용 W3C Datetime 포맷
+  
+  const now = new Date();
+  
   if (latestUpdated) {
     try {
       const updatedDate = new Date(latestUpdated);
-      const now = new Date();
 
       // updatedDate가 현재보다 미래면, 시간대 변환 문제로 간주하고 조정
       let targetDate = updatedDate;
@@ -360,9 +341,22 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
       // SEO를 위한 ISO 8601 형식 (기계가 읽을 수 있는 형식)
       updatedTimeISO = updatedDate.toISOString();
+      
+      // dateModified용 W3C Datetime 포맷 (한국 시간대 +09:00)
+      const year = targetDate.getFullYear();
+      const month = String(targetDate.getMonth() + 1).padStart(2, "0");
+      const day = String(targetDate.getDate()).padStart(2, "0");
+      const hours = String(targetDate.getHours()).padStart(2, "0");
+      const minutes = String(targetDate.getMinutes()).padStart(2, "0");
+      modifiedDate = `${year}-${month}-${day}T${hours}:${minutes}:00+09:00`;
     } catch (e) {
       console.error("업데이트 시간 포맷팅 오류:", e);
+      // 오류 발생 시 기본값 사용
+      modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00+09:00`;
     }
+  } else {
+    // updated가 없으면 현재 시간 사용
+    modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00+09:00`;
   }
 
   // 현재 페이지 URL
@@ -695,7 +689,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                 <Lightbulb className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                 앱테크 퀴즈 목록 ({dateLabel} 기준)
               </h2>
-              <QuizCardComponent viewType="list" />
+              <QuizCardComponent viewType="image" />
             </section>
           </main>
         </div>
