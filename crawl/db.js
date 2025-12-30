@@ -204,15 +204,15 @@ const insertQuizbells = async (type, contents, answerDate) => {
   }
 };
 
-const updateQuizbells = async (id, contents, answerDate) => {
-  if (id && contents && answerDate) {
+const updateQuizbells = async (id, contents, updated) => {
+  if (id && contents && updated) {
     try {
       const url = `${API_URL}/api/quizbells/update`;
 
       const res = await axios.post(url, {
         id,
         contents,
-        answerDate,
+        updated,
       });
       return res.data;
     } catch (e) {

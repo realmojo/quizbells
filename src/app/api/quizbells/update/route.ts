@@ -15,18 +15,18 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { id, contents, answerDate } = body;
+    const { id, contents, updated } = body;
 
-    if (!id || !contents || !answerDate) {
+    if (!id || !contents || !updated) {
       return NextResponse.json(
-        { success: false, error: "id, contents, answerDate는 필수입니다." },
+        { success: false, error: "id, contents, updated는 필수입니다." },
         { status: 400 }
       );
     }
 
     const { data, error } = await supabaseAdmin
       .from("quizbells_answer")
-      .update({ contents, answerDate })
+      .update({ contents, updated })
       .eq("id", id)
       .select()
       .single();
