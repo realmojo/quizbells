@@ -81,6 +81,8 @@ export async function GET() {
   }
 
   // 각 타입별 today 경로는 실제 updated 시간을 조회하여 설정
+  const todayUrls: typeof urls = [];
+
   if (supabaseAdmin) {
     try {
       // 오늘 날짜의 모든 타입 데이터를 한 번에 조회 (updated 필드 포함)
@@ -131,7 +133,7 @@ export async function GET() {
           lastmod = todayDate; // updated가 없으면 오늘 날짜 사용
         }
 
-        urls.unshift({
+        todayUrls.push({
           loc: `${BASE_URL}/quiz/${type}/today`,
           lastmod: lastmod,
           priority: "1.0", // 최고 우선순위
@@ -142,7 +144,7 @@ export async function GET() {
       console.error("Sitemap today 경로 생성 오류:", error);
       // 오류 발생 시 기본값 사용
       for (const type of QUIZ_TYPES) {
-        urls.unshift({
+        todayUrls.push({
           loc: `${BASE_URL}/quiz/${type}/today`,
           lastmod: todayDate,
           priority: "1.0",
@@ -153,7 +155,7 @@ export async function GET() {
   } else {
     // Supabase가 없으면 기본값 사용
     for (const type of QUIZ_TYPES) {
-      urls.unshift({
+      todayUrls.push({
         loc: `${BASE_URL}/quiz/${type}/today`,
         lastmod: todayDate,
         priority: "1.0",
@@ -161,6 +163,16 @@ export async function GET() {
       });
     }
   }
+
+  // /today URL들을 lastmod 기준으로 최신순 정렬 (내림차순)
+  todayUrls.sort((a, b) => {
+    const dateA = new Date(a.lastmod).getTime();
+    const dateB = new Date(b.lastmod).getTime();
+    return dateB - dateA; // 최신이 먼저 오도록
+  });
+
+  // 정렬된 /today URL들을 맨 앞에 추가
+  urls.unshift(...todayUrls);
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
