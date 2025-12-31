@@ -320,7 +320,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
   };
 
   // ISO 날짜 형식 생성
-  const isoDate = `${answerDate}T09:00:00+09:00`;
+  const isoDate = `${answerDate}T00:00:00`;
 
   // updated 컬럼에서 최신 업데이트 시간 가져오기 (오늘 데이터의 updated 사용)
   const latestUpdated = todayUpdated;
@@ -356,22 +356,22 @@ export default async function QuizPage({ params }: QuizPageParams) {
       // SEO를 위한 ISO 8601 형식 (기계가 읽을 수 있는 형식)
       updatedTimeISO = updatedDate.toISOString();
 
-      // dateModified용 W3C Datetime 포맷 (한국 시간대 +09:00, 초 단위까지 정밀도 향상)
+      // dateModified용 W3C Datetime 포맷 (한국 시간대, 초 단위까지 정밀도 향상)
       const year = targetDate.getFullYear();
       const month = String(targetDate.getMonth() + 1).padStart(2, "0");
       const day = String(targetDate.getDate()).padStart(2, "0");
       const hours = String(targetDate.getHours()).padStart(2, "0");
       const minutes = String(targetDate.getMinutes()).padStart(2, "0");
       const seconds = String(targetDate.getSeconds()).padStart(2, "0");
-      modifiedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+09:00`;
+      modifiedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     } catch (e) {
       console.error("업데이트 시간 포맷팅 오류:", e);
       // 오류 발생 시 기본값 사용
-      modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00+09:00`;
+      modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00`;
     }
   } else {
     // updated가 없으면 현재 시간 사용
-    modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00+09:00`;
+    modifiedDate = `${answerDate}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:00`;
   }
 
   // 현재 페이지 URL
