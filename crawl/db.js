@@ -13,15 +13,27 @@ const getKoreaTime = () => {
       const year = koreaTime.getFullYear();
       const month = String(koreaTime.getMonth() + 1).padStart(2, "0");
       const day = String(koreaTime.getDate()).padStart(2, "0");
+      const monthNoPad = String(koreaTime.getMonth() + 1);
+      const dayNoPad = String(koreaTime.getDate());
       const hours = String(koreaTime.getHours()).padStart(2, "0");
       const minutes = String(koreaTime.getMinutes()).padStart(2, "0");
       const seconds = String(koreaTime.getSeconds()).padStart(2, "0");
 
-      if (formatStr === "M월 D일") {
+      // 01월 01일 (0 패딩, 공백 있음)
+      if (formatStr === "MM월 DD일" || formatStr === "01월 01일") {
         return `${month}월 ${day}일`;
       }
-      if (formatStr === "M월D일") {
+      // 01월01일 (0 패딩, 공백 없음)
+      if (formatStr === "MM월DD일" || formatStr === "01월01일") {
         return `${month}월${day}일`;
+      }
+      // 1월 1일 (패딩 없음, 공백 있음)
+      if (formatStr === "M월 D일" || formatStr === "1월 1일") {
+        return `${monthNoPad}월 ${dayNoPad}일`;
+      }
+      // 1월1일 (패딩 없음, 공백 없음)
+      if (formatStr === "M월D일" || formatStr === "1월1일") {
+        return `${monthNoPad}월${dayNoPad}일`;
       }
       if (formatStr === "YYYY-MM-DD HH:mm:ss") {
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;

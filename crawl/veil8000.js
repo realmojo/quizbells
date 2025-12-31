@@ -448,7 +448,7 @@ const extractKbankQuizFromText = async (title, text, type, notifiedTypes) => {
 const getVeil8000Quiz = async () => {
   console.log("🔍 [Veil8000] 퀴즈 크롤링 시작");
   const url =
-    "https://m.blog.naver.com/api/blogs/veil8000/post-list?categoryNo=61&itemCount=30&logCode=0&page=1";
+    "https://m.blog.naver.com/api/blogs/veil8000/post-list?categoryNo=68&itemCount=30&logCode=0&page=1";
   const headers = {
     Referer:
       "https://m.blog.naver.com/PostList.naver?blogId=veil8000&categoryName=%E2%80%A2%E2%80%A6%EC%95%B1%ED%85%8C%ED%81%AC%20%ED%80%B4%EC%A6%88&categoryNo=61&logCode=0&tab=1",
@@ -462,6 +462,8 @@ const getVeil8000Quiz = async () => {
 
   const today1 = getKoreaTime().format("M월 D일");
   const today2 = getKoreaTime().format("M월D일");
+  const today3 = getKoreaTime().format("m월 d일");
+  const today4 = getKoreaTime().format("m월 d일");
 
   let quizItems = items.map((post) => {
     return {
@@ -473,7 +475,10 @@ const getVeil8000Quiz = async () => {
 
   quizItems = quizItems.filter((post) => {
     if (
-      (post.title.includes(today1) || post.title.includes(today2)) &&
+      (post.title.includes(today1) ||
+        post.title.includes(today2) ||
+        post.title.includes(today3) ||
+        post.title.includes(today4)) &&
       post.content.includes("정답")
     ) {
       return true;
