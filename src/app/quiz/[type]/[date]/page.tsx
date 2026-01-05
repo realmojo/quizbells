@@ -13,7 +13,6 @@ import QuizCardComponent from "@/components/QuizCardComponent";
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Lightbulb, ArrowRight } from "lucide-react";
 import { subDays } from "date-fns";
-import CoupangPartnerAdBanner from "@/components/CoupangPartnerAdBanner";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";
 import PWAInstallButton from "@/components/PWAInstallButton";
@@ -547,7 +546,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
               {`${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답`}
             </div>
 
-            <CoupangPartnerAdBanner />
             {/* Quiz Cards - 오늘/어제 퀴즈 모두 확인하기 버튼 */}
 
             {contents.length === 0 && (
