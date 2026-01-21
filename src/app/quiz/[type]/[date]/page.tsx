@@ -65,7 +65,7 @@ export async function generateMetadata({
   const typeTitle = item?.title || "";
   // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
   // 네이버 모바일 검색 가독성 최적화
-  const fullTitle = `${typeName} ${typeTitle} 정답 ${shortDateLabel} | 퀴즈벨`;
+  const fullTitle = `${typeName} ${typeTitle} 오늘 정답 ${shortDateLabel} | 퀴즈벨`;
 
   // 설명문: 핵심 키워드 전진 배치
   const description = `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
@@ -171,7 +171,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
           "increment_answer_count",
           {
             p_quiz_type: type,
-          },
+          }
         );
 
         if (rpcError) {
@@ -183,7 +183,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     })();
   }
 
-  const h1Title = `${item.typeKr} ${item.title} 정답 ${shortDateLabel} | 퀴즈벨`;
+  const h1Title = `${item.typeKr} ${item.title} 오늘 정답 ${shortDateLabel} | 퀴즈벨`;
   const firstDescription = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
 
   let quizItem = null;
@@ -253,7 +253,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const countResponse = await fetch(
       `${baseUrl}/api/quizbells/count?type=${type}`,
-      { next: { revalidate: 300 } }, // 5분 캐시
+      { next: { revalidate: 300 } } // 5분 캐시
     );
     if (countResponse.ok) {
       const countData = await countResponse.json();
