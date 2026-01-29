@@ -276,7 +276,7 @@ const alarmNotify = async (type) => {
         axios.post(`${API_URL}/api/notify`, params);
       } else {
         console.log(
-          `⛔️ [${getQuizItems(quizType).typeKr}] ${item.fcmToken} 유저는 해당 퀴즈 알림 비활성화`
+          `⛔️ [${getQuizItems(quizType).typeKr}] ${item.fcmToken} 유저는 해당 퀴즈 알림 비활성화`,
         );
       }
     }
@@ -291,7 +291,7 @@ const findNewQuizzes = (getItemContents, quizzes) => {
   };
   const newQuizzes = quizzes.filter((newQuiz) => {
     const exists = getItemContents.some((existingQuiz) =>
-      isSameQuiz(newQuiz, existingQuiz)
+      isSameQuiz(newQuiz, existingQuiz),
     );
     return !exists;
   });
@@ -312,7 +312,7 @@ const sanitizeQuotesInJsonArray = (data) => {
         newItem[key] = value.replace(/'/g, "").replace(/"/g, ""); // ' 제거
       } else if (Array.isArray(value)) {
         newItem[key] = value.map((v) =>
-          typeof v === "string" ? v.replace(/'/g, "") : v
+          typeof v === "string" ? v.replace(/'/g, "") : v,
         );
       } else {
         newItem[key] = value;
@@ -351,7 +351,7 @@ const compareQuizQA = (existingContents, quizzes) => {
 
   const result = incoming.map((quiz, idx) => {
     const isSame = existing.some(
-      (prev) => prev.question === quiz.question && prev.answer === quiz.answer
+      (prev) => prev.question === quiz.question && prev.answer === quiz.answer,
     );
     return { index: idx, ...quiz, isSame };
   });
@@ -378,15 +378,15 @@ const quizzesExistInContents = (existingContents, quizzes) => {
 
   return incoming.every((quiz) =>
     existing.some(
-      (prev) => prev.question === quiz.question && prev.answer === quiz.answer
-    )
+      (prev) => prev.question === quiz.question && prev.answer === quiz.answer,
+    ),
   );
 };
 
 const naverIndexNow = async (type) => {
   try {
     const { data } = await axios.get(
-      `https://quizbells.com/api/naver/indexnow?type=${type}`
+      `https://quizbells.com/api/naver/indexnow?type=${type}`,
     );
     if (data.status === "ok") {
       console.log(`✅ ${type} 네이버 인덱싱 처리 성공`);
@@ -412,7 +412,7 @@ const updateLastUpdated = async () => {
 // 전체 퀴즈 타입에 대해 네이버 인덱싱 실행 (1시간마다 실행용)
 const naverIndexNowAll = async () => {
   console.log(
-    `🔍 [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 전체 퀴즈 네이버 인덱싱 시작`
+    `🔍 [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 전체 퀴즈 네이버 인덱싱 시작`,
   );
 
   const results = [];
@@ -436,7 +436,7 @@ const naverIndexNowAll = async () => {
   const failCount = results.filter((r) => r.status === "failed").length;
 
   console.log(
-    `✅ [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 전체 퀴즈 네이버 인덱싱 완료 (성공: ${successCount}, 실패: ${failCount})`
+    `✅ [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 전체 퀴즈 네이버 인덱싱 완료 (성공: ${successCount}, 실패: ${failCount})`,
   );
 
   return {
@@ -456,26 +456,26 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
 
   // 이상한 답은 제외 처리하기
   quizzes = quizzes.filter(
-    (quiz) => quiz.answer && !quiz.answer.includes("잠시만")
+    (quiz) => quiz.answer && !quiz.answer.includes("잠시만"),
   );
 
   let isNotify = false;
   if (quizzes.length > 0) {
     const getItem = await getQuizbells(
       type,
-      getKoreaTime().format("YYYY-MM-DD")
+      getKoreaTime().format("YYYY-MM-DD"),
     );
 
     if (getItem === undefined || getItem === null) {
       console.log(
-        `✅ [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 크롤링 완료`
+        `✅ [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 크롤링 완료`,
       );
       try {
         await naverIndexNow(type);
         await insertQuizbells(
           type,
           quizzes,
-          getKoreaTime().format("YYYY-MM-DD")
+          getKoreaTime().format("YYYY-MM-DD"),
         );
         isNotify = true;
         shouldNotify = true;
@@ -489,7 +489,7 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
         console.log(
           allExists
             ? `🟢 모든 ${type}의 quizzes 가 기존 contents 에 존재합니다.`
-            : "🟠 신규 quizzes 중 일부/전체가 기존 contents 에 없습니다."
+            : "🟠 신규 quizzes 중 일부/전체가 기존 contents 에 없습니다.",
         );
 
         if (!allExists) {
@@ -507,7 +507,7 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
       }
 
       console.log(
-        `✅ [${getKoreaTime().format("YYYY-MM-DD")}] 퀴즈 이미 존재 합니다 - ${type}`
+        `✅ [${getKoreaTime().format("YYYY-MM-DD")}] 퀴즈 이미 존재 합니다 - ${type}`,
       );
     }
 
@@ -540,7 +540,7 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
 
     if (shouldNotify && isNotify && notifiedTypes && !notifiedTypes.has(type)) {
       console.log(
-        `🔔 [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 알람 발송`
+        `🔔 [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 알람 발송`,
       );
       await alarmNotify(type);
       notifiedTypes.add(type); // ← 알람 보냈다고 기록

@@ -5,7 +5,7 @@ const { doInsert, getKoreaTime } = require("./db");
 const { getType } = require("./common");
 
 const extract3o3QuizFromText = async (title, text, type, notifiedTypes) => {
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
 
   const answerMatch = text.match(answerRegex);
 
@@ -30,7 +30,7 @@ const extractDoctornowQuizFromText = async (
   title,
   text,
   type,
-  notifiedTypes
+  notifiedTypes,
 ) => {
   // 질문 추출: "O X"가 붙은 문장 중 하나를 질문으로 가정
   // 정답 추출: "정답은.. O" 형식
@@ -54,7 +54,7 @@ const extractMydoctorQuizFromText = async (
   title,
   text,
   type,
-  notifiedTypes
+  notifiedTypes,
 ) => {
   const answerMatch = text.match(/정답은..\s+(O|X)\s*([^\s]+)/);
   const answer = answerMatch ? `${answerMatch[1]} ${answerMatch[2]}` : "";
@@ -73,7 +73,7 @@ const extractMydoctorQuizFromText = async (
 
 const extractHpointQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title.split("!")[1]?.trim() || title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -95,10 +95,10 @@ const extractKakaopayQuizFromText = async (
   title,
   text,
   type,
-  notifiedTypes
+  notifiedTypes,
 ) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -131,7 +131,7 @@ const extractShinhanQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = questionMatch ? questionMatch[1].trim() : "";
 
   // ✅ 2. 정답 추출 개선
-  const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
+  const answerMatch = text.match(/정답은(?:\.\.)?\s+([^\n#]+)/);
   const answer = answerMatch ? answerMatch[1].trim() : "";
 
   const quizzes = [
@@ -150,7 +150,7 @@ const extractSkstoaQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title.split("!")[1].trim();
 
   // ✅ 2. 정답 추출 개선
-  const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
+  const answerMatch = text.match(/정답은(?:\.\.)?\s+([^\n#]+)/);
   const answer = answerMatch ? answerMatch[1].trim() : "";
 
   const quizzes = [
@@ -169,10 +169,10 @@ const extractOkcashbagQuizFromText = async (
   title,
   text,
   type,
-  notifiedTypes
+  notifiedTypes,
 ) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -194,10 +194,10 @@ const extractKakaobankQuizFromText = async (
   title,
   text,
   type,
-  notifiedTypes
+  notifiedTypes,
 ) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -219,7 +219,7 @@ const extractKakaobankQuizFromText = async (
   //   const question = titleSplits[1].trim();
 
   //   // ✅ 2. 정답 추출 개선
-  //   const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
+  //   const answerMatch = text.match(/정답은(?:\.\.)?\s+([^\n#]+)/);
   //   const answer = answerMatch ? answerMatch[1].trim() : "";
 
   //   if (answer.length < 100) {
@@ -242,10 +242,10 @@ const extractCashwalkQuizFromText = async (
   title,
   text,
   type,
-  notifiedTypes
+  notifiedTypes,
 ) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -267,10 +267,10 @@ const extractHanabankQuizFromText = async (
   title,
   text,
   type,
-  notifiedTypes
+  notifiedTypes,
 ) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -290,7 +290,7 @@ const extractHanabankQuizFromText = async (
 
 const extractKbstQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -310,7 +310,7 @@ const extractKbstQuizFromText = async (title, text, type, notifiedTypes) => {
 
 const extractAuctionQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -338,10 +338,10 @@ const extractCashdocQuizFromText = async (title, text, type, notifiedTypes) => {
   }
 
   // ✅ 2. 정답 추출 개선
-  const answerMatch = text.match(/정답은..\s+([^\n#]+)/);
+  const answerMatch = text.match(/정답은(?:\.\.)?\s+([^\n#]+)/);
   let answer = answerMatch ? answerMatch[1].trim() : "";
 
-  const realAnswerMatch = answer.match(/정답은..\s+([^\n#]+)/);
+  const realAnswerMatch = answer.match(/정답은(?:\.\.)?\s+([^\n#]+)/);
   let realAnswer = realAnswerMatch ? realAnswerMatch[1].trim() : "";
 
   answer = realAnswer ? realAnswer : answer;
@@ -363,7 +363,7 @@ const extractCashdocQuizFromText = async (title, text, type, notifiedTypes) => {
 
 const extractNhQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -385,10 +385,10 @@ const extractBitbunnyQuizFromText = async (
   title,
   text,
   type,
-  notifiedTypes
+  notifiedTypes,
 ) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -408,7 +408,7 @@ const extractBitbunnyQuizFromText = async (
 
 const extractTossQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -428,7 +428,7 @@ const extractTossQuizFromText = async (title, text, type, notifiedTypes) => {
 
 const extractKbankQuizFromText = async (title, text, type, notifiedTypes) => {
   const question = title;
-  const answerRegex = /(정답은..\s+)([^\n#]+)/;
+  const answerRegex = /(정답은(?:\.\.)?\s+)([^\n#]+)/;
   const answerMatch = text.match(answerRegex);
   const answer = answerMatch ? answerMatch[2].toUpperCase().trim() : "";
 
@@ -484,6 +484,8 @@ const getVeil8000Quiz = async () => {
       return true;
     }
   });
+
+  console.log(quizItems);
 
   const notifiedTypes = new Set(); // ← 알림 발송 추적용 Set
 

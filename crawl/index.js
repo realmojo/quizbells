@@ -41,7 +41,7 @@ const googleIndexingApi = async (link) => {
       key.client_email,
       null,
       key.private_key.replace(/\\n/g, "\n"), // ✅ 줄바꿈 처리
-      ["https://www.googleapis.com/auth/indexing"]
+      ["https://www.googleapis.com/auth/indexing"],
     );
 
     jwtClient.authorize(function (err, tokens) {
@@ -76,7 +76,7 @@ const googleIndexingApi = async (link) => {
 };
 const run = async () => {
   console.log(
-    `🔍 [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 시작`
+    `🔍 [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 시작`,
   );
 
   try {
@@ -127,12 +127,12 @@ const run = async () => {
   } catch (err) {
     console.error(
       "⚠️ 전체 크롤링 중단 오류 (이 블록은 사실상 발생하지 않음):",
-      err.message || err
+      err.message || err,
     );
   }
 
   console.log(
-    `✅ [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 완료`
+    `✅ [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 완료`,
   );
 
   if (hasIndexedToday()) {
