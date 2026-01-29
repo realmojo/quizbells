@@ -42,7 +42,7 @@ const APP_DATA: Record<string, AppData> = {
   kakaobank: {
     ios: "https://kakaobank.onelink.me/0qMi/ysxkqbud",
     android: "https://kakaobank.onelink.me/0qMi/ysxkqbud",
-    buttonText: "카카오뱅크 OX 퀴즈 참여하기",
+    buttonText: "카카오뱅크 퀴즈 참여하기",
     bgColor: "bg-yellow-300",
     hoverColor: "hover:bg-yellow-300",
     textColor: "text-black",

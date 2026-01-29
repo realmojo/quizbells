@@ -31,7 +31,7 @@ export const quizItems = [
   {
     type: "kakaobank",
     typeKr: "카카오뱅크",
-    title: "OX 퀴즈",
+    title: "이모지 퀴즈",
     image: "/images/kakaobank_200.png",
     slotId: "3818213044",
   },
@@ -253,7 +253,7 @@ export const requestAlarmPermission = async () => {
       } else {
         // 권한 거부시 메시지 유지
         alert(
-          "알림 권한이 거부되었습니다. 브라우저 설정에서 알림을 허용해주세요."
+          "알림 권한이 거부되었습니다. 브라우저 설정에서 알림을 허용해주세요.",
         );
         return false;
       }

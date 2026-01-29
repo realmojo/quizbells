@@ -178,7 +178,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>카카오뱅크 OX퀴즈</strong>는 카카오뱅크 앱에서 진행되는 정답형
+          <strong>카카오뱅크 퀴즈</strong>는 카카오뱅크 앱에서 진행되는 정답형
           참여 퀴즈입니다. 앱 내 알림 또는 이벤트 페이지를 통해 퀴즈에 참여할 수
           있습니다.
         </p>
@@ -204,7 +204,7 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          카카오뱅크 OX퀴즈는 카카오뱅크가 주관하는 이벤트의 일환으로 진행되며,
+          카카오뱅크 퀴즈는 카카오뱅크가 주관하는 이벤트의 일환으로 진행되며,
           퀴즈 내용, 정답 기준, 보상 방식은{" "}
           <strong>카카오뱅크 이벤트 안내사항</strong>에 따릅니다.
         </p>

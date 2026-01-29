@@ -19,7 +19,7 @@ const answerLabelByType: Record<string, string> = {
   toss: "🎯 토스 행운퀴즈 정답",
   cashwalk: "🏃 캐시워크 돈버는퀴즈 정답",
   shinhan: "💙 신한쏠페이 쏠퀴즈, 퀴즈팡팡, 출석퀴즈 정답",
-  kakaobank: "💛 카카오뱅크 OX 정답",
+  kakaobank: "💛 카카오뱅크 이모지 퀴즈 정답",
   kakaopay: "💛 카카오페이 퀴즈타임 정답",
   bitbunny: "🐰 비트버니 퀴즈 정답",
   okcashbag: "🧡 오케이캐시백 오퀴즈 정답",
@@ -90,7 +90,7 @@ export async function GET() {
         const now = new Date();
         const dateStr = quiz.answerDate || getKoreaDate();
         const date = new Date(
-          `${dateStr}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}+09:00`
+          `${dateStr}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}+09:00`,
         );
         return date.toUTCString();
       }
