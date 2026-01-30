@@ -44,4 +44,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-crawl/
+crawl/node_modules
