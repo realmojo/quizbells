@@ -969,6 +969,75 @@ export default function DescriptionComponents({ type }: { type: string }) {
         </p>
       </>
     );
+  } else if (type === "buzzvil") {
+    return (
+      <>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          <strong>버즈빌 퀴즈</strong>는 버즈빌에서 운영하는 퀴즈 이벤트입니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          사용자는 <strong>버즈빌 앱 접속 후</strong>, 메인 홈 또는 이벤트
+          메뉴에 있는 <strong>퀴즈 이벤트 배너</strong>를 클릭하여 퀴즈에 참여할
+          수 있습니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          퀴즈는 일반적으로{" "}
+          <strong>
+            버즈빌의 금융상품, 서비스, 디지털 금융 정보, 생활 금융 상식
+          </strong>
+          과 관련된 객관식 문제 형식이며, 퀴즈 참여 시{" "}
+          <strong>포인트 또는 경품 추첨 기회</strong>를 제공하는 프로모션과 함께
+          진행됩니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          모니모 모니스쿨 퀴즈는{" "}
+          <strong>매주 또는 특정 기간 동안 한정적으로 진행</strong>되며, 퀴즈
+          정답을 맞힐 경우 즉시 리워드가 지급되거나 추첨 이벤트에 자동 응모되는
+          방식이 사용됩니다. 일부 퀴즈의 경우{" "}
+          <strong>
+            모니모 관련 콘텐츠를 확인한 뒤 정답을 맞히는 미션형 퀴즈
+          </strong>
+          로 제공되기도 합니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          참여 전 반드시 모니모 앱의{" "}
+          <strong>이벤트 상세 페이지의 안내사항 및 유의사항</strong>을 확인하는
+          것이 좋습니다.
+        </p>
+      </>
+    );
+  }
+
+  if (type === "buzzvil") {
+    return (
+      <>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          <strong>버즈빌 퀴즈</strong>는 버즈빌이 제공하는 리워드형 광고 퀴즈
+          서비스입니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          사용자는 <strong>다양한 제휴 앱(OK캐쉬백, 엘포인트 등)</strong> 접속
+          후, 포인트 충전소 또는 잠금화면의 <strong>퀴즈 배너</strong>를
+          클릭하여 참여할 수 있습니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          퀴즈는 일반적으로{" "}
+          <strong>광고주의 브랜드, 상품 특징, 프로모션</strong>과 관련된
+          초성/객관식 문제 형식이며, 참여 시 <strong>포인트 적립</strong> 혜택을
+          제공합니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          버즈빌 퀴즈는 <strong>광고 캠페인 기간 동안 한정적으로 진행</strong>
+          되며, 정답을 맞힐 경우 즉시 리워드가 지급되는 방식입니다. 일부 퀴즈는{" "}
+          <strong>검색이나 힌트 확인 후 정답을 입력하는 미션형</strong>으로
+          제공되기도 합니다.
+        </p>
+        <p className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6">
+          참여 전 반드시 <strong>이벤트 상세 페이지의 적립 유의사항</strong>을
+          확인하는 것이 좋습니다.
+        </p>
+      </>
+    );
   }
 
   return null;

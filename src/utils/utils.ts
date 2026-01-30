@@ -147,6 +147,13 @@ export const quizItems = [
     image: "/images/monimo_200.png",
     slotId: "4867186355",
   },
+  {
+    type: "buzzvil",
+    typeKr: "버즈빌",
+    title: "버즈빌 퀴즈",
+    image: "/images/buzzvil_200.png",
+    slotId: "6068072405",
+  },
 ];
 
 export const detectDevice = () => {

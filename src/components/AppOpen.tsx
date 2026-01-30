@@ -188,6 +188,14 @@ const APP_DATA: Record<string, AppData> = {
     hoverColor: "hover:bg-blue-600",
     textColor: "text-white",
   },
+  buzzvil: {
+    ios: "",
+    android: "",
+    buttonText: "버즈빌 퀴즈 참여하기",
+    bgColor: "bg-blue-600",
+    hoverColor: "hover:bg-blue-600",
+    textColor: "text-white",
+  },
 };
 
 export default function AppOpen({ type }: { type: string }) {

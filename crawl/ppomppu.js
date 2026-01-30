@@ -3,7 +3,7 @@ const cheerio = require("cheerio");
 const iconv = require("iconv-lite");
 
 const { doInsert, getKoreaTime } = require("./db");
-const { getTypeKr } = require("./common");
+const { getTypeKr, getType } = require("./common");
 
 /**
  * 뽐뿌 쿠폰 게시판에서 KB Pay 퀴즈 정보를 크롤링하는 함수
@@ -238,18 +238,16 @@ const extractKbPayQuizFromPage = async (url, title, notifiedTypes) => {
     if (answer) {
       console.log(`✅ [Ppomppu] 정답 추출 성공: "${answer}"`);
 
-      const type = getTypeKr(title);
+      const type = getType(title);
 
       const quizzes = [
         {
-          type, // 또는 게시물 타입에 따라 동적 할당 가능
+          type: getTypeKr(type), // 또는 게시물 타입에 따라 동적 할당 가능
           question: question || title, // 질문이 비었으면 원본 제목 사용
           answer: answer,
           otherAnswers: [],
         },
       ];
-
-      // console.log(quizzes);
 
       // 내가 완료하기전까지 doInsert 주석을 자동으로 해제하지마
       if (type) {
