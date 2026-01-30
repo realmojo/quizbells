@@ -171,7 +171,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
           "increment_answer_count",
           {
             p_quiz_type: type,
-          }
+          },
         );
 
         if (rpcError) {
@@ -253,7 +253,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const countResponse = await fetch(
       `${baseUrl}/api/quizbells/count?type=${type}`,
-      { next: { revalidate: 300 } } // 5분 캐시
+      { next: { revalidate: 300 } }, // 5분 캐시
     );
     if (countResponse.ok) {
       const countData = await countResponse.json();
@@ -518,6 +518,39 @@ export default async function QuizPage({ params }: QuizPageParams) {
             </div>
 
             <Adsense slotId={item.slotId || "8409513997"} />
+
+            {/*
+              오늘 날짜가 아닌경우 /quiz/${type}/today 로 가능하게 버튼
+            */}
+            {date !== "today" && (
+              <a
+                href={`/quiz/${type}/today`}
+                target="_self"
+                className="block mb-3"
+              >
+                <div className="group rounded-xl border-2 border-emerald-300 dark:border-emerald-700 bg-linear-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 px-6 py-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-emerald-500 dark:bg-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 dark:group-hover:bg-emerald-500 transition-colors">
+                        <CheckCircle2 className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-xl font-medium text-emerald-700 dark:text-emerald-300 mb-1">
+                          {item.typeKr} 오늘({format(getKoreaDate(), "M월 d일")}
+                          ) 퀴즈 정답 보기
+                        </div>
+                        <div className="text-xs text-emerald-600 dark:text-emerald-400">
+                          클릭하여 정답 보기 →
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300 group-hover:text-emerald-800 dark:group-hover:text-emerald-200 transition-colors">
+                      →
+                    </div>
+                  </div>
+                </div>
+              </a>
+            )}
 
             {/* Description */}
             <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md mt-4 p-4 mb-4 shadow-sm border border-white/50 dark:border-slate-800 overflow-hidden">
