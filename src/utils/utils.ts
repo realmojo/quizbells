@@ -150,7 +150,7 @@ export const quizItems = [
   {
     type: "buzzvil",
     typeKr: "버즈빌",
-    title: "버즈빌 퀴즈",
+    title: "퀴즈",
     image: "/images/buzzvil_200.png",
     slotId: "6068072405",
   },
