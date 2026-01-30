@@ -7,6 +7,7 @@ const {
   getBntNewsByOkCashbag,
 } = require("./bntnews");
 const { getBookshelfJourneyQuiz } = require("./bookshelf-journey");
+const { getPpomppuQuiz } = require("./ppomppu");
 const { google } = require("googleapis");
 const request = require("request");
 const { quizItems } = require("./db");
@@ -25,7 +26,7 @@ const getGoogleKey = () => {
     return require("./devupbox.json");
   } catch (err) {
     throw new Error(
-      "Google API 키를 찾을 수 없습니다. 환경 변수를 설정하세요."
+      "Google API 키를 찾을 수 없습니다. 환경 변수를 설정하세요.",
     );
   }
 };
@@ -67,7 +68,7 @@ const googleIndexingApi = async (link) => {
       key.client_email,
       null,
       key.private_key,
-      ["https://www.googleapis.com/auth/indexing"]
+      ["https://www.googleapis.com/auth/indexing"],
     );
 
     jwtClient.authorize(function (err, tokens) {
@@ -103,7 +104,7 @@ const googleIndexingApi = async (link) => {
 
 const run = async () => {
   console.log(
-    `🔍 [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 시작`
+    `🔍 [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 시작`,
   );
 
   try {
@@ -150,16 +151,23 @@ const run = async () => {
           console.error("❌ Veil8000 오류:", err.message || err);
         }
       })(),
+      (async () => {
+        try {
+          await getPpomppuQuiz(); //  뽐뿌
+        } catch (err) {
+          console.error("❌ PPomppu 오류:", err.message || err);
+        }
+      })(),
     ]);
   } catch (err) {
     console.error(
       "⚠️ 전체 크롤링 중단 오류 (이 블록은 사실상 발생하지 않음):",
-      err.message || err
+      err.message || err,
     );
   }
 
   console.log(
-    `✅ [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 완료`
+    `✅ [${getKoreaTime().format("YYYY-MM-DD HH:mm:ss")}] 퀴즈 크롤링 완료`,
   );
 
   if (hasIndexedToday()) {

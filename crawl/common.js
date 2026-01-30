@@ -9,6 +9,8 @@ const getType = (title) => {
     return "shinhan";
   } else if (title.includes("신한") && title.includes("SOL")) {
     return "shinhan";
+  } else if (title.includes("신한")) {
+    return "shinhan";
   } else if (title.includes("닥터나우")) {
     return "doctornow";
   } else if (title.includes("나만의닥터")) {
@@ -17,7 +19,11 @@ const getType = (title) => {
     return "kakaobank";
   } else if (title.includes("카카오페이")) {
     return "kakaopay";
-  } else if (title.includes("에이치") || title.includes("H.Point")) {
+  } else if (
+    title.includes("에이치") ||
+    title.includes("H.Point") ||
+    title.toLowerCase().includes("hpoint")
+  ) {
     return "hpoint";
   } else if (title.includes("비트버니")) {
     return "bitbunny";
@@ -49,6 +55,8 @@ const getType = (title) => {
     return "kbank";
   } else if (title.includes("monimo") || title.includes("모니스쿨")) {
     return "monimo";
+  } else if (title.includes("buzzvil") || title.includes("버즈빌")) {
+    return "버즈빌";
   }
 };
 
@@ -93,6 +101,8 @@ const getTypeKr = (type) => {
     return "기후행동 기후동행 기회소득";
   } else if (type === "monimo") {
     return "모니스쿨";
+  } else if (type === "buzzvil") {
+    return "버즈빌";
   } else {
     return type;
   }

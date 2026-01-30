@@ -38,6 +38,9 @@ const getKoreaTime = () => {
       if (formatStr === "YYYY-MM-DD HH:mm:ss") {
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
       }
+      if (formatStr === "YY.MM.DD") {
+        return `${year.toString().slice(-2)}.${month}.${day}`;
+      }
       // 기본값
       return `${year}-${month}-${day}`;
     },

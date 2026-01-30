@@ -7,6 +7,7 @@ const {
   getBntNewsByOkCashbag,
 } = require("./bntnews");
 const { getBookshelfJourneyQuiz } = require("./bookshelf-journey");
+const { getPpomppuQuiz } = require("./ppomppu");
 const { google } = require("googleapis");
 const request = require("request");
 const path = require("path");
@@ -121,6 +122,13 @@ const run = async () => {
           await getVeil8000Quiz(); //  3o3, doctornow, mydoctor, kakaobank, hpoint, kakaopay
         } catch (err) {
           console.error("❌ Veil8000 오류:", err.message || err);
+        }
+      })(),
+      (async () => {
+        try {
+          await getPpomppuQuiz(); //  뽐뿌
+        } catch (err) {
+          console.error("❌ PPomppu 오류:", err.message || err);
         }
       })(),
     ]);
