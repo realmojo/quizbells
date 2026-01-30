@@ -56,7 +56,7 @@ const getType = (title) => {
   } else if (title.includes("monimo") || title.includes("모니스쿨")) {
     return "monimo";
   } else if (title.includes("buzzvil") || title.includes("버즈빌")) {
-    return "버즈빌";
+    return "buzzvil";
   }
 };
 
