@@ -31,7 +31,7 @@ export const quizItems = [
   {
     type: "kakaobank",
     typeKr: "카카오뱅크",
-    title: "이모지 퀴즈",
+    title: "AI 이모지 퀴즈",
     image: "/images/kakaobank_200.png",
     slotId: "3818213044",
   },
