@@ -517,7 +517,9 @@ export default async function QuizPage({ params }: QuizPageParams) {
               )}
             </div>
 
-            <Adsense slotId={item.slotId || "8409513997"} />
+            <div className="h-[280px] bg-slate-100/50 dark:bg-slate-800/50 rounded-lg flex items-center justify-center overflow-hidden my-4">
+              <Adsense slotId={item.slotId || "8409513997"} />
+            </div>
 
             {/*
               오늘 날짜가 아닌경우 /quiz/${type}/today 로 가능하게 버튼
