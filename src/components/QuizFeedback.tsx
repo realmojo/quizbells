@@ -14,7 +14,7 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState({ helpful: 0, notHelpful: 0 });
   const [hasVoted, setHasVoted] = useState<"helpful" | "notHelpful" | null>(
-    null
+    null,
   );
 
   const fetchStats = useCallback(async () => {
@@ -69,7 +69,7 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
       toast.success(
         isHelpful
           ? "도움이 되었다니 기뻐요! 🥰"
-          : "피드백 감사합니다. 빠르게 수정할게요! 🔧"
+          : "피드백 감사합니다. 빠르게 수정할게요! 🔧",
       );
     } catch (e) {
       console.error(e);
@@ -108,7 +108,7 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
             hasVoted === "helpful"
               ? "bg-emerald-50 border-emerald-500 text-emerald-700 dark:bg-emerald-900/20 dark:border-emerald-500 dark:text-emerald-400 ring-2 ring-emerald-200 dark:ring-emerald-900"
               : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-emerald-400 dark:hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/10",
-            hasVoted && hasVoted !== "helpful" && "opacity-50 grayscale"
+            hasVoted && hasVoted !== "helpful" && "opacity-50 grayscale",
           )}
         >
           <div
@@ -116,7 +116,7 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
               "p-2 rounded-full transition-colors",
               hasVoted === "helpful"
                 ? "bg-emerald-100 dark:bg-emerald-900/50"
-                : "bg-slate-100 dark:bg-slate-700"
+                : "bg-slate-100 dark:bg-slate-700",
             )}
           >
             <ThumbsUp
@@ -124,7 +124,7 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
                 "w-6 h-6",
                 hasVoted === "helpful"
                   ? "text-emerald-600 dark:text-emerald-400"
-                  : "text-slate-500 dark:text-slate-400"
+                  : "text-slate-500 dark:text-slate-400",
               )}
             />
           </div>
@@ -138,7 +138,7 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
           </div>
         </button>
 
-        <button
+        {/* <button
           onClick={() => handleVote(false)}
           disabled={loading || hasVoted !== null}
           className={cn(
@@ -174,7 +174,7 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
               </span>
             )}
           </div>
-        </button>
+        </button> */}
       </div>
 
       {totalVotes > 0 && (
