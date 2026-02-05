@@ -15,7 +15,11 @@ const getType = (title) => {
     return "doctornow";
   } else if (title.includes("나만의닥터")) {
     return "mydoctor";
-  } else if (title.includes("카카오뱅크")) {
+  } else if (
+    title.includes("카카오뱅크") ||
+    title.includes("카뱅") ||
+    title.includes("이모지")
+  ) {
     return "kakaobank";
   } else if (title.includes("카카오페이")) {
     return "kakaopay";

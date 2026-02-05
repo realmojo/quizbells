@@ -44,7 +44,12 @@ const getPpomppuQuiz = async () => {
       const koreaTime = getKoreaTime().format("YY.MM.DD");
       const ppomppuTime = time.split(" ")[0];
       const isToday = koreaTime === ppomppuTime;
-      if (title && isToday && !title.includes("네이버")) {
+      if (
+        title &&
+        isToday &&
+        !title.includes("네이버") &&
+        !title.includes("페이코")
+      ) {
         quizItems.push({
           title,
           href: href ? `https://www.ppomppu.co.kr/zboard/${href}` : "",
@@ -251,7 +256,7 @@ const extractKbPayQuizFromPage = async (url, title, notifiedTypes) => {
 
       // 내가 완료하기전까지 doInsert 주석을 자동으로 해제하지마
       if (type) {
-        await doInsert(quizzes, type, notifiedTypes);
+        // await doInsert(quizzes, type, notifiedTypes);
       }
     } else {
       console.log(`⚠️ [Ppomppu] 정답을 추출하지 못했습니다. (URL: ${url})`);
