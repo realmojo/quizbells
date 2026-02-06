@@ -194,11 +194,17 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
           {/* Answer Cards */}
           <div className="space-y-4">
             {contents.map((quiz: any, idx: number) => {
-              const urlMatch = quiz.answer.match(/(https?:\/\/[^\s]+)/);
-              const answerUrl = urlMatch ? urlMatch[0] : null;
-              const displayAnswer = answerUrl
-                ? quiz.answer.replace(answerUrl, "").trim()
-                : quiz.answer;
+              // answerLink가 있으면 그것을 우선 사용, 없으면 answer에서 URL 추출 시도
+              let answerUrl = quiz.answerLink;
+              let displayAnswer = quiz.answer;
+
+              if (!answerUrl) {
+                const urlMatch = quiz.answer.match(/(https?:\/\/[^\s]+)/);
+                answerUrl = urlMatch ? urlMatch[0] : null;
+                if (answerUrl) {
+                  displayAnswer = quiz.answer.replace(answerUrl, "").trim();
+                }
+              }
 
               return (
                 <Fragment key={idx}>
@@ -233,15 +239,19 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
                       >
                         {displayAnswer}
                       </span>
+
                       {answerUrl && (
-                        <a
-                          href={answerUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block mt-3 text-sm font-medium text-emerald-600 dark:text-emerald-400 underline underline-offset-4 break-all hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
-                        >
-                          {answerUrl}
-                        </a>
+                        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                          <span>퀴즈 참여하기:</span>
+                          <a
+                            href={answerUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 dark:text-emerald-400 underline underline-offset-4 break-all hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
+                          >
+                            {answerUrl}
+                          </a>
+                        </div>
                       )}
                     </div>
                     {quiz.otherAnswers?.length > 0 && (

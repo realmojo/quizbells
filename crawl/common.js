@@ -1,7 +1,13 @@
 const getType = (title) => {
   if (title.includes("토스")) {
     return "toss";
-  } else if (title.includes("오퀴즈")) {
+  } else if (
+    title.includes("오퀴즈") ||
+    title.includes("오케이캐시백") ||
+    title.includes("오케이캐쉬백") ||
+    title.includes("ok캐시백") ||
+    title.includes("ok캐쉬백")
+  ) {
     return "okcashbag";
   } else if (title.includes("삼쩜삼")) {
     return "3o3";

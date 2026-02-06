@@ -133,6 +133,7 @@ const extractKbPayQuizFromPage = async (url, title, notifiedTypes) => {
       .filter((line) => line.length > 0); // 빈 줄 제거
 
     let answer = "";
+    let answerLink = "";
 
     // 전략 1: "정답" 키워드가 명시적으로 있는 줄 찾기
     for (const line of lines) {
@@ -145,8 +146,18 @@ const extractKbPayQuizFromPage = async (url, title, notifiedTypes) => {
       if (keywordMatch && keywordMatch[1]) {
         let candidate = keywordMatch[1].trim();
 
-        // URL이 포함되어 있다면 제거 (뒤에 붙어있는 경우)
-        candidate = candidate.replace(/https?:\/\/[^\s]+/, "").trim();
+        // URL 추출 및 제거 Logic
+        const urlMatch = candidate.match(/https?:\/\/[^\s]+/);
+        if (urlMatch) {
+          const url = urlMatch[0];
+          // 이미지 확장자가 아닌 경우에만 answerLink에 저장 (png, jpg, jpeg, gif, webp, svg)
+          // 또한 괄호 등으로 감싸져 있을 수 있으므로 정제 필요할 수 있음
+          if (!/\.(png|jpg|jpeg|gif|webp|svg|bmp)(\?.*)?$/i.test(url)) {
+            answerLink = url;
+          }
+          // 원본 텍스트에서 URL 제거
+          candidate = candidate.replace(url, "").trim();
+        }
 
         // 정답이 "입니다"로 끝나는 경우 처리
         if (candidate.endsWith("입니다.") || candidate.endsWith("입니다")) {
@@ -217,6 +228,23 @@ const extractKbPayQuizFromPage = async (url, title, notifiedTypes) => {
 
     // 정답 정제 (불필요한 앞뒤 번호나 기호 제거)
     if (answer) {
+      // URL 추출 및 제거 Logic (Strategy 2 등에서 넘어온 경우를 위해 한 번 더 체크)
+      const urlMatch = answer.match(/https?:\/\/[^\s]+/);
+      if (urlMatch) {
+        const url = urlMatch[0];
+        // 이미지 확장자가 아닌 경우에만 answerLink에 저장 (png, jpg, jpeg, gif, webp, svg)
+        if (!/\.(png|jpg|jpeg|gif|webp|svg|bmp)(\?.*)?$/i.test(url)) {
+          // 기존에 answerLink가 있다면 덮어쓰지 않거나 확인 필요할 수 있으나,
+          // 여기서는 answer 본문에서 발견된 URL을 우선시하거나 추가할 수 있음.
+          // 일단 answerLink가 비어있을 때만 채우는 방식으로
+          if (!answerLink) {
+            answerLink = url;
+          }
+        }
+        // 원본 텍스트에서 URL 제거
+        answer = answer.replace(url, "").trim();
+      }
+
       // 1. 앞부분의 번호 제거 (예: "1. 사과" -> "사과", "① 사과" -> "사과")
       answer = answer
         .replace(/^[\d]+[\.\)]\s*/, "") // 1. 또는 1) 제거
@@ -253,6 +281,7 @@ const extractKbPayQuizFromPage = async (url, title, notifiedTypes) => {
           type: getTypeKr(type), // 또는 게시물 타입에 따라 동적 할당 가능
           question: question || title, // 질문이 비었으면 원본 제목 사용
           answer: answer,
+          answerLink: answerLink,
           otherAnswers: [],
         },
       ];
