@@ -485,8 +485,6 @@ const getVeil8000Quiz = async () => {
     }
   });
 
-  console.log(quizItems);
-
   const notifiedTypes = new Set(); // ← 알림 발송 추적용 Set
 
   for (const post of quizItems) {

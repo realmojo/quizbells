@@ -542,11 +542,11 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
     // }
 
     if (shouldNotify && isNotify && notifiedTypes && !notifiedTypes.has(type)) {
-      console.log(
-        `🔔 [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 알람 발송`,
-      );
-      alarmNotify(type);
-      notifiedTypes.add(type); // ← 알람 보냈다고 기록
+      // console.log(
+      //   `🔔 [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 알람 발송`,
+      // );
+      // alarmNotify(type);
+      // notifiedTypes.add(type); // ← 알람 보냈다고 기록
     }
   }
 };
