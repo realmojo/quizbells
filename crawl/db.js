@@ -545,7 +545,7 @@ const doInsert = async (quizzes, type, notifiedTypes) => {
       console.log(
         `🔔 [${getKoreaTime().format("YYYY-MM-DD")}] ${type} 퀴즈 알람 발송`,
       );
-      await alarmNotify(type);
+      alarmNotify(type);
       notifiedTypes.add(type); // ← 알람 보냈다고 기록
     }
   }

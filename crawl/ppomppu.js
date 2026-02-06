@@ -145,6 +145,9 @@ const extractKbPayQuizFromPage = async (url, title, notifiedTypes) => {
       if (keywordMatch && keywordMatch[1]) {
         let candidate = keywordMatch[1].trim();
 
+        // URL이 포함되어 있다면 제거 (뒤에 붙어있는 경우)
+        candidate = candidate.replace(/https?:\/\/[^\s]+/, "").trim();
+
         // 정답이 "입니다"로 끝나는 경우 처리
         if (candidate.endsWith("입니다.") || candidate.endsWith("입니다")) {
           candidate = candidate.replace(/입니다\.?$/, "").trim();
@@ -256,7 +259,7 @@ const extractKbPayQuizFromPage = async (url, title, notifiedTypes) => {
 
       // 내가 완료하기전까지 doInsert 주석을 자동으로 해제하지마
       if (type) {
-        // await doInsert(quizzes, type, notifiedTypes);
+        await doInsert(quizzes, type, notifiedTypes);
       }
     } else {
       console.log(`⚠️ [Ppomppu] 정답을 추출하지 못했습니다. (URL: ${url})`);
