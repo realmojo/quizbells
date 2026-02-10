@@ -6,7 +6,7 @@ export const runtime = "edge";
 const BASE_URL = "https://quizbells.com";
 const QUIZ_TYPES = quizItems.map((item) => item.type);
 
-function getKoreaDateString(): string {
+function getKoreaTodayDate(): string {
   const now = new Date();
   const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
   const koreaTime = new Date(utcTime + 9 * 60 * 60 * 1000);
@@ -15,15 +15,22 @@ function getKoreaDateString(): string {
   const month = String(koreaTime.getMonth() + 1).padStart(2, "0");
   const day = String(koreaTime.getDate()).padStart(2, "0");
 
-  const hours = String(koreaTime.getHours()).padStart(2, "0");
-  const minutes = String(koreaTime.getMinutes()).padStart(2, "0");
-  const seconds = String(koreaTime.getSeconds()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function toW3CDatetime(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
 
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+09:00`;
 }
 
 export async function GET() {
-  const todayDateOnly = getKoreaDateString();
+  const today = getKoreaTodayDate();
 
   const urls: {
     loc: string;
@@ -37,7 +44,7 @@ export async function GET() {
       const { data: todayQuizData, error } = await supabaseAdmin
         .from("quizbells_answer")
         .select("type, updated")
-        .eq("answerDate", todayDateOnly)
+        .eq("answerDate", today)
         .in("type", QUIZ_TYPES)
         .order("updated", { ascending: true });
 
@@ -63,20 +70,13 @@ export async function GET() {
 
         if (updatedTime) {
           try {
-            const updatedDate = new Date(updatedTime);
-            const year = updatedDate.getFullYear();
-            const month = String(updatedDate.getMonth() + 1).padStart(2, "0");
-            const day = String(updatedDate.getDate()).padStart(2, "0");
-            const hours = String(updatedDate.getHours()).padStart(2, "0");
-            const minutes = String(updatedDate.getMinutes()).padStart(2, "0");
-            const seconds = String(updatedDate.getSeconds()).padStart(2, "0");
-            lastmod = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+09:00`;
+            lastmod = toW3CDatetime(new Date(updatedTime));
           } catch (e) {
             console.error(`타입 ${type}의 updated 시간 파싱 오류:`, e);
-            lastmod = todayDateOnly;
+            lastmod = today;
           }
         } else {
-          lastmod = todayDateOnly;
+          lastmod = today;
         }
 
         urls.push({
@@ -91,7 +91,7 @@ export async function GET() {
       for (const type of QUIZ_TYPES) {
         urls.push({
           loc: `${BASE_URL}/quiz/${type}/today`,
-          lastmod: todayDateOnly,
+          lastmod: today,
           priority: "1.0",
           changefreq: "hourly",
         });
@@ -101,7 +101,7 @@ export async function GET() {
     for (const type of QUIZ_TYPES) {
       urls.push({
         loc: `${BASE_URL}/quiz/${type}/today`,
-        lastmod: todayDateOnly,
+        lastmod: today,
         priority: "1.0",
         changefreq: "hourly",
       });
