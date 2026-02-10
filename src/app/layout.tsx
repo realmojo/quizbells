@@ -101,6 +101,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://quizbells.com",
   },
+  metadataBase: new URL("https://quizbells.com"),
 };
 
 export default async function RootLayout({
@@ -109,7 +110,7 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body>
         <Script
           strategy="beforeInteractive"
