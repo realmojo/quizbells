@@ -117,7 +117,7 @@ ${urls
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
-  </url>`
+  </url>`,
   )
   .join("\n")}
 </urlset>`;

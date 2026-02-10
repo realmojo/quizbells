@@ -62,9 +62,7 @@ ${urls
   <url>
     <loc>${loc}</loc>
     <lastmod>${lastmod}</lastmod>
-    <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
-  </url>`
+  </url>`,
   )
   .join("")}
 </urlset>`;
