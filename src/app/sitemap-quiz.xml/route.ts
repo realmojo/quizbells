@@ -15,12 +15,15 @@ function getKoreaDateString(): string {
   const month = String(koreaTime.getMonth() + 1).padStart(2, "0");
   const day = String(koreaTime.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${day}T00:00:00`;
+  const hours = String(koreaTime.getHours()).padStart(2, "0");
+  const minutes = String(koreaTime.getMinutes()).padStart(2, "0");
+  const seconds = String(koreaTime.getSeconds()).padStart(2, "0");
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+09:00`;
 }
 
 export async function GET() {
-  const todayDate = getKoreaDateString();
-  const todayDateOnly = todayDate.split("T")[0];
+  const todayDateOnly = getKoreaDateString();
 
   const urls: {
     loc: string;
@@ -67,13 +70,13 @@ export async function GET() {
             const hours = String(updatedDate.getHours()).padStart(2, "0");
             const minutes = String(updatedDate.getMinutes()).padStart(2, "0");
             const seconds = String(updatedDate.getSeconds()).padStart(2, "0");
-            lastmod = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+            lastmod = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+09:00`;
           } catch (e) {
             console.error(`타입 ${type}의 updated 시간 파싱 오류:`, e);
-            lastmod = todayDate;
+            lastmod = todayDateOnly;
           }
         } else {
-          lastmod = todayDate;
+          lastmod = todayDateOnly;
         }
 
         urls.push({
@@ -88,7 +91,7 @@ export async function GET() {
       for (const type of QUIZ_TYPES) {
         urls.push({
           loc: `${BASE_URL}/quiz/${type}/today`,
-          lastmod: todayDate,
+          lastmod: todayDateOnly,
           priority: "1.0",
           changefreq: "hourly",
         });
@@ -98,7 +101,7 @@ export async function GET() {
     for (const type of QUIZ_TYPES) {
       urls.push({
         loc: `${BASE_URL}/quiz/${type}/today`,
-        lastmod: todayDate,
+        lastmod: todayDateOnly,
         priority: "1.0",
         changefreq: "hourly",
       });

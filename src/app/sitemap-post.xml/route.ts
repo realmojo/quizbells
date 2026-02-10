@@ -5,11 +5,6 @@ export const runtime = "edge";
 const BASE_URL = "https://quizbells.com";
 const QUIZ_TYPES = quizItems.map((type) => type.type);
 
-// 날짜 문자열(YYYY-MM-DD)을 W3C Datetime 포맷으로 변환
-function toW3CDatetime(dateString: string): string {
-  return `${dateString}T00:00:00`;
-}
-
 // 최근 1개월(30일) + 내일까지 포함된 날짜 리스트 생성
 function generateDatesLastMonth(): string[] {
   const dates: string[] = [];
@@ -41,7 +36,7 @@ export async function GET() {
   for (const index of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
     urls.push({
       loc: `${BASE_URL}/posts/${index}`,
-      lastmod: "2025-12-05T00:00:00",
+      lastmod: "2025-12-05",
       priority: "0.7",
       changefreq: "weekly",
     });
@@ -52,7 +47,7 @@ export async function GET() {
     for (const type of QUIZ_TYPES) {
       urls.push({
         loc: `${BASE_URL}/quiz/${type}/${date}`,
-        lastmod: toW3CDatetime(date),
+        lastmod: date,
         priority: "0.7",
         changefreq: "daily",
       });
