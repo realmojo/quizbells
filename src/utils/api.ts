@@ -13,7 +13,7 @@ export const getSettings = async (userId: string): Promise<any | null> => {
 // ✅ 설정 업데이트
 export const updateSettings = async (
   userId: string,
-  params: any
+  params: any,
 ): Promise<any | null> => {
   const res = await fetch(`/api/users?userId=${userId}`, {
     method: "PATCH",
@@ -32,14 +32,14 @@ export const updateSettings = async (
 // ✅ 퀴즈벨 정답 조회
 export const getQuizbells = async (
   type: string,
-  answerDate: string
+  answerDate: string,
 ): Promise<any | null> => {
   try {
     // 클라이언트에서는 상대 경로 사용, 서버에서는 절대 경로 사용
     const isClient = typeof window !== "undefined";
     const baseUrl = isClient
       ? ""
-      : process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+      : process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3002";
     const url = `${baseUrl}/api/quizbells?type=${type}&answerDate=${answerDate}`;
 
     const res = await fetch(url, {
@@ -63,16 +63,17 @@ export const getQuizbells = async (
 // ✅ 오늘 날짜의 모든 퀴즈 타입 정답 조회 (한 번에)
 export const getTodayQuizbells = async (
   answerDate: string,
-  isNew: boolean = false
+  isNew: boolean = false,
 ): Promise<Record<string, any> | Record<string, boolean>> => {
   try {
     // 클라이언트에서는 상대 경로 사용, 서버에서는 절대 경로 사용
     const isClient = typeof window !== "undefined";
     const baseUrl = isClient
       ? ""
-      : process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+      : process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3002";
     const url = `${baseUrl}/api/quizbells/today?answerDate=${answerDate}${isNew ? "&isNew=true" : ""}`;
 
+    console.log("url", url);
     const res = await fetch(url, {
       cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
     });
@@ -95,7 +96,7 @@ export const getTodayQuizbells = async (
 export const getPostsList = async (
   offset: number = 0,
   limit: number = 5,
-  type: string = ""
+  type: string = "",
 ): Promise<any | null> => {
   const query = new URLSearchParams({
     type,
@@ -117,7 +118,7 @@ export const getPost = async (id: string): Promise<any | null> => {
     return null;
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3002";
 
   const res = await fetch(`${baseUrl}/api/post?id=${id}`);
 

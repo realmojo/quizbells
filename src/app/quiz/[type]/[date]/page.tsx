@@ -11,12 +11,24 @@ import SocialShare from "@/components/SocialShare";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { getQuizbells } from "@/utils/api";
-import { CheckCircle2, Lightbulb, ArrowRight } from "lucide-react";
+import {
+  CheckCircle2,
+  Lightbulb,
+  ArrowRight,
+  Sparkles,
+  TrendingUp,
+} from "lucide-react";
 import { subDays } from "date-fns";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import VisitTracker from "@/components/VisitTracker";
+import {
+  getRandomFinancialTip,
+  HIGH_VALUE_KEYWORDS,
+  getBridgeContent,
+  getDetailedArticle,
+} from "@/utils/financial-context";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 // Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
@@ -65,7 +77,9 @@ export async function generateMetadata({
   const typeTitle = item?.title || "";
   // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
   // 네이버 모바일 검색 가독성 최적화
-  const fullTitle = `${typeName} ${typeTitle} 오늘 정답 ${shortDateLabel} | 퀴즈벨`;
+  // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
+  // 네이버 모바일 검색 가독성 최적화 및 금융 고단가 키워드 추가
+  const fullTitle = `${typeName} ${typeTitle} 오늘 정답 ${shortDateLabel} 및 최신 금리 비교 | 퀴즈벨`;
 
   // 설명문: 핵심 키워드 전진 배치
   const description = `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
@@ -82,6 +96,9 @@ export async function generateMetadata({
       "앱테크",
       typeName,
       typeTitle,
+      "금리비교",
+      "예적금 추천",
+      "대출이자",
     ],
     openGraph: {
       title: fullTitle,
@@ -250,7 +267,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
   // 참여자 수 조회 (누적값)
   let participantCount = 1000; // 기본값
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3002";
     const countResponse = await fetch(
       `${baseUrl}/api/quizbells/count?type=${type}`,
       { next: { revalidate: 300 } }, // 5분 캐시
@@ -601,6 +618,19 @@ export default async function QuizPage({ params }: QuizPageParams) {
                   편리해요 😊
                 </p>
 
+                <div className="flex justify-center gap-3 mb-6">
+                  <a
+                    href={`/quiz/${type}/${format(subDays(parseISO(answerDate), 1), "yyyy-MM-dd")}`}
+                    className="inline-flex items-center gap-2 px-5 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors shadow-sm"
+                  >
+                    <ArrowRight className="w-4 h-4 rotate-180" />
+                    <span>
+                      {format(subDays(parseISO(answerDate), 1), "M월 d일")} 퀴즈
+                      정답 보기
+                    </span>
+                  </a>
+                </div>
+
                 <PWAInstallButton />
               </div>
             )}
@@ -715,9 +745,74 @@ export default async function QuizPage({ params }: QuizPageParams) {
                   </a>
                 </section>
 
+                {/* 금융 팁 섹션 (Strategy 1 - Visual Excellence Redesign) */}
+                {idx === 0 && (
+                  <div className="mb-8 relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-800 dark:to-indigo-900 p-6 text-white shadow-xl shadow-blue-500/20">
+                    <div className="relative z-10 flex gap-4 items-start">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/20 backdrop-blur-md shadow-inner border border-white/10">
+                        <Sparkles className="h-6 w-6 text-yellow-300 drop-shadow-md" />
+                      </div>
+                      <div>
+                        <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-blue-200 border-b border-white/10 pb-1 inline-block">
+                          Today's Financial Insight
+                        </h3>
+                        <p className="text-lg font-bold leading-snug drop-shadow-sm">
+                          {getRandomFinancialTip()}
+                        </p>
+                      </div>
+                    </div>
+                    {/* Decorative Background Elements */}
+                    <div className="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-3xl" />
+                    <div className="absolute -left-6 -bottom-6 h-24 w-24 rounded-full bg-indigo-500/20 blur-2xl" />
+                  </div>
+                )}
+
+                {/* 브릿지 콘텐츠 (Strategy 2 - Clean Architecture Redesign) */}
+                {idx === 0 && getBridgeContent(item.typeKr) && (
+                  <div className="mb-8 relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 p-6 border border-slate-100 dark:border-slate-700 shadow-lg shadow-slate-200/50 dark:shadow-none">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                        <TrendingUp className="h-5 w-5" />
+                      </div>
+                      <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">
+                        <span className="text-emerald-600 dark:text-emerald-400">
+                          {item.typeKr}
+                        </span>{" "}
+                        관련 정보 도우미
+                      </h3>
+                    </div>
+                    <div className="relative pl-4 border-l-4 border-emerald-500/30 dark:border-emerald-500/50">
+                      <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                        {getBridgeContent(item.typeKr)}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* 상세 금융 정보 아티클 (Strategy: Volume + H2 + Dwell Time) */}
+                {idx === 0 &&
+                  (() => {
+                    const article = getDetailedArticle(item.typeKr);
+                    return (
+                      article && (
+                        <article className="mb-8 p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700">
+                          <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 flex items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-3">
+                            <span className="text-2xl">🧐</span> {article.title}
+                          </h2>
+                          <div className="text-slate-700 dark:text-slate-300 leading-7 text-justify break-keep text-base space-y-4">
+                            {article.content.map((paragraph, index) => (
+                              <p key={index}>{paragraph}</p>
+                            ))}
+                          </div>
+                        </article>
+                      )
+                    );
+                  })()}
+
                 {/* {idx === 0 && <gyCard />} */}
               </Fragment>
             ))}
+
             {/* Description Component */}
             <section className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <DescriptionComponent type={type} />
@@ -738,6 +833,30 @@ export default async function QuizPage({ params }: QuizPageParams) {
               <QuizCardComponent viewType="image" />
             </section>
           </main>
+
+          {/* 금융 상식 키워드 섹션 (Strategy 5) */}
+          <aside className="mt-12 px-4">
+            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
+              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
+                <span className="text-emerald-500">💰</span> 오늘의 금융 상식
+                키워드
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {HIGH_VALUE_KEYWORDS.map((keyword, idx) => (
+                  <span
+                    key={idx}
+                    className="inline-block px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs text-slate-600 dark:text-slate-400 font-medium hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-200 dark:hover:border-emerald-800 transition-colors cursor-default"
+                  >
+                    # {keyword}
+                  </span>
+                ))}
+              </div>
+              <p className="mt-4 text-xs text-slate-400 dark:text-slate-500 text-center">
+                본 페이지는 퀴즈 정답 공유와 함께 유익한 금융 정보를 제공하기
+                위해 제작되었습니다.
+              </p>
+            </div>
+          </aside>
         </div>
       </div>
     </>
