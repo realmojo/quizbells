@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(grep:*)",
-      "Bash(curl -sI https://quizbells.com/quiz/toss/today)"
+      "Bash(curl -sI https://quizbells.com/quiz/toss/today)",
+      "Bash(curl -s https://quizbells.com/sitemap.xml)"
     ]
   }
 }
