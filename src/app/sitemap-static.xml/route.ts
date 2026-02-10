@@ -11,7 +11,7 @@ const staticPages = [
 ];
 
 export async function GET() {
-  const lastmod = "2025-06-28"; // 또는 new Date().toISOString().split('T')[0]
+  const lastmod = new Date().toISOString().split("T")[0];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset 

@@ -126,7 +126,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Quizbells. All rights reserved.
           </p>
 
-          <div
+          {/* <div
             className="text-xs text-slate-400 cursor-pointer hover:text-slate-600 transition-colors"
             onDoubleClick={() => setIsVisibleToken(!isVisibleToken)}
           >
@@ -140,7 +140,7 @@ export default function Footer() {
             ) : (
               <span>Developer Access</span>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

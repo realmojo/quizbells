@@ -183,7 +183,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     })();
   }
 
-  const h1Title = `${item.typeKr} ${item.title} 오늘 정답 ${shortDateLabel} | 퀴즈벨`;
+  const h1Title = `${item.typeKr} ${item.title} 오늘 정답 ${shortDateLabel}`;
   const firstDescription = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
 
   let quizItem = null;
@@ -294,28 +294,32 @@ export default async function QuizPage({ params }: QuizPageParams) {
   };
 
   // Breadcrumb 구조화된 데이터
+  const breadcrumbItems = [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "홈",
+      item: "https://quizbells.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: `${item.typeKr} 퀴즈`,
+      item: `https://quizbells.com/quiz/${type}/today`,
+    },
+  ];
+  // today가 아닌 과거 날짜일 때만 3단계 추가 (today면 2번째와 URL이 중복되므로)
+  if (date !== "today") {
+    breadcrumbItems.push({
+      "@type": "ListItem",
+      position: 3,
+      name: `${shortDateLabel} 정답`,
+      item: `https://quizbells.com/quiz/${type}/${answerDate}`,
+    });
+  }
   const breadcrumbJsonLd = {
     "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "홈",
-        item: "https://quizbells.com",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: `${item.typeKr} 퀴즈`,
-        item: `https://quizbells.com/quiz/${type}/today`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: `${shortDateLabel} 정답`,
-        item: `https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`,
-      },
-    ],
+    itemListElement: breadcrumbItems,
   };
 
   // ISO 날짜 형식 생성
