@@ -70,7 +70,7 @@ ${urls
   return new Response(sitemap, {
     status: 200,
     headers: {
-      "Content-Type": "application/xml",
+      "Content-Type": "application/xml; charset=utf-8",
     },
   });
 }
