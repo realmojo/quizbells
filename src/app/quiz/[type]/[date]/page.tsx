@@ -79,7 +79,7 @@ export async function generateMetadata({
   // 네이버 모바일 검색 가독성 최적화
   // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
   // 네이버 모바일 검색 가독성 최적화 및 금융 고단가 키워드 추가
-  const fullTitle = `${typeName} ${typeTitle} 오늘 정답 ${shortDateLabel} 및 최신 금리 비교 | 퀴즈벨`;
+  const fullTitle = `${typeName} ${typeTitle} 오늘 정답 ${shortDateLabel} | 퀴즈벨`;
 
   // 설명문: 핵심 키워드 전진 배치
   const description = `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
@@ -96,7 +96,6 @@ export async function generateMetadata({
       "앱테크",
       typeName,
       typeTitle,
-      "금리비교",
       "예적금 추천",
       "대출이자",
     ],
