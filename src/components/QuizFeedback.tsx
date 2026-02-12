@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { ThumbsUp, ThumbsDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ThumbsUp } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -17,27 +17,23 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
     null,
   );
 
-  const fetchStats = useCallback(async () => {
-    try {
-      const res = await fetch(`/api/feedback?type=${type}`);
-      if (res.ok) {
-        const data = await res.json();
-        setStats({ helpful: data.helpful, notHelpful: data.notHelpful });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, [type]);
-
   useEffect(() => {
-    fetchStats();
-    if (typeof window !== "undefined") {
-      const vote = localStorage.getItem(`feedback_${type}_${date}`);
-      if (vote === "helpful" || vote === "notHelpful") {
-        setHasVoted(vote);
-      }
+    const controller = new AbortController();
+
+    fetch(`/api/feedback?type=${type}`, { signal: controller.signal })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) setStats({ helpful: data.helpful, notHelpful: data.notHelpful });
+      })
+      .catch(() => {});
+
+    const vote = localStorage.getItem(`feedback_${type}_${date}`);
+    if (vote === "helpful" || vote === "notHelpful") {
+      setHasVoted(vote);
     }
-  }, [type, date, fetchStats]);
+
+    return () => controller.abort();
+  }, [type, date]);
 
   const handleVote = async (isHelpful: boolean) => {
     if (hasVoted) {
