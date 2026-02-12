@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "캐시닥",
     "오케이캐시백",
     "신한쏠퀴즈",
-    "토스행운퀴즈",
+    "토스 두근두근 1등찍기 행운퀴즈",
     "퀴즈 정답 알림",
   ],
   openGraph: {

@@ -16,7 +16,7 @@ const getKoreaDate = (): string => {
 };
 
 const answerLabelByType: Record<string, string> = {
-  toss: "🎯 토스 행운퀴즈 정답",
+  toss: "🎯 토스 두근두근 1등찍기 행운퀴즈 정답",
   cashwalk: "🏃 캐시워크 돈버는퀴즈 정답",
   shinhan: "💙 신한쏠페이 쏠퀴즈, 퀴즈팡팡, 출석퀴즈 정답",
   kakaobank: "💛 카카오뱅크 AI 이모지 퀴즈 정답",

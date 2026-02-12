@@ -10,7 +10,7 @@ export const quizItems = [
   {
     type: "toss",
     typeKr: "토스",
-    title: "행운퀴즈",
+    title: "두근두근 1등찍기 행운퀴즈",
     image: "/images/toss_200.png",
     slotId: "6798248536",
   },

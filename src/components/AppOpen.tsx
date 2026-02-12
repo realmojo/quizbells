@@ -16,7 +16,7 @@ const APP_DATA: Record<string, AppData> = {
     ios: "https://apps.apple.com/kr/app/%ED%86%A0%EC%8A%A4/id839333328",
     android:
       "https://play.google.com/store/apps/details?id=viva.republica.toss&hl=ko",
-    buttonText: "토스 행운퀴즈 참여하기",
+    buttonText: "토스 참여하기",
     bgColor: "bg-blue-600",
     hoverColor: "hover:bg-blue-700",
     textColor: "text-white",
