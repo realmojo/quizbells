@@ -206,6 +206,7 @@ export default function QuizCardComponent({
               key={quiz.type}
               target="_self"
               className="block group"
+              aria-label={`${quiz.typeKr} 퀴즈 정답 보기`}
               onClick={(e) => handleCardClick(e, quiz.type, getKoreaDate())}
             >
               <Card className="border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden rounded-2xl ring-1 ring-slate-900/5 dark:ring-white/10">
@@ -254,6 +255,7 @@ export default function QuizCardComponent({
             key={quiz.type}
             target="_self"
             className="block group"
+            aria-label={`${quiz.typeKr} 퀴즈 정답 보기`}
             onClick={(e) => handleCardClick(e, quiz.type, getKoreaDate())}
           >
             <Card className="h-full border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden rounded-2xl ring-1 ring-slate-900/5 dark:ring-white/10">
@@ -308,6 +310,7 @@ export default function QuizCardComponent({
             key={quiz.type}
             target="_self"
             className="block group"
+            aria-label={`${quiz.typeKr} 퀴즈 정답 보기`}
             onClick={(e) => handleCardClick(e, quiz.type, getKoreaDate())}
           >
             <Card className="border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden rounded-xl ring-1 ring-slate-900/5 dark:ring-white/10">

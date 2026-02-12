@@ -13,13 +13,10 @@ import NaverAnalyticsTracker from "@/components/NaverAnalyticsTracker";
 import "./globals.css";
 import Script from "next/script";
 import SendAuthToSW from "@/components/SendAuthToSW";
-// import InstallPromptBanner from "@/components/InstallPromptBanner";
 import ForegroundNotification from "@/components/ForegroundNotification";
 import AlarmSetting from "@/components/AlarmSetting";
 import { ReactNode } from "react";
 import { GoogleAdSense } from "@/components/AdsenseInit";
-// import ClientOnly from "@/components/ClientOnly";
-
 export const metadata: Metadata = {
   title:
     "퀴즈벨 - 오늘의 앱테크 퀴즈 정답 모음 | 신한쏠, 캐시워크, 토스 퀴즈 정답",
@@ -217,7 +214,6 @@ export default async function RootLayout({
             }),
           }}
         />
-        {/* <ClientOnly /> */}
         <NaverAnalyticsTracker />
         <GoogleAnalytics />
         <ForegroundNotification />
@@ -240,9 +236,7 @@ export default async function RootLayout({
         />
         <RegisterServiceWorker />
         <SendAuthToSW />
-        {/* <InstallPromptBanner /> */}
         <AlarmSetting />
-        {/* <ClientOnly /> */}
       </body>
     </html>
   );

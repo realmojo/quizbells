@@ -1,6 +1,6 @@
 import { tips } from "./tipsData";
 import { Metadata } from "next";
-import Head from "next/head";
+import Script from "next/script";
 import {
   Lightbulb,
   TrendingUp,
@@ -33,40 +33,34 @@ export const metadata: Metadata = {
 export default function AppTechTipsPage() {
   return (
     <>
-      <Head>
-        <title>앱테크 고수가 되는 법 - 퀴즈벨 팁 모음</title>
-        <meta
-          name="description"
-          content="앱테크 고수되는 법을 알려드립니다. 퀴즈 정답, 포인트 적립, 광고 시청 등으로 수익을 높이는 노하우를 확인하세요."
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Article",
-              headline: "앱테크 고수가 되는 법 - 퀴즈벨 팁 모음",
-              description:
-                "앱테크 초보도 고수처럼 수익을 얻을 수 있는 실전 노하우 제공. 앱으로 돈버는 법, 퀴즈 적립 팁, 광고 시청 리워드 팁 정리.",
-              image: "https://quizbells.com/icons/android-icon-192x192.png",
-              author: {
-                "@type": "Person",
-                name: "퀴즈벨",
+      <Script
+        id="structured-data-tips"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "앱테크 고수가 되는 법 - 퀴즈벨 팁 모음",
+            description:
+              "앱테크 초보도 고수처럼 수익을 얻을 수 있는 실전 노하우 제공. 앱으로 돈버는 법, 퀴즈 적립 팁, 광고 시청 리워드 팁 정리.",
+            image: "https://quizbells.com/icons/android-icon-192x192.png",
+            author: {
+              "@type": "Person",
+              name: "퀴즈벨",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "Quizbells",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://quizbells.com/icons/android-icon-192x192.png",
               },
-              publisher: {
-                "@type": "Organization",
-                name: "Quizbells",
-                logo: {
-                  "@type": "ImageObject",
-                  url: "https://quizbells.com/icons/android-icon-192x192.png",
-                },
-              },
-              mainEntityOfPage: "https://quizbells.com/tips",
-              datePublished: "2025-06-30",
-            }),
-          }}
-        ></script>
-      </Head>
+            },
+            mainEntityOfPage: "https://quizbells.com/tips",
+            datePublished: "2025-06-30",
+          }),
+        }}
+      />
 
       <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-orange-950 dark:to-amber-950">
         <main className="mx-auto max-w-3xl px-4 py-12">

@@ -134,43 +134,6 @@ export default function QuizFeedback({ type, date }: QuizFeedbackProps) {
           </div>
         </button>
 
-        {/* <button
-          onClick={() => handleVote(false)}
-          disabled={loading || hasVoted !== null}
-          className={cn(
-            "flex-1 max-w-[140px] flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200 active:scale-95",
-            hasVoted === "notHelpful"
-              ? "bg-rose-50 border-rose-500 text-rose-700 dark:bg-rose-900/20 dark:border-rose-500 dark:text-rose-400 ring-2 ring-rose-200 dark:ring-rose-900"
-              : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-rose-400 dark:hover:border-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/10",
-            hasVoted && hasVoted !== "notHelpful" && "opacity-50 grayscale"
-          )}
-        >
-          <div
-            className={cn(
-              "p-2 rounded-full transition-colors",
-              hasVoted === "notHelpful"
-                ? "bg-rose-100 dark:bg-rose-900/50"
-                : "bg-slate-100 dark:bg-slate-700"
-            )}
-          >
-            <ThumbsDown
-              className={cn(
-                "w-6 h-6",
-                hasVoted === "notHelpful"
-                  ? "text-rose-600 dark:text-rose-400"
-                  : "text-slate-500 dark:text-slate-400"
-              )}
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-bold text-sm">틀렸어요</span>
-            {totalVotes > 0 && (
-              <span className="text-xs font-medium text-rose-600 dark:text-rose-400 mt-1">
-                {stats.notHelpful}
-              </span>
-            )}
-          </div>
-        </button> */}
       </div>
 
       {totalVotes > 0 && (

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Head from "next/head"; // 또는 next/head는 CSR에서도 사용 가능
 import { getPost, getPostsList } from "@/utils/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -47,6 +46,39 @@ export default function PostComponent({ id }: { id: string }) {
     fetchMorePosts();
   }, [id]);
 
+  // JSON-LD 구조화 데이터 삽입
+  useEffect(() => {
+    if (!post) return;
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "post-jsonld";
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: post.title,
+      datePublished: post.regdated,
+      dateModified: post.regdated,
+      author: { "@type": "Person", name: post.author },
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `https://quizbells.com/posts/${post.id}`,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "퀴즈벨",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://quizbells.com/icons/android-icon-192x192.png",
+        },
+      },
+      description: `${post.regdated} ${getQuitItem(post.type)?.typeKr} 퀴즈 콘텐츠`,
+    });
+    document.head.appendChild(script);
+    return () => {
+      document.getElementById("post-jsonld")?.remove();
+    };
+  }, [post]);
+
   if (loading) {
     return (
       <div className="max-w-[720px] mx-auto px-4 py-10">
@@ -67,37 +99,6 @@ export default function PostComponent({ id }: { id: string }) {
 
   return (
     <>
-      <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BlogPosting",
-              headline: post.title,
-              datePublished: post.regdated,
-              dateModified: post.regdated,
-              author: {
-                "@type": "Person",
-                name: post.author,
-              },
-              mainEntityOfPage: {
-                "@type": "WebPage",
-                "@id": `https://quizbells.com/posts/${post.id}`,
-              },
-              publisher: {
-                "@type": "Organization",
-                name: "퀴즈벨",
-                logo: {
-                  "@type": "ImageObject",
-                  url: "https://quizbells.com/logo.png", // 실제 로고 주소로 변경
-                },
-              },
-              description: `${post.regdated} ${getQuitItem(post.type)?.typeKr} 퀴즈 콘텐츠`,
-            }),
-          }}
-        />
-      </Head>
       <div className="max-w-[720px] mx-auto">
         <Card className="shadow-xl border-none rounded-none mb-10 gap-4">
           <CardHeader>

@@ -116,16 +116,6 @@ export default function EarningsSummary() {
                 {(totalEarnings * 365).toLocaleString()}원
               </span>
             </div>
-            {/* pflow 연결 버튼 (임시 링크) */}
-            {/* 
-            <a
-              href="#"
-              className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity"
-            >
-               <span>이 돈으로 무엇을 할 수 있을까?</span>
-               <MoveRight className="w-4 h-4" />
-            </a> 
-            */}
           </div>
         </div>
       </div>

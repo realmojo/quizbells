@@ -62,11 +62,8 @@ export default function InstallPromptBanner({
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const initializeAlarmSetting = async () => {
-      // const isFirstAlarmSetting = localStorage.getItem("isFirstAlarmSetting");
       const { userId } = getUserAuth();
 
-      // 첫 방문이거나, 강제 오픈이거나, userId가 없는 경우 알림창 띄움
-      // if (!isFirstAlarmSetting || isForceOpen || !userId) {
       if (isForceOpen) {
         if (userId) {
           await setSettings();
