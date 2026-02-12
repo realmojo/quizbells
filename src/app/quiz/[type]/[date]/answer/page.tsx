@@ -253,6 +253,45 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
                           </a>
                         </div>
                       )}
+                      {type === "kakaobank" && (
+                        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                          <span>카카오뱅크 앱 열기:</span>
+                          <a
+                            href="https://kakaobank.onelink.me/0qMi/jcwk0sbz"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 dark:text-emerald-400 underline underline-offset-4 break-all hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
+                          >
+                            https://kakaobank.onelink.me/0qMi/jcwk0sbz
+                          </a>
+                        </div>
+                      )}
+                      {type === "kakaopay" && (
+                        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                          <span>카카오페이 앱 열기:</span>
+                          <a
+                            href="https://link.kakaopay.com/_/fMLguKC"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 dark:text-emerald-400 underline underline-offset-4 break-all hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
+                          >
+                            https://link.kakaopay.com/_/fMLguKC
+                          </a>
+                        </div>
+                      )}
+                      {type === "shinhan" && (
+                        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                          <span>신한쏠페이 앱 열기:</span>
+                          <a
+                            href="https://spa.shinhan.com/app_link.html?pr_id=ACXCZ10010010"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 dark:text-emerald-400 underline underline-offset-4 break-all hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
+                          >
+                            https://spa.shinhan.com/app_link.html?pr_id=ACXCZ10010010
+                          </a>
+                        </div>
+                      )}
                     </div>
                     {quiz.otherAnswers?.length > 0 && (
                       <div
