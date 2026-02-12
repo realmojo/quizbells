@@ -59,7 +59,6 @@ export default function InstallPromptBanner({
     }
   };
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const initializeAlarmSetting = async () => {
       const { userId } = getUserAuth();
@@ -67,9 +66,10 @@ export default function InstallPromptBanner({
       if (isForceOpen) {
         if (userId) {
           await setSettings();
+          const freshSettings = settingsStore.getState().settings;
           setCheckedTypes(
-            settings?.alarmSettings !== "*"
-              ? settings?.alarmSettings?.split(",") || []
+            freshSettings?.alarmSettings !== "*"
+              ? freshSettings?.alarmSettings?.split(",") || []
               : []
           );
         }
@@ -78,7 +78,7 @@ export default function InstallPromptBanner({
     };
 
     initializeAlarmSetting();
-  }, [isForceOpen]);
+  }, [isForceOpen, setSettings]);
 
   return (
     <>
