@@ -59,12 +59,6 @@ export default function Header() {
         icon: Sparkles,
         gradient: "from-pink-600 to-purple-600",
       };
-    if (path === "/event")
-      return {
-        title: "이벤트",
-        icon: Gift,
-        gradient: "from-red-600 to-pink-600",
-      };
     if (path === "/sale")
       return {
         title: "특가",
@@ -123,14 +117,6 @@ export default function Header() {
       bgColor: "bg-purple-100 dark:bg-purple-900/30",
     },
     {
-      name: "이벤트",
-      path: "/event",
-      match: (path: string) => path === "/event",
-      icon: Gift,
-      activeColor: "text-red-600 dark:text-red-400",
-      bgColor: "bg-red-100 dark:bg-red-900/30",
-    },
-    {
       name: "팁",
       path: "/tips",
       match: (path: string) => path.includes("/tips"),
@@ -181,16 +167,6 @@ export default function Header() {
 
         {/* 오른쪽: 메뉴 아이콘 */}
         <div className="flex items-center gap-1">
-          <a
-            href="/event"
-            target="_self"
-            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative group"
-            aria-label="이벤트 페이지"
-          >
-            <Gift className="w-6 h-6 text-slate-700 dark:text-slate-300 group-hover:text-red-500 transition-colors" />
-            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-          </a>
-
           <Drawer direction="right">
             <DrawerTrigger asChild>
               <button
@@ -218,7 +194,7 @@ export default function Header() {
                           "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left",
                           active
                             ? cn(item.activeColor, item.bgColor)
-                            : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
+                            : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300",
                         )}
                       >
                         <ItemIcon
@@ -226,7 +202,7 @@ export default function Header() {
                             "w-6 h-6",
                             active
                               ? item.activeColor
-                              : "text-slate-500 dark:text-slate-400"
+                              : "text-slate-500 dark:text-slate-400",
                           )}
                           strokeWidth={active ? 2.5 : 2}
                         />

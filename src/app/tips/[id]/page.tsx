@@ -8,6 +8,7 @@ import {
   Home,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Script from "next/script";
 
 export const runtime = "edge";
 
@@ -28,6 +29,7 @@ export async function generateMetadata({
   return {
     title: `${tip.title} | 앱테크 팁 | 퀴즈벨`,
     description: tip.description,
+    keywords: tip.keywords,
     openGraph: {
       title: `${tip.title} | 앱테크 팁 | 퀴즈벨`,
       description: tip.description,
@@ -80,6 +82,35 @@ export default async function TipDetailPage({
 
   return (
     <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-orange-950 dark:to-amber-950">
+      <Script
+        id={`structured-data-tip-${tip.id}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: tip.title,
+            description: tip.description,
+            datePublished: tip.date,
+            author: {
+              "@type": "Organization",
+              name: "퀴즈벨 에디터",
+              url: "https://quizbells.com",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "QUIZBELLS",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://quizbells.com/icons/android-icon-192x192.png",
+              },
+            },
+            mainEntityOfPage: `https://quizbells.com/tips/${tip.id}`,
+            articleSection: tip.category,
+            keywords: tip.keywords?.join(", "),
+          }),
+        }}
+      />
       <div className="max-w-4xl mx-auto px-4 py-12 mb-20">
         {/* Breadcrumb */}
         <div className="mb-8">

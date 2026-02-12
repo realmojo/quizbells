@@ -1,5 +1,6 @@
 import { quizItems } from "@/utils/utils";
 import { supabaseAdmin } from "@/lib/supabase";
+import { tips } from "@/app/tips/tipsData";
 
 export const runtime = "edge";
 
@@ -160,6 +161,16 @@ export async function GET() {
       lastmod: "2025-12-05",
       priority: "0.7",
       changefreq: "weekly",
+    });
+  }
+
+  // ── 3-B. 금융 팁 (/tips/{id}) ──
+  for (const tip of tips) {
+    urls.push({
+      loc: `${BASE_URL}/tips/${tip.id}`,
+      lastmod: tip.date,
+      priority: "0.8",
+      changefreq: "monthly",
     });
   }
 

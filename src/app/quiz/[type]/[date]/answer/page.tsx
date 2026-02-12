@@ -374,6 +374,36 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
           <div className="mb-8 px-4">
             <AppOpen type={type} />
           </div>
+
+          {/* 관련 금융 팁 섹션 */}
+          <div className="mb-8 px-4">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-amber-500" />
+              알아두면 돈이 되는 금융 팁
+            </h3>
+            <div className="space-y-3">
+              {[
+                { id: "3", title: "2026년 적금 금리 비교 - 은행별 최고 금리 적금 추천 총정리", category: "적금" },
+                { id: "5", title: "주택담보대출 금리 비교 - 전세자금대출 조건과 금리 총정리", category: "대출" },
+                { id: "6", title: "자동차보험료 비교 견적 - 다이렉트 보험으로 20% 절약하는 법", category: "보험" },
+              ].map((tip) => (
+                <a
+                  key={tip.id}
+                  href={`/tips/${tip.id}`}
+                  target="_self"
+                  className="block bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-xl p-4 border border-white/50 dark:border-slate-800 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <span className="inline-block text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 mb-2">
+                    {tip.category}
+                  </span>
+                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 line-clamp-2">
+                    {tip.title}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </div>
+
           <Adsense slotId="9099705716" format="autorelaxed" />
         </section>
       </div>

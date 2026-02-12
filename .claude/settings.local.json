@@ -6,7 +6,14 @@
       "mcp__supabase__list_organizations",
       "Bash(npm outdated:*)",
       "Bash(node --version:*)",
-      "Bash(npm --version:*)"
+      "Bash(npm --version:*)",
+      "Bash(ls:*)",
+      "Bash(npx supabase --version)",
+      "Bash(npx supabase:*)",
+      "Bash(node -e:*)",
+      "Bash(curl:*)",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__apply_migration"
     ]
   },
   "enableAllProjectMcpServers": true,

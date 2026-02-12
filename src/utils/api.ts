@@ -96,10 +96,10 @@ export const getTodayQuizbells = async (
 export const getPostsList = async (
   offset: number = 0,
   limit: number = 5,
-  type: string = "",
+  category: string = "",
 ): Promise<any | null> => {
   const query = new URLSearchParams({
-    type,
+    category,
     offset: offset.toString(),
     limit: limit.toString(),
   });

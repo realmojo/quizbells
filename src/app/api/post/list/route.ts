@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     }
 
     const { searchParams } = new URL(req.url);
-    const type = searchParams.get("type") || "";
+    const category = searchParams.get("category") || "";
     const limit = parseInt(searchParams.get("limit") || "5", 10);
     const offset = parseInt(searchParams.get("offset") || "0", 10);
 
@@ -21,11 +21,11 @@ export async function GET(req: NextRequest) {
     let query = supabaseAdmin
       .from("quizbells_posts")
       .select("*", { count: "exact" })
-      .order("regdated", { ascending: false });
+      .order("date", { ascending: false });
 
-    // type 필터링 (type이 있을 경우)
-    if (type) {
-      query = query.eq("type", type);
+    // category 필터링
+    if (category) {
+      query = query.eq("category", category);
     }
 
     // 페이지네이션 적용
