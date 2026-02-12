@@ -57,6 +57,7 @@ const staticPages = [
   "/faq",
   "/terms",
   "/tips",
+  "/posts",
   "/quiz",
 ];
 
@@ -155,13 +156,26 @@ export async function GET() {
   }
 
   // ── 3. 게시글 (/posts/{id}) ──
-  for (const index of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
-    urls.push({
-      loc: `${BASE_URL}/posts/${index}`,
-      lastmod: "2025-12-05",
-      priority: "0.7",
-      changefreq: "weekly",
-    });
+  if (supabaseAdmin) {
+    try {
+      const { data: postsData } = await supabaseAdmin
+        .from("quizbells_posts")
+        .select("id, date")
+        .order("date", { ascending: false });
+
+      if (postsData) {
+        for (const post of postsData) {
+          urls.push({
+            loc: `${BASE_URL}/posts/${post.id}`,
+            lastmod: post.date,
+            priority: "0.8",
+            changefreq: "weekly",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Sitemap posts 조회 오류:", error);
+    }
   }
 
   // ── 3-B. 금융 팁 (/tips/{id}) ──
