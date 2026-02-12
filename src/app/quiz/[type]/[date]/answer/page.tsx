@@ -292,6 +292,45 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
                           </a>
                         </div>
                       )}
+                      {type === "hanabank" && (
+                        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                          <span>하나원큐 앱 열기:</span>
+                          <a
+                            href="https://mbp.hanabank.com/oneqplus.jsp?MENUM/mbp/resource/html/LLFN/LLFN11/LLFN1101001.html"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 dark:text-emerald-400 underline underline-offset-4 break-all hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
+                          >
+                            https://mbp.hanabank.com/oneqplus.jsp?MENUM/mbp/resource/html/LLFN/LLFN11/LLFN1101001.html
+                          </a>
+                        </div>
+                      )}
+                      {type === "hpoint" && (
+                        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                          <span>에이치포인트 앱 열기:</span>
+                          <a
+                            href="https://www.h-point.co.kr/cma/invite.nhd?scheme=quizMain"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 dark:text-emerald-400 underline underline-offset-4 break-all hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
+                          >
+                            https://www.h-point.co.kr/cma/invite.nhd?scheme=quizMain
+                          </a>
+                        </div>
+                      )}
+                      {type === "kbstar" && (
+                        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                          <span>KB스타 KBPAY 앱 열기:</span>
+                          <a
+                            href="https://m.liivmate.com/katsv4/kbpay/share.do?appId=https://m.liivmate.com/katsv4/kbpay/share.do/goEv?F000070"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 dark:text-emerald-400 underline underline-offset-4 break-all hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
+                          >
+                            https://m.liivmate.com/katsv4/kbpay/share.do?appId=https://m.liivmate.com/katsv4/kbpay/share.do/goEv?F000070
+                          </a>
+                        </div>
+                      )}
                     </div>
                     {quiz.otherAnswers?.length > 0 && (
                       <div
