@@ -2,87 +2,10 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  const response = NextResponse.next();
 
-  // CSP 정책 설정
-  const cspHeader = `
-    default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval'
-      https://www.googletagmanager.com
-      https://www.google-analytics.com
-      https://www.clarity.ms
-      https://scripts.clarity.ms
-      https://pagead2.googlesyndication.com
-      https://adservice.google.com
-      https://www.google.com
-      https://googleads.g.doubleclick.net
-      https://partner.googleadservices.com
-      https://tpc.googlesyndication.com
-      https://cdn.jsdelivr.net
-      https://wcs.naver.net
-      https://ssl.pstatic.net
-      https://static.cloudflareinsights.com
-      https://fundingchoicesmessages.google.com
-      https://ep1.adtrafficquality.google
-      https://ep2.adtrafficquality.google;
-    style-src 'self' 'unsafe-inline'
-      https://fonts.googleapis.com
-      https://cdn.jsdelivr.net;
-    img-src 'self' data: blob: https: http:;
-    font-src 'self' data:
-      https://fonts.gstatic.com
-      https://cdn.jsdelivr.net;
-    connect-src 'self'
-      https://www.google-analytics.com
-      https://www.googletagmanager.com
-      https://stats.g.doubleclick.net
-      https://www.clarity.ms
-      https://scripts.clarity.ms
-      https://wcs.naver.net
-      https://wcs.naver.com
-      https://pagead2.googlesyndication.com
-      https://adservice.google.com
-      https://googleads.g.doubleclick.net
-      https://partner.googleadservices.com
-      https://www.google.com
-      https://static.cloudflareinsights.com
-      https://fundingchoicesmessages.google.com
-      *.googleapis.com
-      *.firebaseio.com
-      *.firebase.com
-      *.google.com
-      fcm.googleapis.com;
-    frame-src 'self'
-      https://www.google.com
-      https://googleads.g.doubleclick.net
-      https://tpc.googlesyndication.com
-      https://td.doubleclick.net
-      https://fundingchoicesmessages.google.com;
-    object-src 'none';
-    base-uri 'self';
-    form-action 'self';
-    frame-ancestors 'none';
-    upgrade-insecure-requests;
-  `
-    .replace(/\s{2,}/g, " ")
-    .trim();
-
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-nonce", nonce);
-  requestHeaders.set("Content-Security-Policy", cspHeader);
-
-  const response = NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
-
-  response.headers.set("Content-Security-Policy", cspHeader);
-
-  // 추가 보안 헤더
+  // 보안 헤더 (CSP 제외 - 광고/분석 서드파티 스크립트와 충돌 방지)
   response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("X-Frame-Options", "DENY");
-  response.headers.set("X-XSS-Protection", "1; mode=block");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set(
     "Permissions-Policy",
