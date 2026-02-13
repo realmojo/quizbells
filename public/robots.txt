@@ -1,11 +1,16 @@
 User-agent: *
 Allow: /
 
+# Naver bot optimization
+User-agent: Yeti
+Allow: /
+
 # Sitemaps
 Sitemap: https://quizbells.com/sitemap.xml
-
-# Crawl-delay
-Crawl-delay: 1
+Sitemap: https://quizbells.com/sitemap-pages.xml
+Sitemap: https://quizbells.com/sitemap-quiz-today.xml
+Sitemap: https://quizbells.com/sitemap-quiz-dates.xml
+Sitemap: https://quizbells.com/sitemap-posts.xml
 
 # Disallow admin or private paths if any
 Disallow: /api/

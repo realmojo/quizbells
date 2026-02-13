@@ -75,7 +75,7 @@ const quizItems = [
   {
     type: "kakaobank",
     typeKr: "카카오뱅크",
-    title: "OX 퀴즈",
+    title: "AI 이모지 퀴즈",
     image: "/images/kakaobank.png",
   },
   {
