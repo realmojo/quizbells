@@ -11,6 +11,7 @@ export function middleware(request: NextRequest) {
       https://www.googletagmanager.com
       https://www.google-analytics.com
       https://www.clarity.ms
+      https://scripts.clarity.ms
       https://pagead2.googlesyndication.com
       https://adservice.google.com
       https://www.google.com
@@ -18,8 +19,12 @@ export function middleware(request: NextRequest) {
       https://partner.googleadservices.com
       https://tpc.googlesyndication.com
       https://cdn.jsdelivr.net
-      wcs.naver.net
-      //wcs.naver.net;
+      https://wcs.naver.net
+      https://ssl.pstatic.net
+      https://static.cloudflareinsights.com
+      https://fundingchoicesmessages.google.com
+      https://ep1.adtrafficquality.google
+      https://ep2.adtrafficquality.google;
     style-src 'self' 'unsafe-inline'
       https://fonts.googleapis.com
       https://cdn.jsdelivr.net;
@@ -32,13 +37,16 @@ export function middleware(request: NextRequest) {
       https://www.googletagmanager.com
       https://stats.g.doubleclick.net
       https://www.clarity.ms
-      wcs.naver.net
+      https://scripts.clarity.ms
+      https://wcs.naver.net
       https://wcs.naver.com
       https://pagead2.googlesyndication.com
       https://adservice.google.com
       https://googleads.g.doubleclick.net
       https://partner.googleadservices.com
       https://www.google.com
+      https://static.cloudflareinsights.com
+      https://fundingchoicesmessages.google.com
       *.googleapis.com
       *.firebaseio.com
       *.firebase.com
@@ -48,7 +56,8 @@ export function middleware(request: NextRequest) {
       https://www.google.com
       https://googleads.g.doubleclick.net
       https://tpc.googlesyndication.com
-      https://td.doubleclick.net;
+      https://td.doubleclick.net
+      https://fundingchoicesmessages.google.com;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
