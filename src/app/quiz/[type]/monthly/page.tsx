@@ -160,9 +160,64 @@ export default async function MonthlyQuizPage({ params }: MonthlyPageParams) {
     0,
   );
 
+  // JSON-LD 구조화 데이터
+  const monthlyJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": `https://quizbells.com/quiz/${type}/monthly`,
+        headline: h1Title,
+        description: `${item.typeKr} ${item.title} ${yearMonth} 전체 퀴즈 정답을 한눈에 확인하세요. 이번 달 모든 퀴즈 정답을 날짜별로 정리했습니다.`,
+        url: `https://quizbells.com/quiz/${type}/monthly`,
+        inLanguage: "ko",
+        datePublished: format(monthStart, "yyyy-MM-dd"),
+        dateModified: format(today, "yyyy-MM-dd"),
+        author: {
+          "@type": "Organization",
+          name: "퀴즈벨",
+          url: "https://quizbells.com",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "퀴즈벨",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://quizbells.com/icons/android-icon-192x192.png",
+            width: 192,
+            height: 192,
+          },
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://quizbells.com/quiz/${type}/monthly`,
+        },
+        image: {
+          "@type": "ImageObject",
+          url: "https://quizbells.com/icons/og-image.png",
+          width: 1200,
+          height: 630,
+        },
+        articleSection: "앱테크/재테크",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "홈", item: "https://quizbells.com" },
+          { "@type": "ListItem", position: 2, name: `${item.typeKr} 퀴즈`, item: `https://quizbells.com/quiz/${type}/today` },
+          { "@type": "ListItem", position: 3, name: "월간 정답", item: `https://quizbells.com/quiz/${type}/monthly` },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
       <VisitTracker type={type} answerDate="monthly" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(monthlyJsonLd) }}
+      />
       <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
         <div className="container mx-auto px-4 py-8 max-w-4xl">
           {/* 헤더 섹션 */}
@@ -347,6 +402,7 @@ export default async function MonthlyQuizPage({ params }: MonthlyPageParams) {
             <SocialShare
               url={`https://quizbells.com/quiz/${type}/monthly`}
               title={h1Title}
+              imageUrl="https://quizbells.com/icons/og-image.png"
             />
           </div>
 

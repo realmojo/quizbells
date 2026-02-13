@@ -35,11 +35,40 @@ export async function generateMetadata({
       description: tip.description,
       type: "article",
       url: `https://quizbells.com/tips/${tip.id}`,
+      siteName: "퀴즈벨",
+      locale: "ko_KR",
+      images: [
+        {
+          url: "https://quizbells.com/icons/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: `${tip.title} - 퀴즈벨`,
+        },
+      ],
+      publishedTime: tip.date,
+      section: tip.category,
+      tags: tip.keywords,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${tip.title} | 앱테크 팁 | 퀴즈벨`,
+      description: tip.description,
+      images: ["https://quizbells.com/icons/og-image.png"],
     },
     alternates: {
       canonical: `https://quizbells.com/tips/${tip.id}`,
     },
-    robots: { index: true, follow: true },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
   };
 }
 

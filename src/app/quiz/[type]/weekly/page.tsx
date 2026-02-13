@@ -153,9 +153,64 @@ export default async function WeeklyQuizPage({ params }: WeeklyPageParams) {
 
   const h1Title = `${item.typeKr} ${item.title} 이번 주 정답 총정리`;
 
+  // JSON-LD 구조화 데이터
+  const weeklyJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": `https://quizbells.com/quiz/${type}/weekly`,
+        headline: h1Title,
+        description: `${item.typeKr} ${item.title} ${weekStart}부터 ${weekEnd}까지 전체 퀴즈 정답을 한눈에 확인하세요.`,
+        url: `https://quizbells.com/quiz/${type}/weekly`,
+        inLanguage: "ko",
+        datePublished: format(subDays(today, 6), "yyyy-MM-dd"),
+        dateModified: format(today, "yyyy-MM-dd"),
+        author: {
+          "@type": "Organization",
+          name: "퀴즈벨",
+          url: "https://quizbells.com",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "퀴즈벨",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://quizbells.com/icons/android-icon-192x192.png",
+            width: 192,
+            height: 192,
+          },
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://quizbells.com/quiz/${type}/weekly`,
+        },
+        image: {
+          "@type": "ImageObject",
+          url: "https://quizbells.com/icons/og-image.png",
+          width: 1200,
+          height: 630,
+        },
+        articleSection: "앱테크/재테크",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "홈", item: "https://quizbells.com" },
+          { "@type": "ListItem", position: 2, name: `${item.typeKr} 퀴즈`, item: `https://quizbells.com/quiz/${type}/today` },
+          { "@type": "ListItem", position: 3, name: "주간 정답", item: `https://quizbells.com/quiz/${type}/weekly` },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
       <VisitTracker type={type} answerDate="weekly" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(weeklyJsonLd) }}
+      />
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
         <div className="container mx-auto px-4 py-8 max-w-4xl">
           {/* 헤더 섹션 */}
@@ -332,6 +387,7 @@ export default async function WeeklyQuizPage({ params }: WeeklyPageParams) {
             <SocialShare
               url={`https://quizbells.com/quiz/${type}/weekly`}
               title={h1Title}
+              imageUrl="https://quizbells.com/icons/og-image.png"
             />
           </div>
 

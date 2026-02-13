@@ -36,14 +36,37 @@ export const metadata: Metadata = {
       "앱테크 수익 극대화 방법부터 적금 금리 비교, 대출 금리 절약, 보험료 절감, ETF 투자 입문까지. 돈이 되는 금융 정보를 한곳에서 확인하세요.",
     type: "article",
     url: "https://quizbells.com/tips",
+    siteName: "퀴즈벨",
+    locale: "ko_KR",
     images: [
       {
-        url: "https://quizbells.com/icons/android-icon-192x192.png",
-        width: 192,
-        height: 192,
-        alt: "앱테크 고수 이미지",
+        url: "https://quizbells.com/icons/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "앱테크 고수되기 - 퀴즈벨 꿀팁 총정리",
       },
     ],
+  },
+  alternates: {
+    canonical: "https://quizbells.com/tips",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "앱테크 고수되기 - 적금·대출·보험·투자 꿀팁 총정리 | 퀴즈벨",
+    description:
+      "앱테크 수익 극대화 방법부터 적금 금리 비교, 대출 금리 절약, 보험료 절감까지. 돈이 되는 금융 정보를 확인하세요.",
+    images: ["https://quizbells.com/icons/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -60,10 +83,17 @@ export default function AppTechTipsPage() {
             headline: "앱테크 고수가 되는 법 - 퀴즈벨 팁 모음",
             description:
               "앱테크 초보도 고수처럼 수익을 얻을 수 있는 실전 노하우 제공. 앱으로 돈버는 법, 퀴즈 적립 팁, 광고 시청 리워드 팁 정리.",
-            image: "https://quizbells.com/icons/android-icon-192x192.png",
+            image: {
+              "@type": "ImageObject",
+              url: "https://quizbells.com/icons/og-image.png",
+              width: 1200,
+              height: 630,
+            },
+            inLanguage: "ko",
             author: {
-              "@type": "Person",
+              "@type": "Organization",
               name: "퀴즈벨",
+              url: "https://quizbells.com",
             },
             publisher: {
               "@type": "Organization",

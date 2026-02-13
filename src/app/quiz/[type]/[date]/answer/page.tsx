@@ -82,6 +82,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: fullTitle,
       description,
+      images: [`https://quizbells.com/images/${type}.png`],
     },
     alternates: {
       canonical: `https://quizbells.com/quiz/${type}/${answerDate}/answer`,
@@ -89,6 +90,13 @@ export async function generateMetadata({
     robots: {
       index: true,
       follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
   };
 }
@@ -152,8 +160,47 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
     contents.push(q);
   });
 
+  // JSON-LD 구조화 데이터
+  const answerJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "FAQPage",
+        mainEntity: contents.length > 0
+          ? contents.map((quiz: any) => ({
+              "@type": "Question",
+              name: `${answerDateString} ${item.typeKr} ${item.title} ${quiz.question || "퀴즈"} 정답`,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: `정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
+              },
+            }))
+          : [{
+              "@type": "Question",
+              name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요?`,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "정답이 아직 업데이트되지 않았습니다. 곧 업데이트될 예정입니다.",
+              },
+            }],
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "홈", item: "https://quizbells.com" },
+          { "@type": "ListItem", position: 2, name: `${item.typeKr} 퀴즈`, item: `https://quizbells.com/quiz/${type}/today` },
+          { "@type": "ListItem", position: 3, name: `${answerDateString} 정답`, item: `https://quizbells.com/quiz/${type}/${answerDate}/answer` },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(answerJsonLd) }}
+      />
       <div className="max-w-xl mx-auto pt-6 pb-4">
         <section
           id="quiz-content"

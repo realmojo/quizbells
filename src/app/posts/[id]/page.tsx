@@ -70,11 +70,20 @@ export async function generateMetadata({
       modifiedTime: post.updated_at || post.date,
       section: post.category,
       tags: post.keywords,
+      images: [
+        {
+          url: "https://quizbells.com/icons/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: `${post.title} - 퀴즈벨`,
+        },
+      ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: pageTitle,
       description: pageDescription,
+      images: ["https://quizbells.com/icons/og-image.png"],
     },
     alternates: {
       canonical: `https://quizbells.com/posts/${post.id}`,
