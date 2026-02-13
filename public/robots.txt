@@ -9,6 +9,7 @@ Allow: /
 Sitemap: https://quizbells.com/sitemap.xml
 Sitemap: https://quizbells.com/sitemap-pages.xml
 Sitemap: https://quizbells.com/sitemap-quiz-today.xml
+Sitemap: https://quizbells.com/sitemap-quiz-periods.xml
 Sitemap: https://quizbells.com/sitemap-quiz-dates.xml
 Sitemap: https://quizbells.com/sitemap-posts.xml
 

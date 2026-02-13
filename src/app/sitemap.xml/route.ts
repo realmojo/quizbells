@@ -8,6 +8,7 @@ export async function GET() {
   const sitemaps = [
     { loc: `${BASE_URL}/sitemap-pages.xml`, lastmod },
     { loc: `${BASE_URL}/sitemap-quiz-today.xml`, lastmod },
+    { loc: `${BASE_URL}/sitemap-quiz-periods.xml`, lastmod },
     { loc: `${BASE_URL}/sitemap-quiz-dates.xml`, lastmod },
     { loc: `${BASE_URL}/sitemap-posts.xml`, lastmod },
   ];
