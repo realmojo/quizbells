@@ -23,6 +23,7 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import VisitTracker from "@/components/VisitTracker";
+import SajuLatteModal from "@/components/SajuLatteModal";
 import {
   getRandomFinancialTip,
   HIGH_VALUE_KEYWORDS,
@@ -266,7 +267,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
   // 참여자 수 조회 (누적값)
   let participantCount = 1000; // 기본값
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3002";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const countResponse = await fetch(
       `${baseUrl}/api/quizbells/count?type=${type}`,
       { next: { revalidate: 300 } }, // 5분 캐시
@@ -508,6 +509,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
     <>
       {/* 방문 기록 추적 (today 페이지일 때만) */}
       {date === "today" && <VisitTracker type={type} />}
+      {/* 사주라떼 모달 (today 페이지일 때만) */}
+      {date === "today" && <SajuLatteModal />}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
