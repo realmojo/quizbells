@@ -747,7 +747,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                 {/* 사주라떼 오늘의 운세 카드 (today 페이지, 첫 번째 퀴즈 아래) */}
                 {idx === 0 && date === "today" && (
                   <a
-                    href="https://sajulatte.app"
+                    href="https://sajulatte.app/daily"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block mb-8 group"
@@ -762,8 +762,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                             Today's Fortune
                           </h3>
                           <p className="text-lg font-bold leading-snug drop-shadow-sm mb-3">
-                            퀴즈 정답 확인했으면, 오늘의 운세도
-                            확인해보세요!
+                            퀴즈 정답 확인했으면, 오늘의 운세도 확인해보세요!
                           </p>
                           <div className="flex flex-wrap gap-2 mb-3">
                             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-medium">
