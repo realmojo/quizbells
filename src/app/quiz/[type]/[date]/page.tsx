@@ -23,7 +23,6 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import VisitTracker from "@/components/VisitTracker";
-import SajuLatteModal from "@/components/SajuLatteModal";
 import {
   getRandomFinancialTip,
   HIGH_VALUE_KEYWORDS,
@@ -509,8 +508,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
     <>
       {/* 방문 기록 추적 (today 페이지일 때만) */}
       {date === "today" && <VisitTracker type={type} />}
-      {/* 사주라떼 모달 (today 페이지일 때만) */}
-      {date === "today" && <SajuLatteModal />}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
