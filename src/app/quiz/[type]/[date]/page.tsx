@@ -744,6 +744,52 @@ export default async function QuizPage({ params }: QuizPageParams) {
                   </a>
                 </section>
 
+                {/* 사주라떼 오늘의 운세 카드 (today 페이지, 첫 번째 퀴즈 아래) */}
+                {idx === 0 && date === "today" && (
+                  <a
+                    href="https://sajulatte.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block mb-8 group"
+                  >
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-600 via-pink-600 to-rose-600 dark:from-purple-800 dark:via-pink-800 dark:to-rose-800 p-6 text-white shadow-xl shadow-purple-500/20 hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-[1.02]">
+                      <div className="relative z-10 flex gap-4 items-start">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/20 backdrop-blur-md shadow-inner border border-white/10">
+                          <span className="text-2xl">🔮</span>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-purple-200 border-b border-white/10 pb-1 inline-block">
+                            Today's Fortune
+                          </h3>
+                          <p className="text-lg font-bold leading-snug drop-shadow-sm mb-3">
+                            퀴즈 정답 확인했으면, 오늘의 운세도
+                            확인해보세요!
+                          </p>
+                          <div className="flex flex-wrap gap-2 mb-3">
+                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-medium">
+                              ✨ 무료 사주 풀이
+                            </span>
+                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-medium">
+                              📅 오늘의 운세
+                            </span>
+                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-medium">
+                              💕 궁합 분석
+                            </span>
+                          </div>
+                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/90 text-purple-700 font-bold text-sm group-hover:bg-white transition-colors">
+                            사주라떼 바로가기
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        </div>
+                      </div>
+                      {/* Decorative Background Elements */}
+                      <div className="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-3xl" />
+                      <div className="absolute -left-6 -bottom-6 h-24 w-24 rounded-full bg-rose-500/20 blur-2xl" />
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-pink-500/10 blur-3xl" />
+                    </div>
+                  </a>
+                )}
+
                 {/* 금융 팁 섹션 (Strategy 1 - Visual Excellence Redesign) */}
                 {idx === 0 && (
                   <div className="mb-8 relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-800 dark:to-indigo-900 p-6 text-white shadow-xl shadow-blue-500/20">
