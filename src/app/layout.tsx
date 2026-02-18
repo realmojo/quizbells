@@ -164,6 +164,7 @@ export default async function RootLayout({
         />
         <Script
           id="gpt-init"
+          strategy="afterInteractive" // 페이지 로드 후 즉시 실행
           dangerouslySetInnerHTML={{
             __html: `
               window.googletag = window.googletag || {cmd: []};
