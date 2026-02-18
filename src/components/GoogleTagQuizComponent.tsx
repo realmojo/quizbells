@@ -44,7 +44,7 @@ const GoogleTagComponent = () => {
       {/* 실제 광고가 그려질 HTML 요소 */}
       <div
         id="div-gpt-ad-1771406658372-0"
-        style={{ width: "120px", height: "60px" }}
+        style={{ minWidth: "120px", minHeight: "60px" }}
       />
     </div>
   );
