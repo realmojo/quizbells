@@ -13,7 +13,7 @@ const GoogleTagComponent = () => {
     // layout.tsx의 초기화 스크립트도 cmd.push를 사용하므로,
     // 먼저 실행된 layout의 스크립트가 먼저 처리되고, 이어서 display가 처리됩니다.
     w.googletag.cmd.push(() => {
-      w.googletag.display("div-gpt-ad-1771389317304-0");
+      w.googletag.display("div-gpt-ad-1771394382291-0");
     });
 
     // 3. 컴포넌트 언마운트 시 해당 슬롯만 정리
@@ -26,7 +26,7 @@ const GoogleTagComponent = () => {
           if (pubads) {
             const slots = pubads.getSlots();
             const targetSlot = slots.find(
-              (s: any) => s.getSlotElementId() === "div-gpt-ad-1771389317304-0",
+              (s: any) => s.getSlotElementId() === "div-gpt-ad-1771394382291-0",
             );
             if (targetSlot) {
               googletag.destroySlots([targetSlot]);
@@ -43,8 +43,8 @@ const GoogleTagComponent = () => {
     >
       {/* 실제 광고가 그려질 HTML 요소 */}
       <div
-        id="div-gpt-ad-1771389317304-0"
-        style={{ minWidth: "336px", minHeight: "280px" }}
+        id="div-gpt-ad-1771394382291-0"
+        style={{ minWidth: "250px", minHeight: "200px" }}
       />
     </div>
   );
