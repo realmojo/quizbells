@@ -176,6 +176,16 @@ export default async function RootLayout({
                 if (rewardedSlot) {
                   rewardedSlot.addService(googletag.pubads());
                 }
+                googletag.pubads().addEventListener('rewardedSlotReady', function(event) {
+                  window.__rewardedAdEvent = event;
+                });
+                googletag.pubads().addEventListener('rewardedSlotClosed', function() {
+                  if (window.__pendingNavUrl) {
+                    window.location.href = window.__pendingNavUrl;
+                    window.__pendingNavUrl = null;
+                  }
+                });
+                googletag.pubads().addEventListener('rewardedSlotGranted', function() {});
                 googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
               });
