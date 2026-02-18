@@ -182,7 +182,7 @@ export default async function RootLayout({
                   .defineSizeMapping(mapping1)
                   .addService(googletag.pubads());
 
-                googletag.defineSlot('/23331430035/quizbells_quiz', ['fluid'], 'div-gpt-ad-1771410054443-0').addService(googletag.pubads());
+                googletag.defineSlot('/23331430035/quizbells_quiz', [336, 280], 'div-gpt-ad-1771411880347-0').addService(googletag.pubads());
 
                 // 2. 웹 전면 광고(Interstitial) 슬롯 정의
                 var interstitialSlot = googletag.defineOutOfPageSlot('/23331430035/quizbells_Rewarded_Ad', googletag.enums.OutOfPageFormat.INTERSTITIAL);
