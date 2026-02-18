@@ -170,8 +170,68 @@ export default async function RootLayout({
               window.googletag = window.googletag || {cmd: []};
               window.googletag.cmd = window.googletag.cmd || [];
 
+              // 보상형 광고 전역 상태
+              window.__rewardedAdSlot = null;
+              window.__rewardedAdTrigger = null;
+              window.__rewardedAdHasAd = false;
+              window.__pendingNavUrl = null;
+
+              // 보상형 광고 로드 함수 (점신 패턴: 매번 새 슬롯 생성)
+              window.loadRewardedAd = function() {
+                googletag.cmd.push(function() {
+                  // 기존 슬롯 제거
+                  if (window.__rewardedAdSlot) {
+                    googletag.destroySlots([window.__rewardedAdSlot]);
+                    window.__rewardedAdSlot = null;
+                  }
+                  window.__rewardedAdTrigger = null;
+                  window.__rewardedAdHasAd = false;
+
+                  var slot = googletag.defineOutOfPageSlot(
+                    '/23331430035/quizbells_Rewarded_Ad',
+                    googletag.enums.OutOfPageFormat.REWARDED
+                  );
+                  if (!slot) return;
+
+                  window.__rewardedAdSlot = slot;
+                  slot.addService(googletag.pubads());
+
+                  googletag.pubads().addEventListener('rewardedSlotReady', function(event) {
+                    if (event.slot !== slot) return;
+                    console.log('Rewarded ad ready');
+                    window.__rewardedAdHasAd = true;
+                    window.__rewardedAdTrigger = function() {
+                      event.makeRewardedVisible();
+                    };
+                  });
+
+                  googletag.pubads().addEventListener('rewardedSlotClosed', function(event) {
+                    console.log('Rewarded ad closed');
+                    window.__rewardedAdHasAd = false;
+                    window.__rewardedAdTrigger = null;
+                    if (window.__pendingNavUrl) {
+                      window.location.href = window.__pendingNavUrl;
+                      window.__pendingNavUrl = null;
+                    }
+                  });
+
+                  googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+                    if (event.slot !== slot) return;
+                    if (event.isEmpty) {
+                      console.log('No ad returned for rewarded slot');
+                      window.__rewardedAdHasAd = false;
+                    } else {
+                      console.log('Rewarded ad loaded');
+                    }
+                  });
+
+                  googletag.enableServices();
+                  googletag.display(slot);
+                });
+              };
+
               googletag.cmd.push(function() {
-                // 1. 일반 광고 슬롯 정의
+                // 일반 광고 슬롯 정의
                 var mapping1 = googletag.sizeMapping()
                   .addSize([1024, 768], [[750, 200], [750, 300], [336, 280], 'fluid'])
                   .addSize([640, 480], [[336, 280], [300, 250], [250, 250], 'fluid'])
@@ -184,18 +244,8 @@ export default async function RootLayout({
 
                 googletag.defineSlot('/23331430035/quizbells_quiz', [336, 280], 'div-gpt-ad-1771411880347-0').addService(googletag.pubads());
 
-                // 2. 웹 전면 광고(Interstitial) 슬롯 정의
-                var interstitialSlot = googletag.defineOutOfPageSlot('/23331430035/quizbells_Rewarded_Ad', googletag.enums.OutOfPageFormat.INTERSTITIAL);
-                if (interstitialSlot) {
-                  interstitialSlot.addService(googletag.pubads());
-                }
-
-                // 3. 서비스 활성화 & 광고 요청
                 googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
-                if (interstitialSlot) {
-                  googletag.display(interstitialSlot);
-                }
               });
             `,
           }}
