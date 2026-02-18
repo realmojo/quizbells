@@ -172,8 +172,9 @@ export default async function RootLayout({
               window.__rewardedAdEvent = null;
               
               googletag.cmd.push(function() {
+                // 1. 일반 광고 슬롯 정의
                 var mapping1 = googletag.sizeMapping()
-                  .addSize([1024, 768], [[970, 250], [750, 200], [750, 300]]) 
+                  .addSize([1024, 768], [[970, 250], [750, 200], [750, 300]])
                   .addSize([640, 480], [[336, 280], [250, 250]])
                   .addSize([0, 0], [[336, 280], [250, 250], [300, 250], 'fluid'])
                   .build();
@@ -181,36 +182,52 @@ export default async function RootLayout({
                 googletag.defineSlot('/23331430035/quizbells_main_top', [[336, 280], [250, 250], [750, 200], [970, 250], 'fluid', [750, 300]], 'div-gpt-ad-1771394382291-0')
                   .defineSizeMapping(mapping1)
                   .addService(googletag.pubads());
-                  
+
                 googletag.defineSlot('/23331430035/quizbells_quiz', [[200, 200], [125, 125], 'fluid', [120, 90], [336, 280], [1, 1], [300, 250], [120, 60], [300, 100]], 'div-gpt-ad-1771406658372-0').addService(googletag.pubads());
-                googletag.pubads().enableSingleRequest();
-                googletag.enableServices();
-                  
+
+                // 2. 보상형 광고 슬롯 정의
                 var rewardedSlot = googletag.defineOutOfPageSlot('/23331430035/quizbells_Rewarded_Ad', googletag.enums.OutOfPageFormat.REWARDED);
                 if (rewardedSlot) {
                   rewardedSlot.addService(googletag.pubads());
                 }
 
-                // 리워드 광고 이벤트 리스너
+                // 3. 이벤트 리스너 등록 (enableServices 전에!)
                 googletag.pubads().addEventListener('rewardedSlotReady', function(event) {
-                  console.log('Rewarded ad slot ready');
+                  console.log('Rewarded ad ready');
                   window.__rewardedAdEvent = event;
                 });
 
                 googletag.pubads().addEventListener('rewardedSlotClosed', function() {
                   console.log('Rewarded ad closed');
                   if (window.__pendingNavUrl) {
-                     window.location.href = window.__pendingNavUrl;
-                     window.__pendingNavUrl = null;
+                    window.location.href = window.__pendingNavUrl;
+                    window.__pendingNavUrl = null;
                   }
-                  // 광고가 닫힌 후 슬롯 갱신 (다음 클릭을 위해)
                   if (rewardedSlot) {
                     googletag.pubads().refresh([rewardedSlot]);
                   }
                 });
 
+                googletag.pubads().addEventListener('rewardedSlotGranted', function() {
+                  console.log('Rewarded ad granted');
+                });
+
+                googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+                  if (event.slot === rewardedSlot) {
+                    if (event.isEmpty) {
+                      console.log('No ad returned for rewarded slot');
+                    } else {
+                      console.log('Rewarded ad loaded');
+                    }
+                  }
+                });
+
+                // 4. 서비스 활성화 & 광고 요청
                 googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
+                if (rewardedSlot) {
+                  googletag.display(rewardedSlot);
+                }
               });
             `,
           }}
