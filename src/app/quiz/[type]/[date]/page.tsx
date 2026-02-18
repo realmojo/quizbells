@@ -709,9 +709,9 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     {quiz.question || quiz.type}
                   </h2>
 
-                  {(idx === 0 || idx === 1 || idx === 2) && (
-                    // <Adsense slotId={item.slotId || "8409513997"} />
-                    <GoogleTagQuizComponent />
+                  {idx === 0 && <GoogleTagQuizComponent />}
+                  {(idx === 1 || idx === 2) && (
+                    <Adsense slotId={item.slotId || "8409513997"} />
                   )}
 
                   <RewardedAdButton
