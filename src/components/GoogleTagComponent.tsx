@@ -4,23 +4,34 @@ import { useEffect } from "react";
 
 const GoogleTagComponent = () => {
   useEffect(() => {
-    // 전역 googletag 객체 확인 및 초기화
+    // 1. window.googletag 객체 안전하게 초기화
     const w = window as any;
-    w.googletag = w.googletag || {};
+    w.googletag = w.googletag || { cmd: [] };
     w.googletag.cmd = w.googletag.cmd || [];
 
-    const googletag = w.googletag;
-
-    googletag.cmd.push(() => {
-      // 정의된 슬롯에 광고를 표시함
-      googletag.display("div-gpt-ad-1771389317304-0");
+    // 2. 명령 대기열(cmd)에 display 호출 추가
+    // layout.tsx의 초기화 스크립트도 cmd.push를 사용하므로,
+    // 먼저 실행된 layout의 스크립트가 먼저 처리되고, 이어서 display가 처리됩니다.
+    w.googletag.cmd.push(() => {
+      w.googletag.display("div-gpt-ad-1771389317304-0");
     });
 
-    // 선택 사항: 컴포넌트가 사라질 때 광고 슬롯을 비워주는 것이 좋습니다.
+    // 3. 컴포넌트 언마운트 시 해당 슬롯만 정리
     return () => {
-      if (googletag.destroySlots) {
+      const googletag = w.googletag;
+      if (googletag && googletag.destroySlots) {
         googletag.cmd.push(() => {
-          googletag.destroySlots();
+          // 현재 슬롯 ID에 해당하는 슬롯 객체를 찾아 제거 (전체 제거 방지)
+          const pubads = googletag.pubads && googletag.pubads();
+          if (pubads) {
+            const slots = pubads.getSlots();
+            const targetSlot = slots.find(
+              (s: any) => s.getSlotElementId() === "div-gpt-ad-1771389317304-0",
+            );
+            if (targetSlot) {
+              googletag.destroySlots([targetSlot]);
+            }
+          }
         });
       }
     };
