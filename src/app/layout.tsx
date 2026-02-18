@@ -169,8 +169,7 @@ export default async function RootLayout({
             __html: `
               window.googletag = window.googletag || {cmd: []};
               window.googletag.cmd = window.googletag.cmd || [];
-              window.__rewardedAdEvent = null;
-              
+
               googletag.cmd.push(function() {
                 // 1. 일반 광고 슬롯 정의
                 var mapping1 = googletag.sizeMapping()
@@ -185,48 +184,17 @@ export default async function RootLayout({
 
                 googletag.defineSlot('/23331430035/quizbells_quiz', ['fluid'], 'div-gpt-ad-1771410054443-0').addService(googletag.pubads());
 
-                // 2. 보상형 광고 슬롯 정의
-                var rewardedSlot = googletag.defineOutOfPageSlot('/23331430035/quizbells_Rewarded_Ad', googletag.enums.OutOfPageFormat.REWARDED);
-                if (rewardedSlot) {
-                  rewardedSlot.addService(googletag.pubads());
+                // 2. 웹 전면 광고(Interstitial) 슬롯 정의
+                var interstitialSlot = googletag.defineOutOfPageSlot('/23331430035/quizbells_Rewarded_Ad', googletag.enums.OutOfPageFormat.INTERSTITIAL);
+                if (interstitialSlot) {
+                  interstitialSlot.addService(googletag.pubads());
                 }
 
-                // 3. 이벤트 리스너 등록 (enableServices 전에!)
-                googletag.pubads().addEventListener('rewardedSlotReady', function(event) {
-                  console.log('Rewarded ad ready');
-                  window.__rewardedAdEvent = event;
-                });
-
-                googletag.pubads().addEventListener('rewardedSlotClosed', function() {
-                  console.log('Rewarded ad closed');
-                  if (window.__pendingNavUrl) {
-                    window.location.href = window.__pendingNavUrl;
-                    window.__pendingNavUrl = null;
-                  }
-                  if (rewardedSlot) {
-                    googletag.pubads().refresh([rewardedSlot]);
-                  }
-                });
-
-                googletag.pubads().addEventListener('rewardedSlotGranted', function() {
-                  console.log('Rewarded ad granted');
-                });
-
-                googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-                  if (event.slot === rewardedSlot) {
-                    if (event.isEmpty) {
-                      console.log('No ad returned for rewarded slot');
-                    } else {
-                      console.log('Rewarded ad loaded');
-                    }
-                  }
-                });
-
-                // 4. 서비스 활성화 & 광고 요청
+                // 3. 서비스 활성화 & 광고 요청
                 googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
-                if (rewardedSlot) {
-                  googletag.display(rewardedSlot);
+                if (interstitialSlot) {
+                  googletag.display(interstitialSlot);
                 }
               });
             `,
