@@ -156,6 +156,25 @@ export default async function RootLayout({
             __html: `(function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt"; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "umxzbajlwf");`,
           }}
         />
+        {/* Google Ad Manager (GPT) */}
+        <Script
+          async
+          src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+          crossOrigin="anonymous"
+        />
+        <Script
+          id="gpt-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.googletag = window.googletag || {cmd: []};
+              googletag.cmd.push(function() {
+                googletag.defineSlot('/23331430035/quizbells_main_top', [[336, 280], 'fluid'], 'div-gpt-ad-1771389317304-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+              });
+            `,
+          }}
+        />
         <GoogleAdSense />
         {/* 구조화된 데이터 (Schema.org JSON-LD) - Organization & Ariticle */}
         <Script

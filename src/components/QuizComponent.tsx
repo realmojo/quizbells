@@ -25,6 +25,7 @@ import { quizItems } from "@/utils/utils";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import EarningsSummary from "@/components/EarningsSummary";
+import GoogleTagComponent from "./GoogleTagComponent";
 
 // PWA 설치 프롬프트 이벤트 타입
 interface BeforeInstallPromptEvent extends Event {
@@ -108,7 +109,7 @@ export default function QuizPage() {
     return () => {
       window.removeEventListener(
         "beforeinstallprompt",
-        handleBeforeInstallPrompt
+        handleBeforeInstallPrompt,
       );
       clearTimeout(timeout);
     };
@@ -188,6 +189,8 @@ export default function QuizPage() {
           </h1>
         </header>
 
+        <GoogleTagComponent />
+
         {/* 오늘 예상 수익 요약 */}
         <EarningsSummary />
         {/* <EmailSubscribe /> */}
@@ -218,7 +221,7 @@ export default function QuizPage() {
               aria-label="다음 날짜"
               className={cn(
                 "hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg h-9 w-9",
-                isToday && "opacity-30"
+                isToday && "opacity-30",
               )}
             >
               <ChevronRight className="h-5 w-5" />
