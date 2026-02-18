@@ -30,6 +30,7 @@ import {
   getDetailedArticle,
 } from "@/utils/financial-context";
 import GoogleTagQuizComponent from "@/components/GoogleTagQuizComponent";
+import RewardedAdButton from "@/components/RewardedAdButton";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 // Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
@@ -713,10 +714,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     <GoogleTagQuizComponent />
                   )}
 
-                  <a
+                  <RewardedAdButton
                     href={`/quiz/${type}/${quiz.isToday ? "today" : quiz.answerDate}/answer`}
-                    target="_self"
-                    className="block mb-3"
                   >
                     <div
                       className="group rounded-xl border-2 border-emerald-300 dark:border-emerald-700 bg-linear-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 px-6 py-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer"
@@ -743,7 +742,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </RewardedAdButton>
                 </section>
 
                 {/* 사주라떼 오늘의 운세 카드 (today 페이지, 첫 번째 퀴즈 아래) */}

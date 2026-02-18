@@ -179,6 +179,14 @@ export default async function RootLayout({
                 googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
               });
+              googletag.cmd.push(function() {
+                var rewardedSlot = googletag.defineOutOfPageSlot('/23331430035/quizbells_Rewarded_Ad', googletag.enums.OutOfPageFormat.REWARDED);
+                if (rewardedSlot) {
+                  rewardedSlot.addService(googletag.pubads());
+                }
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+              });
             `,
           }}
         />
