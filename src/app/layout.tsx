@@ -183,7 +183,7 @@ export default async function RootLayout({
                   .defineSizeMapping(mapping1)
                   .addService(googletag.pubads());
 
-                googletag.defineSlot('/23331430035/quizbells_quiz', [[200, 200], [125, 125], 'fluid', [120, 90], [336, 280], [1, 1], [300, 250], [120, 60], [300, 100]], 'div-gpt-ad-1771406658372-0').addService(googletag.pubads());
+                googletag.defineSlot('/23331430035/quizbells_quiz', ['fluid'], 'div-gpt-ad-1771410054443-0').addService(googletag.pubads());
 
                 // 2. 보상형 광고 슬롯 정의
                 var rewardedSlot = googletag.defineOutOfPageSlot('/23331430035/quizbells_Rewarded_Ad', googletag.enums.OutOfPageFormat.REWARDED);
