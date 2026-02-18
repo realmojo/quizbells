@@ -164,28 +164,50 @@ export default async function RootLayout({
         />
         <Script
           id="gpt-init"
-          strategy="afterInteractive" // 페이지 로드 후 즉시 실행
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.googletag = window.googletag || {cmd: []};
               window.googletag.cmd = window.googletag.cmd || [];
+              window.__rewardedAdEvent = null;
+              
               googletag.cmd.push(function() {
-                googletag.defineSlot('/23331430035/quizbells_main_top', [[336, 280], [250, 250], [750, 200], [970, 250], 'fluid', [750, 300]], 'div-gpt-ad-1771394382291-0').addService(googletag.pubads());
-                googletag.defineSlot('/23331430035/quizbells_quiz', ['fluid'], 'div-gpt-ad-1771396240362-0').addService(googletag.pubads());
+                var mapping1 = googletag.sizeMapping()
+                  .addSize([1024, 768], [[970, 250], [750, 200], [750, 300]]) 
+                  .addSize([640, 480], [[336, 280], [250, 250]])
+                  .addSize([0, 0], [[336, 280], [250, 250], [300, 250], 'fluid'])
+                  .build();
+
+                googletag.defineSlot('/23331430035/quizbells_main_top', [[336, 280], [250, 250], [750, 200], [970, 250], 'fluid', [750, 300]], 'div-gpt-ad-1771394382291-0')
+                  .defineSizeMapping(mapping1)
+                  .addService(googletag.pubads());
+                  
+                googletag.defineSlot('/23331430035/quizbells_quiz', ['fluid'], 'div-gpt-ad-1771396240362-0')
+                  .addService(googletag.pubads());
+                  
                 var rewardedSlot = googletag.defineOutOfPageSlot('/23331430035/quizbells_Rewarded_Ad', googletag.enums.OutOfPageFormat.REWARDED);
                 if (rewardedSlot) {
                   rewardedSlot.addService(googletag.pubads());
                 }
+
+                // 리워드 광고 이벤트 리스너
                 googletag.pubads().addEventListener('rewardedSlotReady', function(event) {
+                  console.log('Rewarded ad slot ready');
                   window.__rewardedAdEvent = event;
                 });
+
                 googletag.pubads().addEventListener('rewardedSlotClosed', function() {
+                  console.log('Rewarded ad closed');
                   if (window.__pendingNavUrl) {
-                    window.location.href = window.__pendingNavUrl;
-                    window.__pendingNavUrl = null;
+                     window.location.href = window.__pendingNavUrl;
+                     window.__pendingNavUrl = null;
+                  }
+                  // 광고가 닫힌 후 슬롯 갱신 (다음 클릭을 위해)
+                  if (rewardedSlot) {
+                    googletag.pubads().refresh([rewardedSlot]);
                   }
                 });
-                googletag.pubads().addEventListener('rewardedSlotGranted', function() {});
+
                 googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
               });
