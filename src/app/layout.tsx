@@ -174,6 +174,11 @@ export default async function RootLayout({
                 googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
               });
+              googletag.cmd.push(function() {
+                googletag.defineSlot('/23331430035/quizbells_quiz', ['fluid'], 'div-gpt-ad-1771396240362-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+              });
             `,
           }}
         />

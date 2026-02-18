@@ -29,6 +29,7 @@ import {
   getBridgeContent,
   getDetailedArticle,
 } from "@/utils/financial-context";
+import GoogleTagQuizComponent from "@/components/GoogleTagQuizComponent";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 // Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
@@ -708,7 +709,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
                   </h2>
 
                   {(idx === 0 || idx === 1 || idx === 2) && (
-                    <Adsense slotId={item.slotId || "8409513997"} />
+                    // <Adsense slotId={item.slotId || "8409513997"} />
+                    <GoogleTagQuizComponent />
                   )}
 
                   <a
