@@ -173,12 +173,12 @@ export default async function RootLayout({
               googletag.cmd.push(function() {
                 // 1. 일반 광고 슬롯 정의
                 var mapping1 = googletag.sizeMapping()
-                  .addSize([1024, 768], [[970, 250], [750, 200], [750, 300]])
+                  .addSize([1024, 768], [[750, 200], [750, 300]])
                   .addSize([640, 480], [[336, 280], [250, 250]])
                   .addSize([0, 0], [[336, 280], [250, 250], [300, 250], 'fluid'])
                   .build();
 
-                googletag.defineSlot('/23331430035/quizbells_main_top', [[336, 280], [250, 250], [750, 200], [970, 250], 'fluid', [750, 300]], 'div-gpt-ad-1771394382291-0')
+                googletag.defineSlot('/23331430035/quizbells_main_top', [[336, 280], [250, 250], [750, 200], 'fluid', [750, 300]], 'div-gpt-ad-1771394382291-0')
                   .defineSizeMapping(mapping1)
                   .addService(googletag.pubads());
 
