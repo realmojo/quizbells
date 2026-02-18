@@ -171,15 +171,7 @@ export default async function RootLayout({
               window.googletag.cmd = window.googletag.cmd || [];
               googletag.cmd.push(function() {
                 googletag.defineSlot('/23331430035/quizbells_main_top', [[336, 280], [250, 250], [750, 200], [970, 250], 'fluid', [750, 300]], 'div-gpt-ad-1771394382291-0').addService(googletag.pubads());
-                googletag.pubads().enableSingleRequest();
-                googletag.enableServices();
-              });
-              googletag.cmd.push(function() {
                 googletag.defineSlot('/23331430035/quizbells_quiz', ['fluid'], 'div-gpt-ad-1771396240362-0').addService(googletag.pubads());
-                googletag.pubads().enableSingleRequest();
-                googletag.enableServices();
-              });
-              googletag.cmd.push(function() {
                 var rewardedSlot = googletag.defineOutOfPageSlot('/23331430035/quizbells_Rewarded_Ad', googletag.enums.OutOfPageFormat.REWARDED);
                 if (rewardedSlot) {
                   rewardedSlot.addService(googletag.pubads());
