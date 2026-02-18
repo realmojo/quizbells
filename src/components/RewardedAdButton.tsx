@@ -25,12 +25,11 @@ export default function RewardedAdButton({
 
       w.googletag.cmd.push(() => {
         // 보상형 광고 준비 완료 이벤트
-        w.googletag.pubads().addEventListener(
-          "rewardedSlotReady",
-          (event: any) => {
+        w.googletag
+          .pubads()
+          .addEventListener("rewardedSlotReady", (event: any) => {
             rewardedAdEvent = event;
-          },
-        );
+          });
 
         // 보상형 광고 닫힘 이벤트 → 정답 페이지로 이동
         w.googletag.pubads().addEventListener("rewardedSlotClosed", () => {
@@ -50,6 +49,8 @@ export default function RewardedAdButton({
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    console.log("RewardedAdButton clicked");
+    console.log("rewardedAdEvent", rewardedAdEvent);
 
     if (rewardedAdEvent) {
       // 광고 준비됨 → 전면광고 표시
