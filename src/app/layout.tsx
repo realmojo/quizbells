@@ -167,6 +167,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               window.googletag = window.googletag || {cmd: []};
+              window.googletag.cmd = window.googletag.cmd || [];
               googletag.cmd.push(function() {
                 googletag.defineSlot('/23331430035/quizbells_main_top', [[336, 280], 'fluid'], 'div-gpt-ad-1771389317304-0').addService(googletag.pubads());
                 googletag.pubads().enableSingleRequest();
