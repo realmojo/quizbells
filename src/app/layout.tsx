@@ -180,12 +180,17 @@ export default async function RootLayout({
               // 보상형 광고 로드 함수 (중복 로드 방지, 슬롯별 이벤트 격리)
               window.loadRewardedAd = function() {
                 // 이미 로딩 중이거나 광고 준비 완료 시 재로드 방지
-                if (window.__rewardedAdLoading || window.__rewardedAdHasAd) return;
+                if (window.__rewardedAdLoading || window.__rewardedAdHasAd) {
+                  console.log('[RewardedAd] 이미 로딩 중 또는 준비 완료 상태 - 재로드 스킵', {loading: window.__rewardedAdLoading, hasAd: window.__rewardedAdHasAd});
+                  return;
+                }
                 window.__rewardedAdLoading = true;
+                console.log('[RewardedAd] 광고 로드 시작...');
 
                 googletag.cmd.push(function() {
                   // 기존 슬롯 제거
                   if (window.__rewardedAdSlot) {
+                    console.log('[RewardedAd] 기존 슬롯 제거');
                     googletag.destroySlots([window.__rewardedAdSlot]);
                     window.__rewardedAdSlot = null;
                   }
@@ -197,15 +202,18 @@ export default async function RootLayout({
                     googletag.enums.OutOfPageFormat.REWARDED
                   );
                   if (!slot) {
+                    console.warn('[RewardedAd] ❌ 슬롯 생성 실패 - 이 브라우저/환경에서 보상형 광고 미지원');
                     window.__rewardedAdLoading = false;
                     return;
                   }
+                  console.log('[RewardedAd] ✅ 슬롯 생성 성공', slot.getSlotElementId());
 
                   window.__rewardedAdSlot = slot;
                   slot.addService(googletag.pubads());
 
                   googletag.pubads().addEventListener('rewardedSlotReady', function(event) {
                     if (event.slot !== slot) return;
+                    console.log('[RewardedAd] ✅ rewardedSlotReady - 광고 준비 완료! 버튼 클릭 시 광고 표시됩니다.');
                     window.__rewardedAdHasAd = true;
                     window.__rewardedAdLoading = false;
                     window.__rewardedAdTrigger = function() {
@@ -215,6 +223,7 @@ export default async function RootLayout({
 
                   googletag.pubads().addEventListener('rewardedSlotClosed', function(event) {
                     if (event.slot !== slot) return;
+                    console.log('[RewardedAd] rewardedSlotClosed - 광고 닫힘, 이동:', window.__pendingNavUrl);
                     window.__rewardedAdHasAd = false;
                     window.__rewardedAdLoading = false;
                     window.__rewardedAdTrigger = null;
@@ -225,14 +234,23 @@ export default async function RootLayout({
                     }
                   });
 
+                  googletag.pubads().addEventListener('rewardedSlotGranted', function(event) {
+                    if (event.slot !== slot) return;
+                    console.log('[RewardedAd] ✅ rewardedSlotGranted - 사용자 리워드 획득!', event.payload);
+                  });
+
                   googletag.pubads().addEventListener('slotRenderEnded', function(event) {
                     if (event.slot !== slot) return;
                     if (event.isEmpty) {
+                      console.warn('[RewardedAd] ❌ slotRenderEnded - 광고 없음 (isEmpty). 광고 항목 설정을 확인하세요.');
                       window.__rewardedAdHasAd = false;
                       window.__rewardedAdLoading = false;
+                    } else {
+                      console.log('[RewardedAd] slotRenderEnded - 광고 로드됨');
                     }
                   });
 
+                  console.log('[RewardedAd] googletag.display() 호출...');
                   googletag.enableServices();
                   googletag.display(slot);
                 });
