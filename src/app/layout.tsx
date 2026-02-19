@@ -178,7 +178,7 @@ export default async function RootLayout({
               window.__pendingNavUrl = null;
               window.__isHouseAd = false;
               // 하우스 광고 lineItemId 목록
-              window.__houseAdLineItemIds = [138546401339];
+              window.__houseAdLineItemIds = [7227449947];
 
               // 보상형 광고 로드 함수 (중복 로드 방지, 슬롯별 이벤트 격리)
               window.loadRewardedAd = function() {
