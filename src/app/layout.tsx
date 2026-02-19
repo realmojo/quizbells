@@ -176,6 +176,9 @@ export default async function RootLayout({
               window.__rewardedAdHasAd = false;
               window.__rewardedAdLoading = false;
               window.__pendingNavUrl = null;
+              window.__isHouseAd = false;
+              // 하우스 광고 lineItemId 목록
+              window.__houseAdLineItemIds = [138546401339];
 
               // 보상형 광고 로드 함수 (중복 로드 방지, 슬롯별 이벤트 격리)
               window.loadRewardedAd = function() {
@@ -213,7 +216,15 @@ export default async function RootLayout({
 
                   googletag.pubads().addEventListener('rewardedSlotReady', function(event) {
                     if (event.slot !== slot) return;
-                    console.log('[RewardedAd] ✅ rewardedSlotReady - 광고 준비 완료! 버튼 클릭 시 광고 표시됩니다.');
+                    console.log('[RewardedAd] ✅ rewardedSlotReady - 광고 준비 완료!');
+                    // 하우스 광고인 경우 무시 → <a> 태그 기본 동작(AdSense 전면광고)으로 처리
+                    if (window.__isHouseAd) {
+                      console.log('[RewardedAd] 🏠 하우스 광고 - rewardedSlotReady 무시, a 태그로 이동 처리');
+                      window.__rewardedAdHasAd = false;
+                      window.__rewardedAdLoading = false;
+                      return;
+                    }
+                    console.log('[RewardedAd] ✅ 실제 광고 - 버튼 클릭 시 광고 표시됩니다.');
                     window.__rewardedAdHasAd = true;
                     window.__rewardedAdLoading = false;
                     window.__rewardedAdTrigger = function() {
@@ -242,11 +253,33 @@ export default async function RootLayout({
                   googletag.pubads().addEventListener('slotRenderEnded', function(event) {
                     if (event.slot !== slot) return;
                     if (event.isEmpty) {
-                      console.warn('[RewardedAd] ❌ slotRenderEnded - 광고 없음 (isEmpty). 광고 항목 설정을 확인하세요.');
+                      console.warn('[RewardedAd] ❌ 광고 없음 (isEmpty)');
                       window.__rewardedAdHasAd = false;
                       window.__rewardedAdLoading = false;
                     } else {
-                      console.log('[RewardedAd] slotRenderEnded - 광고 로드됨');
+                      // lineItemId로 하우스 광고 여부 판별
+                      var lineItemId = event.lineItemId;
+                      var advertiserId = event.advertiserId;
+                      console.log('[RewardedAd] slotRenderEnded 상세:', {
+                        lineItemId: lineItemId,
+                        advertiserId: advertiserId,
+                        isBackfill: event.isBackfill,
+                        campaignId: event.campaignId,
+                        creativeId: event.creativeId,
+                      });
+
+                      // 하우스 광고 lineItemId 목록 (콘솔 확인 후 여기에 추가)
+                      var HOUSE_AD_LINE_ITEM_IDS = window.__houseAdLineItemIds || [];
+
+                      if (HOUSE_AD_LINE_ITEM_IDS.indexOf(lineItemId) !== -1) {
+                        console.log('[RewardedAd] 🏠 하우스 광고 감지 (lineItemId: ' + lineItemId + ') - 표시 스킵');
+                        window.__isHouseAd = true;
+                        window.__rewardedAdHasAd = false;
+                        window.__rewardedAdLoading = false;
+                      } else {
+                        console.log('[RewardedAd] ✅ 실제 광고 로드됨 (lineItemId: ' + lineItemId + ')');
+                        window.__isHouseAd = false;
+                      }
                     }
                   });
 
