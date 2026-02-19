@@ -174,10 +174,15 @@ export default async function RootLayout({
               window.__rewardedAdSlot = null;
               window.__rewardedAdTrigger = null;
               window.__rewardedAdHasAd = false;
+              window.__rewardedAdLoading = false;
               window.__pendingNavUrl = null;
 
-              // 보상형 광고 로드 함수 (점신 패턴: 매번 새 슬롯 생성)
+              // 보상형 광고 로드 함수 (중복 로드 방지, 슬롯별 이벤트 격리)
               window.loadRewardedAd = function() {
+                // 이미 로딩 중이거나 광고 준비 완료 시 재로드 방지
+                if (window.__rewardedAdLoading || window.__rewardedAdHasAd) return;
+                window.__rewardedAdLoading = true;
+
                 googletag.cmd.push(function() {
                   // 기존 슬롯 제거
                   if (window.__rewardedAdSlot) {
@@ -191,37 +196,40 @@ export default async function RootLayout({
                     '/23331430035/quizbells_Rewarded_Ad',
                     googletag.enums.OutOfPageFormat.REWARDED
                   );
-                  if (!slot) return;
+                  if (!slot) {
+                    window.__rewardedAdLoading = false;
+                    return;
+                  }
 
                   window.__rewardedAdSlot = slot;
                   slot.addService(googletag.pubads());
 
                   googletag.pubads().addEventListener('rewardedSlotReady', function(event) {
                     if (event.slot !== slot) return;
-                    console.log('Rewarded ad ready');
                     window.__rewardedAdHasAd = true;
+                    window.__rewardedAdLoading = false;
                     window.__rewardedAdTrigger = function() {
                       event.makeRewardedVisible();
                     };
                   });
 
                   googletag.pubads().addEventListener('rewardedSlotClosed', function(event) {
-                    console.log('Rewarded ad closed');
+                    if (event.slot !== slot) return;
                     window.__rewardedAdHasAd = false;
+                    window.__rewardedAdLoading = false;
                     window.__rewardedAdTrigger = null;
                     if (window.__pendingNavUrl) {
-                      window.location.href = window.__pendingNavUrl;
+                      var url = window.__pendingNavUrl;
                       window.__pendingNavUrl = null;
+                      window.location.href = url;
                     }
                   });
 
                   googletag.pubads().addEventListener('slotRenderEnded', function(event) {
                     if (event.slot !== slot) return;
                     if (event.isEmpty) {
-                      console.log('No ad returned for rewarded slot');
                       window.__rewardedAdHasAd = false;
-                    } else {
-                      console.log('Rewarded ad loaded');
+                      window.__rewardedAdLoading = false;
                     }
                   });
 
