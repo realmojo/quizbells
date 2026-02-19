@@ -18,23 +18,24 @@ export default function RewardedAdButton({
     }
   }, []);
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const w = window as any;
 
     if (w.__rewardedAdHasAd && typeof w.__rewardedAdTrigger === "function") {
+      // GPT 보상형 광고 준비됨 → 광고 표시 후 이동
+      e.preventDefault();
       console.log("Showing rewarded ad...");
       w.__pendingNavUrl = href;
       w.__rewardedAdTrigger();
     } else {
-      console.log("Ad not ready, navigating directly");
-      window.location.href = href;
+      // 광고 없음 → <a> 태그 기본 동작으로 이동 (AdSense 바이네트 개입 가능)
+      console.log("Ad not ready, navigating via <a> tag");
     }
   };
 
   return (
-    <div onClick={handleClick} className="block mb-3 cursor-pointer">
+    <a href={href} onClick={handleClick} className="block mb-3 cursor-pointer">
       {children}
-    </div>
+    </a>
   );
 }
