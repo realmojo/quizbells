@@ -29,7 +29,7 @@ import {
   getBridgeContent,
   getDetailedArticle,
 } from "@/utils/financial-context";
-import GoogleTagQuizComponent from "@/components/GoogleTagQuizComponent";
+// import GoogleTagQuizComponent from "@/components/GoogleTagQuizComponent";
 import RewardedAdButton from "@/components/RewardedAdButton";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
@@ -709,8 +709,8 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     {quiz.question || quiz.type}
                   </h2>
 
-                  {idx === 0 && <GoogleTagQuizComponent />}
-                  {(idx === 1 || idx === 2) && (
+                  {/* {idx === 0 && <GoogleTagQuizComponent />} */}
+                  {(idx === 0 || idx === 1 || idx === 2) && (
                     <Adsense slotId={item.slotId || "8409513997"} />
                   )}
 

@@ -157,7 +157,7 @@ export default async function RootLayout({
           }}
         />
         {/* Google Ad Manager (GPT) */}
-        <Script
+        {/* <Script
           async
           src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
           crossOrigin="anonymous"
@@ -308,7 +308,7 @@ export default async function RootLayout({
               });
             `,
           }}
-        />
+        /> */}
         <GoogleAdSense />
         {/* 구조화된 데이터 (Schema.org JSON-LD) - Organization & Ariticle */}
         <Script
