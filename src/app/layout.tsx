@@ -67,6 +67,10 @@ export const metadata: Metadata = {
       "naver-site-verification": "3f64e7db8e8deef8c04f1aaffd716f53498e30ee",
     },
   },
+  other: {
+    // 네이버 Yeti 봇 전용: 리치 스니펫 최대 허용
+    Yeti: "index, follow, max-snippet:-1, max-image-preview:large",
+  },
   icons: {
     icon: "/icons/android-icon-48x48.png",
   },
@@ -134,7 +138,6 @@ export default async function RootLayout({
         <Script
           strategy="beforeInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-ZPZFXZ11GR"
-          async
         />
         <Script
           strategy="beforeInteractive"
@@ -150,165 +153,6 @@ export default async function RootLayout({
           `,
           }}
         />
-        <Script
-          id="clarity-tracking"
-          dangerouslySetInnerHTML={{
-            __html: `(function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt"; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "umxzbajlwf");`,
-          }}
-        />
-        {/* Google Ad Manager (GPT) */}
-        {/* <Script
-          async
-          src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
-          crossOrigin="anonymous"
-        />
-        <Script
-          id="gpt-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.googletag = window.googletag || {cmd: []};
-              window.googletag.cmd = window.googletag.cmd || [];
-
-              // 보상형 광고 전역 상태
-              window.__rewardedAdSlot = null;
-              window.__rewardedAdTrigger = null;
-              window.__rewardedAdHasAd = false;
-              window.__rewardedAdLoading = false;
-              window.__pendingNavUrl = null;
-              window.__isHouseAd = false;
-              // 하우스 광고 lineItemId 목록
-              window.__houseAdLineItemIds = [7227449947];
-
-              // 보상형 광고 로드 함수 (중복 로드 방지, 슬롯별 이벤트 격리)
-              window.loadRewardedAd = function() {
-                // 이미 로딩 중이거나 광고 준비 완료 시 재로드 방지
-                if (window.__rewardedAdLoading || window.__rewardedAdHasAd) {
-                  console.log('[RewardedAd] 이미 로딩 중 또는 준비 완료 상태 - 재로드 스킵', {loading: window.__rewardedAdLoading, hasAd: window.__rewardedAdHasAd});
-                  return;
-                }
-                window.__rewardedAdLoading = true;
-                console.log('[RewardedAd] 광고 로드 시작...');
-
-                googletag.cmd.push(function() {
-                  // 기존 슬롯 제거
-                  if (window.__rewardedAdSlot) {
-                    console.log('[RewardedAd] 기존 슬롯 제거');
-                    googletag.destroySlots([window.__rewardedAdSlot]);
-                    window.__rewardedAdSlot = null;
-                  }
-                  window.__rewardedAdTrigger = null;
-                  window.__rewardedAdHasAd = false;
-
-                  var slot = googletag.defineOutOfPageSlot(
-                    '/23331430035/quizbells_Rewarded_Ad',
-                    googletag.enums.OutOfPageFormat.REWARDED
-                  );
-                  if (!slot) {
-                    console.warn('[RewardedAd] ❌ 슬롯 생성 실패 - 이 브라우저/환경에서 보상형 광고 미지원');
-                    window.__rewardedAdLoading = false;
-                    return;
-                  }
-                  console.log('[RewardedAd] ✅ 슬롯 생성 성공', slot.getSlotElementId());
-
-                  window.__rewardedAdSlot = slot;
-                  slot.addService(googletag.pubads());
-
-                  googletag.pubads().addEventListener('rewardedSlotReady', function(event) {
-                    if (event.slot !== slot) return;
-                    console.log('[RewardedAd] ✅ rewardedSlotReady - 광고 준비 완료!');
-                    // 하우스 광고인 경우 무시 → <a> 태그 기본 동작(AdSense 전면광고)으로 처리
-                    if (window.__isHouseAd) {
-                      console.log('[RewardedAd] 🏠 하우스 광고 - rewardedSlotReady 무시, a 태그로 이동 처리');
-                      window.__rewardedAdHasAd = false;
-                      window.__rewardedAdLoading = false;
-                      return;
-                    }
-                    console.log('[RewardedAd] ✅ 실제 광고 - 버튼 클릭 시 광고 표시됩니다.');
-                    window.__rewardedAdHasAd = true;
-                    window.__rewardedAdLoading = false;
-                    window.__rewardedAdTrigger = function() {
-                      event.makeRewardedVisible();
-                    };
-                  });
-
-                  googletag.pubads().addEventListener('rewardedSlotClosed', function(event) {
-                    if (event.slot !== slot) return;
-                    console.log('[RewardedAd] rewardedSlotClosed - 광고 닫힘, 이동:', window.__pendingNavUrl);
-                    window.__rewardedAdHasAd = false;
-                    window.__rewardedAdLoading = false;
-                    window.__rewardedAdTrigger = null;
-                    if (window.__pendingNavUrl) {
-                      var url = window.__pendingNavUrl;
-                      window.__pendingNavUrl = null;
-                      window.location.href = url;
-                    }
-                  });
-
-                  googletag.pubads().addEventListener('rewardedSlotGranted', function(event) {
-                    if (event.slot !== slot) return;
-                    console.log('[RewardedAd] ✅ rewardedSlotGranted - 사용자 리워드 획득!', event.payload);
-                  });
-
-                  googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-                    if (event.slot !== slot) return;
-                    if (event.isEmpty) {
-                      console.warn('[RewardedAd] ❌ 광고 없음 (isEmpty)');
-                      window.__rewardedAdHasAd = false;
-                      window.__rewardedAdLoading = false;
-                    } else {
-                      // lineItemId로 하우스 광고 여부 판별
-                      var lineItemId = event.lineItemId;
-                      var advertiserId = event.advertiserId;
-                      console.log('[RewardedAd] slotRenderEnded 상세:', {
-                        lineItemId: lineItemId,
-                        advertiserId: advertiserId,
-                        isBackfill: event.isBackfill,
-                        campaignId: event.campaignId,
-                        creativeId: event.creativeId,
-                      });
-
-                      // 하우스 광고 lineItemId 목록 (콘솔 확인 후 여기에 추가)
-                      var HOUSE_AD_LINE_ITEM_IDS = window.__houseAdLineItemIds || [];
-
-                      if (HOUSE_AD_LINE_ITEM_IDS.indexOf(lineItemId) !== -1) {
-                        console.log('[RewardedAd] 🏠 하우스 광고 감지 (lineItemId: ' + lineItemId + ') - 표시 스킵');
-                        window.__isHouseAd = true;
-                        window.__rewardedAdHasAd = false;
-                        window.__rewardedAdLoading = false;
-                      } else {
-                        console.log('[RewardedAd] ✅ 실제 광고 로드됨 (lineItemId: ' + lineItemId + ')');
-                        window.__isHouseAd = false;
-                      }
-                    }
-                  });
-
-                  console.log('[RewardedAd] googletag.display() 호출...');
-                  googletag.enableServices();
-                  googletag.display(slot);
-                });
-              };
-
-              googletag.cmd.push(function() {
-                // 일반 광고 슬롯 정의
-                var mapping1 = googletag.sizeMapping()
-                  .addSize([1024, 768], [[750, 200], [750, 300], [336, 280], 'fluid'])
-                  .addSize([640, 480], [[336, 280], [300, 250], [250, 250], 'fluid'])
-                  .addSize([0, 0], [[300, 250], [250, 250], [336, 280], 'fluid'])
-                  .build();
-
-                googletag.defineSlot('/23331430035/quizbells_main_top', [[336, 280], [250, 250], [300, 250], [750, 200], [750, 300], 'fluid'], 'div-gpt-ad-1771394382291-0')
-                  .defineSizeMapping(mapping1)
-                  .addService(googletag.pubads());
-
-                googletag.defineSlot('/23331430035/quizbells_quiz', [336, 280], 'div-gpt-ad-1771411880347-0').addService(googletag.pubads());
-
-                googletag.pubads().enableSingleRequest();
-                googletag.enableServices();
-              });
-            `,
-          }}
-        /> */}
         <GoogleAdSense />
         {/* 구조화된 데이터 (Schema.org JSON-LD) - Organization & Ariticle */}
         <Script
@@ -336,7 +180,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Article",
+              "@type": "SoftwareApplication",
               name: "퀴즈벨",
               alternateName: "QUIZBELLS",
               url: "https://quizbells.com",

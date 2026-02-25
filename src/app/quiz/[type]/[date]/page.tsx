@@ -122,7 +122,10 @@ export async function generateMetadata({
       images: [`https://quizbells.com/icons/og-image.png`],
     },
     alternates: {
-      canonical: `https://quizbells.com/quiz/${type}/today`,
+      canonical:
+        date === "today"
+          ? `https://quizbells.com/quiz/${type}/today`
+          : `https://quizbells.com/quiz/${type}/${answerDate}`,
     },
     robots: {
       index: true,
