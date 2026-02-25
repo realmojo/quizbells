@@ -154,8 +154,8 @@ export default async function RootLayout({
           }}
         />
         <GoogleAdSense />
-        {/* 구조화된 데이터 (Schema.org JSON-LD) - Organization & Ariticle */}
-        <Script
+        {/* 구조화된 데이터 (Schema.org JSON-LD) - JSON-LD는 JS 실행 없음, 일반 script 태그 사용 */}
+        <script
           id="structured-data-organization"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -173,8 +173,7 @@ export default async function RootLayout({
             }),
           }}
         />
-        <Script
-          strategy="beforeInteractive"
+        <script
           id="structured-data-webapp"
           type="application/ld+json"
           dangerouslySetInnerHTML={{

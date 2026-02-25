@@ -25,7 +25,6 @@ import PWAInstallButton from "@/components/PWAInstallButton";
 import VisitTracker from "@/components/VisitTracker";
 import {
   getRandomFinancialTip,
-  HIGH_VALUE_KEYWORDS,
   getBridgeContent,
   getDetailedArticle,
 } from "@/utils/financial-context";
@@ -882,29 +881,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
             </section>
           </main>
 
-          {/* 금융 상식 키워드 섹션 (Strategy 5) */}
-          <aside className="mt-12 px-4">
-            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
-              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
-                <span className="text-emerald-500">💰</span> 오늘의 금융 상식
-                키워드
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {HIGH_VALUE_KEYWORDS.map((keyword, idx) => (
-                  <span
-                    key={idx}
-                    className="inline-block px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs text-slate-600 dark:text-slate-400 font-medium hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-200 dark:hover:border-emerald-800 transition-colors cursor-default"
-                  >
-                    # {keyword}
-                  </span>
-                ))}
-              </div>
-              <p className="mt-4 text-xs text-slate-400 dark:text-slate-500 text-center">
-                본 페이지는 퀴즈 정답 공유와 함께 유익한 금융 정보를 제공하기
-                위해 제작되었습니다.
-              </p>
-            </div>
-          </aside>
         </div>
       </div>
     </>

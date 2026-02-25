@@ -1,19 +1,23 @@
 User-agent: *
 Allow: /
 
+# 크롤링 불필요 경로 (크롤 버짓 절약)
+Disallow: /api/
+Disallow: /admin/
+Disallow: /naver-cafe/
+Disallow: /s/
+Disallow: /settings/
+
 # Naver bot optimization
 User-agent: Yeti
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /naver-cafe/
+Disallow: /s/
+Disallow: /settings/
 
 # Sitemaps
 Sitemap: https://quizbells.com/sitemap.xml
-Sitemap: https://quizbells.com/sitemap-pages.xml
-Sitemap: https://quizbells.com/sitemap-quiz-today.xml
-Sitemap: https://quizbells.com/sitemap-quiz-periods.xml
-Sitemap: https://quizbells.com/sitemap-quiz-dates.xml
-Sitemap: https://quizbells.com/sitemap-posts.xml
-
-# Disallow admin or private paths if any
-Disallow: /api/
 
 #DaumWebMasterTool:34a57ac8a419165cc7ea8d891eff111633ffc72102d05ff94498967d578ba6d9:yi66Srl+AIS4g6lN/iGwtA==

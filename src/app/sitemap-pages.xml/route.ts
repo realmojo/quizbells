@@ -2,20 +2,28 @@ export const runtime = "edge";
 
 const BASE_URL = "https://quizbells.com";
 
-// 정적 페이지 목록
+// 정적 페이지 목록 — lastmod는 실제 변경 주기에 맞게 고정
 const staticPages = [
-  { path: "/", priority: "1.0", changefreq: "daily" },
-  { path: "/about", priority: "0.8", changefreq: "monthly" },
-  { path: "/privacy", priority: "0.8", changefreq: "monthly" },
-  { path: "/faq", priority: "0.8", changefreq: "monthly" },
-  { path: "/terms", priority: "0.8", changefreq: "monthly" },
-  { path: "/tips", priority: "0.8", changefreq: "weekly" },
-  { path: "/posts", priority: "0.8", changefreq: "weekly" },
-  { path: "/quiz", priority: "0.8", changefreq: "daily" },
+  { path: "/", priority: "1.0", changefreq: "daily", lastmod: null },      // 매일 변경
+  { path: "/quiz", priority: "0.9", changefreq: "daily", lastmod: null },   // 매일 변경
+  { path: "/posts", priority: "0.8", changefreq: "weekly", lastmod: null }, // 콘텐츠 추가 시
+  { path: "/tips", priority: "0.7", changefreq: "monthly", lastmod: "2025-06-01" },
+  { path: "/faq", priority: "0.6", changefreq: "monthly", lastmod: "2025-01-01" },
+  { path: "/about", priority: "0.5", changefreq: "monthly", lastmod: "2025-01-01" },
+  { path: "/privacy", priority: "0.3", changefreq: "yearly", lastmod: "2025-01-01" },
+  { path: "/terms", priority: "0.3", changefreq: "yearly", lastmod: "2025-01-01" },
 ];
 
+// 한국 시간 기준 오늘 날짜
+function getKoreaTodayDate(): string {
+  const now = new Date();
+  const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const koreaTime = new Date(utcTime + 9 * 60 * 60 * 1000);
+  return koreaTime.toISOString().split("T")[0];
+}
+
 export async function GET() {
-  const lastmod = new Date().toISOString().split("T")[0];
+  const today = getKoreaTodayDate();
 
   const urls: {
     loc: string;
@@ -27,7 +35,7 @@ export async function GET() {
   for (const page of staticPages) {
     urls.push({
       loc: `${BASE_URL}${page.path}`,
-      lastmod,
+      lastmod: page.lastmod ?? today,
       changefreq: page.changefreq,
       priority: page.priority,
     });
