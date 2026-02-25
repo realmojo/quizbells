@@ -7,6 +7,8 @@ Disallow: /admin/
 Disallow: /naver-cafe/
 Disallow: /s/
 Disallow: /settings/
+Disallow: /fortune/
+Disallow: /sale/
 
 # Naver bot optimization
 User-agent: Yeti
@@ -16,6 +18,8 @@ Disallow: /admin/
 Disallow: /naver-cafe/
 Disallow: /s/
 Disallow: /settings/
+Disallow: /fortune/
+Disallow: /sale/
 
 # Sitemaps
 Sitemap: https://quizbells.com/sitemap.xml

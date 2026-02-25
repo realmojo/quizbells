@@ -5,7 +5,7 @@ const BASE_URL = "https://quizbells.com";
 // 정적 페이지 목록 — lastmod는 실제 변경 주기에 맞게 고정
 const staticPages = [
   { path: "/", priority: "1.0", changefreq: "daily", lastmod: null },      // 매일 변경
-  { path: "/quiz", priority: "0.9", changefreq: "daily", lastmod: null },   // 매일 변경
+  // /quiz는 /quiz/${type}/today로 redirect만 하는 페이지라 제외
   { path: "/posts", priority: "0.8", changefreq: "weekly", lastmod: null }, // 콘텐츠 추가 시
   { path: "/tips", priority: "0.7", changefreq: "monthly", lastmod: "2025-06-01" },
   { path: "/faq", priority: "0.6", changefreq: "monthly", lastmod: "2025-01-01" },

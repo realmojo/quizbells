@@ -6,17 +6,18 @@ export const runtime = "edge";
 const BASE_URL = "https://quizbells.com";
 const QUIZ_TYPES = quizItems.map((item) => item.type);
 
-// 최근 30일 + 내일까지 날짜 리스트 생성
+// 최근 30일 날짜 리스트 생성 (오늘까지만, 내일 미래 날짜 제외)
 function generateDatesLastMonth(): string[] {
   const dates: string[] = [];
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  const now = new Date();
+  // 한국 시간(UTC+9) 기준 오늘
+  const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const today = new Date(utcTime + 9 * 60 * 60 * 1000);
 
   const startDate = new Date(today);
   startDate.setDate(startDate.getDate() - 30);
 
-  for (let d = new Date(startDate); d <= tomorrow; d.setDate(d.getDate() + 1)) {
+  for (let d = new Date(startDate); d <= today; d.setDate(d.getDate() + 1)) {
     dates.push(d.toISOString().split("T")[0]);
   }
 
