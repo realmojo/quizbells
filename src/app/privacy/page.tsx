@@ -8,6 +8,23 @@ import {
   FileText,
 } from "lucide-react";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "개인정보처리방침 - 퀴즈벨(Quizbells)",
+  description:
+    "퀴즈벨의 개인정보처리방침 안내 페이지입니다. 수집하는 개인정보 항목, 수집 목적, 보유 기간, 제3자 제공, 사용자 권리 등을 확인하세요.",
+  openGraph: {
+    title: "퀴즈벨 개인정보처리방침",
+    description:
+      "퀴즈벨 서비스의 개인정보 수집·이용·보호에 관한 사항을 안내합니다.",
+    url: "https://quizbells.com/privacy",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://quizbells.com/privacy",
+  },
+};
 
 export default function PrivacyPolicyPage() {
   return (

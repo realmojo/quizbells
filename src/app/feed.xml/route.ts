@@ -86,12 +86,9 @@ export async function GET() {
         const date = new Date(dateTime);
         return date.toUTCString();
       } catch {
-        // 폴백: answerDate를 사용하되 현재 시간의 시/분/초 추가
-        const now = new Date();
+        // 폴백: answerDate를 사용하되 고정 시간(09:00 KST) 사용
         const dateStr = quiz.answerDate || getKoreaDate();
-        const date = new Date(
-          `${dateStr}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}+09:00`,
-        );
+        const date = new Date(`${dateStr}T09:00:00+09:00`);
         return date.toUTCString();
       }
     };

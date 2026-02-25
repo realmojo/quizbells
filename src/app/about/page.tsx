@@ -52,6 +52,9 @@ export const metadata: Metadata = {
       "앱테크 유저를 위한 퀴즈 정답 실시간 알림 서비스 - 캐시워크, 오퀴즈, 리브메이트 등을 한곳에!",
     images: ["https://quizbells.com/icons/android-icon-192x192.png"],
   },
+  alternates: {
+    canonical: "https://quizbells.com/about",
+  },
   metadataBase: new URL("https://quizbells.com"),
 };
 

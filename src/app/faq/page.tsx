@@ -40,6 +40,9 @@ export const metadata: Metadata = {
       "앱테크 퀴즈 알림 서비스 퀴즈벨의 설치, 사용 방법, 알림 문제 등 자주 묻는 질문 모음.",
     images: ["https://quizbells.com/icons/android-icon-192x192.png"],
   },
+  alternates: {
+    canonical: "https://quizbells.com/faq",
+  },
   metadataBase: new URL("https://quizbells.com"),
 };
 
