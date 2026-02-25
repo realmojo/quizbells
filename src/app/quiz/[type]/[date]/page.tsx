@@ -15,19 +15,12 @@ import {
   CheckCircle2,
   Lightbulb,
   ArrowRight,
-  Sparkles,
-  TrendingUp,
 } from "lucide-react";
 import { subDays } from "date-fns";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import VisitTracker from "@/components/VisitTracker";
-import {
-  getRandomFinancialTip,
-  getBridgeContent,
-  getDetailedArticle,
-} from "@/utils/financial-context";
 // import GoogleTagQuizComponent from "@/components/GoogleTagQuizComponent";
 import RewardedAdButton from "@/components/RewardedAdButton";
 
@@ -79,7 +72,6 @@ export async function generateMetadata({
   // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
   // 네이버 모바일 검색 가독성 최적화
   // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
-  // 네이버 모바일 검색 가독성 최적화 및 금융 고단가 키워드 추가
   const fullTitle = `${typeName} ${typeTitle} 오늘 정답 ${shortDateLabel} | 퀴즈벨`;
 
   // 설명문: 핵심 키워드 전진 배치
@@ -97,8 +89,6 @@ export async function generateMetadata({
       "앱테크",
       typeName,
       typeTitle,
-      "예적금 추천",
-      "대출이자",
     ],
     openGraph: {
       title: fullTitle,
@@ -792,71 +782,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
                   </a>
                 )}
 
-                {/* 금융 팁 섹션 (Strategy 1 - Visual Excellence Redesign) */}
-                {idx === 0 && (
-                  <div className="mb-8 relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-800 dark:to-indigo-900 p-6 text-white shadow-xl shadow-blue-500/20">
-                    <div className="relative z-10 flex gap-4 items-start">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/20 backdrop-blur-md shadow-inner border border-white/10">
-                        <Sparkles className="h-6 w-6 text-yellow-300 drop-shadow-md" />
-                      </div>
-                      <div>
-                        <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-blue-200 border-b border-white/10 pb-1 inline-block">
-                          Today's Financial Insight
-                        </h3>
-                        <p className="text-lg font-bold leading-snug drop-shadow-sm">
-                          {getRandomFinancialTip()}
-                        </p>
-                      </div>
-                    </div>
-                    {/* Decorative Background Elements */}
-                    <div className="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-3xl" />
-                    <div className="absolute -left-6 -bottom-6 h-24 w-24 rounded-full bg-indigo-500/20 blur-2xl" />
-                  </div>
-                )}
-
-                {/* 브릿지 콘텐츠 (Strategy 2 - Clean Architecture Redesign) */}
-                {idx === 0 && getBridgeContent(item.typeKr) && (
-                  <div className="mb-8 relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 p-6 border border-slate-100 dark:border-slate-700 shadow-lg shadow-slate-200/50 dark:shadow-none">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
-                        <TrendingUp className="h-5 w-5" />
-                      </div>
-                      <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">
-                        <span className="text-emerald-600 dark:text-emerald-400">
-                          {item.typeKr}
-                        </span>{" "}
-                        관련 정보 도우미
-                      </h3>
-                    </div>
-                    <div className="relative pl-4 border-l-4 border-emerald-500/30 dark:border-emerald-500/50">
-                      <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-                        {getBridgeContent(item.typeKr)}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {/* 상세 금융 정보 아티클 (Strategy: Volume + H2 + Dwell Time) */}
-                {idx === 0 &&
-                  (() => {
-                    const article = getDetailedArticle(item.typeKr);
-                    return (
-                      article && (
-                        <article className="mb-8 p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700">
-                          <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 flex items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-3">
-                            <span className="text-2xl">🧐</span> {article.title}
-                          </h2>
-                          <div className="text-slate-700 dark:text-slate-300 leading-7 text-justify break-keep text-base space-y-4">
-                            {article.content.map((paragraph, index) => (
-                              <p key={index}>{paragraph}</p>
-                            ))}
-                          </div>
-                        </article>
-                      )
-                    );
-                  })()}
-
-                {/* {idx === 0 && <gyCard />} */}
               </Fragment>
             ))}
 
