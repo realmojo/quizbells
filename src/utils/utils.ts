@@ -136,7 +136,7 @@ export const quizItems = [
   {
     type: "kbank",
     typeKr: "케이뱅크",
-    title: "미션 퀴즈",
+    title: "AI 퀴즈",
     image: "/images/kbank_200.png",
     slotId: "5629572527",
   },
