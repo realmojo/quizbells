@@ -11,11 +11,7 @@ import SocialShare from "@/components/SocialShare";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { getQuizbells } from "@/utils/api";
-import {
-  CheckCircle2,
-  Lightbulb,
-  ArrowRight,
-} from "lucide-react";
+import { CheckCircle2, Lightbulb, ArrowRight } from "lucide-react";
 import { subDays } from "date-fns";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";
@@ -781,7 +777,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     </div>
                   </a>
                 )}
-
               </Fragment>
             ))}
 
@@ -795,7 +790,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
               imageUrl="https://quizbells.com/icons/og-image.png"
             />
 
-            <Adsense slotId="9099705716" format="autorelaxed" />
+            <Adsense slotId="4827796860" />
             {/* Related Quizzes */}
             <section className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
@@ -805,7 +800,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
               <QuizCardComponent viewType="image" />
             </section>
           </main>
-
         </div>
       </div>
     </>

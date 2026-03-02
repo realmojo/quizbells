@@ -166,30 +166,48 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
     "@graph": [
       {
         "@type": "FAQPage",
-        mainEntity: contents.length > 0
-          ? contents.map((quiz: any) => ({
-              "@type": "Question",
-              name: `${answerDateString} ${item.typeKr} ${item.title} ${quiz.question || "퀴즈"} 정답`,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: `정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
-              },
-            }))
-          : [{
-              "@type": "Question",
-              name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요?`,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "정답이 아직 업데이트되지 않았습니다. 곧 업데이트될 예정입니다.",
-              },
-            }],
+        mainEntity:
+          contents.length > 0
+            ? contents.map((quiz: any) => ({
+                "@type": "Question",
+                name: `${answerDateString} ${item.typeKr} ${item.title} ${quiz.question || "퀴즈"} 정답`,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: `정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
+                },
+              }))
+            : [
+                {
+                  "@type": "Question",
+                  name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요?`,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "정답이 아직 업데이트되지 않았습니다. 곧 업데이트될 예정입니다.",
+                  },
+                },
+              ],
       },
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "홈", item: "https://quizbells.com" },
-          { "@type": "ListItem", position: 2, name: `${item.typeKr} 퀴즈`, item: `https://quizbells.com/quiz/${type}/today` },
-          { "@type": "ListItem", position: 3, name: `${answerDateString} 정답`, item: `https://quizbells.com/quiz/${type}/${answerDate}/answer` },
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "홈",
+            item: "https://quizbells.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: `${item.typeKr} 퀴즈`,
+            item: `https://quizbells.com/quiz/${type}/today`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: `${answerDateString} 정답`,
+            item: `https://quizbells.com/quiz/${type}/${answerDate}/answer`,
+          },
         ],
       },
     ],
@@ -430,9 +448,24 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
             </h3>
             <div className="space-y-3">
               {[
-                { id: "3", title: "2026년 적금 금리 비교 - 은행별 최고 금리 적금 추천 총정리", category: "적금" },
-                { id: "5", title: "주택담보대출 금리 비교 - 전세자금대출 조건과 금리 총정리", category: "대출" },
-                { id: "6", title: "자동차보험료 비교 견적 - 다이렉트 보험으로 20% 절약하는 법", category: "보험" },
+                {
+                  id: "3",
+                  title:
+                    "2026년 적금 금리 비교 - 은행별 최고 금리 적금 추천 총정리",
+                  category: "적금",
+                },
+                {
+                  id: "5",
+                  title:
+                    "주택담보대출 금리 비교 - 전세자금대출 조건과 금리 총정리",
+                  category: "대출",
+                },
+                {
+                  id: "6",
+                  title:
+                    "자동차보험료 비교 견적 - 다이렉트 보험으로 20% 절약하는 법",
+                  category: "보험",
+                },
               ].map((tip) => (
                 <a
                   key={tip.id}
@@ -451,7 +484,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
             </div>
           </div>
 
-          <Adsense slotId="9099705716" format="autorelaxed" />
+          <Adsense slotId="4827796860" />
         </section>
       </div>
     </div>
