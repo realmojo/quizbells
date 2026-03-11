@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 type AdsenseProps = {
   slotId: string;
-  format?: "auto" | "autorelaxed";
+  format?: "auto" | "autorelaxed" | "multiplex";
 };
 
 export default function Adsense({ slotId, format = "auto" }: AdsenseProps) {
@@ -31,6 +31,21 @@ export default function Adsense({ slotId, format = "auto" }: AdsenseProps) {
       <div className="adsense-dev text-white bg-gray-800 p-2 min-h-[320px] mb-8 rounded">
         애드센스 {slotId}
       </div>
+    );
+  }
+
+  if (format === "multiplex") {
+    return (
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client="ca-pub-9130836798889522"
+        data-ad-slot={slotId}
+        data-matched-content-ui-type="text"
+        data-matched-content-rows-num="4"
+        data-matched-content-columns-num="1"
+        data-ad-format="autorelaxed"
+      />
     );
   }
 

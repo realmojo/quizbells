@@ -435,6 +435,8 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
             })}
           </div>
 
+          <Adsense slotId="4827796860" format="multiplex" />
+
           {/* App Open Button - 정답 아래에 배치 */}
           <div className="mb-8 px-4">
             <AppOpen type={type} />
@@ -483,8 +485,6 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
               ))}
             </div>
           </div>
-
-          <Adsense slotId="4827796860" />
         </section>
       </div>
     </div>

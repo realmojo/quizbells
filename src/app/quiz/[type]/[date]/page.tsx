@@ -790,7 +790,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
               imageUrl="https://quizbells.com/icons/og-image.png"
             />
 
-            <Adsense slotId="4827796860" />
+            <Adsense slotId="4827796860" format="multiplex" />
             {/* Related Quizzes */}
             <section className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
