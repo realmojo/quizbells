@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 type AdsenseProps = {
   slotId: string;
-  format?: "auto" | "autorelaxed" | "multiplex";
+  format?: "auto" | "autorelaxed";
 };
 
 export default function Adsense({ slotId, format = "auto" }: AdsenseProps) {
@@ -34,7 +34,7 @@ export default function Adsense({ slotId, format = "auto" }: AdsenseProps) {
     );
   }
 
-  if (format === "multiplex") {
+  if (format === "autorelaxed") {
     return (
       <ins
         className="adsbygoogle"
