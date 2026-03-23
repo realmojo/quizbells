@@ -13,6 +13,7 @@ export const quizItems = [
     title: "두근두근 1등찍기 행운퀴즈",
     image: "/images/toss_200.png",
     slotId: "6798248536",
+    searchKeywords: ["토스 1등찍기", "토스 두근두근 1등찍기 오늘", "토스 두근두근 1등찍기 오늘 정답", "토스 행운퀴즈", "토스퀴즈"],
   },
   {
     type: "cashwalk",
@@ -20,6 +21,7 @@ export const quizItems = [
     title: "돈버는퀴즈",
     image: "/images/cashwalk_200.png",
     slotId: "4172085197",
+    searchKeywords: ["캐시워크 돈버는퀴즈 정답", "캐시워크 퀴즈"],
   },
   {
     type: "shinhan",
@@ -27,6 +29,7 @@ export const quizItems = [
     title: "쏠퀴즈, 퀴즈팡팡, 출석퀴즈",
     image: "/images/shinhan_200.png",
     slotId: "5131294718",
+    searchKeywords: ["신한 쏠퀴즈 정답", "신한쏠 퀴즈팡팡", "신한 출석퀴즈"],
   },
   {
     type: "kakaobank",
@@ -34,6 +37,7 @@ export const quizItems = [
     title: "AI 이모지 퀴즈",
     image: "/images/kakaobank_200.png",
     slotId: "3818213044",
+    searchKeywords: ["사물관련이모지", "카뱅 이모지", "카카오뱅크 ai퀴즈", "카카오뱅크 ai 이모지", "카뱅 이모지 퀴즈", "ai사물관련이모지", "카카오뱅크 사물관련이모지", "카뱅 ai퀴즈"],
   },
   {
     type: "nh",
@@ -41,6 +45,7 @@ export const quizItems = [
     title: "디깅퀴즈",
     image: "/images/nh_200.png",
     slotId: "7102851930",
+    searchKeywords: ["디킹퀴즈", "디킹퀴즈정답", "디킹퀴즈 정답", "농협 디깅퀴즈", "농협 디킹퀴즈"],
   },
   {
     type: "kakaopay",
@@ -48,6 +53,7 @@ export const quizItems = [
     title: "퀴즈타임",
     image: "/images/kakaopay_200.png",
     slotId: "2505131371",
+    searchKeywords: ["카카오페이 퀴즈", "카카오페이 퀴즈타임 정답", "카페 퀴즈"],
   },
   {
     type: "bitbunny",
@@ -55,6 +61,7 @@ export const quizItems = [
     title: "퀴즈",
     image: "/images/bitbunny_200.png",
     slotId: "1192049702",
+    searchKeywords: [],
   },
   {
     type: "okcashbag",
@@ -62,6 +69,7 @@ export const quizItems = [
     title: "오퀴즈",
     image: "/images/okcashbag_200.png",
     slotId: "3728112507",
+    searchKeywords: ["오퀴즈 정답", "오케이캐시백 오퀴즈"],
   },
   {
     type: "cashdoc",
@@ -69,6 +77,7 @@ export const quizItems = [
     title: "용돈퀴즈",
     image: "/images/cashdoc_200.png",
     slotId: "8878968030",
+    searchKeywords: ["캐시닥 퀴즈", "타임스프레드 퀴즈"],
   },
   {
     type: "kbstar",
@@ -76,6 +85,7 @@ export const quizItems = [
     title: "도전미션 스타퀴즈, 퀴즈",
     image: "/images/kbstar_200.png",
     slotId: "8224361914",
+    searchKeywords: ["KB스타 퀴즈", "KBPAY 퀴즈", "KB 스타퀴즈 정답"],
   },
   {
     type: "3o3",
@@ -83,6 +93,7 @@ export const quizItems = [
     title: "퀴즈",
     image: "/images/3o3_200.png",
     slotId: "1150336034",
+    searchKeywords: ["삼쩜삼 퀴즈 정답"],
   },
   {
     type: "doctornow",
@@ -90,6 +101,7 @@ export const quizItems = [
     title: "퀴즈",
     image: "/images/doctornow_200.png",
     slotId: "2667431838",
+    searchKeywords: [],
   },
   {
     type: "mydoctor",
@@ -97,6 +109,7 @@ export const quizItems = [
     title: "건강 퀴즈",
     image: "/images/mydoctor_200.png",
     slotId: "9392622289",
+    searchKeywords: [],
   },
   {
     type: "hpoint",
@@ -104,6 +117,7 @@ export const quizItems = [
     title: "퀴즈",
     image: "/images/hpoint_200.png",
     slotId: "5598198579",
+    searchKeywords: [],
   },
   {
     type: "climate",
@@ -111,6 +125,7 @@ export const quizItems = [
     title: "퀴즈",
     image: "/images/climate_200.png",
     slotId: "8079540616",
+    searchKeywords: ["기후동행퀴즈", "기후동행 오늘의퀴즈 정답", "오늘기후행동퀴즈정답", "기후행동퀴즈", "기후동행 퀴즈 정답"],
   },
   {
     type: "skstoa",
@@ -118,6 +133,7 @@ export const quizItems = [
     title: "퀴즈타임",
     image: "/images/skstoa_200.png",
     slotId: "7374314675",
+    searchKeywords: [],
   },
   {
     type: "hanabank",
@@ -125,6 +141,7 @@ export const quizItems = [
     title: "퀴즈하나",
     image: "/images/hanabank_200.png",
     slotId: "6061233003",
+    searchKeywords: ["하나은행 퀴즈", "하나원큐 퀴즈하나 정답"],
   },
   {
     type: "auction",
@@ -132,6 +149,7 @@ export const quizItems = [
     title: "매일퀴즈",
     image: "/images/auction_200.png",
     slotId: "4748151334",
+    searchKeywords: ["옥션 매일퀴즈 정답"],
   },
   {
     type: "kbank",
@@ -139,6 +157,7 @@ export const quizItems = [
     title: "AI 퀴즈",
     image: "/images/kbank_200.png",
     slotId: "5629572527",
+    searchKeywords: ["케이뱅크 AI퀴즈 정답"],
   },
   {
     type: "monimo",
@@ -146,6 +165,7 @@ export const quizItems = [
     title: "모니스쿨 퀴즈",
     image: "/images/monimo_200.png",
     slotId: "4867186355",
+    searchKeywords: ["모니스쿨 정답", "모니모 모니스쿨", "모니모 모니스쿨 정답"],
   },
   {
     type: "buzzvil",
@@ -153,6 +173,7 @@ export const quizItems = [
     title: "퀴즈",
     image: "/images/buzzvil_200.png",
     slotId: "6068072405",
+    searchKeywords: [],
   },
 ];
 

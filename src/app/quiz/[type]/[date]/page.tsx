@@ -65,13 +65,16 @@ export async function generateMetadata({
 
   const typeName = item?.typeKr || type;
   const typeTitle = item?.title || "";
+  const searchKeywords = item?.searchKeywords || [];
   // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
   // 네이버 모바일 검색 가독성 최적화
-  // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
   const fullTitle = `${typeName} ${typeTitle} 오늘 정답 ${shortDateLabel} | 퀴즈벨`;
 
-  // 설명문: 핵심 키워드 전진 배치
-  const description = `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
+  // 설명문: 핵심 검색 키워드를 자연스럽게 포함
+  const topSearchKeyword = searchKeywords.length > 0 ? searchKeywords[0] : "";
+  const description = topSearchKeyword
+    ? `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. ${topSearchKeyword} 정답을 퀴즈벨에서 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`
+    : `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
 
   return {
     title: fullTitle,
@@ -85,6 +88,7 @@ export async function generateMetadata({
       "앱테크",
       typeName,
       typeTitle,
+      ...searchKeywords,
     ],
     openGraph: {
       title: fullTitle,
@@ -98,7 +102,7 @@ export async function generateMetadata({
       publishedTime: answerDate,
       authors: ["퀴즈벨"],
       section: "앱테크/재테크",
-      tags: [typeName, "앱테크", "퀴즈정답"],
+      tags: [typeName, "앱테크", "퀴즈정답", ...searchKeywords],
     },
     twitter: {
       card: "summary_large_image",
@@ -386,13 +390,15 @@ export default async function QuizPage({ params }: QuizPageParams) {
   // 현재 페이지 URL
   const currentUrl = `https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`;
 
-  // 키워드 생성
+  // 키워드 생성 (searchKeywords 포함)
+  const searchKeywords = item.searchKeywords || [];
   const keywords = [
     `${item.typeKr} 정답`,
     `${item.typeKr} ${item.title} 정답`,
     `${shortDateLabel} ${item.typeKr}`,
     `${item.typeKr} 퀴즈`,
     `${item.typeKr} 퀴즈 정답`,
+    ...searchKeywords,
     "앱테크 퀴즈",
     "퀴즈 정답",
     "실시간 정답",
@@ -403,11 +409,17 @@ export default async function QuizPage({ params }: QuizPageParams) {
   // articleBody 생성 (퀴즈 내용 포함)
   const articleBodyText = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. ${contents.length > 0 ? `오늘의 퀴즈 정답은 ${contents.map((q: any) => q.answer).join(", ")} 등이 있습니다.` : ""} 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
 
+  // 검색 키워드 기반 대체 헤드라인 (검색엔진이 키워드 매칭에 활용)
+  const alternativeHeadlines = searchKeywords.length > 0
+    ? searchKeywords.slice(0, 3).map((kw: string) => `${kw} ${shortDateLabel} 정답`)
+    : [];
+
   const articleJsonLd = {
     "@type": "Article",
     "@id": currentUrl,
     url: currentUrl,
     headline: h1Title,
+    ...(alternativeHeadlines.length > 0 && { alternativeHeadline: alternativeHeadlines.join(" | ") }),
     description: firstDescription,
     inLanguage: "ko",
     isAccessibleForFree: true,
