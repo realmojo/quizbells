@@ -16,7 +16,8 @@
       "mcp__supabase__apply_migration",
       "Bash(npm run build:*)",
       "WebFetch(domain:support.google.com)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(node:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -10,6 +10,7 @@
 !.yarn/releases
 !.yarn/versions
 /crawl/*.json
+/scripts/*-credentials.json
 # testing
 /coverage
 
