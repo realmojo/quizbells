@@ -76,26 +76,23 @@ export async function generateMetadata({
       siteName: "퀴즈벨",
       type: "website",
       locale: "ko_KR",
-      images: [`https://quizbells.com/images/${type}.png`],
+      images: [`https://quizbells.com/images/${type}.webp`],
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [`https://quizbells.com/images/${type}.png`],
+      images: [`https://quizbells.com/images/${type}.webp`],
     },
     alternates: {
-      canonical: `https://quizbells.com/quiz/${type}/${answerDate}/answer`,
+      canonical: `https://quizbells.com/quiz/${type}/${answerDate}`,
     },
     robots: {
-      index: true,
+      index: false,
       follow: true,
       googleBot: {
-        index: true,
+        index: false,
         follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
       },
     },
   };

@@ -17,7 +17,8 @@
       "Bash(npm run build:*)",
       "WebFetch(domain:support.google.com)",
       "Bash(npm run lint)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(npx next:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

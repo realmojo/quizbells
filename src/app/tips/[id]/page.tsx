@@ -8,7 +8,6 @@ import {
   Home,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Script from "next/script";
 
 export const runtime = "edge";
 
@@ -111,8 +110,7 @@ export default async function TipDetailPage({
 
   return (
     <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-slate-950 dark:via-orange-950 dark:to-amber-950">
-      <Script
-        id={`structured-data-tip-${tip.id}`}
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -135,6 +133,12 @@ export default async function TipDetailPage({
               },
             },
             mainEntityOfPage: `https://quizbells.com/tips/${tip.id}`,
+            image: {
+              "@type": "ImageObject",
+              url: "https://quizbells.com/images/quizbells_og_1200.webp",
+              width: 1200,
+              height: 630,
+            },
             articleSection: tip.category,
             keywords: tip.keywords?.join(", "),
           }),

@@ -14,7 +14,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Image
-                src="/images/quizbells_logo.png"
+                src="/images/quizbells_logo.webp"
                 alt="Quizbells Logo"
                 width={40}
                 height={40}

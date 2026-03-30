@@ -50,7 +50,7 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
           content: {
             title,
             description: title,
-            imageUrl: imageUrl || "https://quizbells.com/icons/og-image.png",
+            imageUrl: imageUrl || "https://quizbells.com/icons/og-image.webp",
             link: { mobileWebUrl: url, webUrl: url },
           },
           buttons: [
@@ -99,7 +99,7 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
           aria-label="X(트위터) 공유"
         >
           <Image
-            src="/images/x.png"
+            src="/images/x.webp"
             alt="X share"
             width={24}
             height={24}
@@ -113,7 +113,7 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
           aria-label="페이스북 공유"
         >
           <Image
-            src="/images/facebook.png"
+            src="/images/facebook.webp"
             alt="Facebook share"
             width={60} // 원본 이미지가 꽉 차는 형태라면 크기 조절 필요. 여기선 아이콘 느낌으로.
             height={60} // 원본 이미지가 아이콘 자체라면 w-full h-full object-cover 등으로 처리 가능.
@@ -127,7 +127,7 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
           aria-label="카카오톡 공유"
         >
           <Image
-            src="/images/kakao.png"
+            src="/images/kakao.webp"
             alt="Kakao share"
             width={60}
             height={60}
@@ -141,7 +141,7 @@ export default function SocialShare({ title, url, imageUrl }: ShareProps) {
           aria-label="링크 복사"
         >
           <Image
-            src="/images/link.png"
+            src="/images/link.webp"
             alt="Copy Link"
             width={28}
             height={28}

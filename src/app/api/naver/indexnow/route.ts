@@ -15,29 +15,55 @@ export async function GET(request: NextRequest) {
 
   const urlList = [`https://${HOST}/quiz/${encodeURIComponent(type)}/today`];
 
-  // POST 방식으로 일괄 제출 (네이버 권장)
-  const response = await fetch("https://searchadvisor.naver.com/indexnow", {
-    method: "POST",
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify({
-      host: HOST,
-      key: KEY,
-      keyLocation: `https://${HOST}/${KEY}.txt`,
-      urlList,
-    }),
+  const payload = JSON.stringify({
+    host: HOST,
+    key: KEY,
+    keyLocation: `https://${HOST}/${KEY}.txt`,
+    urlList,
   });
 
-  if (response.ok) {
+  const headers = { "Content-Type": "application/json; charset=utf-8" };
+
+  // Naver와 Bing(IndexNow)에 병렬로 전송. 각각 독립적으로 처리.
+  const [naverResult, bingResult] = await Promise.allSettled([
+    fetch("https://searchadvisor.naver.com/indexnow", {
+      method: "POST",
+      headers,
+      body: payload,
+    }),
+    fetch("https://api.indexnow.org/indexnow", {
+      method: "POST",
+      headers,
+      body: payload,
+    }),
+  ]);
+
+  const naverOk = naverResult.status === "fulfilled" && naverResult.value.ok;
+  const bingOk = bingResult.status === "fulfilled" && bingResult.value.ok;
+
+  if (naverOk) {
     return NextResponse.json({
       status: "ok",
       message: "IndexNow request sent successfully",
       urlList,
+      naver: "ok",
+      bing: bingOk ? "ok" : "failed",
     });
   } else {
-    const text = await response.text();
+    const naverDetail =
+      naverResult.status === "fulfilled"
+        ? await naverResult.value.text()
+        : naverResult.reason?.message || "Network error";
     return NextResponse.json(
-      { message: "Failed to send IndexNow request", detail: text },
-      { status: response.status }
+      {
+        message: "Failed to send IndexNow request",
+        detail: naverDetail,
+        bing: bingOk ? "ok" : "failed",
+      },
+      {
+        status:
+          naverResult.status === "fulfilled" ? naverResult.value.status : 500,
+      }
     );
   }
 }

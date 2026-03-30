@@ -85,7 +85,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://quizbells.com/images/quizbells_og_1200.png",
+        url: "https://quizbells.com/images/quizbells_og_1200.webp",
         width: 1200,
         height: 630,
         alt: "퀴즈벨 - 앱테크 퀴즈 정답 알림 서비스",
@@ -97,7 +97,7 @@ export const metadata: Metadata = {
     title: "퀴즈벨 - 오늘의 앱테크 퀴즈 정답 모음",
     description:
       "신한쏠퀴즈, 캐시워크, 토스 행운퀴즈 등 퀴즈 정답을 실시간 업데이트! 알림으로 포인트 적립을 놓치지 마세요.",
-    images: ["https://quizbells.com/images/quizbells_og_1200.png"],
+    images: ["https://quizbells.com/images/quizbells_og_1200.webp"],
   },
   alternates: {
     canonical: "https://quizbells.com",
@@ -127,7 +127,7 @@ export default async function RootLayout({
           }}
         />
         <Script
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           id="google-tag-manager"
           dangerouslySetInnerHTML={{
             __html:
@@ -136,11 +136,11 @@ export default async function RootLayout({
         />
         {/* Google Analytics */}
         <Script
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-ZPZFXZ11GR"
         />
         <Script
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           id="google-analytics"
           dangerouslySetInnerHTML={{
             __html: `
@@ -162,14 +162,29 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
+              "@id": "https://quizbells.com/#organization",
               name: "퀴즈벨",
               alternateName: "QUIZBELLS",
               url: "https://quizbells.com",
-              logo: "https://quizbells.com/icons/android-icon-192x192.png",
+              description:
+                "매일 업데이트되는 앱테크 퀴즈 정답 알림 서비스. 캐시워크, 토스, 신한쏠 등 21개 이상 인기 앱의 퀴즈 정답을 실시간으로 제공합니다.",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://quizbells.com/icons/android-icon-192x192.png",
+                width: 192,
+                height: 192,
+              },
               sameAs: [
                 "https://play.google.com/store/apps/details?id=com.mojoday.quizbells",
                 "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703",
               ],
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer service",
+                email: "quizbells.official@gmail.com",
+                url: "https://quizbells.com/contact",
+                availableLanguage: "Korean",
+              },
             }),
           }}
         />
@@ -202,9 +217,34 @@ export default async function RootLayout({
                 name: "QUIZBELLS",
                 url: "https://quizbells.com",
               },
+            }),
+          }}
+        />
+        <script
+          id="structured-data-website"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": "https://quizbells.com/#website",
+              name: "퀴즈벨",
+              alternateName: "QUIZBELLS",
+              url: "https://quizbells.com",
+              inLanguage: "ko",
+              description:
+                "매일 업데이트되는 앱테크 퀴즈 정답 모음. 신한쏠퀴즈, 캐시워크, 토스 행운퀴즈 등 인기 앱의 퀴즈 정답을 실시간으로 제공합니다.",
+              publisher: {
+                "@type": "Organization",
+                "@id": "https://quizbells.com/#organization",
+              },
               potentialAction: {
                 "@type": "SearchAction",
-                target: "https://quizbells.com/quiz?q={search_term_string}",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate:
+                    "https://quizbells.com/quiz?q={search_term_string}",
+                },
                 "query-input": "required name=search_term_string",
               },
             }),

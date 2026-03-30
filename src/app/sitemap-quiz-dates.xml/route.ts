@@ -6,22 +6,22 @@ export const runtime = "edge";
 const BASE_URL = "https://quizbells.com";
 const QUIZ_TYPES = quizItems.map((item) => item.type);
 
-// 최근 30일 날짜 리스트 생성 (오늘까지만, 내일 미래 날짜 제외)
-function generateDatesLastMonth(): string[] {
+// 최근 7일 날짜 리스트 생성 (오늘 제외 — today URL은 sitemap-quiz-today.xml에서 관리)
+function generateRecentDates(): string[] {
   const dates: string[] = [];
   const now = new Date();
   // 한국 시간(UTC+9) 기준 오늘
   const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
   const today = new Date(utcTime + 9 * 60 * 60 * 1000);
 
-  const startDate = new Date(today);
-  startDate.setDate(startDate.getDate() - 30);
-
-  for (let d = new Date(startDate); d <= today; d.setDate(d.getDate() + 1)) {
+  // 어제부터 7일 전까지 (오늘은 sitemap-quiz-today.xml에서 /today URL로 관리)
+  for (let i = 1; i <= 7; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
     dates.push(d.toISOString().split("T")[0]);
   }
 
-  return dates.reverse();
+  return dates;
 }
 
 // W3C Datetime 형식으로 변환
@@ -44,7 +44,7 @@ export async function GET() {
     changefreq: string;
   }[] = [];
 
-  const recentDates = generateDatesLastMonth();
+  const recentDates = generateRecentDates();
 
   // Supabase에서 각 날짜별 퀴즈의 업데이트 시간 조회
   let updatedMap = new Map<string, string>(); // key: "type-date", value: updated time

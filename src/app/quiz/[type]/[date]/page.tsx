@@ -112,7 +112,7 @@ export async function generateMetadata({
     },
     alternates: {
       canonical:
-        date === "today"
+        date === "today" || answerDate === format(getKoreaDate(), "yyyy-MM-dd")
           ? `https://quizbells.com/quiz/${type}/today`
           : `https://quizbells.com/quiz/${type}/${answerDate}`,
     },
@@ -467,7 +467,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     // Image 정보 보강 (검색 결과 썸네일 노출 확률 향상)
     image: {
       "@type": "ImageObject",
-      url: `https://quizbells.com/images/${type}.png`,
+      url: `https://quizbells.com/images/${type}.webp`,
       width: 1200,
       height: 630,
       alt: `${item.typeKr} ${item.title} 퀴즈 정답`,

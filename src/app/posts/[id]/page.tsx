@@ -1,5 +1,4 @@
 import { supabaseAdmin } from "@/lib/supabase";
-import Script from "next/script";
 import { notFound } from "next/navigation";
 
 export const runtime = "edge";
@@ -12,6 +11,8 @@ const CATEGORY_COLORS: Record<string, string> = {
   건강: "bg-rose-50 text-rose-600",
   쇼핑: "bg-amber-50 text-amber-600",
 };
+
+const YMYL_CATEGORIES = new Set(["금융", "세금", "정부지원", "건강"]);
 
 async function getPostById(id: string) {
   if (!supabaseAdmin) return null;
@@ -138,6 +139,12 @@ export default async function PostDetailPage({
       "@type": "WebPage",
       "@id": `https://quizbells.com/posts/${post.id}`,
     },
+    image: {
+      "@type": "ImageObject",
+      url: post.thumbnail || post.image || "https://quizbells.com/images/quizbells_og_1200.webp",
+      width: 1200,
+      height: 630,
+    },
     articleSection: post.category,
     keywords: post.keywords?.join(", "),
   };
@@ -155,13 +162,11 @@ export default async function PostDetailPage({
   return (
     <div className="min-h-screen bg-white">
       {/* JSON-LD */}
-      <Script
-        id={`article-jsonld-${post.id}`}
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      <Script
-        id={`breadcrumb-jsonld-${post.id}`}
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
@@ -217,6 +222,19 @@ export default async function PostDetailPage({
               </div>
             )}
           </header>
+
+          {/* YMYL 면책 조항 */}
+          {YMYL_CATEGORIES.has(post.category) && (
+            <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 mb-8 text-[13px] text-amber-800 leading-relaxed">
+              <strong>안내:</strong> 이 콘텐츠는 정보 제공 목적으로 작성되었으며, 전문적인{" "}
+              {post.category === "세금" || post.category === "금융"
+                ? "세무·재무"
+                : post.category === "건강"
+                  ? "의료"
+                  : "법률"}{" "}
+              조언이 아닙니다. 구체적인 상황은 관련 전문가에게 상담하시기 바랍니다.
+            </div>
+          )}
 
           {/* 구분선 */}
           <hr className="border-slate-100 mb-8" />

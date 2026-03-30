@@ -1,0 +1,37 @@
+# QuizBells (퀴즈벨)
+
+> 매일 업데이트되는 앱테크 퀴즈 정답 모음 서비스. 토스, 캐시워크, 신한쏠, 카카오뱅크, NH뱅크 등 21개 이상의 퀴즈 유형을 실시간으로 제공합니다.
+
+## 오늘의 퀴즈 정답
+- [토스 행운퀴즈 정답](https://quizbells.com/quiz/toss/today): 토스 두근두근 1등찍기 행운퀴즈 오늘의 정답
+- [캐시워크 퀴즈 정답](https://quizbells.com/quiz/cashwalk/today): 캐시워크 돈버는퀴즈 오늘의 정답
+- [신한쏠 퀴즈 정답](https://quizbells.com/quiz/shinhan/today): 신한 SOL페이 쏠퀴즈, 팡팡퀴즈, 출석퀴즈 정답
+- [카카오뱅크 퀴즈 정답](https://quizbells.com/quiz/kakaobank/today): 카카오뱅크 AI 이모티콘 퀴즈 정답
+- [NH뱅크 퀴즈 정답](https://quizbells.com/quiz/nh/today): NH올원뱅크 올원퀴즈 정답
+- [카카오페이 퀴즈 정답](https://quizbells.com/quiz/kakaopay/today): 카카오페이 퀴즈 정답
+- [KB스타 퀴즈 정답](https://quizbells.com/quiz/kbstar/today): KB스타뱅킹 오늘의 퀴즈 정답
+- [하나은행 퀴즈 정답](https://quizbells.com/quiz/hanabank/today): 하나은행 퀴즈 정답
+- [케이뱅크 퀴즈 정답](https://quizbells.com/quiz/kbank/today): 케이뱅크 퀴즈 정답
+- [비트버니 퀴즈 정답](https://quizbells.com/quiz/bitbunny/today): 비트버니 퀴즈 정답
+- [H포인트 퀴즈 정답](https://quizbells.com/quiz/hpoint/today): H.Point 퀴즈 정답
+- [버즈빌 퀴즈 정답](https://quizbells.com/quiz/buzzvil/today): 버즈빌 퀴즈 정답
+- [모니모 퀴즈 정답](https://quizbells.com/quiz/monimo/today): 모니모 퀴즈 정답
+- [OK캐쉬백 퀴즈 정답](https://quizbells.com/quiz/okcashbag/today): OK캐쉬백 오퀴즈 정답
+- [캐시닥 퀴즈 정답](https://quizbells.com/quiz/cashdoc/today): 캐시닥 퀴즈 정답
+- [삼쩜삼 퀴즈 정답](https://quizbells.com/quiz/3o3/today): 삼쩜삼 퀴즈 정답
+- [닥터나우 퀴즈 정답](https://quizbells.com/quiz/doctornow/today): 닥터나우 퀴즈 정답
+- [나의닥터 퀴즈 정답](https://quizbells.com/quiz/mydoctor/today): 나의닥터 퀴즈 정답
+- [기후동행 퀴즈 정답](https://quizbells.com/quiz/climate/today): 기후동행카드 퀴즈 정답
+- [SK스토아 퀴즈 정답](https://quizbells.com/quiz/skstoa/today): SK스토아 퀴즈 정답
+- [옥션 퀴즈 정답](https://quizbells.com/quiz/auction/today): 옥션 퀴즈 정답
+
+## 앱테크 가이드
+- [걷기앱 비교](https://quizbells.com/posts/44): 캐시워크 vs 토스만보기 vs 캐시슬라이드 상세 비교
+- [6개월 앱테크 수익 보고서](https://quizbells.com/posts/50): 실제 앱테크 6개월 수익 데이터
+- [프리랜서 종합소득세 가이드](https://quizbells.com/posts/23): 프리랜서 종합소득세 신고 가이드
+
+## 서비스 정보
+- [서비스 소개](https://quizbells.com/about): 퀴즈벨 서비스 소개
+- [자주 묻는 질문](https://quizbells.com/faq): FAQ
+- [커뮤니티](https://quizbells.com/posts): 앱테크 관련 블로그 글 모음
+- [앱테크 꿀팁](https://quizbells.com/tips): 앱테크 팁과 전략

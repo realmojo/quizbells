@@ -13,7 +13,7 @@ export default function ImageComponents({
 }) {
   return (
     <Image
-      src={`/images/${type}.png`}
+      src={`/images/${type}.webp`}
       alt={`${answerDate ? answerDate : ""} ${type} 퀴즈 이미지`}
       width={width}
       height={height}
