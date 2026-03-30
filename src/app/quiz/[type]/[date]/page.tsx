@@ -68,7 +68,7 @@ export async function generateMetadata({
   const searchKeywords = item?.searchKeywords || [];
   // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
   // 네이버 모바일 검색 가독성 최적화
-  const fullTitle = `${typeName} ${typeTitle} 오늘 정답 ${shortDateLabel} | 퀴즈벨`;
+  const fullTitle = `${typeName} ${typeTitle} ${shortDateLabel} 오늘 정답 | 퀴즈벨`;
 
   // 설명문: 핵심 검색 키워드를 자연스럽게 포함
   const topSearchKeyword = searchKeywords.length > 0 ? searchKeywords[0] : "";
@@ -193,7 +193,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
     })();
   }
 
-  const h1Title = `${item.typeKr} ${item.title} 오늘 정답 ${shortDateLabel}`;
+  const h1Title = `${item.typeKr} ${item.title} ${shortDateLabel} 오늘 정답`;
   const firstDescription = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
 
   let quizItem = null;
