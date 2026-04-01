@@ -15,6 +15,7 @@ import Script from "next/script";
 import SendAuthToSW from "@/components/SendAuthToSW";
 import ForegroundNotification from "@/components/ForegroundNotification";
 import AlarmSetting from "@/components/AlarmSetting";
+import BfcacheRestore from "@/components/BfcacheRestore";
 import { ReactNode } from "react";
 import { GoogleAdSense } from "@/components/AdsenseInit";
 export const metadata: Metadata = {
@@ -273,6 +274,7 @@ export default async function RootLayout({
         <RegisterServiceWorker />
         <SendAuthToSW />
         <AlarmSetting />
+        <BfcacheRestore />
       </body>
     </html>
   );

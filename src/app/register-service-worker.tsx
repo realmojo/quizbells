@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { Workbox } from "workbox-window"; // ✅ npm 설치된 모듈 import
+import { Workbox } from "workbox-window";
+import { toast } from "sonner";
 
 export default function RegisterServiceWorker() {
   useEffect(() => {
@@ -13,18 +14,25 @@ export default function RegisterServiceWorker() {
     const SW_URL = `/firebase-messaging-sw.js?v=${version}`;
     localStorage.setItem("quizbell_sw_version", version);
 
+    let wb: Workbox | null = null;
+
     const registerNewSW = () => {
-      const wb = new Workbox(SW_URL);
+      wb = new Workbox(SW_URL);
 
       wb.addEventListener("waiting", () => {
-        console.log("🆕 새로운 SW가 waiting 상태입니다. 강제 활성화 요청");
-
-        wb.addEventListener("controlling", () => {
-          console.log("✅ 새로운 SW가 페이지를 제어함 → 새로고침");
-          window.location.reload();
+        toast("새 버전이 있습니다", {
+          action: {
+            label: "업데이트",
+            onClick: () => {
+              wb?.messageSkipWaiting();
+            },
+          },
+          duration: Infinity,
         });
+      });
 
-        wb.messageSkipWaiting();
+      wb.addEventListener("controlling", () => {
+        window.location.reload();
       });
 
       wb.addEventListener("activated", (event) => {
@@ -44,24 +52,24 @@ export default function RegisterServiceWorker() {
         });
     };
 
-    // 👉 업데이트 되면 기존에 등록된 firebase-messaging-sw.js 제거
     if (currentVersion !== version) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
         const deletionPromises = registrations.map((reg) => {
           if (reg.active?.scriptURL.includes("firebase-messaging-sw.js")) {
-            console.log("🧹 기존 firebase-messaging 서비스워커 제거 중...");
             return reg.unregister();
           }
           return Promise.resolve();
         });
 
-        // 기존 삭제 후 새로 등록
         Promise.all(deletionPromises).then(() => {
-          console.log("✅ 기존 서비스워커 정리 완료. 새로 등록 시작...");
-          registerNewSW(); // 신규 SW 등록
+          registerNewSW();
         });
       });
     }
+
+    return () => {
+      wb = null;
+    };
   }, []);
 
   return null;

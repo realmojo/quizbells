@@ -1,7 +1,7 @@
 // ✅ 설정 조회
 export const getSettings = async (userId: string): Promise<any | null> => {
   const res = await fetch(`/api/users?userId=${userId}`, {
-    cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+    next: { revalidate: 0 }, // ← SSR 시 실시간 데이터 원할 경우
   });
 
   if (!res.ok) return null;
@@ -43,7 +43,7 @@ export const getQuizbells = async (
     const url = `${baseUrl}/api/quizbells?type=${type}&answerDate=${answerDate}`;
 
     const res = await fetch(url, {
-      cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+      next: { revalidate: 0 }, // ← SSR 시 실시간 데이터 원할 경우
     });
 
     if (!res.ok) {
@@ -74,7 +74,7 @@ export const getTodayQuizbells = async (
     const url = `${baseUrl}/api/quizbells/today?answerDate=${answerDate}${isNew ? "&isNew=true" : ""}`;
 
     const res = await fetch(url, {
-      cache: "no-store", // ← SSR 시 실시간 데이터 원할 경우
+      next: { revalidate: 0 }, // ← SSR 시 실시간 데이터 원할 경우
     });
 
     if (!res.ok) {
@@ -140,7 +140,7 @@ export const getWeeklyQuizbells = async (
     const url = `${baseUrl}/api/quizbells/weekly?type=${type}${baseDate ? `&baseDate=${baseDate}` : ""}`;
 
     const res = await fetch(url, {
-      cache: "no-store",
+      next: { revalidate: 0 },
     });
 
     if (!res.ok) {
@@ -169,7 +169,7 @@ export const getMonthlyQuizbells = async (
     const url = `${baseUrl}/api/quizbells/monthly?type=${type}${baseDate ? `&baseDate=${baseDate}` : ""}`;
 
     const res = await fetch(url, {
-      cache: "no-store",
+      next: { revalidate: 0 },
     });
 
     if (!res.ok) {

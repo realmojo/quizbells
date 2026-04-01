@@ -11,6 +11,21 @@ const nextConfig: NextConfig = {
   // Cloudflare Pages를 위한 추가 설정
   // API Routes가 있으므로 output: 'export'는 사용하지 않습니다
   // Cloudflare Pages가 자동으로 Edge Functions로 변환합니다
+
+  // bfcache 호환 헤더: no-store 대신 no-cache 사용
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "private, no-cache, max-age=0, must-revalidate",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
