@@ -89,6 +89,12 @@ export async function GET() {
           priority: "1.0",
           changefreq: "hourly",
         });
+        urls.push({
+          loc: `${BASE_URL}/quiz/${type}/today/answer`,
+          lastmod: todayLastmod,
+          priority: "0.9",
+          changefreq: "hourly",
+        });
       }
     } catch (error) {
       console.error("Sitemap today 경로 생성 오류:", error);
@@ -100,6 +106,12 @@ export async function GET() {
           priority: "1.0",
           changefreq: "hourly",
         });
+        urls.push({
+          loc: `${BASE_URL}/quiz/${type}/today/answer`,
+          lastmod: today,
+          priority: "0.9",
+          changefreq: "hourly",
+        });
       }
     }
   } else {
@@ -109,6 +121,12 @@ export async function GET() {
         loc: `${BASE_URL}/quiz/${type}/today`,
         lastmod: today,
         priority: "1.0",
+        changefreq: "hourly",
+      });
+      urls.push({
+        loc: `${BASE_URL}/quiz/${type}/today/answer`,
+        lastmod: today,
+        priority: "0.9",
         changefreq: "hourly",
       });
     }

@@ -55,6 +55,9 @@ export async function generateMetadata({
   const fullTitle = `${typeName} ${typeTitle} ${dateLabel} 정답 확인 | 퀴즈벨`;
   const description = `${typeName} ${typeTitle} ${dateLabel} 기준 정답을 확인하고, 앱테크 리워드를 적립해 보세요.`;
 
+  // canonical과 og.url을 동일하게 맞춤 (구글 중복 판별 혼란 방지)
+  const canonicalUrl = `https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}/answer`;
+
   return {
     title: fullTitle,
     description,
@@ -72,7 +75,7 @@ export async function generateMetadata({
     openGraph: {
       title: fullTitle,
       description,
-      url: `https://quizbells.com/quiz/${type}/${answerDate}/answer`,
+      url: canonicalUrl,
       siteName: "퀴즈벨",
       type: "website",
       locale: "ko_KR",
@@ -85,14 +88,17 @@ export async function generateMetadata({
       images: [`https://quizbells.com/images/${type}.webp`],
     },
     alternates: {
-      canonical: `https://quizbells.com/quiz/${type}/${answerDate}`,
+      canonical: canonicalUrl,
     },
     robots: {
-      index: false,
+      index: true,
       follow: true,
       googleBot: {
-        index: false,
+        index: true,
         follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
       },
     },
   };

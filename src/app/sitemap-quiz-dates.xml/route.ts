@@ -97,6 +97,12 @@ export async function GET() {
         priority: "0.7",
         changefreq: "daily",
       });
+      urls.push({
+        loc: `${BASE_URL}/quiz/${type}/${date}/answer`,
+        lastmod,
+        priority: "0.6",
+        changefreq: "daily",
+      });
     }
   }
 

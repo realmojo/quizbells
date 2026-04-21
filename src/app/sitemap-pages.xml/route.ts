@@ -2,16 +2,17 @@ export const runtime = "edge";
 
 const BASE_URL = "https://quizbells.com";
 
-// 정적 페이지 목록 — lastmod는 실제 변경 주기에 맞게 고정
+// 정적 페이지 목록
+// lastmod가 null이면 요청 시점의 오늘 날짜로 대체됨
+// 고정값은 실제로 해당 페이지가 최근에 수정된 날짜를 반영해야 함
 const staticPages = [
-  { path: "/", priority: "1.0", changefreq: "daily", lastmod: null },      // 매일 변경
-  // /quiz는 /quiz/${type}/today로 redirect만 하는 페이지라 제외
-  { path: "/posts", priority: "0.8", changefreq: "weekly", lastmod: null }, // 콘텐츠 추가 시
-  { path: "/tips", priority: "0.7", changefreq: "monthly", lastmod: "2025-06-01" },
-  { path: "/faq", priority: "0.6", changefreq: "monthly", lastmod: "2025-01-01" },
-  { path: "/about", priority: "0.5", changefreq: "monthly", lastmod: "2025-01-01" },
-  { path: "/privacy", priority: "0.3", changefreq: "yearly", lastmod: "2025-01-01" },
-  { path: "/terms", priority: "0.3", changefreq: "yearly", lastmod: "2025-01-01" },
+  { path: "/", priority: "1.0", changefreq: "daily", lastmod: null },
+  { path: "/posts", priority: "0.8", changefreq: "weekly", lastmod: null },
+  { path: "/tips", priority: "0.7", changefreq: "monthly", lastmod: null },
+  { path: "/faq", priority: "0.6", changefreq: "monthly", lastmod: null },
+  { path: "/about", priority: "0.5", changefreq: "monthly", lastmod: null },
+  { path: "/privacy", priority: "0.3", changefreq: "yearly", lastmod: null },
+  { path: "/terms", priority: "0.3", changefreq: "yearly", lastmod: null },
 ];
 
 // 한국 시간 기준 오늘 날짜

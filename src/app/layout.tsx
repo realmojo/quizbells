@@ -19,10 +19,9 @@ import BfcacheRestore from "@/components/BfcacheRestore";
 import { ReactNode } from "react";
 import { GoogleAdSense } from "@/components/AdsenseInit";
 export const metadata: Metadata = {
-  title:
-    "퀴즈벨 - 오늘의 앱테크 퀴즈 정답 모음 | 신한쏠, 캐시워크, 토스 퀴즈 정답",
+  title: "퀴즈벨 - 오늘의 앱테크 퀴즈 정답 모음",
   description:
-    "매일 업데이트되는 앱테크 퀴즈 정답! 신한쏠퀴즈, 캐시워크, 토스 행운퀴즈, 캐시닥, 오케이캐시백 등 인기 앱의 퀴즈 정답을 실시간으로 확인하세요. 퀴즈 정답 푸시 알림으로 포인트 적립을 놓치지 마세요!",
+    "신한쏠퀴즈, 캐시워크, 토스 행운퀴즈 등 인기 앱테크 퀴즈 정답을 매일 실시간 업데이트. 퀴즈벨에서 확인하고 포인트 적립하세요.",
   keywords: [
     "퀴즈벨",
     "QUIZBELLS",
@@ -238,15 +237,6 @@ export default async function RootLayout({
               publisher: {
                 "@type": "Organization",
                 "@id": "https://quizbells.com/#organization",
-              },
-              potentialAction: {
-                "@type": "SearchAction",
-                target: {
-                  "@type": "EntryPoint",
-                  urlTemplate:
-                    "https://quizbells.com/quiz?q={search_term_string}",
-                },
-                "query-input": "required name=search_term_string",
               },
             }),
           }}

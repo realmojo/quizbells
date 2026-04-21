@@ -8,7 +8,6 @@ import { useAppStore } from "@/store/useAppStore";
 import { useEffect, useState } from "react";
 import { getTodayQuizbells } from "@/utils/api";
 import { sortQuizzesByVisitHistory } from "@/utils/visitHistory";
-import { Skeleton } from "./ui/skeleton";
 
 interface QuizCardComponentProps {
   viewType?: "grid" | "list" | "image";
@@ -26,10 +25,13 @@ export default function QuizCardComponent({
   const [hasAnswers, setHasAnswers] = useState<Record<string, boolean>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [hiddenBadges, setHiddenBadges] = useState<Set<string>>(new Set());
-  // 정렬된 퀴즈 목록 (정렬 완료 후에만 설정)
-  const [sortedQuizItems, setSortedQuizItems] = useState<
-    typeof quizItems | null
-  >(null);
+  // 정렬된 퀴즈 목록
+  // SSR에서는 기본 quizItems 순서로 내부 링크가 초기 HTML에 포함되어야
+  // 구글봇이 내부 링크를 따라 하위 퀴즈 페이지를 발견할 수 있음
+  // 클라이언트에서 방문 이력 기반 정렬로 덮어씀
+  const [sortedQuizItems, setSortedQuizItems] = useState<typeof quizItems>(
+    quizItems,
+  );
 
   const STORAGE_KEY = "hideQuizBadgeDate";
 
@@ -131,68 +133,6 @@ export default function QuizCardComponent({
     }
     // 페이지 이동은 정상적으로 진행됨
   };
-
-  // 정렬이 완료될 때까지 로딩 표시
-  if (sortedQuizItems === null) {
-    if (viewType === "image") {
-      return (
-        <div className="grid grid-cols-3 gap-4">
-          {quizItems.map((quiz) => (
-            <Card
-              key={quiz.type}
-              className="border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm overflow-hidden rounded-2xl ring-1 ring-slate-900/5 dark:ring-white/10"
-            >
-              <CardContent className="p-0">
-                <div className="w-full aspect-square relative overflow-hidden">
-                  <Skeleton className="w-full h-full" />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      );
-    }
-
-    return viewType === "grid" ? (
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {quizItems.map((quiz) => (
-          <Card
-            key={quiz.type}
-            className="h-full border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm overflow-hidden rounded-2xl ring-1 ring-slate-900/5 dark:ring-white/10"
-          >
-            <CardContent className="p-0">
-              <div className="w-full aspect-square relative overflow-hidden">
-                <Skeleton className="w-full h-full" />
-              </div>
-              <div className="p-4">
-                <Skeleton className="h-5 w-3/4 mb-2" />
-                <Skeleton className="h-4 w-1/2" />
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    ) : (
-      <div className="flex flex-col space-y-4">
-        {quizItems.map((quiz) => (
-          <Card
-            key={quiz.type}
-            className="border-0 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-sm overflow-hidden rounded-xl ring-1 ring-slate-900/5 dark:ring-white/10"
-          >
-            <CardContent className="flex p-0">
-              <div className="relative w-24 h-24 flex-shrink-0">
-                <Skeleton className="w-full h-full" />
-              </div>
-              <div className="flex flex-col justify-center p-4 flex-1">
-                <Skeleton className="h-6 w-3/4 mb-2" />
-                <Skeleton className="h-4 w-1/2" />
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    );
-  }
 
   if (viewType === "image") {
     return (

@@ -76,6 +76,13 @@ export async function generateMetadata({
     ? `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. ${topSearchKeyword} 정답을 퀴즈벨에서 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`
     : `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
 
+  // canonical URL: today(또는 오늘 날짜)는 /today로, 과거는 /YYYY-MM-DD로 통일
+  // og.url도 canonical과 일치시켜 구글의 중복 판별 혼란 제거
+  const canonicalUrl =
+    date === "today" || answerDate === format(getKoreaDate(), "yyyy-MM-dd")
+      ? `https://quizbells.com/quiz/${type}/today`
+      : `https://quizbells.com/quiz/${type}/${answerDate}`;
+
   return {
     title: fullTitle,
     description,
@@ -93,8 +100,7 @@ export async function generateMetadata({
     openGraph: {
       title: fullTitle,
       description,
-      // 사용자가 수정한 전략(/today) 유지
-      url: `https://quizbells.com/quiz/${type}/today`,
+      url: canonicalUrl,
       siteName: "퀴즈벨",
       type: "article",
       locale: "ko_KR",
@@ -111,10 +117,7 @@ export async function generateMetadata({
       images: [`https://quizbells.com/icons/og-image.png`],
     },
     alternates: {
-      canonical:
-        date === "today" || answerDate === format(getKoreaDate(), "yyyy-MM-dd")
-          ? `https://quizbells.com/quiz/${type}/today`
-          : `https://quizbells.com/quiz/${type}/${answerDate}`,
+      canonical: canonicalUrl,
     },
     robots: {
       index: true,
