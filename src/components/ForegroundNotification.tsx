@@ -1,7 +1,6 @@
 "use client";
-import { messaging, onMessage } from "@/lib/firebase";
 import { getUserAuth, refreshToken } from "@/utils/utils";
-import { MessagePayload } from "firebase/messaging";
+import type { MessagePayload } from "firebase/messaging";
 import { useEffect } from "react";
 
 export default function ForegroundNotification() {
@@ -9,9 +8,11 @@ export default function ForegroundNotification() {
     let cancelled = false;
     let unsubscribe: (() => void) | null = null;
 
-    const interval = setInterval(() => {
+    const setup = async () => {
+      // firebase는 유휴 시점에만 동적 로드한다(초기 렌더/LCP 비방해).
+      const { getMessagingInstance, onMessage } = await import("@/lib/firebase");
+      const messaging = await getMessagingInstance();
       if (!messaging || cancelled) return;
-      clearInterval(interval);
 
       // 토큰 유효성 검사
       const auth = getUserAuth();
@@ -33,7 +34,7 @@ export default function ForegroundNotification() {
       }
 
       // onMessage 리스너 등록
-      unsubscribe = onMessage(messaging, (payload: MessagePayload) => {
+      unsubscribe = await onMessage(messaging, (payload: MessagePayload) => {
         if (
           payload.data?.silent === "true" &&
           payload.data?.check === "validity"
@@ -53,11 +54,26 @@ export default function ForegroundNotification() {
           });
         });
       });
-    }, 300);
+
+      if (cancelled) {
+        // setup 도중 언마운트된 경우 즉시 해제
+        unsubscribe?.();
+        unsubscribe = null;
+      }
+    };
+
+    const hasRic = typeof window.requestIdleCallback === "function";
+    const idleId = hasRic
+      ? window.requestIdleCallback(setup, { timeout: 3000 })
+      : window.setTimeout(setup, 1500);
 
     return () => {
       cancelled = true;
-      clearInterval(interval);
+      if (hasRic) {
+        window.cancelIdleCallback(idleId as number);
+      } else {
+        clearTimeout(idleId as number);
+      }
       unsubscribe?.();
     };
   }, []);

@@ -250,7 +250,10 @@ export const requestAlarmPermission = async () => {
       if (permission === "granted") {
         // 권한 허용시 /mynow로 이동
 
-        const { messaging, getToken } = await import("@/lib/firebase");
+        const { getMessagingInstance, getToken } = await import(
+          "@/lib/firebase"
+        );
+        const messaging = await getMessagingInstance();
         if (messaging) {
           // FCM 토큰 받아오기
           const userId = nanoid(12);
@@ -307,7 +310,8 @@ export const sendNotificationTest = async () => {
   } else {
     const permission = await Notification.requestPermission();
     if (permission === "granted") {
-      const { messaging } = await import("@/lib/firebase");
+      const { getMessagingInstance } = await import("@/lib/firebase");
+      const messaging = await getMessagingInstance();
       if (auth.fcmToken) {
         try {
           const response = await sendNotification();

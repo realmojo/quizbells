@@ -1,16 +1,15 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import {
-  getMessaging,
-  getToken,
-  onMessage,
-  isSupported,
-} from "firebase/messaging";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// Firebase 클라이언트 SDK는 모듈 로드 시 initializeApp() 부수효과가 있고
+// firebase/messaging 평가 비용이 커서, top-level 정적 import를 두면 이 모듈을
+// import 하는 모든 청크(=layout에서 항상 렌더되는 ForegroundNotification)의 메인
+// 번들에 firebase 전체가 포함되어 매 페이지 로드마다 평가된다(Script Evaluation 급증).
+//
+// 따라서 firebase/app·firebase/messaging는 함수 내부에서 동적 import로만 로드하고,
+// 실제로 알림이 필요한 시점(유휴/사용자 동작)에만 초기화한다.
+
+import type { FirebaseApp } from "firebase/app";
+import type { Messaging, MessagePayload } from "firebase/messaging";
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyC_E2U2dgb8Smz-dBzcrpVlsQtwnxOBCMQ",
   authDomain: "quizbells-2d26a.firebaseapp.com",
@@ -21,19 +20,50 @@ const firebaseConfig = {
   measurementId: "G-KH8RLMC19C",
 };
 
-let messaging: ReturnType<typeof getMessaging> | null = null;
+let appPromise: Promise<FirebaseApp> | null = null;
+let messagingPromise: Promise<Messaging | null> | null = null;
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-if (typeof window !== "undefined") {
-  isSupported().then((supported) => {
-    if (supported) {
-      messaging = getMessaging(app);
+const getApp = (): Promise<FirebaseApp> => {
+  if (!appPromise) {
+    appPromise = import("firebase/app").then(({ initializeApp }) =>
+      initializeApp(firebaseConfig),
+    );
+  }
+  return appPromise;
+};
+
+/**
+ * 브라우저에서 FCM 지원 시 Messaging 인스턴스를 (한 번만) 초기화해 반환한다.
+ * SSR 또는 미지원 브라우저에서는 null.
+ */
+export const getMessagingInstance = (): Promise<Messaging | null> => {
+  if (typeof window === "undefined") return Promise.resolve(null);
+  if (!messagingPromise) {
+    messagingPromise = (async () => {
+      const { isSupported, getMessaging } = await import("firebase/messaging");
+      if (!(await isSupported())) {
+        console.warn("⚠️ 이 브라우저는 FCM을 지원하지 않습니다.");
+        return null;
+      }
       console.log("✅ Firebase Messaging Init");
-    } else {
-      console.warn("⚠️ 이 브라우저는 FCM을 지원하지 않습니다.");
-    }
-  });
-}
+      return getMessaging(await getApp());
+    })();
+  }
+  return messagingPromise;
+};
 
-export { messaging, getToken, onMessage };
+export const getToken = async (
+  messaging: Messaging,
+  options: { vapidKey?: string },
+): Promise<string> => {
+  const { getToken } = await import("firebase/messaging");
+  return getToken(messaging, options);
+};
+
+export const onMessage = async (
+  messaging: Messaging,
+  next: (payload: MessagePayload) => void,
+): Promise<() => void> => {
+  const { onMessage } = await import("firebase/messaging");
+  return onMessage(messaging, next);
+};
