@@ -186,7 +186,7 @@ export default function QuizCardComponent({
 
   return viewType === "grid" ? (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      {sortedQuizItems.map((quiz) => {
+      {sortedQuizItems.map((quiz, index) => {
         const href = `/quiz/${quiz.type}/${isToday ? "today" : answerDate}`;
 
         return (
@@ -207,7 +207,9 @@ export default function QuizCardComponent({
                     fill
                     sizes="(max-width: 768px) 100vw, 200px"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    loading="lazy"
+                    priority={index === 0}
+                    fetchPriority={index === 0 ? "high" : "auto"}
+                    loading={index === 0 ? undefined : "lazy"}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   {/* 오늘 정답이 있으면 빨간색 동그라미 배지 표시 */}
