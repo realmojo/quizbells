@@ -3,6 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   // htmlLimitedBots: /.*/,
+
+  // 렌더링 차단 제거: CSS를 외부 <link> 대신 HTML <head>에 <style>로 인라인.
+  // 초기 렌더를 막던 CSS 네트워크 요청이 사라져 FCP/LCP가 개선된다.
+  experimental: {
+    inlineCss: true,
+  },
+
   // Cloudflare Pages 호환성 설정
   // Cloudflare Pages는 Next.js를 자동으로 감지하고 최적화합니다
   images: {
