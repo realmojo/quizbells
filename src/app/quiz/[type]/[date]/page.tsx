@@ -763,7 +763,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
                         </div>
                         <div className="flex-1">
                           <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-purple-200 border-b border-white/10 pb-1 inline-block">
-                            Today's Fortune
+                            Today&apos;s Fortune
                           </h3>
                           <p className="text-lg font-bold leading-snug drop-shadow-sm mb-3">
                             퀴즈 정답 확인했으면, 오늘의 운세도 확인해보세요!
@@ -799,6 +799,70 @@ export default async function QuizPage({ params }: QuizPageParams) {
             <section className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
               <DescriptionComponent type={type} />
             </section>
+
+            {/* 같은 앱 다른 기간 정답 - 내부 링크 (체류시간/PV 향상) */}
+            <section className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-5 flex items-center gap-2">
+                📅 {item.typeKr} {item.title} 정답 더 보기
+              </h2>
+
+              {/* 주간 / 월간 모아보기 */}
+              <div className="grid grid-cols-2 gap-3 mb-5">
+                <a
+                  href={`/quiz/${type}/weekly`}
+                  target="_self"
+                  className="group flex items-center justify-between rounded-xl border border-indigo-200 dark:border-indigo-800 bg-linear-to-br from-indigo-50 to-blue-50 dark:from-indigo-900/30 dark:to-blue-900/30 px-4 py-4 hover:shadow-md transition-all duration-300"
+                >
+                  <div>
+                    <div className="text-sm font-bold text-indigo-700 dark:text-indigo-300">
+                      주간 정답 모아보기
+                    </div>
+                    <div className="text-xs text-indigo-500 dark:text-indigo-400 mt-0.5">
+                      최근 7일 {item.typeKr} 정답
+                    </div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-indigo-500 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a
+                  href={`/quiz/${type}/monthly`}
+                  target="_self"
+                  className="group flex items-center justify-between rounded-xl border border-purple-200 dark:border-purple-800 bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 px-4 py-4 hover:shadow-md transition-all duration-300"
+                >
+                  <div>
+                    <div className="text-sm font-bold text-purple-700 dark:text-purple-300">
+                      월간 정답 모아보기
+                    </div>
+                    <div className="text-xs text-purple-500 dark:text-purple-400 mt-0.5">
+                      이번 달 {item.typeKr} 정답
+                    </div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-purple-500 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+
+              {/* 최근 날짜별 바로가기 */}
+              <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3">
+                날짜별 정답 바로가기
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {Array.from({ length: 7 }).map((_, i) => {
+                  const baseDate = parseISO(answerDate);
+                  const targetDate = subDays(baseDate, i + 1);
+                  const targetStr = format(targetDate, "yyyy-MM-dd");
+                  return (
+                    <a
+                      key={targetStr}
+                      href={`/quiz/${type}/${targetStr}`}
+                      target="_self"
+                      className="inline-flex items-center px-3 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm text-slate-600 dark:text-slate-300 font-medium hover:border-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                    >
+                      {format(targetDate, "M월 d일", { locale: ko })} 정답
+                    </a>
+                  );
+                })}
+              </div>
+            </section>
+
             <SocialShare
               title={`${item.typeKr} ${item.title} ${answerDateString} 정답`}
               url={`https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`}

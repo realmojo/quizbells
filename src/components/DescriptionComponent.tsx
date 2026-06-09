@@ -178,35 +178,46 @@ export default function DescriptionComponents({ type }: { type: string }) {
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          <strong>카카오뱅크 퀴즈</strong>는 카카오뱅크 앱에서 진행되는 정답형
-          참여 퀴즈입니다. 앱 내 알림 또는 이벤트 페이지를 통해 퀴즈에 참여할 수
-          있습니다.
+          <strong>카카오뱅크 AI 이모지 퀴즈</strong>는 인터넷전문은행인
+          카카오뱅크 앱에서 진행되는 정답형 참여 퀴즈로, 제시된 이모지를 보고
+          사물이나 단어를 맞히는 방식입니다. 앱 내 알림 또는 이벤트 페이지를 통해
+          참여할 수 있으며, 퀴즈를 푸는 동안 자연스럽게 <strong>적금</strong>,{" "}
+          <strong>모임통장</strong>, <strong>세이프박스</strong>,{" "}
+          <strong>저금통</strong> 등 카카오뱅크의 다양한 금융상품과 서비스를
+          접하게 됩니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          퀴즈는 <strong>OX형 문제</strong>로 구성되어 있으며, 문제에 정답을
-          선택하여 참여할 수 있습니다. 정답자에게는{" "}
-          <strong>이벤트 참여 보상</strong>
-          으로 추첨을 통한 경품 또는 리워드가 제공됩니다.
+          퀴즈는 <strong>이모지·OX형 문제</strong>로 구성되며, 정답을 선택해
+          제출하면 참여가 완료됩니다. 정답자에게는{" "}
+          <strong>이벤트 참여 보상</strong>으로 추첨을 통한 경품이나 리워드가
+          제공되며, 적립한 혜택은 <strong>카카오뱅크 입출금통장</strong>이나
+          제휴 포인트로 받을 수 있습니다. 소액이라도 매일 꾸준히 모으면{" "}
+          <strong>비상금 마련</strong>이나 <strong>26주 적금</strong> 같은 목돈
+          만들기에 보탬이 됩니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
           itemProp="description"
         >
-          퀴즈는 <strong>이벤트 기간 중 1회 참여</strong> 방식이며, 정답을
-          선택한 후 제출하면 참여가 완료됩니다. 퀴즈 정답 및 당첨 여부는{" "}
-          <strong>앱 푸시 알림</strong> 또는{" "}
+          카카오뱅크는 별도 영업점 없이 모바일로 계좌 개설부터{" "}
+          <strong>예금·적금 가입, 체크카드 발급, 비상금대출, 신용대출</strong>{" "}
+          까지 처리할 수 있어 앱테크 이용자들에게 인기가 높습니다. 퀴즈로 받은
+          리워드를 <strong>세이프박스</strong>에 분리 보관하면 생활비와
+          비상금을 따로 관리할 수 있고, <strong>저금통</strong> 기능을 함께
+          쓰면 잔돈을 자동으로 모아 작은 재테크 습관을 만들 수 있습니다.
+        </p>
+        <p
+          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
+          itemProp="description"
+        >
+          퀴즈 정답 및 당첨 여부는 <strong>앱 푸시 알림</strong> 또는{" "}
           <strong>이벤트 페이지 내 결과 발표</strong>를 통해 확인할 수 있습니다.
-        </p>
-        <p
-          className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
-          itemProp="description"
-        >
-          카카오뱅크 퀴즈는 카카오뱅크가 주관하는 이벤트의 일환으로 진행되며,
           퀴즈 내용, 정답 기준, 보상 방식은{" "}
-          <strong>카카오뱅크 이벤트 안내사항</strong>에 따릅니다.
+          <strong>카카오뱅크 이벤트 안내사항</strong>에 따르며, 금리·한도 등
+          금융상품 조건은 가입 시점의 공시 내용을 기준으로 합니다.
         </p>
         <p
           className="text-gray-700 text-base leading-relaxed tracking-tight mt-6 mb-6"
@@ -214,8 +225,9 @@ export default function DescriptionComponents({ type }: { type: string }) {
         >
           참여 전 반드시 <strong>카카오뱅크 앱 최신 버전</strong>으로
           업데이트되어 있어야 하며, 일부 기능은{" "}
-          <strong>알림 설정 및 이벤트 수신 동의</strong>가 필요한 경우도
-          있습니다.
+          <strong>알림 설정 및 이벤트 수신 동의</strong>가 필요합니다. 매일
+          퀴즈 정답을 확인하며 카카오뱅크의 <strong>금융 혜택과 적립 이벤트</strong>
+          를 함께 챙기면 앱테크 효율을 한층 높일 수 있습니다.
         </p>
       </>
     );
