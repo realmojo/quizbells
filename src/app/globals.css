@@ -1,76 +1,30 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Thin.woff2")
-    format("woff2");
-  font-weight: 100;
-  font-display: swap;
-}
+/*
+ * Pretendard 동적 서브셋(Variable) 폰트.
+ * 기존 projectnoonnu@1.0 전체 한글 폰트(weight당 1~2MB)는 로딩이 느려
+ * 폴백 → Pretendard 교체(swap)가 늦게 일어나면서 큰 레이아웃 이동(CLS)을 유발했다.
+ * 동적 서브셋은 실제 사용된 글자 조각만 내려받아 로딩이 빠르고,
+ * 하나의 variable 폰트가 모든 weight를 커버한다.
+ */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 
+/*
+ * 메트릭이 유사한 시스템 폰트 폴백.
+ * Pretendard는 시스템 UI 폰트(Apple SD Gothic Neo / Malgun Gothic)와
+ * 메트릭이 거의 일치하도록 설계되어, 폰트 로드 전에도 동일한 공간을 차지해
+ * swap 교체 시 리플로우를 최소화한다.
+ */
 @font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraLight.woff2")
-    format("woff2");
-  font-weight: 200;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2")
-    format("woff2");
-  font-weight: 300;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2")
-    format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2")
-    format("woff2");
-  font-weight: 500;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-SemiBold.woff2")
-    format("woff2");
-  font-weight: 600;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2")
-    format("woff2");
-  font-weight: 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraBold.woff2")
-    format("woff2");
-  font-weight: 800;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Black.woff2")
-    format("woff2");
-  font-weight: 900;
-  font-display: swap;
+  font-family: "Pretendard Fallback";
+  src:
+    local("Apple SD Gothic Neo"), local("AppleSDGothicNeo-Regular"),
+    local("Malgun Gothic"), local("맑은 고딕"), local("sans-serif");
+  ascent-override: 92%;
+  descent-override: 8%;
+  line-gap-override: 0%;
+  size-adjust: 100%;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -188,7 +142,10 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Pretendard", sans-serif;
+    font-family:
+      "Pretendard Variable", "Pretendard", "Pretendard Fallback",
+      -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo",
+      "Malgun Gothic", sans-serif;
     letter-spacing: -1px;
   }
   button {

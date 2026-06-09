@@ -112,6 +112,15 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        {/* 폰트 CDN 연결을 조기에 시작해 Pretendard 로딩 지연으로 인한
+            레이아웃 이동(CLS)을 줄인다. */}
+        <link
+          rel="preconnect"
+          href="https://cdn.jsdelivr.net"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         <Script
           strategy="beforeInteractive"

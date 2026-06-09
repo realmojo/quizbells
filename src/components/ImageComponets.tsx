@@ -18,6 +18,7 @@ export default function ImageComponents({
       width={width}
       height={height}
       priority
+      fetchPriority="high"
     />
   );
 }

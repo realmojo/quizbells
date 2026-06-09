@@ -158,7 +158,7 @@ export default function QuizCardComponent({
                       fill
                       sizes="(max-width: 768px) 33vw, 200px"
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      priority
+                      loading="lazy"
                     />
                     {/* 오늘 정답이 있으면 빨간색 동그라미 배지 표시 */}
                     {isToday &&
@@ -207,7 +207,7 @@ export default function QuizCardComponent({
                     fill
                     sizes="(max-width: 768px) 100vw, 200px"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    priority
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   {/* 오늘 정답이 있으면 빨간색 동그라미 배지 표시 */}
@@ -261,7 +261,7 @@ export default function QuizCardComponent({
                     alt={`${quiz.typeKr} 퀴즈 썸네일`}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    priority
+                    loading="lazy"
                   />
                   {/* 오늘 정답이 있으면 빨간색 동그라미 배지 표시 */}
                   {isToday &&
