@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { saveNaverTokens } from "@/lib/naver-cafe";
 
 export const runtime = 'edge';
 
@@ -25,7 +26,16 @@ export async function POST(request: Request) {
       return NextResponse.json(data, { status: 400 });
     }
 
-    console.log("Token Data:", data);
+    // 무인 자동 발행을 위해 refresh_token을 Supabase에 저장(부트스트랩).
+    // 최초 1회 관리자가 네이버 로그인하면 이후 cron이 토큰을 자동 갱신해 사용한다.
+    if (data.refresh_token) {
+      try {
+        await saveNaverTokens(data);
+      } catch (e) {
+        console.error("refresh_token 저장 실패:", e);
+      }
+    }
+
     return NextResponse.json(data);
   } catch (error) {
     console.error("Token Error:", error);

@@ -14,6 +14,8 @@ provider:
     GOOGLE_CLIENT_EMAIL: ${env:GOOGLE_CLIENT_EMAIL, 'devupbox-google-api@devupbox.iam.gserviceaccount.com'}
     GOOGLE_PRIVATE_KEY: ${env:GOOGLE_PRIVATE_KEY, ''}
     LAST_INDEXED_DATE: ${env:LAST_INDEXED_DATE, ''}
+    # 네이버 카페 자동 발행 엔드포인트 인증용 시크릿 (Next.js의 CRON_SECRET와 동일해야 함)
+    CRON_SECRET: ${env:CRON_SECRET, ''}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -60,6 +62,19 @@ functions:
       # 또는 API Gateway로 수동 실행
       - http:
           path: /naver-indexnow
+          method: get
+          cors: true
+
+  naverCafePublish:
+    handler: lambda.naverCafePublishHandler
+    events:
+      # EventBridge (CloudWatch Events)로 1시간마다 실행 (멱등 엔드포인트)
+      - schedule:
+          rate: rate(1 hour) # 1시간마다 실행
+          enabled: true
+      # 또는 API Gateway로 수동 실행
+      - http:
+          path: /naver-cafe-publish
           method: get
           cors: true
 # plugins:

@@ -238,6 +238,38 @@ exports.naverIndexNowHandler = async (event, context) => {
   }
 };
 
+// 네이버 카페 자동 발행 핸들러 (1시간마다 실행)
+// quizbells 앱의 멱등 엔드포인트를 호출한다. 실제 발행은 그쪽에서 처리(타입/날짜별 1회).
+exports.naverCafePublishHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    const secret = process.env.CRON_SECRET;
+    if (!secret) {
+      console.warn("⚠️ CRON_SECRET 미설정 - 카페 자동 발행 건너뜀");
+      return { statusCode: 200, body: JSON.stringify({ skipped: true }) };
+    }
+
+    const baseUrl = process.env.API_URL || "https://quizbells.com";
+    const url = `${baseUrl}/api/naver/auto-publish?secret=${encodeURIComponent(secret)}`;
+
+    const res = await fetch(url); // Node 20 글로벌 fetch
+    const data = await res.json();
+    console.log("☕️ 카페 자동 발행 응답:", JSON.stringify(data));
+
+    return { statusCode: res.status, body: JSON.stringify(data) };
+  } catch (error) {
+    console.error("❌ 카페 자동 발행 Lambda 오류:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: error.message || "카페 자동 발행 중 오류 발생",
+        timestamp: getKoreaTime().format("YYYY-MM-DD HH:mm:ss"),
+      }),
+    };
+  }
+};
+
 // 로컬 테스트용 (선택사항)
 if (require.main === module) {
   run()
