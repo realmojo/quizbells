@@ -1,5 +1,9 @@
-import { messaging, getToken } from "@/lib/firebase";
 import { nanoid } from "nanoid";
+
+// 주의: firebase 클라이언트 SDK는 모듈 로드 시 initializeApp() 부수효과가 있어
+// 트리셰이킹되지 않는다. top-level import 시 quizItems/getQuitItem을 쓰는 모든
+// 서버(Edge) 함수 번들에 firebase가 포함되어 번들 용량이 폭증하므로,
+// firebase가 필요한 함수 내부에서 동적 import(클라이언트 실행 시점)로만 로드한다.
 
 export const getQuitItem = (type: string) => {
   const item = quizItems.find((item) => item.type === type);
@@ -212,6 +216,7 @@ export const sendNotification = async () => {
 export const refreshToken = async (messaging: any, isTest: boolean = false) => {
   if (!messaging) return;
 
+  const { getToken } = await import("@/lib/firebase");
   const fcmToken = await getToken(messaging, {
     vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
   });
@@ -245,6 +250,7 @@ export const requestAlarmPermission = async () => {
       if (permission === "granted") {
         // 권한 허용시 /mynow로 이동
 
+        const { messaging, getToken } = await import("@/lib/firebase");
         if (messaging) {
           // FCM 토큰 받아오기
           const userId = nanoid(12);
@@ -301,6 +307,7 @@ export const sendNotificationTest = async () => {
   } else {
     const permission = await Notification.requestPermission();
     if (permission === "granted") {
+      const { messaging } = await import("@/lib/firebase");
       if (auth.fcmToken) {
         try {
           const response = await sendNotification();
