@@ -1,5 +1,5 @@
-"use client";
-
+// 인터랙션이 없는 순수 렌더 컴포넌트이므로 서버 컴포넌트로 둔다.
+// (클라이언트 번들에서 제외 → JS 평가 비용 감소, SEO 텍스트는 SSR로 그대로 노출)
 export default function DescriptionComponents({ type }: { type: string }) {
   if (type === "toss") {
     return (

@@ -5,20 +5,21 @@ export const runtime = "edge";
 import ImageComponents from "@/components/ImageComponets";
 import { format, parseISO, formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
-import { getQuitItem } from "@/utils/utils";
+import { getQuitItem, quizItems } from "@/utils/utils";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
 import { getQuizbells } from "@/utils/api";
 import { CheckCircle2, Lightbulb, ArrowRight } from "lucide-react";
-import { subDays } from "date-fns";
+import { subDays, addDays } from "date-fns";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Fragment } from "react/jsx-runtime";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import VisitTracker from "@/components/VisitTracker";
 // import GoogleTagQuizComponent from "@/components/GoogleTagQuizComponent";
 import RewardedAdButton from "@/components/RewardedAdButton";
+import { buildQuizStructuredData } from "./structuredData";
 
 // 한국 시간(KST, UTC+9)으로 현재 날짜 가져오기
 // Edge Runtime에서도 정확하게 작동하도록 UTC에 9시간을 더하는 방식 사용
@@ -279,62 +280,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
     // 오류 발생 시 기본값 사용
   }
 
-  // FAQPage 구조화된 데이터 (검색결과 리치 스니펫용)
-  // 구글 공식 FAQPage 형식에 맞춰 정확하게 구성
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity:
-      contents.length > 0
-        ? contents.map((quiz: any) => ({
-            "@type": "Question",
-            name: `${answerDateString} ${item.typeKr} ${item.title} ${quiz.question || "퀴즈"} 정답`,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: `정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
-            },
-          }))
-        : [
-            {
-              "@type": "Question",
-              name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요?`,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "정답이 아직 업데이트되지 않았습니다. 곧 업데이트될 예정입니다.",
-              },
-            },
-          ],
-  };
-
-  // Breadcrumb 구조화된 데이터
-  const breadcrumbItems = [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "홈",
-      item: "https://quizbells.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: `${item.typeKr} 퀴즈`,
-      item: `https://quizbells.com/quiz/${type}/today`,
-    },
-  ];
-  // today가 아닌 과거 날짜일 때만 3단계 추가 (today면 2번째와 URL이 중복되므로)
-  if (date !== "today") {
-    breadcrumbItems.push({
-      "@type": "ListItem",
-      position: 3,
-      name: `${shortDateLabel} 정답`,
-      item: `https://quizbells.com/quiz/${type}/${answerDate}`,
-    });
-  }
-  const breadcrumbJsonLd = {
-    "@type": "BreadcrumbList",
-    itemListElement: breadcrumbItems,
-  };
-
   // ISO 날짜 형식 생성
   const isoDate = `${answerDate}T00:00:00`;
 
@@ -393,121 +338,39 @@ export default async function QuizPage({ params }: QuizPageParams) {
   // 현재 페이지 URL
   const currentUrl = `https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}`;
 
-  // 키워드 생성 (searchKeywords 포함)
-  const searchKeywords = item.searchKeywords || [];
-  const keywords = [
-    `${item.typeKr} 정답`,
-    `${item.typeKr} ${item.title} 정답`,
-    `${shortDateLabel} ${item.typeKr}`,
-    `${item.typeKr} 퀴즈`,
-    `${item.typeKr} 퀴즈 정답`,
-    ...searchKeywords,
-    "앱테크 퀴즈",
-    "퀴즈 정답",
-    "실시간 정답",
-    "오늘의 퀴즈",
-    "퀴즈벨",
-  ].join(", ");
+  // 이전/다음 날 내비게이션 (크롤 깊이·체류시간·SEO 페이지네이션)
+  const todayStr = format(getKoreaDate(), "yyyy-MM-dd");
+  const baseDateObj = /^\d{4}-\d{2}-\d{2}$/.test(answerDate)
+    ? parseISO(answerDate)
+    : getKoreaDate();
+  const prevDateStr = format(subDays(baseDateObj, 1), "yyyy-MM-dd");
+  const nextDateStr = format(addDays(baseDateObj, 1), "yyyy-MM-dd");
+  // 다음 날이 오늘 이후(미래)면 링크를 만들지 않는다.
+  const hasNextDate = nextDateStr <= todayStr;
+  // 다음 날이 오늘이면 canonical 일관성을 위해 /today 로 연결
+  const nextHref =
+    nextDateStr === todayStr
+      ? `/quiz/${type}/today`
+      : `/quiz/${type}/${nextDateStr}`;
+  const prevShortLabel = format(subDays(baseDateObj, 1), "M월 d일");
+  const nextShortLabel = format(addDays(baseDateObj, 1), "M월 d일");
 
-  // articleBody 생성 (퀴즈 내용 포함)
-  const articleBodyText = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. ${contents.length > 0 ? `오늘의 퀴즈 정답은 ${contents.map((q: any) => q.answer).join(", ")} 등이 있습니다.` : ""} 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
-
-  // 검색 키워드 기반 대체 헤드라인 (검색엔진이 키워드 매칭에 활용)
-  const alternativeHeadlines = searchKeywords.length > 0
-    ? searchKeywords.slice(0, 3).map((kw: string) => `${kw} ${shortDateLabel} 정답`)
-    : [];
-
-  const articleJsonLd = {
-    "@type": "Article",
-    "@id": currentUrl,
-    url: currentUrl,
-    headline: h1Title,
-    ...(alternativeHeadlines.length > 0 && { alternativeHeadline: alternativeHeadlines.join(" | ") }),
-    description: firstDescription,
-    inLanguage: "ko",
-    isAccessibleForFree: true,
-    datePublished: isoDate,
-    dateModified: modifiedDate,
-    dateCreated: isoDate,
-    author: {
-      "@type": "Person",
-      name: "퀴즈벨 에디터",
-      url: "https://quizbells.com",
-    },
-    // Publisher 정보 보강 (필수 항목)
-    publisher: {
-      "@type": "Organization",
-      "@id": "https://quizbells.com/#organization",
-      name: "퀴즈벨",
-      alternateName: "QUIZBELLS",
-      url: "https://quizbells.com",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://quizbells.com/icons/android-icon-192x192.png",
-        width: 192,
-        height: 192,
-      },
-      sameAs: [
-        "https://play.google.com/store/apps/details?id=com.mojoday.quizbells",
-        "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703",
-      ],
-    },
-    // mainEntityOfPage 추가 (페이지의 핵심 콘텐츠임을 명시)
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": currentUrl,
-      url: currentUrl,
-      name: h1Title,
-      description: firstDescription,
-      inLanguage: "ko",
-      isPartOf: {
-        "@type": "WebSite",
-        "@id": "https://quizbells.com/#website",
-        name: "퀴즈벨",
-        url: "https://quizbells.com",
-      },
-    },
-    // Image 정보 보강 (검색 결과 썸네일 노출 확률 향상)
-    image: {
-      "@type": "ImageObject",
-      url: `https://quizbells.com/images/${type}.webp`,
-      width: 1200,
-      height: 630,
-      alt: `${item.typeKr} ${item.title} 퀴즈 정답`,
-      caption: `${item.typeKr} ${item.title} ${answerDateString} 정답`,
-    },
-    keywords: keywords,
-    articleSection: "앱테크/재테크",
-    articleBody: articleBodyText,
-    about: {
-      "@type": "Thing",
-      name: `${item.typeKr} ${item.title}`,
-      description: `매일 출제되는 ${item.typeKr} ${item.title} 퀴즈 정답을 실시간으로 제공하는 서비스`,
-    },
-    // hasPart 제거: Article 타입에서 Question을 hasPart에 넣으면 에러 발생
-    // FAQPage의 mainEntity에 Question을 넣는 것이 올바른 방법
-    isPartOf: {
-      "@type": "WebSite",
-      "@id": "https://quizbells.com/#website",
-      name: "퀴즈벨",
-      url: "https://quizbells.com",
-    },
-    interactionStatistic: [
-      {
-        "@type": "InteractionCounter",
-        interactionType: {
-          "@type": "https://schema.org/ReadAction",
-        },
-        userInteractionCount: participantCount,
-      },
-    ],
-  };
-
-  // @graph를 사용하여 모든 구조화된 데이터 통합
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@graph": [faqJsonLd, breadcrumbJsonLd, articleJsonLd],
-  };
+  // 구조화된 데이터(JSON-LD) 생성은 structuredData.ts로 분리
+  const structuredData = buildQuizStructuredData({
+    type,
+    date,
+    answerDate,
+    item,
+    answerDateString,
+    shortDateLabel,
+    h1Title,
+    firstDescription,
+    currentUrl,
+    isoDate,
+    modifiedDate,
+    contents,
+    participantCount,
+  });
 
   return (
     <>
@@ -860,6 +723,71 @@ export default async function QuizPage({ params }: QuizPageParams) {
                     </a>
                   );
                 })}
+              </div>
+
+              {/* 이전/다음 날 페이저 (SEO 페이지네이션·크롤 깊이) */}
+              <nav
+                aria-label="날짜 이동"
+                className="mt-5 grid grid-cols-2 gap-3"
+              >
+                <a
+                  href={`/quiz/${type}/${prevDateStr}`}
+                  rel="prev"
+                  target="_self"
+                  className="group flex items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 hover:border-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                >
+                  <ArrowRight className="w-4 h-4 rotate-180 text-slate-400 group-hover:text-emerald-500" />
+                  <div className="text-left">
+                    <div className="text-[11px] text-slate-400 dark:text-slate-500">
+                      이전 날
+                    </div>
+                    <div className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                      {prevShortLabel} {item.typeKr} 정답
+                    </div>
+                  </div>
+                </a>
+                {hasNextDate && (
+                  <a
+                    href={nextHref}
+                    rel="next"
+                    target="_self"
+                    className="group flex items-center justify-end gap-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 hover:border-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                  >
+                    <div className="text-right">
+                      <div className="text-[11px] text-slate-400 dark:text-slate-500">
+                        다음 날
+                      </div>
+                      <div className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                        {nextShortLabel} {item.typeKr} 정답
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-500" />
+                  </a>
+                )}
+              </nav>
+            </section>
+
+            {/* 같은 날짜 다른 앱 정답 - 날짜 키워드 교차 내부링크 (SEO) */}
+            <section className="mb-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-sm border border-white/50 dark:border-slate-800">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-5 flex items-center gap-2">
+                🗓️ {shortDateLabel} 다른 앱 퀴즈 정답
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {quizItems
+                  .filter((q) => q.type !== type)
+                  .map((q) => (
+                    <a
+                      key={q.type}
+                      href={`/quiz/${q.type}/${date === "today" ? "today" : answerDate}`}
+                      target="_self"
+                      className="group flex items-center justify-between rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 hover:border-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                    >
+                      <span className="text-sm font-medium text-slate-600 dark:text-slate-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 truncate">
+                        {q.typeKr} {shortDateLabel} 정답
+                      </span>
+                      <ArrowRight className="w-3.5 h-3.5 shrink-0 text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-all" />
+                    </a>
+                  ))}
               </div>
             </section>
 
