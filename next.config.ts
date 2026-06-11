@@ -10,14 +10,11 @@ const nextConfig: NextConfig = {
     inlineCss: true,
   },
 
-  // Cloudflare Pages 호환성 설정
-  // Cloudflare Pages는 Next.js를 자동으로 감지하고 최적화합니다
+  // Cloudflare Workers(opennextjs-cloudflare) 배포.
+  // next/image는 wrangler.jsonc의 IMAGES 바인딩(Cloudflare Images)으로 최적화된다.
   images: {
-    unoptimized: false, // Cloudflare Pages는 이미지 최적화를 지원
+    unoptimized: false,
   },
-  // Cloudflare Pages를 위한 추가 설정
-  // API Routes가 있으므로 output: 'export'는 사용하지 않습니다
-  // Cloudflare Pages가 자동으로 Edge Functions로 변환합니다
 
   // 프로덕션 빌드에서 console.* 제거 (디버깅용 error/warn은 유지)
   compiler: {
@@ -60,3 +57,8 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+// next dev 실행 시 Cloudflare 바인딩(getCloudflareContext 등)을 로컬에서 사용 가능하게 함.
+// 프로덕션 빌드에는 영향 없음.
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+initOpenNextCloudflareForDev();

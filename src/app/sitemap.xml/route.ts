@@ -1,4 +1,6 @@
-export const runtime = "edge";
+// lastmod에 "오늘" 날짜를 쓰므로 빌드 시 프리렌더(고정)되지 않도록 매 요청 렌더링
+export const dynamic = "force-dynamic";
+
 
 const BASE_URL = "https://quizbells.com";
 

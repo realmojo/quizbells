@@ -10,7 +10,6 @@ import PWAInstallButton from "@/components/PWAInstallButton";
 import VisitTracker from "@/components/VisitTracker";
 import Link from "next/link";
 
-export const runtime = "edge";
 
 // 한국 시간 기준 날짜 가져오기
 const getKoreaDate = (): Date => {

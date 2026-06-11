@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 
-export const runtime = "edge";
 
 import ImageComponents from "@/components/ImageComponets";
 import { format, parseISO, formatDistanceToNow } from "date-fns";

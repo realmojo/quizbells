@@ -1,7 +1,6 @@
 import { supabaseAdmin } from "@/lib/supabase";
 import { tips } from "@/app/tips/tipsData";
 
-export const runtime = "edge";
 
 const BASE_URL = "https://quizbells.com";
 

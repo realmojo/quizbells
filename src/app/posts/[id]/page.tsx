@@ -7,7 +7,6 @@ import {
   DEFAULT_OG_IMAGE,
 } from "@/lib/jsonld";
 
-export const runtime = "edge";
 
 const CATEGORY_COLORS: Record<string, string> = {
   금융: "bg-emerald-50 text-emerald-600",

@@ -46,3 +46,6 @@ yarn-error.log*
 next-env.d.ts
 
 crawl/node_modules
+# opennextjs-cloudflare
+.open-next
+cloudflare-env.d.ts

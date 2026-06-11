@@ -16,7 +16,6 @@ import {
   DEFAULT_OG_IMAGE,
 } from "@/lib/jsonld";
 
-export const runtime = "edge";
 
 export async function generateMetadata({
   params,

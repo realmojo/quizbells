@@ -8,7 +8,6 @@ import {
   type QuizAnswerItem,
 } from "@/lib/naver-cafe";
 
-export const runtime = "edge";
 
 // 자동 발행 대상 카페/게시판 (본인 소유 카페: 재테크플로우 / menuId 48)
 const DEFAULT_CLUB_ID = "31632186";

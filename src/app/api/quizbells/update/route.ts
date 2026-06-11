@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 
-export const runtime = "edge";
 
 // ✅ 퀴즈벨 정답 수정 (Supabase)
 // 테이블: quizbells_answer

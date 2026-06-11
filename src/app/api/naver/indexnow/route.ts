@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = "edge";
 
 const KEY = "b21c58144b521f5656d122efdeaa208f";
 const HOST = "quizbells.com";

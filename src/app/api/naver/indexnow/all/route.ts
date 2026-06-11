@@ -3,7 +3,6 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { tips } from "@/app/tips/tipsData";
 import { NextResponse } from "next/server";
 
-export const runtime = "edge";
 
 const HOST = "quizbells.com";
 const KEY = "b21c58144b521f5656d122efdeaa208f";

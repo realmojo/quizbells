@@ -1,4 +1,3 @@
-export const runtime = "edge";
 
 const BASE_URL = "https://quizbells.com";
 

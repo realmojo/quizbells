@@ -1,7 +1,6 @@
 import { quizItems } from "@/utils/utils";
 import { supabaseAdmin } from "@/lib/supabase";
 
-export const runtime = "edge";
 
 const BASE_URL = "https://quizbells.com";
 const QUIZ_TYPES = quizItems.map((item) => item.type);

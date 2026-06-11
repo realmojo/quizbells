@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { format, startOfMonth } from "date-fns";
 
-export const runtime = "edge";
 
 // 한국 시간 기준 날짜 가져오기
 const getKoreaDate = (): Date => {

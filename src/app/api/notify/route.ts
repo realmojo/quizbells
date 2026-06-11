@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getFCMAccessToken } from "@/lib/fcm-token";
 
-export const runtime = "edge";
 
 // Firebase Cloud Messaging REST API를 직접 호출 (Edge Runtime 호환)
 async function sendFCMNotification(message: any) {
