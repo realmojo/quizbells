@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import React from "react";
 import { HelpCircle, MessageCircle } from "lucide-react";
+import { SITE_URL, websiteRef, buildBreadcrumb } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "자주 묻는 질문 - 퀴즈벨(Quizbells) FAQ",
@@ -85,8 +86,40 @@ export default function FAQPage() {
     },
   ];
 
+  // JSON-LD가 구글 권장 형식이므로 마이크로데이터 대신 JSON-LD로 FAQ를 선언한다.
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/faq#faqpage`,
+        url: `${SITE_URL}/faq`,
+        name: "퀴즈벨 자주 묻는 질문",
+        inLanguage: "ko",
+        isPartOf: websiteRef,
+        mainEntity: faqList.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+      buildBreadcrumb([
+        { name: "홈", item: SITE_URL },
+        { name: "자주 묻는 질문", item: `${SITE_URL}/faq` },
+      ]),
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-linear-to-br from-violet-50 via-purple-50 to-fuchsia-50 dark:from-violet-950 dark:via-purple-950 dark:to-fuchsia-950">
+      <script
+        id="structured-data-faq"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <main className="mx-auto max-w-3xl px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12 space-y-4">
@@ -104,28 +137,18 @@ export default function FAQPage() {
 
         {/* FAQ List */}
         <section className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl shadow-sm border border-white/50 dark:border-slate-800 overflow-hidden p-6 md:p-8">
-          <div
-            className="space-y-4"
-            itemScope
-            itemType="https://schema.org/FAQPage"
-          >
+          <div className="space-y-4">
             {faqList.map((faq, index) => (
               <details
                 key={index}
                 className="group border border-slate-200 dark:border-slate-800 rounded-2xl bg-white/50 dark:bg-slate-800/50 open:bg-white dark:open:bg-slate-800 transition-all duration-300"
-                itemScope
-                itemProp="mainEntity"
-                itemType="https://schema.org/Question"
               >
                 <summary className="flex items-center justify-between p-6 cursor-pointer list-none select-none">
                   <div className="flex items-center gap-4">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center text-violet-600 dark:text-violet-400 font-bold text-sm">
                       Q
                     </div>
-                    <span
-                      className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors"
-                      itemProp="name"
-                    >
+                    <span className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
                       {faq.question}
                     </span>
                   </div>
@@ -145,17 +168,12 @@ export default function FAQPage() {
                     </svg>
                   </div>
                 </summary>
-                <div
-                  className="px-6 pb-6 pt-0 ml-12"
-                  itemScope
-                  itemProp="acceptedAnswer"
-                  itemType="https://schema.org/Answer"
-                >
+                <div className="px-6 pb-6 pt-0 ml-12">
                   <div className="text-slate-600 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl">
                     <span className="font-bold text-violet-600 dark:text-violet-400 mr-2">
                       A.
                     </span>
-                    <span itemProp="text">{faq.answer}</span>
+                    <span>{faq.answer}</span>
                   </div>
                 </div>
               </details>

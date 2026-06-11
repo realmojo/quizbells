@@ -1,5 +1,11 @@
 import { supabaseAdmin } from "@/lib/supabase";
 import { notFound } from "next/navigation";
+import {
+  SITE_URL,
+  websiteRef,
+  publisherJsonLd,
+  DEFAULT_OG_IMAGE,
+} from "@/lib/jsonld";
 
 export const runtime = "edge";
 
@@ -118,30 +124,27 @@ export default async function PostDetailPage({
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
+    "@id": `${SITE_URL}/posts/${post.id}`,
     headline: post.title,
     description: post.description,
+    inLanguage: "ko",
+    isAccessibleForFree: true,
     datePublished: post.date,
     dateModified: post.updated_at || post.date,
     author: {
       "@type": "Organization",
       name: "퀴즈벨",
-      url: "https://quizbells.com",
+      url: SITE_URL,
     },
-    publisher: {
-      "@type": "Organization",
-      name: "퀴즈벨",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://quizbells.com/icons/android-icon-192x192.png",
-      },
-    },
+    publisher: publisherJsonLd,
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://quizbells.com/posts/${post.id}`,
+      "@id": `${SITE_URL}/posts/${post.id}`,
     },
+    isPartOf: websiteRef,
     image: {
       "@type": "ImageObject",
-      url: post.thumbnail || post.image || "https://quizbells.com/images/quizbells_og_1200.webp",
+      url: post.thumbnail || post.image || DEFAULT_OG_IMAGE,
       width: 1200,
       height: 630,
     },

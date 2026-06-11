@@ -8,6 +8,13 @@ import {
   Home,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  SITE_URL,
+  websiteRef,
+  publisherJsonLd,
+  buildBreadcrumb,
+  DEFAULT_OG_IMAGE,
+} from "@/lib/jsonld";
 
 export const runtime = "edge";
 
@@ -115,32 +122,42 @@ export default async function TipDetailPage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Article",
-            headline: tip.title,
-            description: tip.description,
-            datePublished: tip.date,
-            author: {
-              "@type": "Organization",
-              name: "퀴즈벨 에디터",
-              url: "https://quizbells.com",
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "QUIZBELLS",
-              logo: {
-                "@type": "ImageObject",
-                url: "https://quizbells.com/icons/android-icon-192x192.png",
+            "@graph": [
+              {
+                "@type": "Article",
+                "@id": `${SITE_URL}/tips/${tip.id}`,
+                headline: tip.title,
+                description: tip.description,
+                inLanguage: "ko",
+                isAccessibleForFree: true,
+                datePublished: tip.date,
+                dateModified: tip.date,
+                author: {
+                  "@type": "Organization",
+                  name: "퀴즈벨 에디터",
+                  url: SITE_URL,
+                },
+                publisher: publisherJsonLd,
+                mainEntityOfPage: {
+                  "@type": "WebPage",
+                  "@id": `${SITE_URL}/tips/${tip.id}`,
+                },
+                isPartOf: websiteRef,
+                image: {
+                  "@type": "ImageObject",
+                  url: DEFAULT_OG_IMAGE,
+                  width: 1200,
+                  height: 630,
+                },
+                articleSection: tip.category,
+                keywords: tip.keywords?.join(", "),
               },
-            },
-            mainEntityOfPage: `https://quizbells.com/tips/${tip.id}`,
-            image: {
-              "@type": "ImageObject",
-              url: "https://quizbells.com/images/quizbells_og_1200.webp",
-              width: 1200,
-              height: 630,
-            },
-            articleSection: tip.category,
-            keywords: tip.keywords?.join(", "),
+              buildBreadcrumb([
+                { name: "홈", item: SITE_URL },
+                { name: "앱테크 팁", item: `${SITE_URL}/tips` },
+                { name: tip.title, item: `${SITE_URL}/tips/${tip.id}` },
+              ]),
+            ],
           }),
         }}
       />

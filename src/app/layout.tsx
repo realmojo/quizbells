@@ -187,6 +187,15 @@ export default async function RootLayout({
                 "https://play.google.com/store/apps/details?id=com.mojoday.quizbells",
                 "https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EB%B2%A8-%EC%95%B1%ED%85%8C%ED%81%AC-%ED%80%B4%EC%A6%88-%EC%A0%95%EB%8B%B5-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4/id6748852703",
               ],
+              knowsAbout: [
+                "앱테크",
+                "퀴즈 정답",
+                "포인트 적립",
+                "리워드 앱",
+                "캐시워크",
+                "토스 행운퀴즈",
+                "신한쏠퀴즈",
+              ],
               contactPoint: {
                 "@type": "ContactPoint",
                 contactType: "customer service",
@@ -204,6 +213,7 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "SoftwareApplication",
+              "@id": "https://quizbells.com/#app",
               name: "퀴즈벨",
               alternateName: "QUIZBELLS",
               url: "https://quizbells.com",
@@ -211,6 +221,7 @@ export default async function RootLayout({
                 "매일 업데이트되는 앱테크 퀴즈 정답 모음. 신한쏠퀴즈, 캐시워크, 토스 행운퀴즈 등 인기 앱의 퀴즈 정답을 실시간으로 제공합니다.",
               applicationCategory: "UtilityApplication",
               operatingSystem: "Web, iOS, Android",
+              inLanguage: "ko",
               offers: {
                 "@type": "Offer",
                 price: "0",
@@ -218,13 +229,11 @@ export default async function RootLayout({
               },
               author: {
                 "@type": "Organization",
-                name: "QUIZBELLS",
-                url: "https://quizbells.com",
+                "@id": "https://quizbells.com/#organization",
               },
               provider: {
                 "@type": "Organization",
-                name: "QUIZBELLS",
-                url: "https://quizbells.com",
+                "@id": "https://quizbells.com/#organization",
               },
             }),
           }}

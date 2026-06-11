@@ -1,6 +1,6 @@
 import { tips } from "./tipsData";
 import { Metadata } from "next";
-import Script from "next/script";
+import { SITE_URL, websiteRef, buildBreadcrumb } from "@/lib/jsonld";
 import {
   Lightbulb,
   TrendingUp,
@@ -73,38 +73,43 @@ export const metadata: Metadata = {
 export default function AppTechTipsPage() {
   return (
     <>
-      <Script
+      {/* JSON-LD는 JS 실행이 필요 없으므로 일반 script 태그로 SSR HTML에 포함시킨다.
+          next/script(afterInteractive)는 초기 HTML에 없어 크롤러가 못 읽을 수 있음. */}
+      <script
         id="structured-data-tips"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Article",
-            headline: "앱테크 고수가 되는 법 - 퀴즈벨 팁 모음",
-            description:
-              "앱테크 초보도 고수처럼 수익을 얻을 수 있는 실전 노하우 제공. 앱으로 돈버는 법, 퀴즈 적립 팁, 광고 시청 리워드 팁 정리.",
-            image: {
-              "@type": "ImageObject",
-              url: "https://quizbells.com/icons/og-image.png",
-              width: 1200,
-              height: 630,
-            },
-            inLanguage: "ko",
-            author: {
-              "@type": "Organization",
-              name: "퀴즈벨",
-              url: "https://quizbells.com",
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "Quizbells",
-              logo: {
-                "@type": "ImageObject",
-                url: "https://quizbells.com/icons/android-icon-192x192.png",
+            "@graph": [
+              {
+                "@type": "CollectionPage",
+                "@id": `${SITE_URL}/tips#webpage`,
+                url: `${SITE_URL}/tips`,
+                name: "앱테크 고수되기 - 앱으로 돈버는 꿀팁 총정리",
+                description:
+                  "앱테크 초보도 고수처럼 수익을 얻을 수 있는 실전 노하우 제공. 앱으로 돈버는 법, 퀴즈 적립 팁, 광고 시청 리워드 팁 정리.",
+                inLanguage: "ko",
+                isPartOf: websiteRef,
+                mainEntity: { "@id": `${SITE_URL}/tips#tip-list` },
               },
-            },
-            mainEntityOfPage: "https://quizbells.com/tips",
-            datePublished: "2025-06-30",
+              {
+                "@type": "ItemList",
+                "@id": `${SITE_URL}/tips#tip-list`,
+                name: "앱테크 팁 목록",
+                numberOfItems: tips.length,
+                itemListElement: tips.map((tip, i) => ({
+                  "@type": "ListItem",
+                  position: i + 1,
+                  name: tip.title,
+                  url: `${SITE_URL}/tips/${tip.id}`,
+                })),
+              },
+              buildBreadcrumb([
+                { name: "홈", item: SITE_URL },
+                { name: "앱테크 팁", item: `${SITE_URL}/tips` },
+              ]),
+            ],
           }),
         }}
       />

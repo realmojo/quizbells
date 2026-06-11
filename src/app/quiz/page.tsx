@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import QuizComponent from "@/components/QuizComponent";
+import { quizItems } from "@/utils/utils";
+import { SITE_URL, websiteRef, buildBreadcrumb } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "오늘의 퀴즈 정답 - 앱테크 퀴즈 모음 | 퀴즈벨",
@@ -56,5 +58,47 @@ export const metadata: Metadata = {
 };
 
 export default function QuizPage() {
-  return <QuizComponent />;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${SITE_URL}/quiz#webpage`,
+        url: `${SITE_URL}/quiz`,
+        name: "오늘의 퀴즈 정답 - 앱테크 퀴즈 모음",
+        description:
+          "캐시워크, 토스, 신한쏠, 카카오뱅크 등 오늘의 앱테크 퀴즈 정답을 실시간으로 확인하세요.",
+        inLanguage: "ko",
+        isPartOf: websiteRef,
+        mainEntity: { "@id": `${SITE_URL}/quiz#quiz-list` },
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${SITE_URL}/quiz#quiz-list`,
+        name: "오늘의 앱테크 퀴즈 정답 목록",
+        numberOfItems: quizItems.length,
+        itemListElement: quizItems.map((q, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: `${q.typeKr} ${q.title} 오늘 정답`,
+          url: `${SITE_URL}/quiz/${q.type}/today`,
+        })),
+      },
+      buildBreadcrumb([
+        { name: "홈", item: SITE_URL },
+        { name: "오늘의 퀴즈 정답", item: `${SITE_URL}/quiz` },
+      ]),
+    ],
+  };
+
+  return (
+    <>
+      <script
+        id="structured-data-quiz-list"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <QuizComponent />
+    </>
+  );
 }

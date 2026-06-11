@@ -1,4 +1,10 @@
 import type { Metadata } from "next";
+import {
+  SITE_URL,
+  websiteRef,
+  organizationRef,
+  buildBreadcrumb,
+} from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "문의하기 - 퀴즈벨(Quizbells) Contact",
@@ -16,10 +22,40 @@ export const metadata: Metadata = {
   },
 };
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ContactPage",
+      "@id": `${SITE_URL}/contact#webpage`,
+      url: `${SITE_URL}/contact`,
+      name: "퀴즈벨 문의하기",
+      description:
+        "퀴즈벨 광고, 제휴, 서비스 피드백 등 문의사항은 이메일로 연락해 주세요.",
+      inLanguage: "ko",
+      isPartOf: websiteRef,
+      about: organizationRef,
+    },
+    buildBreadcrumb([
+      { name: "홈", item: SITE_URL },
+      { name: "문의하기", item: `${SITE_URL}/contact` },
+    ]),
+  ],
+};
+
 export default function ContactLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <script
+        id="structured-data-contact"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      {children}
+    </>
+  );
 }

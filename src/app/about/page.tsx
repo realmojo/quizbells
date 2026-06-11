@@ -1,6 +1,12 @@
 // app/about/page.tsx
 import { Metadata } from "next";
 import {
+  SITE_URL,
+  websiteRef,
+  organizationRef,
+  buildBreadcrumb,
+} from "@/lib/jsonld";
+import {
   Bell,
   CheckCircle2,
   Heart,
@@ -59,8 +65,35 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": `${SITE_URL}/about#webpage`,
+        url: `${SITE_URL}/about`,
+        name: "퀴즈벨 소개 - 앱테크 퀴즈 정답 실시간 알림 서비스",
+        description:
+          "퀴즈벨은 매일 앱테크 퀴즈 정답을 실시간으로 알려주는 퀴즈 알림 서비스입니다.",
+        inLanguage: "ko",
+        isPartOf: websiteRef,
+        about: organizationRef,
+        mainEntity: organizationRef,
+      },
+      buildBreadcrumb([
+        { name: "홈", item: SITE_URL },
+        { name: "퀴즈벨 소개", item: `${SITE_URL}/about` },
+      ]),
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-linear-to-br from-emerald-50 via-teal-50 to-green-50 dark:from-emerald-950 dark:via-teal-950 dark:to-green-950">
+      <script
+        id="structured-data-about"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <main className="mx-auto max-w-3xl px-4 py-12">
         {/* Header Section */}
         <div className="text-center mb-12 space-y-4">

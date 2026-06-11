@@ -47,14 +47,17 @@ export function buildQuizStructuredData(args: BuildStructuredDataArgs) {
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    inLanguage: "ko",
     mainEntity:
       contents.length > 0
         ? contents.map((quiz: any) => ({
             "@type": "Question",
-            name: `${answerDateString} ${item.typeKr} ${item.title} ${quiz.question || "퀴즈"} 정답`,
+            // AEO: 사용자가 실제 검색하는 질문형 문장으로 작성해야
+            // AI 답변 엔진이 질의와 매칭하기 쉽다.
+            name: `${answerDateString} ${item.typeKr} ${item.title}${quiz.question ? ` "${quiz.question}"` : ""} 정답은 무엇인가요?`,
             acceptedAnswer: {
               "@type": "Answer",
-              text: `정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
+              text: `${answerDateString} ${item.typeKr} ${item.title} 정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
             },
           }))
         : [
@@ -186,6 +189,11 @@ export function buildQuizStructuredData(args: BuildStructuredDataArgs) {
     keywords: keywords,
     articleSection: "앱테크/재테크",
     articleBody: articleBodyText,
+    // 음성 비서·AI 요약 엔진이 우선 읽어갈 핵심 영역 지정 (AEO)
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "#quiz-content"],
+    },
     about: {
       "@type": "Thing",
       name: `${item.typeKr} ${item.title}`,

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL, websiteRef, buildBreadcrumb } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "콘텐츠 - 금융, 세금, 앱테크 실생활 정보 모음 | 퀴즈벨",
@@ -53,10 +54,39 @@ export const metadata: Metadata = {
   },
 };
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${SITE_URL}/posts#webpage`,
+      url: `${SITE_URL}/posts`,
+      name: "콘텐츠 - 금융, 세금, 앱테크 실생활 정보 모음",
+      description:
+        "금융, 세금, 정부지원, 앱테크, 건강, 쇼핑 등 실생활에 도움되는 정보를 한곳에서 확인하세요.",
+      inLanguage: "ko",
+      isPartOf: websiteRef,
+    },
+    buildBreadcrumb([
+      { name: "홈", item: SITE_URL },
+      { name: "콘텐츠", item: `${SITE_URL}/posts` },
+    ]),
+  ],
+};
+
 export default function PostsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <script
+        id="structured-data-posts"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      {children}
+    </>
+  );
 }

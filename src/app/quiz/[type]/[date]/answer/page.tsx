@@ -169,14 +169,16 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
     "@graph": [
       {
         "@type": "FAQPage",
+        inLanguage: "ko",
         mainEntity:
           contents.length > 0
             ? contents.map((quiz: any) => ({
                 "@type": "Question",
-                name: `${answerDateString} ${item.typeKr} ${item.title} ${quiz.question || "퀴즈"} 정답`,
+                // AEO: 질문형 문장이 AI 답변 엔진의 질의 매칭에 유리
+                name: `${answerDateString} ${item.typeKr} ${item.title}${quiz.question ? ` "${quiz.question}"` : ""} 정답은 무엇인가요?`,
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: `정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
+                  text: `${answerDateString} ${item.typeKr} ${item.title} 정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
                 },
               }))
             : [
