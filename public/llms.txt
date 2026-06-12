@@ -24,6 +24,10 @@
 - [기후동행 퀴즈 정답](https://quizbells.com/quiz/climate/today): 기후동행카드 퀴즈 정답
 - [SK스토아 퀴즈 정답](https://quizbells.com/quiz/skstoa/today): SK스토아 퀴즈 정답
 - [옥션 퀴즈 정답](https://quizbells.com/quiz/auction/today): 옥션 퀴즈 정답
+- [리브메이트 오늘의퀴즈 정답](https://quizbells.com/quiz/livemate/today): 리브메이트 일반상식 오늘의퀴즈 정답
+- [페이북 퀴즈팡 정답](https://quizbells.com/quiz/paybooc/today): BC카드 페이북 퀴즈팡 정답
+- [캐시슬라이드 초성퀴즈 정답](https://quizbells.com/quiz/cashslide/today): 캐시슬라이드 초성퀴즈 정답
+- [발로소득 OX퀴즈 정답](https://quizbells.com/quiz/balso/today): 발로소득 OX퀴즈 정답
 
 ## 앱테크 가이드
 - [걷기앱 비교](https://quizbells.com/posts/44): 캐시워크 vs 토스만보기 vs 캐시슬라이드 상세 비교

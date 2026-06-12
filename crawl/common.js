@@ -62,11 +62,21 @@ const getType = (title) => {
     title.includes("기후동행") ||
     title.includes("기회소득")
   ) {
-    return "kbank";
+    // 버그 수정: 기존에 kbank(케이뱅크)로 잘못 매핑되어 기후동행 정답이
+    // 케이뱅크 페이지에 저장되고 있었음
+    return "climate";
   } else if (title.includes("monimo") || title.includes("모니스쿨")) {
     return "monimo";
   } else if (title.includes("buzzvil") || title.includes("버즈빌")) {
     return "buzzvil";
+  } else if (title.includes("리브메이트")) {
+    return "livemate";
+  } else if (title.includes("페이북")) {
+    return "paybooc";
+  } else if (title.includes("캐시슬라이드")) {
+    return "cashslide";
+  } else if (title.includes("발로소득")) {
+    return "balso";
   }
 };
 
@@ -113,6 +123,14 @@ const getTypeKr = (type) => {
     return "모니스쿨";
   } else if (type === "buzzvil") {
     return "버즈빌";
+  } else if (type === "livemate") {
+    return "리브메이트";
+  } else if (type === "paybooc") {
+    return "페이북";
+  } else if (type === "cashslide") {
+    return "캐시슬라이드";
+  } else if (type === "balso") {
+    return "발로소득";
   } else {
     return type;
   }

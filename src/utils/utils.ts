@@ -193,6 +193,59 @@ export const quizItems = [
     slotId: "6068072405",
     searchKeywords: ["버즈빌 퀴즈 정답", "버즈빌 오늘의 퀴즈"],
   },
+  {
+    type: "livemate",
+    typeKr: "리브메이트",
+    title: "오늘의퀴즈",
+    image: "/images/livemate_200.webp",
+    slotId: "8409513997",
+    searchKeywords: [
+      "리브메이트 오늘의퀴즈 정답",
+      "리브메이트 퀴즈 정답",
+      "리브메이트 일반상식퀴즈",
+      "리브메이트 퀴즈",
+      "리브메이트 정답",
+    ],
+  },
+  {
+    type: "paybooc",
+    typeKr: "페이북",
+    title: "퀴즈팡",
+    image: "/images/paybooc_200.webp",
+    slotId: "8409513997",
+    searchKeywords: [
+      "페이북 퀴즈 정답",
+      "페이북 퀴즈팡",
+      "페이북 퀴즈팡 정답",
+      "비씨카드 페이북 퀴즈",
+    ],
+  },
+  {
+    type: "cashslide",
+    typeKr: "캐시슬라이드",
+    title: "초성퀴즈",
+    image: "/images/cashslide_200.webp",
+    slotId: "8409513997",
+    searchKeywords: [
+      "캐시슬라이드 초성퀴즈 정답",
+      "캐시슬라이드 초성퀴즈",
+      "캐시슬라이드 퀴즈",
+      "초성퀴즈 정답",
+    ],
+  },
+  {
+    type: "balso",
+    typeKr: "발로소득",
+    title: "OX퀴즈",
+    image: "/images/balso_200.webp",
+    slotId: "8409513997",
+    searchKeywords: [
+      "발로소득 퀴즈 정답",
+      "발로소득 OX퀴즈",
+      "발로소득 퀴즈",
+      "발로소득 오늘의 퀴즈",
+    ],
+  },
 ];
 
 export const detectDevice = () => {
