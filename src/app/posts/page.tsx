@@ -17,6 +17,7 @@ const LIMIT = 10;
 
 const CATEGORIES = [
   { label: "전체", value: "" },
+  { label: "퀴즈", value: "퀴즈" },
   { label: "금융", value: "금융" },
   { label: "세금", value: "세금" },
   { label: "정부지원", value: "정부지원" },

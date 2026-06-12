@@ -9,6 +9,7 @@ import {
 
 
 const CATEGORY_COLORS: Record<string, string> = {
+  퀴즈: "bg-indigo-50 text-indigo-600",
   금융: "bg-emerald-50 text-emerald-600",
   세금: "bg-orange-50 text-orange-600",
   정부지원: "bg-purple-50 text-purple-600",
