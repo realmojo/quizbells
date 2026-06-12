@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import ImageComponents from "@/components/ImageComponets";
 import { format, parseISO, formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
-import { getQuitItem, quizItems } from "@/utils/utils";
+import { getQuitItem, getQuizSeoLead, quizItems } from "@/utils/utils";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
 import DescriptionComponent from "@/components/DescriptionComponent";
@@ -68,16 +68,23 @@ export async function generateMetadata({
 
   const typeName = item?.typeKr || type;
   const typeTitle = item?.title || "";
+  // 검색 사용자가 실제 입력하는 연속 구문이 타이틀 선두에 오도록 seoLead 사용
+  const seoLead = item ? getQuizSeoLead(item) : `${typeName} ${typeTitle}`;
   const searchKeywords = item?.searchKeywords || [];
-  // 제목 전략: [날짜] [퀴즈명] 정답 (실시간) | [사이트명]
-  // 네이버 모바일 검색 가독성 최적화
-  const fullTitle = `${typeName} ${typeTitle} ${shortDateLabel} 오늘 정답 | 퀴즈벨`;
+  // 오늘 여부: 과거 날짜 페이지에 "오늘 정답"을 붙이면 날짜형 검색어
+  // ("기후동행퀴즈4월7일" 등)와 불일치하고 사용자를 오도하므로 구분한다.
+  const isToday =
+    date === "today" || answerDate === format(getKoreaDate(), "yyyy-MM-dd");
+  // 제목 전략: [퀴즈명 연속구문] [날짜] (오늘) 정답 | [사이트명]
+  const fullTitle = isToday
+    ? `${seoLead} ${shortDateLabel} 오늘 정답 | 퀴즈벨`
+    : `${seoLead} ${shortDateLabel} 정답 | 퀴즈벨`;
 
   // 설명문: 핵심 검색 키워드를 자연스럽게 포함
   const topSearchKeyword = searchKeywords.length > 0 ? searchKeywords[0] : "";
   const description = topSearchKeyword
-    ? `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. ${topSearchKeyword} 정답을 퀴즈벨에서 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`
-    : `${typeName} ${typeTitle} ${shortDateLabel} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
+    ? `${seoLead} ${shortDateLabel} 정답을 실시간으로 공개합니다. ${topSearchKeyword} 정답을 퀴즈벨에서 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`
+    : `${seoLead} ${shortDateLabel} 정답을 실시간으로 공개합니다. 퀴즈벨에서 정답 확인하고 즉시 포인트 적립하세요. 늦으면 종료될 수 있습니다.`;
 
   // canonical URL: today(또는 오늘 날짜)는 /today로, 과거는 /YYYY-MM-DD로 통일
   // og.url도 canonical과 일치시켜 구글의 중복 판별 혼란 제거
@@ -199,8 +206,13 @@ export default async function QuizPage({ params }: QuizPageParams) {
     })();
   }
 
-  const h1Title = `${item.typeKr} ${item.title} ${shortDateLabel} 오늘 정답`;
-  const firstDescription = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
+  const seoLead = getQuizSeoLead(item);
+  const isTodayPage =
+    date === "today" || answerDate === format(getKoreaDate(), "yyyy-MM-dd");
+  const h1Title = isTodayPage
+    ? `${seoLead} ${shortDateLabel} 오늘 정답`
+    : `${seoLead} ${shortDateLabel} 정답`;
+  const firstDescription = `${seoLead} ${answerDateString} 정답을 알려드립니다. 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
 
   let quizItem = null;
   let lastDayQuizItem = null;

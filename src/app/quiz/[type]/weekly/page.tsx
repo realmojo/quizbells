@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { format, subDays, parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
-import { getQuitItem } from "@/utils/utils";
+import { getQuitItem, getQuizSeoLead } from "@/utils/utils";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
 import { getWeeklyQuizbellsFromDb } from "@/utils/quizbells-server";
@@ -32,13 +32,14 @@ export async function generateMetadata({
   const item = getQuitItem(type);
   const typeName = item?.typeKr || type;
   const typeTitle = item?.title || "";
+  const seoLead = item ? getQuizSeoLead(item) : `${typeName} ${typeTitle}`;
 
   const today = getKoreaDate();
   const weekStart = format(subDays(today, 6), "M월 d일", { locale: ko });
   const weekEnd = format(today, "M월 d일", { locale: ko });
 
-  const fullTitle = `${typeName} ${typeTitle} 이번 주 정답 총정리 (${weekStart}~${weekEnd}) | 퀴즈벨`;
-  const description = `${typeName} ${typeTitle} 이번 주 ${weekStart}부터 ${weekEnd}까지 전체 퀴즈 정답을 한눈에 확인하세요. 7일간의 모든 퀴즈 정답을 실시간으로 업데이트합니다.`;
+  const fullTitle = `${seoLead} 이번 주 정답 총정리 (${weekStart}~${weekEnd}) | 퀴즈벨`;
+  const description = `${seoLead} 이번 주 ${weekStart}부터 ${weekEnd}까지 전체 퀴즈 정답을 한눈에 확인하세요. 7일간의 모든 퀴즈 정답을 실시간으로 업데이트합니다.`;
 
   return {
     title: fullTitle,
@@ -150,7 +151,7 @@ export default async function WeeklyQuizPage({ params }: WeeklyPageParams) {
       }))
     : [];
 
-  const h1Title = `${item.typeKr} ${item.title} 이번 주 정답 총정리`;
+  const h1Title = `${getQuizSeoLead(item)} 이번 주 정답 총정리`;
 
   // JSON-LD 구조화 데이터
   const weeklyJsonLd = {
@@ -160,7 +161,7 @@ export default async function WeeklyQuizPage({ params }: WeeklyPageParams) {
         "@type": "Article",
         "@id": `https://quizbells.com/quiz/${type}/weekly`,
         headline: h1Title,
-        description: `${item.typeKr} ${item.title} ${weekStart}부터 ${weekEnd}까지 전체 퀴즈 정답을 한눈에 확인하세요.`,
+        description: `${getQuizSeoLead(item)} ${weekStart}부터 ${weekEnd}까지 전체 퀴즈 정답을 한눈에 확인하세요.`,
         url: `https://quizbells.com/quiz/${type}/weekly`,
         inLanguage: "ko",
         datePublished: format(subDays(today, 6), "yyyy-MM-dd"),

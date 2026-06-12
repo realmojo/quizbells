@@ -10,14 +10,26 @@ export const getQuitItem = (type: string) => {
   return item;
 };
 
+// SEO 타이틀·H1 선두 구문.
+// 네이버는 연속(붙은) 구문 매칭 가중치가 높아, 사용자가 실제 입력하는
+// 검색어("토스 1등찍기", "기후동행퀴즈")가 타이틀에 연속으로 포함되어야 한다.
+// seoLead가 없으면 기존 `${typeKr} ${title}` 그대로 사용.
+export const getQuizSeoLead = (item: {
+  typeKr: string;
+  title: string;
+  seoLead?: string;
+}) => item.seoLead || `${item.typeKr} ${item.title}`;
+
 export const quizItems = [
   {
     type: "toss",
     typeKr: "토스",
     title: "두근두근 1등찍기 행운퀴즈",
+    // 검색량 1위 구문 "토스 1등찍기"(노출 34만, CTR 1.4%)가 연속으로 포함되도록 어순 변경
+    seoLead: "토스 1등찍기 두근두근 행운퀴즈",
     image: "/images/toss_200.webp",
     slotId: "6798248536",
-    searchKeywords: ["토스 1등찍기", "토스 두근두근 1등찍기 오늘", "토스 두근두근 1등찍기 오늘 정답", "토스 행운퀴즈", "토스퀴즈"],
+    searchKeywords: ["토스 1등찍기", "토스 두근두근 1등찍기 오늘", "토스 두근두근 1등찍기 오늘 정답", "토스 두근두근 1등", "토스 행운퀴즈", "토스퀴즈", "토스두근두근정답"],
   },
   {
     type: "cashwalk",
@@ -73,7 +85,7 @@ export const quizItems = [
     title: "오퀴즈",
     image: "/images/okcashbag_200.webp",
     slotId: "3728112507",
-    searchKeywords: ["오퀴즈 정답", "오케이캐시백 오퀴즈"],
+    searchKeywords: ["오퀴즈 정답", "오케이캐시백 오퀴즈", "오케이정답", "오퀴즈"],
   },
   {
     type: "cashdoc",
@@ -127,6 +139,8 @@ export const quizItems = [
     type: "climate",
     typeKr: "기후행동 기후동행 기회소득",
     title: "퀴즈",
+    // 사용자는 "기후동행퀴즈"로 붙여 검색(노출 31만, CTR 4.7%) — 연속 구문을 선두에 배치
+    seoLead: "기후동행퀴즈 기후행동 기회소득",
     image: "/images/climate_200.webp",
     slotId: "8079540616",
     searchKeywords: ["기후동행퀴즈", "기후동행 오늘의퀴즈 정답", "오늘기후행동퀴즈정답", "기후행동퀴즈", "기후동행 퀴즈 정답"],
@@ -169,7 +183,7 @@ export const quizItems = [
     title: "모니스쿨 퀴즈",
     image: "/images/monimo_200.webp",
     slotId: "4867186355",
-    searchKeywords: ["모니스쿨 정답", "모니모 모니스쿨", "모니모 모니스쿨 정답"],
+    searchKeywords: ["모니스쿨 정답", "모니모 모니스쿨", "모니모 모니스쿨 정답", "모니모스쿨", "모니모스쿨 정답"],
   },
   {
     type: "buzzvil",

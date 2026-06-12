@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { format, parseISO } from "date-fns";
-import { getQuitItem } from "@/utils/utils";
+import { getQuitItem, getQuizSeoLead } from "@/utils/utils";
 
 import { getQuizbellsFromDb } from "@/utils/quizbells-server";
 import { CheckCircle2, Calendar, Lightbulb } from "lucide-react";
@@ -51,8 +51,9 @@ export async function generateMetadata({
 
   const typeName = item?.typeKr || type;
   const typeTitle = item?.title || "";
-  const fullTitle = `${typeName} ${typeTitle} ${dateLabel} 정답 확인 | 퀴즈벨`;
-  const description = `${typeName} ${typeTitle} ${dateLabel} 기준 정답을 확인하고, 앱테크 리워드를 적립해 보세요.`;
+  const seoLead = item ? getQuizSeoLead(item) : `${typeName} ${typeTitle}`;
+  const fullTitle = `${seoLead} ${dateLabel} 정답 확인 | 퀴즈벨`;
+  const description = `${seoLead} ${dateLabel} 기준 정답을 확인하고, 앱테크 리워드를 적립해 보세요.`;
 
   // canonical과 og.url을 동일하게 맞춤 (구글 중복 판별 혼란 방지)
   const canonicalUrl = `https://quizbells.com/quiz/${type}/${date === "today" ? "today" : answerDate}/answer`;
@@ -139,7 +140,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
     answerDateString = format(koreaDate, "yyyy년 MM월 dd일");
   }
 
-  const h1Title = `${item.typeKr} ${item.title} ${answerDateString} 정답`;
+  const h1Title = `${getQuizSeoLead(item)} ${answerDateString} 정답`;
 
   let quizItem;
   try {
@@ -174,16 +175,16 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
             ? contents.map((quiz: any) => ({
                 "@type": "Question",
                 // AEO: 질문형 문장이 AI 답변 엔진의 질의 매칭에 유리
-                name: `${answerDateString} ${item.typeKr} ${item.title}${quiz.question ? ` "${quiz.question}"` : ""} 정답은 무엇인가요?`,
+                name: `${answerDateString} ${getQuizSeoLead(item)}${quiz.question ? ` "${quiz.question}"` : ""} 정답은 무엇인가요?`,
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: `${answerDateString} ${item.typeKr} ${item.title} 정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
+                  text: `${answerDateString} ${getQuizSeoLead(item)} 정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
                 },
               }))
             : [
                 {
                   "@type": "Question",
-                  name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요?`,
+                  name: `${answerDateString} ${getQuizSeoLead(item)} 퀴즈 정답은 무엇인가요?`,
                   acceptedAnswer: {
                     "@type": "Answer",
                     text: "정답이 아직 업데이트되지 않았습니다. 곧 업데이트될 예정입니다.",

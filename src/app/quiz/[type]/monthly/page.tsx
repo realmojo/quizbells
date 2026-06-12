@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { format, startOfMonth, parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
-import { getQuitItem } from "@/utils/utils";
+import { getQuitItem, getQuizSeoLead } from "@/utils/utils";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
 import { getMonthlyQuizbellsFromDb } from "@/utils/quizbells-server";
@@ -32,13 +32,14 @@ export async function generateMetadata({
   const item = getQuitItem(type);
   const typeName = item?.typeKr || type;
   const typeTitle = item?.title || "";
+  const seoLead = item ? getQuizSeoLead(item) : `${typeName} ${typeTitle}`;
 
   const today = getKoreaDate();
   const monthLabel = format(today, "M월", { locale: ko });
   const yearMonth = format(today, "yyyy년 M월", { locale: ko });
 
-  const fullTitle = `${typeName} ${typeTitle} ${monthLabel} 정답 총정리 (이번 달 전체) | 퀴즈벨`;
-  const description = `${typeName} ${typeTitle} ${yearMonth} 전체 퀴즈 정답을 한눈에 확인하세요. 이번 달 모든 퀴즈 정답을 날짜별로 정리했습니다. 앱테크 포인트 적립에 활용하세요.`;
+  const fullTitle = `${seoLead} ${monthLabel} 정답 총정리 (이번 달 전체) | 퀴즈벨`;
+  const description = `${seoLead} ${yearMonth} 전체 퀴즈 정답을 한눈에 확인하세요. 이번 달 모든 퀴즈 정답을 날짜별로 정리했습니다. 앱테크 포인트 적립에 활용하세요.`;
 
   return {
     title: fullTitle,
@@ -152,7 +153,7 @@ export default async function MonthlyQuizPage({ params }: MonthlyPageParams) {
       }))
     : [];
 
-  const h1Title = `${item.typeKr} ${item.title} ${monthLabel} 정답 총정리`;
+  const h1Title = `${getQuizSeoLead(item)} ${monthLabel} 정답 총정리`;
 
   const totalQuizCount = monthlyQuizzes.reduce(
     (sum, day) => sum + day.contents.length,
@@ -167,7 +168,7 @@ export default async function MonthlyQuizPage({ params }: MonthlyPageParams) {
         "@type": "Article",
         "@id": `https://quizbells.com/quiz/${type}/monthly`,
         headline: h1Title,
-        description: `${item.typeKr} ${item.title} ${yearMonth} 전체 퀴즈 정답을 한눈에 확인하세요. 이번 달 모든 퀴즈 정답을 날짜별로 정리했습니다.`,
+        description: `${getQuizSeoLead(item)} ${yearMonth} 전체 퀴즈 정답을 한눈에 확인하세요. 이번 달 모든 퀴즈 정답을 날짜별로 정리했습니다.`,
         url: `https://quizbells.com/quiz/${type}/monthly`,
         inLanguage: "ko",
         datePublished: format(monthStart, "yyyy-MM-dd"),

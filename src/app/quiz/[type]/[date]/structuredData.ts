@@ -2,9 +2,12 @@
 // page.tsx 본문이 비대해지지 않도록 SEO 데이터 구성 로직을 분리한다.
 // 반환값(@graph)은 기존 인라인 구현과 동일하다.
 
+import { getQuizSeoLead } from "@/utils/utils";
+
 interface QuizDescItem {
   typeKr: string;
   title: string;
+  seoLead?: string;
   searchKeywords?: string[];
 }
 
@@ -42,6 +45,8 @@ export function buildQuizStructuredData(args: BuildStructuredDataArgs) {
   } = args;
 
   const searchKeywords = item.searchKeywords || [];
+  // 검색 사용자가 실제 입력하는 연속 구문 (예: "토스 1등찍기", "기후동행퀴즈")
+  const seoLead = getQuizSeoLead(item);
 
   // FAQPage 구조화된 데이터 (검색결과 리치 스니펫용)
   const faqJsonLd = {
@@ -54,16 +59,16 @@ export function buildQuizStructuredData(args: BuildStructuredDataArgs) {
             "@type": "Question",
             // AEO: 사용자가 실제 검색하는 질문형 문장으로 작성해야
             // AI 답변 엔진이 질의와 매칭하기 쉽다.
-            name: `${answerDateString} ${item.typeKr} ${item.title}${quiz.question ? ` "${quiz.question}"` : ""} 정답은 무엇인가요?`,
+            name: `${answerDateString} ${seoLead}${quiz.question ? ` "${quiz.question}"` : ""} 정답은 무엇인가요?`,
             acceptedAnswer: {
               "@type": "Answer",
-              text: `${answerDateString} ${item.typeKr} ${item.title} 정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
+              text: `${answerDateString} ${seoLead} 정답은 [${quiz.answer}] 입니다.${quiz.otherAnswers?.length > 0 ? ` 다른 정답으로는 ${quiz.otherAnswers.join(", ")} 등이 있습니다.` : ""}`,
             },
           }))
         : [
             {
               "@type": "Question",
-              name: `${answerDateString} ${item.typeKr} ${item.title} 퀴즈 정답은 무엇인가요?`,
+              name: `${answerDateString} ${seoLead} 퀴즈 정답은 무엇인가요?`,
               acceptedAnswer: {
                 "@type": "Answer",
                 text: "정답이 아직 업데이트되지 않았습니다. 곧 업데이트될 예정입니다.",
@@ -104,7 +109,7 @@ export function buildQuizStructuredData(args: BuildStructuredDataArgs) {
   // 키워드 생성 (searchKeywords 포함)
   const keywords = [
     `${item.typeKr} 정답`,
-    `${item.typeKr} ${item.title} 정답`,
+    `${seoLead} 정답`,
     `${shortDateLabel} ${item.typeKr}`,
     `${item.typeKr} 퀴즈`,
     `${item.typeKr} 퀴즈 정답`,
@@ -117,7 +122,7 @@ export function buildQuizStructuredData(args: BuildStructuredDataArgs) {
   ].join(", ");
 
   // articleBody 생성 (퀴즈 내용 포함)
-  const articleBodyText = `${item.typeKr} ${item.title} ${answerDateString} 정답을 알려드립니다. ${contents.length > 0 ? `오늘의 퀴즈 정답은 ${contents.map((q: any) => q.answer).join(", ")} 등이 있습니다.` : ""} 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
+  const articleBodyText = `${seoLead} ${answerDateString} 정답을 알려드립니다. ${contents.length > 0 ? `오늘의 퀴즈 정답은 ${contents.map((q: any) => q.answer).join(", ")} 등이 있습니다.` : ""} 앱테크로 소소한 행복을 누리시는 분들을 위해 실시간으로 정답을 업데이트하고 있습니다. 매일 새로운 퀴즈와 함께 포인트를 적립하고 현금으로 환급받을 수 있는 기회를 제공합니다. 정확하고 빠른 정답 정보로 여러분의 앱테크 생활을 더욱 풍요롭게 만들어드리겠습니다.`;
 
   // 검색 키워드 기반 대체 헤드라인 (검색엔진이 키워드 매칭에 활용)
   const alternativeHeadlines =
@@ -183,8 +188,8 @@ export function buildQuizStructuredData(args: BuildStructuredDataArgs) {
       url: `https://quizbells.com/images/${type}.webp`,
       width: 1200,
       height: 630,
-      alt: `${item.typeKr} ${item.title} 퀴즈 정답`,
-      caption: `${item.typeKr} ${item.title} ${answerDateString} 정답`,
+      alt: `${seoLead} 퀴즈 정답`,
+      caption: `${seoLead} ${answerDateString} 정답`,
     },
     keywords: keywords,
     articleSection: "앱테크/재테크",
@@ -196,8 +201,8 @@ export function buildQuizStructuredData(args: BuildStructuredDataArgs) {
     },
     about: {
       "@type": "Thing",
-      name: `${item.typeKr} ${item.title}`,
-      description: `매일 출제되는 ${item.typeKr} ${item.title} 퀴즈 정답을 실시간으로 제공하는 서비스`,
+      name: `${seoLead}`,
+      description: `매일 출제되는 ${seoLead} 퀴즈 정답을 실시간으로 제공하는 서비스`,
     },
     // FAQPage의 mainEntity에 Question을 넣는 것이 올바른 방법
     isPartOf: {
