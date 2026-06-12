@@ -13,6 +13,10 @@ const eslintConfig = defineConfig([
     "build/**",
     "crawl/**",
     "next-env.d.ts",
+    // opennextjs-cloudflare 빌드 산출물
+    ".open-next/**",
+    ".wrangler/**",
+    "cloudflare-env.d.ts",
   ]),
   {
     rules: {

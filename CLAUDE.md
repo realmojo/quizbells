@@ -13,6 +13,9 @@ npm run dev          # Dev server with Turbopack (localhost:3000)
 npm run build        # Production build
 npm run start        # Start production server
 npm run lint         # ESLint (flat config v9)
+npm run preview      # OpenNext build + local Workers runtime (workerd) preview
+npm run deploy       # OpenNext build + deploy to Cloudflare Workers
+npm run upload       # OpenNext build + upload new version (no traffic shift)
 ```
 
 No test framework is configured.
@@ -24,7 +27,7 @@ No test framework is configured.
 - **State**: Zustand (`src/store/`)
 - **Database**: Supabase (PostgreSQL) — clients in `src/lib/supabase.ts`
 - **Push Notifications**: Firebase Cloud Messaging — config in `src/lib/firebase.ts`, `src/lib/firebase-admin.ts`
-- **Deployment**: Cloudflare Pages (Edge Functions for API routes)
+- **Deployment**: Cloudflare Workers via `@opennextjs/cloudflare` (`wrangler.jsonc`, `open-next.config.ts`). Build: `npx opennextjs-cloudflare build`, deploy: `npx opennextjs-cloudflare deploy`. Do NOT add `export const runtime = "edge"` to routes — OpenNext does not support the edge runtime (everything runs on Workers' Node-compatible runtime).
 - **Font**: Pretendard (Korean-optimized, loaded via CDN in `globals.css`)
 
 ## Architecture

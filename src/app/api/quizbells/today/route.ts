@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { quizItems } from "@/utils/utils";
 
-export const runtime = 'edge';
 
 // ✅ 오늘 날짜의 모든 퀴즈 타입 정답 조회 (한 번에)
 export async function GET(req: NextRequest) {

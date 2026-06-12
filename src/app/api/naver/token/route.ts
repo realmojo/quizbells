@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { saveNaverTokens } from "@/lib/naver-cafe";
 
-export const runtime = 'edge';
 
 export async function POST(request: Request) {
   try {
