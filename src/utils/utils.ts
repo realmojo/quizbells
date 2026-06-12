@@ -77,7 +77,7 @@ export const quizItems = [
     title: "퀴즈",
     image: "/images/bitbunny_200.webp",
     slotId: "1192049702",
-    searchKeywords: [],
+    searchKeywords: ["비트버니 퀴즈 정답", "비트버니 퀴즈", "비트버니 오늘의 퀴즈"],
   },
   {
     type: "okcashbag",
@@ -117,7 +117,7 @@ export const quizItems = [
     title: "퀴즈",
     image: "/images/doctornow_200.webp",
     slotId: "2667431838",
-    searchKeywords: [],
+    searchKeywords: ["닥터나우 퀴즈 정답", "닥터나우 오늘의 퀴즈", "닥터나우 퀴즈"],
   },
   {
     type: "mydoctor",
@@ -125,7 +125,7 @@ export const quizItems = [
     title: "건강 퀴즈",
     image: "/images/mydoctor_200.webp",
     slotId: "9392622289",
-    searchKeywords: [],
+    searchKeywords: ["나만의닥터 퀴즈 정답", "나만의 닥터 건강퀴즈", "나만의닥터 퀴즈"],
   },
   {
     type: "hpoint",
@@ -133,7 +133,7 @@ export const quizItems = [
     title: "퀴즈",
     image: "/images/hpoint_200.webp",
     slotId: "5598198579",
-    searchKeywords: [],
+    searchKeywords: ["에이치포인트 퀴즈 정답", "H포인트 퀴즈", "H.Point 퀴즈 정답"],
   },
   {
     type: "climate",
@@ -151,7 +151,7 @@ export const quizItems = [
     title: "퀴즈타임",
     image: "/images/skstoa_200.webp",
     slotId: "7374314675",
-    searchKeywords: [],
+    searchKeywords: ["SK스토아 퀴즈 정답", "SK스토아 퀴즈타임 정답", "에스케이스토아 퀴즈"],
   },
   {
     type: "hanabank",
@@ -191,7 +191,7 @@ export const quizItems = [
     title: "퀴즈",
     image: "/images/buzzvil_200.webp",
     slotId: "6068072405",
-    searchKeywords: [],
+    searchKeywords: ["버즈빌 퀴즈 정답", "버즈빌 오늘의 퀴즈"],
   },
 ];
 

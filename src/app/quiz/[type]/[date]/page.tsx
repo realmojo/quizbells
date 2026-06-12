@@ -237,10 +237,16 @@ export default async function QuizPage({ params }: QuizPageParams) {
   }
 
   let todayUpdated: string | null = null;
+  let participantCount = 1000; // 기본값
 
   try {
-    // 오늘 퀴즈 데이터 조회
-    const todayQuizData = await getQuizbellsFromDb(type, answerDate);
+    // 오늘/어제 정답·참여자 수는 서로 독립이므로 병렬 조회 (TTFB 단축)
+    const [todayQuizData, yesterdayQuizData, count] = await Promise.all([
+      getQuizbellsFromDb(type, answerDate),
+      getQuizbellsFromDb(type, lastDayAnswerDate),
+      getParticipantCountFromDb(type),
+    ]);
+
     todayUpdated = todayQuizData?.updated || null; // updated 컬럼 직접 조회
     quizItem =
       todayQuizData?.contents.map((quiz: any) => ({
@@ -249,17 +255,20 @@ export default async function QuizPage({ params }: QuizPageParams) {
         answerDate,
       })) ?? [];
 
-    // 어제 퀴즈 데이터 조회
-    const yesterdayQuizData = await getQuizbellsFromDb(type, lastDayAnswerDate);
     lastDayQuizItem =
       yesterdayQuizData?.contents.map((quiz: any) => ({
         ...quiz,
         isToday: false,
         answerDate: lastDayAnswerDate,
       })) ?? [];
+
+    if (count !== null) {
+      participantCount = count;
+    }
   } catch (error) {
     console.error("퀴즈 데이터 조회 오류:", error);
-    quizItem = null;
+    quizItem = quizItem ?? [];
+    lastDayQuizItem = lastDayQuizItem ?? [];
   }
 
   const contentMerges = [...quizItem.reverse(), ...lastDayQuizItem];
@@ -274,18 +283,6 @@ export default async function QuizPage({ params }: QuizPageParams) {
     prevAnswers.push(q.answer);
     contents.push(q);
   });
-
-  // 참여자 수 조회 (누적값)
-  let participantCount = 1000; // 기본값
-  try {
-    const count = await getParticipantCountFromDb(type);
-    if (count !== null) {
-      participantCount = count;
-    }
-  } catch (error) {
-    console.error("참여자 수 조회 오류:", error);
-    // 오류 발생 시 기본값 사용
-  }
 
   // ISO 날짜 형식 생성
   const isoDate = `${answerDate}T00:00:00`;
