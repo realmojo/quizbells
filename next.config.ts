@@ -11,9 +11,11 @@ const nextConfig: NextConfig = {
   },
 
   // Cloudflare Workers(opennextjs-cloudflare) 배포.
-  // next/image는 wrangler.jsonc의 IMAGES 바인딩(Cloudflare Images)으로 최적화된다.
+  // Workers에서 /_next/image 최적화는 Cloudflare Images(존별 Transformations 활성화 필요)에
+  // 의존하는데, 미활성 상태면 모든 <Image>가 500으로 깨진다.
+  // 이미지들이 이미 사전 리사이즈된 webp라 런타임 최적화 이득이 없으므로 원본을 직접 서빙한다.
   images: {
-    unoptimized: false,
+    unoptimized: true,
   },
 
   // 프로덕션 빌드에서 console.* 제거 (디버깅용 error/warn은 유지)
