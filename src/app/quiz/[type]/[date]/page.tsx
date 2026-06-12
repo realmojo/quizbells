@@ -9,7 +9,10 @@ import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
 import DescriptionComponent from "@/components/DescriptionComponent";
 import QuizCardComponent from "@/components/QuizCardComponent";
-import { getQuizbells } from "@/utils/api";
+import {
+  getQuizbellsFromDb,
+  getParticipantCountFromDb,
+} from "@/utils/quizbells-server";
 import { CheckCircle2, Lightbulb, ArrowRight } from "lucide-react";
 import { subDays, addDays } from "date-fns";
 import { supabaseAdmin } from "@/lib/supabase";
@@ -225,7 +228,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
 
   try {
     // 오늘 퀴즈 데이터 조회
-    const todayQuizData = await getQuizbells(type, answerDate);
+    const todayQuizData = await getQuizbellsFromDb(type, answerDate);
     todayUpdated = todayQuizData?.updated || null; // updated 컬럼 직접 조회
     quizItem =
       todayQuizData?.contents.map((quiz: any) => ({
@@ -235,7 +238,7 @@ export default async function QuizPage({ params }: QuizPageParams) {
       })) ?? [];
 
     // 어제 퀴즈 데이터 조회
-    const yesterdayQuizData = await getQuizbells(type, lastDayAnswerDate);
+    const yesterdayQuizData = await getQuizbellsFromDb(type, lastDayAnswerDate);
     lastDayQuizItem =
       yesterdayQuizData?.contents.map((quiz: any) => ({
         ...quiz,
@@ -263,16 +266,9 @@ export default async function QuizPage({ params }: QuizPageParams) {
   // 참여자 수 조회 (누적값)
   let participantCount = 1000; // 기본값
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const countResponse = await fetch(
-      `${baseUrl}/api/quizbells/count?type=${type}`,
-      { next: { revalidate: 300 } }, // 5분 캐시
-    );
-    if (countResponse.ok) {
-      const countData = await countResponse.json();
-      if (countData.success && countData.count !== undefined) {
-        participantCount = countData.count;
-      }
+    const count = await getParticipantCountFromDb(type);
+    if (count !== null) {
+      participantCount = count;
     }
   } catch (error) {
     console.error("참여자 수 조회 오류:", error);

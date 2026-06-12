@@ -4,7 +4,7 @@ import { ko } from "date-fns/locale";
 import { getQuitItem } from "@/utils/utils";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
-import { getWeeklyQuizbells } from "@/utils/api";
+import { getWeeklyQuizbellsFromDb } from "@/utils/quizbells-server";
 import { CalendarDays, TrendingUp, Sparkles, CheckCircle2 } from "lucide-react";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import VisitTracker from "@/components/VisitTracker";
@@ -111,7 +111,7 @@ export default async function WeeklyQuizPage({ params }: WeeklyPageParams) {
   const weekEnd = format(today, "M월 d일", { locale: ko });
 
   // 최근 7일간 퀴즈 데이터 조회 (API 한 번 호출)
-  const weeklyData = await getWeeklyQuizbells(type);
+  const weeklyData = await getWeeklyQuizbellsFromDb(type);
 
   // 중복 정답 제거 함수 (질문이 가장 긴 것만 남김)
   const removeDuplicateAnswers = (quizzes: any[]) => {

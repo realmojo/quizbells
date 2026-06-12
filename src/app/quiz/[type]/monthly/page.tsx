@@ -4,7 +4,7 @@ import { ko } from "date-fns/locale";
 import { getQuitItem } from "@/utils/utils";
 import Adsense from "@/components/Adsense";
 import SocialShare from "@/components/SocialShare";
-import { getMonthlyQuizbells } from "@/utils/api";
+import { getMonthlyQuizbellsFromDb } from "@/utils/quizbells-server";
 import { Calendar, TrendingUp, Award, Sparkles, CheckCircle2 } from "lucide-react";
 import PWAInstallButton from "@/components/PWAInstallButton";
 import VisitTracker from "@/components/VisitTracker";
@@ -113,7 +113,7 @@ export default async function MonthlyQuizPage({ params }: MonthlyPageParams) {
   const yearMonth = format(today, "yyyy년 M월", { locale: ko });
 
   // 이번 달 1일부터 오늘까지의 퀴즈 데이터 조회 (API 한 번 호출)
-  const monthlyData = await getMonthlyQuizbells(type);
+  const monthlyData = await getMonthlyQuizbellsFromDb(type);
 
   // 중복 정답 제거 함수 (질문이 가장 긴 것만 남김)
   const removeDuplicateAnswers = (quizzes: any[]) => {

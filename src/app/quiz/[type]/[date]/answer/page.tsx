@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { format, parseISO } from "date-fns";
 import { getQuitItem } from "@/utils/utils";
 
-import { getQuizbells } from "@/utils/api";
+import { getQuizbellsFromDb } from "@/utils/quizbells-server";
 import { CheckCircle2, Calendar, Lightbulb } from "lucide-react";
 import AppOpen from "@/components/AppOpen";
 import { Fragment } from "react";
@@ -143,7 +143,7 @@ export default async function AnswerPage({ params }: AnswerPageParams) {
 
   let quizItem;
   try {
-    quizItem = await getQuizbells(type, answerDate);
+    quizItem = await getQuizbellsFromDb(type, answerDate);
   } catch (error) {
     console.error("퀴즈 데이터 조회 오류:", error);
     quizItem = null;
