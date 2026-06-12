@@ -4,6 +4,10 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-12-01",
   "compatibility_flags": ["nodejs_compat"],
+  // 배포 시 대시보드에서 설정한 환경 변수를 삭제하지 않음.
+  // wrangler deploy는 기본적으로 이 파일을 설정의 원본으로 보고
+  // 여기 없는 일반 텍스트 변수를 전부 지워버린다.
+  "keep_vars": true,
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
